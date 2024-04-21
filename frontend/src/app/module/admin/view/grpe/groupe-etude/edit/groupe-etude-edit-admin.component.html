@@ -1,0 +1,54 @@
+<p-dialog [(visible)]="editDialog" [draggable]="false" [maximizable]="true"
+          [modal]="true" [resizable]="false" [style]="{width: '70vw'}" header="{{'groupeEtude.tabPan' | translate}}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'groupeEtude.tabPan' | translate}}">
+                <div class="grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'groupeEtude.libelle' | translate}}<span style="color: red;">*</span></label>
+                        <input [(ngModel)]="item.libelle" [ngClass]="{'ng-invalid ng-dirty' : !validGroupeEtudeLibelle}" class="mb-2 mr-2"
+                               id="1" pInputText placeholder="{{'groupeEtude.libelle' | translate}}"
+                               type="text"/>
+                        <small *ngIf='!validGroupeEtudeLibelle' class='p-error'>Libelle est obligatoire.</small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'groupeEtude.description' | translate}}</label>
+                        <textarea [(ngModel)]="item.description" cols="30" id="2" pInputTextarea
+                                  placeholder="{{'groupeEtude.description' | translate}}" rows="5"
+                        ></textarea>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'groupeEtude.nombreEtudiant' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.nombreEtudiant" class="mb-2 mr-2"
+                                       id="3"
+                                       placeholder="{{'groupeEtude.nombreEtudiant' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+
+            <button (click)="edit()" icon="pi pi-check" label="{{'validate' | translate}}" pButton pRipple></button>
+
+
+            <button (click)="hideEditDialog()" class="p-button-outlined" icon="pi pi-times" label="{{'cancel' | translate}}" pButton
+                    pRipple></button>
+
+
+        </div>
+    </ng-template>
+
+</p-dialog>

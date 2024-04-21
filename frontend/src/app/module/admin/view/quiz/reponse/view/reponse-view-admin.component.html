@@ -1,0 +1,53 @@
+<p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '70vw'}" header="{{'reponse.tabPan' | translate}}"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'reponse.tabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'reponse.ref' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.ref" autofocus class="mb-2 mr-2"
+                               id="1" pInputText placeholder="{{'reponse.ref' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'reponse.lib' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.lib" autofocus class="mb-2 mr-2"
+                               id="2" pInputText placeholder="{{'reponse.lib' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'reponse.etatReponse' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.etatReponse" autofocus class="mb-2 mr-2"
+                               id="3" pInputText placeholder="{{'reponse.etatReponse' | translate}}"
+                               type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'reponse.numero' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.numero" class="mb-2 mr-2"
+                                       id="4"
+                                       placeholder="{{'reponse.numero' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="5">{{'reponse.question' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.question?.libelle" autofocus class="mb-2 mr-2"
+                               id="5" pInputText placeholder="{{'reponse.question' | translate}}"
+                               type="text">
+                    </div>
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+            <div>
+                <button (click)="hideViewDialog()" class="p-button-outlined" icon="pi pi-times" label="Annuler" pButton
+                        pRipple></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+

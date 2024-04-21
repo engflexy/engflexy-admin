@@ -1,0 +1,158 @@
+<p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '70vw'}" header="{{'cours.tabPan' | translate}}"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'cours.tabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'cours.code' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.code" autofocus class="mb-2 mr-2"
+                               id="1" pInputText placeholder="{{'cours.code' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'cours.libelle' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.libelle" autofocus class="mb-2 mr-2"
+                               id="2" pInputText placeholder="{{'cours.libelle' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'cours.description' | translate}}</label>
+                        <textarea [disabled]="true" [ngModel]="item.description" cols="30" id="3" pInputTextarea
+                                  placeholder="{{'cours.description' | translate}}"
+                                  rows="5"></textarea>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'cours.image' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.image" autofocus class="mb-2 mr-2"
+                               id="4" pInputText placeholder="{{'cours.image' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="5">{{'cours.etatCours' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.etatCours?.libelle" autofocus class="mb-2 mr-2"
+                               id="5" pInputText placeholder="{{'cours.etatCours' | translate}}"
+                               type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="6">{{'cours.parcours' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.parcours?.libelle" autofocus class="mb-2 mr-2"
+                               id="6" pInputText placeholder="{{'cours.parcours' | translate}}"
+                               type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="7">{{'cours.nombreSectionFinalise' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nombreSectionFinalise" class="mb-2 mr-2"
+                                       id="7"
+                                       placeholder="{{'cours.nombreSectionFinalise' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="8">{{'cours.nombreSectionEnCours' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nombreSectionEnCours" class="mb-2 mr-2"
+                                       id="8"
+                                       placeholder="{{'cours.nombreSectionEnCours' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="9">{{'cours.nombreLinkEnCours' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nombreLinkEnCours" class="mb-2 mr-2"
+                                       id="9"
+                                       placeholder="{{'cours.nombreLinkEnCours' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="10">{{'cours.nombreLinkFinalise' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nombreLinkFinalise" class="mb-2 mr-2"
+                                       id="10"
+                                       placeholder="{{'cours.nombreLinkFinalise' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="11">{{'cours.numeroOrder' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.numeroOrder" class="mb-2 mr-2"
+                                       id="11"
+                                       placeholder="{{'cours.numeroOrder' | translate}}"></p-inputNumber>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="{{'cours.sections' | translate}}">
+                <div class="grid">
+                    <div class="col">
+                        <div class="card">
+                            <p-table [scrollable]="true" [value]="item.sections" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Libelle</th>
+                                        <th>Url image</th>
+                                        <th>Url image2</th>
+                                        <th>Url image3</th>
+                                        <th>Url video</th>
+                                        <th>Contenu</th>
+                                        <th>Questions</th>
+                                        <th>Indication prof</th>
+                                        <th>Numero order</th>
+                                        <th>Categorie section</th>
+                                        <th>Url</th>
+                                        <th>Content</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-p pTemplate="body">
+                                    <tr>
+                                        <td>{{p.code}}</td>
+                                        <td>{{p.libelle}}</td>
+                                        <td>{{p.urlImage}}</td>
+                                        <td>{{p.urlImage2}}</td>
+                                        <td>{{p.urlImage3}}</td>
+                                        <td>{{p.urlVideo}}</td>
+                                        <td>{{p.contenu}}</td>
+                                        <td>{{p.questions}}</td>
+                                        <td>{{p.indicationProf}}</td>
+                                        <td>{{p.numeroOrder}}</td>
+                                        <td>{{p.categorieSection?.code}}</td>
+                                        <td>{{p.url}}</td>
+                                        <td>{{p.content}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="{{'cours.homeWorks' | translate}}">
+                <div class="grid">
+                    <div class="col">
+                        <div class="card">
+                            <p-table [scrollable]="true" [value]="item.homeWorks" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Libelle</th>
+                                        <th>Url image</th>
+                                        <th>Url video</th>
+                                        <th>Type home work</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-p pTemplate="body">
+                                    <tr>
+                                        <td>{{p.libelle}}</td>
+                                        <td>{{p.urlImage}}</td>
+                                        <td>{{p.urlVideo}}</td>
+                                        <td>{{p.typeHomeWork?.lib}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+            <div>
+                <button (click)="hideViewDialog()" class="p-button-outlined" icon="pi pi-times" label="Annuler" pButton
+                        pRipple></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+

@@ -1,0 +1,107 @@
+<p-dialog [(visible)]="createDialog" [draggable]="false" [maximizable]="true" [modal]="true"
+          [resizable]="false" [style]="{width: '70vw'}" header="{{'news.tabPan' | translate}}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'news.tabPan' | translate}}">
+                <div class="grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'news.ref' | translate}}<span style="color: red;">*</span></label>
+                        <input [(ngModel)]="item.ref" [ngClass]="{'ng-invalid ng-dirty' : !validNewsRef}" class="mb-2 mr-2" id="1" pInputText
+                               placeholder="{{'news.ref' | translate}}"
+                               type="text"/>
+                        <small *ngIf='!validNewsRef' class='p-error'>Ref est obligatoire.</small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'news.libelle' | translate}}</label>
+                        <input [(ngModel)]="item.libelle" class="mb-2 mr-2" id="2" pInputText
+                               placeholder="{{'news.libelle' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'news.image' | translate}}</label>
+                        <input [(ngModel)]="item.image" class="mb-2 mr-2" id="3" pInputText
+                               placeholder="{{'news.image' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'news.description' | translate}}</label>
+                        <textarea [(ngModel)]="item.description" cols="30" id="4" pInputTextarea
+                                  placeholder="{{'news.description' | translate}}" rows="5"
+                        ></textarea>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="5">{{'news.dateNews' | translate}}</label>
+                        <p-calendar [(ngModel)]="item.dateNews" [showSeconds]="false" [showTime]="true" appendTo="body"
+                                    dateFormat="{{dateFormat}}" id="5"
+                                    placeholder="{{'news.dateNews' | translate}}">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="6">{{'news.dateDebut' | translate}}</label>
+                        <p-calendar [(ngModel)]="item.dateDebut" [showSeconds]="false" [showTime]="true" appendTo="body"
+                                    dateFormat="{{dateFormat}}" id="6"
+                                    placeholder="{{'news.dateDebut' | translate}}">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="7">{{'news.dateFin' | translate}}</label>
+                        <p-calendar [(ngModel)]="item.dateFin" [showSeconds]="false" [showTime]="true" appendTo="body"
+                                    dateFormat="{{dateFormat}}" id="7"
+                                    placeholder="{{'news.dateFin' | translate}}">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="8">{{'news.numeroOrdre' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.numeroOrdre" class="mb-2 mr-2" id="8"
+                                       placeholder="{{'news.numeroOrdre' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="9">{{'news.destinataire' | translate}}</label>
+                        <input [(ngModel)]="item.destinataire" class="mb-2 mr-2" id="9"
+                               pInputText placeholder="{{'news.destinataire' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+
+            <button (click)="save()" icon="pi pi-check" label="{{'validate' | translate}}" pButton pRipple></button>
+
+
+            <button (click)="hideCreateDialog()" class="p-button-outlined" icon="pi pi-times" label="{{'cancel' | translate}}" pButton
+                    pRipple></button>
+
+
+        </div>
+    </ng-template>
+
+</p-dialog>

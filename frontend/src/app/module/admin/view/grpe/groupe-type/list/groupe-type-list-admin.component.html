@@ -1,0 +1,139 @@
+<div *ngIf="listActionIsValid" class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button (click)="openCreate('GroupeType')" *ngIf="createActionIsValid" class="p-button-info mr-2 mb-2" icon="pi pi-plus"
+                            label=" {{'new' | translate}}" pButton
+                            pRipple></button>
+                    <button (click)=deleteMultiple() *ngIf="deleteActionIsValid" [disabled]="isSelectionDisabled()" class="p-button-danger mr-2 mb-2"
+                            icon="pi pi-trash" label=" {{'delete' | translate}}" pButton
+                            pRipple></button>
+                    <button (click)="this.showSearch()" class="p-button-secondary mr-2 mb-2" icon="pi pi-{{findByCriteriaShow?'angle-down':'angle-right'}}"
+                            label=" {{'search' | translate}}"
+                            pButton pRipple></button>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <div class="flex">
+                        <p-splitButton [model]="excelPdfButons" icon="pi pi-download"
+                                       label=" {{'export' | translate}}" styleClass="p-button-secondary"></p-splitButton>
+                    </div>
+                </ng-template>
+
+            </p-toolbar>
+            <p-toolbar *ngIf="findByCriteriaShow">
+
+                <div class="col-12">
+                    <div class="flex flex-wrap p-fluid col-12">
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2" for="1">{{'groupeType.code' | translate}}</label>
+                            <input [(ngModel)]="criteria.codeLike" class="w-full" id="1" pInputText type="text">
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2" for="2">{{'groupeType.libelle' | translate}}</label>
+                            <input [(ngModel)]="criteria.libelleLike" class="w-full" id="2" pInputText type="text">
+                        </div>
+                    </div>
+                    <div [style]="{ marginTop : '1rem', display: 'flex', justifyContent: 'flex-end' }">
+                        <button (click)="findPaginatedByCriteria()" class="p-button-info mr-2" icon="pi pi-sort-amount-down" label="{{'validate' | translate}}"
+                                pButton pRipple></button>
+                    </div>
+                </div>
+
+
+            </p-toolbar>
+
+
+            <p-table #dt [(selection)]="selections" [columns]="cols" [globalFilterFields]="['code', 'libelle']" [paginator]="false"
+                     [rowHover]="true" [rowsPerPageOptions]="[10,25,50]"
+                     [rows]="8" [showCurrentPageReport]="true" [value]="items"
+                     currentPageReportTemplate="{{'les éléments de {first} à {last} sur {totalRecords} ' | translate}}"
+                     dataKey="id" selectionMode="multiple" styleClass="p-datatable-customers">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column flex-row justify-content-between table-header">
+                        <h5 class="p-m-0">{{'groupeType.header' | translate}}</h5>
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input (input)="dt.filterGlobal($event.target.value, 'contains')" pInputText placeholder="{{'searchInput' | translate}}"
+                                   type="text"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+
+                        <th pSortableColumn="code">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeType.code' | translate}}</span>
+                                <p-sortIcon field="code"></p-sortIcon>
+                                <p-columnFilter class="ml-auto" display="menu" field="element.code"
+                                                type="text"></p-columnFilter>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="libelle">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeType.libelle' | translate}}</span>
+                                <p-sortIcon field="libelle"></p-sortIcon>
+                                <p-columnFilter class="ml-auto" display="menu" field="element.libelle"
+                                                type="text"></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th>Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template let-element pTemplate="body">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="element"></p-tableCheckbox>
+                        </td>
+
+                        <td>{{element.code}}</td>
+
+
+                        <td>{{element.libelle}}</td>
+
+                        <td>
+                            <button (click)="edit(element)" *ngIf="editActionIsValid" class="p-button-rounded p-button-info mr-2" icon="pi pi-pencil"
+                                    pButton pRipple></button>
+                            <button (click)="view(element)" *ngIf="viewActionIsValid" class="p-button-rounded p-button-secondary mr-2" icon="pi pi-list"
+                                    pButton pRipple></button>
+                            <button (click)="delete(element)" *ngIf="deleteActionIsValid" class="p-button-rounded p-button-danger mr-2" icon="pi pi-trash"
+                                    pButton pRipple></button>
+                            <button (click)="duplicate(element)" *ngIf="duplicateActionIsValid" class="p-button-rounded p-button-raised p-button-warning mr-2"
+                                    icon="pi pi-copy"
+                                    pButton pRipple></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="summary">
+                    <p-paginator (onPageChange)="onPage($event)" [rows]="10"
+                                 [totalRecords]="totalRecords"></p-paginator>
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        En totale
+                        il {{items ? totalRecords == 1 ? 'y a' : 'y a' : 'y a' }} {{items ? totalRecords : 0 }} {{items ? totalRecords == 1 ? 'groupe type' : 'groupe types' : 0 }}
+                        .
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <app-groupe-type-create-admin *ngIf="createDialog  && createActionIsValid"></app-groupe-type-create-admin>
+        <app-groupe-type-edit-admin *ngIf="editDialog  && editActionIsValid"></app-groupe-type-edit-admin>
+        <app-groupe-type-view-admin *ngIf="viewDialog  && viewActionIsValid"></app-groupe-type-view-admin>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+</div>
+
+<p-card *ngIf="!listActionIsValid" header="Permission not allowed">
+    <p class="m-0">
+        You don't have permission to access !
+    </p>
+</p-card>

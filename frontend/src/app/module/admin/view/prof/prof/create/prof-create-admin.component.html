@@ -1,0 +1,386 @@
+<p-dialog [(visible)]="createDialog" [draggable]="false" [maximizable]="true" [modal]="true"
+          [resizable]="false" [style]="{width: '70vw'}" header="{{'prof.tabPan' | translate}}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'prof.tabPan' | translate}}">
+                <div class="grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'prof.ref' | translate}}<span style="color: red;">*</span></label>
+                        <input [(ngModel)]="item.ref" [ngClass]="{'ng-invalid ng-dirty' : !validProfRef}" class="mb-2 mr-2" id="1" pInputText
+                               placeholder="{{'prof.ref' | translate}}"
+                               type="text"/>
+                        <small *ngIf='!validProfRef' class='p-error'>Ref est obligatoire.</small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'prof.about' | translate}}</label>
+                        <input [(ngModel)]="item.about" class="mb-2 mr-2" id="2" pInputText
+                               placeholder="{{'prof.about' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                    <div class="field col-11 md:col-6">
+                        <label for="3">{{'prof.parcours' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.parcours" [filter]="true" [options]="parcourss" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="3" optionLabel="libelle"
+                                    placeholder="{{'prof.parcours' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-11 md:col-6">
+                        <label for="5">{{'prof.categorieProf' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.categorieProf" [filter]="true" [options]="categorieProfs" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="5" optionLabel="code"
+                                    placeholder="{{'prof.categorieProf' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-11 md:col-6">
+                        <label for="8">{{'prof.typeTeacher' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.typeTeacher" [filter]="true" [options]="typeTeachers" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="8" optionLabel="libelle"
+                                    placeholder="{{'prof.typeTeacher' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field align-inputswitch col-12  md:col-6">
+                        <div class="label-inputswitch">
+                            <label for="9">{{'prof.credentialsNonExpired' | translate}}</label>
+                        </div>
+                        <div class="input-switch">
+                            <p-inputSwitch [(ngModel)]="item.credentialsNonExpired" id="9"
+                            >
+                            </p-inputSwitch>
+
+                        </div>
+                    </div>
+
+
+                    <div class="field align-inputswitch col-12  md:col-6">
+                        <div class="label-inputswitch">
+                            <label for="10">{{'prof.enabled' | translate}}</label>
+                        </div>
+                        <div class="input-switch">
+                            <p-inputSwitch [(ngModel)]="item.enabled" id="10"
+                            >
+                            </p-inputSwitch>
+
+                        </div>
+                    </div>
+
+
+                    <div class="field align-inputswitch col-12  md:col-6">
+                        <div class="label-inputswitch">
+                            <label for="11">{{'prof.accountNonExpired' | translate}}</label>
+                        </div>
+                        <div class="input-switch">
+                            <p-inputSwitch [(ngModel)]="item.accountNonExpired" id="11"
+                            >
+                            </p-inputSwitch>
+
+                        </div>
+                    </div>
+
+
+                    <div class="field align-inputswitch col-12  md:col-6">
+                        <div class="label-inputswitch">
+                            <label for="12">{{'prof.accountNonLocked' | translate}}</label>
+                        </div>
+                        <div class="input-switch">
+                            <p-inputSwitch [(ngModel)]="item.accountNonLocked" id="12"
+                            >
+                            </p-inputSwitch>
+
+                        </div>
+                    </div>
+
+
+                    <div class="field align-inputswitch col-12  md:col-6">
+                        <div class="label-inputswitch">
+                            <label for="13">{{'prof.passwordChanged' | translate}}</label>
+                        </div>
+                        <div class="input-switch">
+                            <p-inputSwitch [(ngModel)]="item.passwordChanged" id="13"
+                            >
+                            </p-inputSwitch>
+
+                        </div>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="14">{{'prof.username' | translate}}</label>
+                        <input [(ngModel)]="item.username" class="mb-2 mr-2" id="14" pInputText
+                               placeholder="{{'prof.username' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="15">{{'prof.password' | translate}}</label>
+                        <input [(ngModel)]="item.password" class="mb-2 mr-2" id="15" pInputText
+                               placeholder="{{'prof.password' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="{{'prof.trancheHoraireProfs' | translate}}">
+                <div class="p-col">
+                    <div class="grid">
+                        <div class="field col-12 md:col-6">
+                            <label for="2">Start hour</label>
+                            <input [(ngModel)]="trancheHoraireProfsElement.startHour" autofocus class="mb-2 mr-2" id="2"
+                                   pInputText placeholder="Start hour" type="text">
+
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label for="3">End hour</label>
+                            <input [(ngModel)]="trancheHoraireProfsElement.endHour" autofocus class="mb-2 mr-2" id="3"
+                                   pInputText placeholder="End hour" type="text">
+
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label for="4">Day</label>
+                            <p-inputNumber [(ngModel)]="trancheHoraireProfsElement.day" class="mb-2 mr-2" id="day"
+                                           placeholder="Day"></p-inputNumber>
+
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label for="5">Group index</label>
+                            <p-inputNumber [(ngModel)]="trancheHoraireProfsElement.groupIndex" class="mb-2 mr-2" id="groupIndex"
+                                           placeholder="Group index"></p-inputNumber>
+
+                        </div>
+                        <div class="field col-12 md:col-1">
+                            <button (click)="addTrancheHoraireProfs()" class="mt-4" icon="pi pi-plus" label="OK" pButton pRipple
+                                    type="button"></button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="p-col">
+                    <div class="card">
+                        <p-table [scrollable]="true" [value]="item.trancheHoraireProfs" scrollHeight="200px">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Start hour</th>
+                                    <th>End hour</th>
+                                    <th>Day</th>
+                                    <th>Group index</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template let-p pTemplate="body">
+                                <tr>
+                                    <td>{{p.startHour}}</td>
+                                    <td>{{p.endHour}}</td>
+                                    <td>{{p.day}}</td>
+                                    <td>{{p.groupIndex}}</td>
+                                    <td>
+                                        <button (click)="deleteTrancheHoraireProfs(p)" class="p-button-rounded p-button-danger" icon="pi pi-times"
+                                                pButton type="button"></button>
+                                        <button (click)="editTrancheHoraireProfs(p)" class="p-button-rounded p-button-success mr-2" icon="pi pi-pencil"
+                                                pButton
+                                                type="button"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="{{'prof.classRooms' | translate}}">
+                <div class="p-col">
+                    <div class="grid">
+                        <div class="field col-12 md:col-6">
+                            <label for="1">Libelle<span style="color: red;">*</span></label>
+                            <input [(ngModel)]="classRoomsElement.libelle" [ngClass]="{'ng-invalid ng-dirty' : !validClassRoomsLibelle}" autofocus class="mb-2 mr-2"
+                                   id="1" pInputText placeholder="Libelle"
+                                   type="text">
+                            <small *ngIf='!validClassRoomsLibelle' class='p-error'>Libelle est obligatoire.</small>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label for="2">Code<span style="color: red;">*</span></label>
+                            <input [(ngModel)]="classRoomsElement.code" [ngClass]="{'ng-invalid ng-dirty' : !validClassRoomsCode}" autofocus class="mb-2 mr-2"
+                                   id="2" pInputText placeholder="Code"
+                                   type="text">
+                            <small *ngIf='!validClassRoomsCode' class='p-error'>Code est obligatoire.</small>
+                        </div>
+                        <div class="field col-12 md:col-1">
+                            <button (click)="addClassRooms()" class="mt-4" icon="pi pi-plus" label="OK" pButton pRipple
+                                    type="button"></button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="p-col">
+                    <div class="card">
+                        <p-table [scrollable]="true" [value]="item.classRooms" scrollHeight="200px">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Libelle</th>
+                                    <th>Code</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template let-p pTemplate="body">
+                                <tr>
+                                    <td>{{p.libelle}}</td>
+                                    <td>{{p.code}}</td>
+                                    <td>
+                                        <button (click)="deleteClassRooms(p)" class="p-button-rounded p-button-danger" icon="pi pi-times" pButton
+                                                type="button"></button>
+                                        <button (click)="editClassRooms(p)" class="p-button-rounded p-button-success mr-2" icon="pi pi-pencil" pButton
+                                                type="button"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="{{'prof.recommendTeachers' | translate}}">
+                <p-tabView [(activeIndex)]="activeTab">
+                    <p-tabPanel header="Création">
+                        <div class="grid">
+                            <div class="field col-12 md:col-6">
+                                <label for="1">Ref<span style="color: red;">*</span></label>
+                                <input [(ngModel)]="recommendTeachersElement.ref" [ngClass]="{'ng-invalid ng-dirty' : !validRecommendTeachersRef}" autofocus class="mb-2 mr-2"
+                                       id="1" pInputText placeholder="Ref"
+                                       type="text">
+                                <small *ngIf='!validRecommendTeachersRef' class='p-error'>Ref est obligatoire.</small>
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="2">Nombrevote</label>
+                                <p-inputNumber [(ngModel)]="recommendTeachersElement.nombrevote" class="mb-2 mr-2" id="nombrevote"
+                                               placeholder="Nombrevote"></p-inputNumber>
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="3">Nom</label>
+                                <input [(ngModel)]="recommendTeachersElement.nom" autofocus class="mb-2 mr-2" id="3"
+                                       pInputText placeholder="Nom" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="4">Prenom</label>
+                                <input [(ngModel)]="recommendTeachersElement.prenom" autofocus class="mb-2 mr-2" id="4"
+                                       pInputText placeholder="Prenom" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="5">{{'recommendTeacher.commentaire' | translate}}</label>
+                                <textarea [(ngModel)]="item.commentaire" cols="30" id="5" pInputTextarea
+                                          placeholder="{{'recommendTeacher.commentaire' | translate}}"
+                                          rows="5"
+                                ></textarea>
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="6">Telephone</label>
+                                <input [(ngModel)]="recommendTeachersElement.telephone" autofocus class="mb-2 mr-2" id="6"
+                                       pInputText placeholder="Telephone" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="7">Login</label>
+                                <input [(ngModel)]="recommendTeachersElement.login" autofocus class="mb-2 mr-2" id="7"
+                                       pInputText placeholder="Login" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="8">Date recommamdation</label>
+                                <p-calendar [(ngModel)]="recommendTeachersElement.dateRecommamdation" [showIcon]="true" [showSeconds]="false" [showTime]="true"
+                                            appendTo="body"
+                                            dateFormat="{{dateFormat}}"
+                                            id="8" placeholder="Date recommamdation"></p-calendar>
+
+                            </div>
+                            <div class="field col-12 md:col-1">
+                                <button (click)="addRecommendTeachers()" class="mt-4" icon="pi pi-plus" label="OK" pButton pRipple
+                                        type="button"></button>
+                            </div>
+
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel
+                        header="Liste {{item.recommendTeachers?.length > 0 ? '(' + item.recommendTeachers?.length + ')' : ''}}">
+                        <div class="card">
+                            <p-table [scrollable]="true" [value]="item.recommendTeachers" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Ref</th>
+                                        <th>Nombrevote</th>
+                                        <th>Nom</th>
+                                        <th>Prenom</th>
+                                        <th>Commentaire</th>
+                                        <th>Telephone</th>
+                                        <th>Login</th>
+                                        <th>Date recommamdation</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-p pTemplate="body">
+                                    <tr>
+                                        <td>{{p.ref}}</td>
+                                        <td>{{p.nombrevote}}</td>
+                                        <td>{{p.nom}}</td>
+                                        <td>{{p.prenom}}</td>
+                                        <td>{{p.commentaire}}</td>
+                                        <td>{{p.telephone}}</td>
+                                        <td>{{p.login}}</td>
+                                        <td>{{p.dateRecommamdation | date: dateFormatColumn}}</td>
+                                        <td>
+                                            <button (click)="deleteRecommendTeachers(p)" class="p-button-rounded p-button-danger" icon="pi pi-times"
+                                                    pButton
+                                                    type="button"></button>
+                                            <button (click)="editRecommendTeachers(p)" class="p-button-rounded p-button-success mr-2" icon="pi pi-pencil"
+                                                    pButton
+                                                    type="button"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+                    </p-tabPanel>
+                </p-tabView>
+            </p-tabPanel>
+
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+
+            <button (click)="save()" icon="pi pi-check" label="{{'validate' | translate}}" pButton pRipple></button>
+
+
+            <button (click)="hideCreateDialog()" class="p-button-outlined" icon="pi pi-times" label="{{'cancel' | translate}}" pButton
+                    pRipple></button>
+
+
+        </div>
+    </ng-template>
+
+</p-dialog>

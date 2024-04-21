@@ -1,0 +1,176 @@
+<p-dialog [(visible)]="editDialog" [draggable]="false" [maximizable]="true"
+          [modal]="true" [resizable]="false" [style]="{width: '70vw'}" header="{{'groupeEtudiant.tabPan' | translate}}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'groupeEtudiant.tabPan' | translate}}">
+                <div class="grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'groupeEtudiant.libelle' | translate}}</label>
+                        <input [(ngModel)]="item.libelle" class="mb-2 mr-2" id="1"
+                               pInputText placeholder="{{'groupeEtudiant.libelle' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'groupeEtudiant.type' | translate}}</label>
+                        <input [(ngModel)]="item.type" class="mb-2 mr-2" id="2"
+                               pInputText placeholder="{{'groupeEtudiant.type' | translate}}" type="text"
+                        />
+
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'groupeEtudiant.dateDebut' | translate}}</label>
+                        <p-calendar [(ngModel)]="item.dateDebut" [showSeconds]="false" [showTime]="true" appendTo="body"
+                                    dateFormat="{{dateFormat}}"
+                                    id="3"
+                                    placeholder="{{'groupeEtudiant.dateDebut' | translate}}">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'groupeEtudiant.dateFin' | translate}}</label>
+                        <p-calendar [(ngModel)]="item.dateFin" [showSeconds]="false" [showTime]="true" appendTo="body"
+                                    dateFormat="{{dateFormat}}" id="4"
+                                    placeholder="{{'groupeEtudiant.dateFin' | translate}}">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="5">{{'groupeEtudiant.nombrePlace' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.nombrePlace" class="mb-2 mr-2"
+                                       id="5"
+                                       placeholder="{{'groupeEtudiant.nombrePlace' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="6">{{'groupeEtudiant.nombrePlacevide' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.nombrePlacevide" class="mb-2 mr-2"
+                                       id="6"
+                                       placeholder="{{'groupeEtudiant.nombrePlacevide' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="7">{{'groupeEtudiant.nombrePlaceNonVide' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.nombrePlaceNonVide" class="mb-2 mr-2"
+                                       id="7"
+                                       placeholder="{{'groupeEtudiant.nombrePlaceNonVide' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12  md:col-6">
+                        <label>Etudiant</label>
+                        <p-multiSelect [(ngModel)]="item.groupeEtudiantDetails" [options]="groupeEtudiantDetails"
+                                       [virtualScroll]="true" defaultLabel="Select un etudiant"
+                                       display="chip" itemSize="30"
+                                       optionLabel="etudiant.ref"></p-multiSelect>
+                    </div>
+                    <div class="field col-11 md:col-6">
+                        <label for="9">{{'groupeEtudiant.groupeEtude' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.groupeEtude" [filter]="true" [options]="groupeEtudes" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="9" optionLabel="libelle"
+                                    placeholder="{{'groupeEtudiant.groupeEtude' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-11 md:col-6">
+                        <label for="10">{{'groupeEtudiant.groupeType' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.groupeType" [filter]="true" [options]="groupeTypes" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="10" optionLabel="libelle"
+                                    placeholder="{{'groupeEtudiant.groupeType' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-11 md:col-6">
+                        <label for="11">{{'groupeEtudiant.groupeEtat' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.groupeEtat" [filter]="true" [options]="groupeEtats" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="11" optionLabel="libelle"
+                                    placeholder="{{'groupeEtudiant.groupeEtat' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-11 md:col-6">
+                        <label for="12">{{'groupeEtudiant.parcours' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.parcours" [filter]="true" [options]="parcourss" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="12" optionLabel="libelle"
+                                    placeholder="{{'groupeEtudiant.parcours' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-11 md:col-6">
+                        <label for="13">{{'groupeEtudiant.prof' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.prof" [filter]="true" [options]="profs" [showClear]="true" appendTo="body"
+                                    filterMatchMode="contains"
+                                    id="13" optionLabel="ref"
+                                    placeholder="{{'groupeEtudiant.prof' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="14">{{'groupeEtudiant.nreCoursesComing' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.nreCoursesComing" class="mb-2 mr-2"
+                                       id="14"
+                                       placeholder="{{'groupeEtudiant.nreCoursesComing' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="15">{{'groupeEtudiant.nreCoursesCompleted' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.nreCoursesCompleted" class="mb-2 mr-2"
+                                       id="15"
+                                       placeholder="{{'groupeEtudiant.nreCoursesCompleted' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="16">{{'groupeEtudiant.nreCourses' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.nreCourses" class="mb-2 mr-2"
+                                       id="16"
+                                       placeholder="{{'groupeEtudiant.nreCourses' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+
+            <button (click)="edit()" icon="pi pi-check" label="{{'validate' | translate}}" pButton pRipple></button>
+
+
+            <button (click)="hideEditDialog()" class="p-button-outlined" icon="pi pi-times" label="{{'cancel' | translate}}" pButton
+                    pRipple></button>
+
+
+        </div>
+    </ng-template>
+
+</p-dialog>

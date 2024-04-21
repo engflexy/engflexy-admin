@@ -1,0 +1,37 @@
+<p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '70vw'}" header="{{'faqType.tabPan' | translate}}"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'faqType.tabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'faqType.destinataire' | translate}}</label>
+                        <textarea [disabled]="true" [ngModel]="item.destinataire" cols="30" id="1" pInputTextarea
+                                  placeholder="{{'faqType.destinataire' | translate}}"
+                                  rows="5"></textarea>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'faqType.libelle' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.libelle" autofocus class="mb-2 mr-2"
+                               id="2" pInputText placeholder="{{'faqType.libelle' | translate}}"
+                               type="text">
+                    </div>
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+            <div>
+                <button (click)="hideViewDialog()" class="p-button-outlined" icon="pi pi-times" label="Annuler" pButton
+                        pRipple></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+

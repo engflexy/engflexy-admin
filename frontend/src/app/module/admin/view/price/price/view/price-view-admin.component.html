@@ -1,0 +1,68 @@
+<p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '70vw'}" header="{{'price.tabPan' | translate}}"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'price.tabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'price.price' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.price" class="mb-2 mr-2"
+                                       id="1"
+                                       placeholder="{{'price.price' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'price.oldPrice' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.oldPrice" class="mb-2 mr-2"
+                                       id="2"
+                                       placeholder="{{'price.oldPrice' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'price.lib' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.lib" autofocus class="mb-2 mr-2"
+                               id="3" pInputText placeholder="{{'price.lib' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'price.nreCourse' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nreCourse" class="mb-2 mr-2"
+                                       id="4"
+                                       placeholder="{{'price.nreCourse' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="5">{{'price.nreHours' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nreHours" class="mb-2 mr-2"
+                                       id="5"
+                                       placeholder="{{'price.nreHours' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="6">{{'price.nreMonth' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nreMonth" class="mb-2 mr-2"
+                                       id="6"
+                                       placeholder="{{'price.nreMonth' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field align-inputswitch col-12  md:col-6">
+                        <div class="label-inputswitch">
+                            <label for="7">{{'price.forGroup' | translate}}</label>
+                        </div>
+                        <div class="input-switch">
+                            <p-inputSwitch [disabled]="true" [ngModel]="item.forGroup" id="7"></p-inputSwitch>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+            <div>
+                <button (click)="hideViewDialog()" class="p-button-outlined" icon="pi pi-times" label="Annuler" pButton
+                        pRipple></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+

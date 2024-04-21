@@ -1,0 +1,74 @@
+import {Component, OnInit} from '@angular/core';
+
+
+import {AbstractEditController} from 'src/app/zynerator/controller/AbstractEditController';
+
+import {GroupeEtatAdminService} from 'src/app/shared/service/admin/grpe/GroupeEtatAdmin.service';
+import {GroupeEtatDto} from 'src/app/shared/model/grpe/GroupeEtat.model';
+import {GroupeEtatCriteria} from 'src/app/shared/criteria/grpe/GroupeEtatCriteria.model';
+
+
+@Component({
+    selector: 'app-groupe-etat-edit-admin',
+    templateUrl: './groupe-etat-edit-admin.component.html'
+})
+export class GroupeEtatEditAdminComponent extends AbstractEditController<GroupeEtatDto, GroupeEtatCriteria, GroupeEtatAdminService> implements OnInit {
+
+
+    constructor(private groupeEtatService: GroupeEtatAdminService) {
+        super(groupeEtatService);
+    }
+
+    private _validGroupeEtatCode = true;
+
+    get validGroupeEtatCode(): boolean {
+        return this._validGroupeEtatCode;
+    }
+
+    set validGroupeEtatCode(value: boolean) {
+        this._validGroupeEtatCode = value;
+    }
+
+    private _validGroupeEtatLibelle = true;
+
+    get validGroupeEtatLibelle(): boolean {
+        return this._validGroupeEtatLibelle;
+    }
+
+    set validGroupeEtatLibelle(value: boolean) {
+        this._validGroupeEtatLibelle = value;
+    }
+
+    ngOnInit(): void {
+    }
+
+    public override setValidation(value: boolean) {
+        this.validGroupeEtatCode = value;
+        this.validGroupeEtatLibelle = value;
+    }
+
+    public override validateForm(): void {
+        this.errorMessages = new Array<string>();
+        this.validateGroupeEtatCode();
+        this.validateGroupeEtatLibelle();
+    }
+
+    public validateGroupeEtatCode() {
+        if (this.stringUtilService.isEmpty(this.item.code)) {
+            this.errorMessages.push('Code non valide');
+            this.validGroupeEtatCode = false;
+        } else {
+            this.validGroupeEtatCode = true;
+        }
+    }
+
+    public validateGroupeEtatLibelle() {
+        if (this.stringUtilService.isEmpty(this.item.libelle)) {
+            this.errorMessages.push('Libelle non valide');
+            this.validGroupeEtatLibelle = false;
+        } else {
+            this.validGroupeEtatLibelle = true;
+        }
+    }
+
+}

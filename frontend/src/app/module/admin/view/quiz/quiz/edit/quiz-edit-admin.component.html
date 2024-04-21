@@ -1,0 +1,296 @@
+<p-dialog [(visible)]="editDialog" [draggable]="false" [maximizable]="true" [modal]="true"
+          [resizable]="false" [style]="{width: '70vw'}" header="{{'quiz.tabPan' | translate}}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'quiz.tabPan' | translate}}">
+                <div class="grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'quiz.ref' | translate}}<span style="color: red;">*</span></label>
+                        <input [(ngModel)]="item.ref" [ngClass]="{'ng-invalid ng-dirty' : !validQuizRef}" class="mb-2 mr-2" id="1" pInputText
+                               placeholder="{{'quiz.ref' | translate}}"
+                               type="text"/>
+                        <small *ngIf='!validQuizRef' class='p-error'>Ref est obligatoire.</small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'quiz.lib' | translate}}<span style="color: red;">*</span></label>
+                        <input [(ngModel)]="item.lib" [ngClass]="{'ng-invalid ng-dirty' : !validQuizLib}" class="mb-2 mr-2" id="2" pInputText
+                               placeholder="{{'quiz.lib' | translate}}"
+                               type="text"/>
+                        <small *ngIf='!validQuizLib' class='p-error'>Lib est obligatoire.</small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'quiz.dateDebut' | translate}}</label>
+                        <p-calendar [(ngModel)]="item.dateDebut" [showSeconds]="false" [showTime]="true" appendTo="body"
+                                    dateFormat="{{dateFormat}}" id="3"
+                                    placeholder="{{'quiz.dateDebut' | translate}}">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'quiz.dateFin' | translate}}</label>
+                        <p-calendar [(ngModel)]="item.dateFin" [showSeconds]="false" [showTime]="true" appendTo="body"
+                                    dateFormat="{{dateFormat}}" id="4"
+                                    placeholder="{{'quiz.dateFin' | translate}}">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="field col-11 md:col-6">
+                        <label for="7">{{'quiz.section' | translate}}</label>
+                        <p-dropdown [(ngModel)]="item.section" [filter]="true" [options]="sections" [showClear]="true"
+                                    appendTo="body" filterMatchMode="contains"
+                                    id="7" optionLabel="code" placeholder="{{'quiz.section' | translate}}">
+                        </p-dropdown>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="8">{{'quiz.numero' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.numero" class="mb-2 mr-2" id="8"
+                                       placeholder="{{'quiz.numero' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="9">{{'quiz.seuilReussite' | translate}}</label>
+                        <p-inputNumber [(ngModel)]="item.seuilReussite" class="mb-2 mr-2" id="9"
+                                       placeholder="{{'quiz.seuilReussite' | translate}}">
+                        </p-inputNumber>
+
+                    </div>
+
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="{{'quiz.questions' | translate}}">
+                <p-tabView [(activeIndex)]="activeTab">
+                    <p-tabPanel header="Création">
+                        <div class="grid">
+                            <div class="field col-12 md:col-6">
+                                <label for="1">Ref<span style="color: red;">*</span></label>
+                                <input [(ngModel)]="questionsElement.ref" [ngClass]="{'ng-invalid ng-dirty' : !validQuestionsRef}" autofocus class="mb-2 mr-2"
+                                       id="1" pInputText placeholder="Ref"
+                                       type="text">
+                                <small *ngIf='!validQuestionsRef' class='p-error'>Ref est obligatoire.</small>
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="2">Libelle</label>
+                                <input [(ngModel)]="questionsElement.libelle" autofocus class="mb-2 mr-2" id="2"
+                                       pInputText placeholder="Libelle" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="3">Url img</label>
+                                <input [(ngModel)]="questionsElement.urlImg" autofocus class="mb-2 mr-2" id="3"
+                                       pInputText placeholder="Url img" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="4">Url video</label>
+                                <input [(ngModel)]="questionsElement.urlVideo" autofocus class="mb-2 mr-2" id="4"
+                                       pInputText placeholder="Url video" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="5">Numero</label>
+                                <p-inputNumber [(ngModel)]="questionsElement.numero" class="mb-2 mr-2" id="numero"
+                                               placeholder="Numero"></p-inputNumber>
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="6">Point reponse juste</label>
+                                <p-inputNumber [(ngModel)]="questionsElement.pointReponseJuste" class="mb-2 mr-2"
+                                               id="pointReponseJuste"
+                                               placeholder="Point reponse juste"></p-inputNumber>
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="7">Point reponsefausse</label>
+                                <p-inputNumber [(ngModel)]="questionsElement.pointReponsefausse" class="mb-2 mr-2"
+                                               id="pointReponsefausse"
+                                               placeholder="Point reponsefausse"></p-inputNumber>
+
+                            </div>
+                            <div class="field col-11 md:col-6">
+                                <label>Type de question</label>
+                                <p-dropdown [(ngModel)]="questionsElement.typeDeQuestion" [filter]="true"
+                                            [options]="typeDeQuestions"
+                                            [showClear]="true" appendTo="body" filterMatchMode="contains" id="8"
+                                            optionLabel="lib"
+                                            placeholder="Type de question">
+                                </p-dropdown>
+
+                            </div>
+
+                            <div class="field col-11 md:col-6">
+                                <label>Home work</label>
+                                <p-dropdown [(ngModel)]="questionsElement.homeWork" [filter]="true"
+                                            [options]="homeWorks"
+                                            [showClear]="true" appendTo="body" filterMatchMode="contains" id="11"
+                                            optionLabel="libelle"
+                                            placeholder="Home work">
+                                </p-dropdown>
+
+                            </div>
+
+                            <div class="field col-12 md:col-1">
+                                <button (click)="addQuestions()" class="mt-4" icon="pi pi-plus" label="OK" pButton pRipple
+                                        type="button"></button>
+                            </div>
+
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Liste {{item.questions?.length > 0 ? '(' + item.questions?.length + ')' : ''}}">
+                        <div class="card">
+                            <p-table [scrollable]="true" [value]="item.questions" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Ref</th>
+                                        <th>Libelle</th>
+                                        <th>Url img</th>
+                                        <th>Url video</th>
+                                        <th>Numero</th>
+                                        <th>Point reponse juste</th>
+                                        <th>Point reponsefausse</th>
+                                        <th>Type de question</th>
+                                        <th>Home work</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-p pTemplate="body">
+                                    <tr>
+                                        <td>{{p.ref}}</td>
+                                        <td>{{p.libelle}}</td>
+                                        <td>{{p.urlImg}}</td>
+                                        <td>{{p.urlVideo}}</td>
+                                        <td>{{p.numero}}</td>
+                                        <td>{{p.pointReponseJuste}}</td>
+                                        <td>{{p.pointReponsefausse}}</td>
+                                        <td>{{p.typeDeQuestion?.lib}}</td>
+                                        <td>{{p.homeWork?.libelle}}</td>
+                                        <td>
+                                            <button (click)="deleteQuestions(p)" class="p-button-rounded p-button-danger" icon="pi pi-times"
+                                                    pButton
+                                                    type="button"></button>
+                                            <button (click)="editQuestions(p)" class="p-button-rounded p-button-success mr-2" icon="pi pi-pencil" pButton
+                                                    type="button"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+                    </p-tabPanel>
+                </p-tabView>
+            </p-tabPanel>
+
+            <p-tabPanel header="{{'quiz.quizEtudiants' | translate}}">
+                <p-tabView [(activeIndex)]="activeTab">
+                    <p-tabPanel header="Création">
+                        <div class="grid">
+                            <div class="field col-12 md:col-6">
+                                <label for="1">Ref<span style="color: red;">*</span></label>
+                                <input [(ngModel)]="quizEtudiantsElement.ref" [ngClass]="{'ng-invalid ng-dirty' : !validQuizEtudiantsRef}" autofocus class="mb-2 mr-2"
+                                       id="1" pInputText placeholder="Ref"
+                                       type="text">
+                                <small *ngIf='!validQuizEtudiantsRef' class='p-error'>Ref est obligatoire.</small>
+                            </div>
+                            <div class="field col-11 md:col-6">
+                                <label>Etudiant</label>
+                                <p-dropdown [(ngModel)]="quizEtudiantsElement.etudiant" [filter]="true"
+                                            [options]="etudiants"
+                                            [showClear]="true" appendTo="body" filterMatchMode="contains" id="2"
+                                            optionLabel="ref"
+                                            placeholder="Etudiant">
+                                </p-dropdown>
+
+                            </div>
+
+                            <div class="field col-12 md:col-6">
+                                <label for="5">Note</label>
+                                <p-inputNumber [(ngModel)]="quizEtudiantsElement.note" class="mb-2 mr-2" id="note"
+                                               placeholder="Note"></p-inputNumber>
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="6">Resultat</label>
+                                <input [(ngModel)]="quizEtudiantsElement.resultat" autofocus class="mb-2 mr-2" id="6"
+                                       pInputText placeholder="Resultat" type="text">
+
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="7">Question current</label>
+                                <p-inputNumber [(ngModel)]="quizEtudiantsElement.questionCurrent" class="mb-2 mr-2" id="questionCurrent"
+                                               placeholder="Question current"></p-inputNumber>
+
+                            </div>
+                            <div class="field col-12 md:col-1">
+                                <button (click)="addQuizEtudiants()" class="mt-4" icon="pi pi-plus" label="OK" pButton pRipple
+                                        type="button"></button>
+                            </div>
+
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel
+                        header="Liste {{item.quizEtudiants?.length > 0 ? '(' + item.quizEtudiants?.length + ')' : ''}}">
+                        <div class="card">
+                            <p-table [scrollable]="true" [value]="item.quizEtudiants" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Ref</th>
+                                        <th>Etudiant</th>
+                                        <th>Note</th>
+                                        <th>Resultat</th>
+                                        <th>Question current</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-p pTemplate="body">
+                                    <tr>
+                                        <td>{{p.ref}}</td>
+                                        <td>{{p.etudiant?.ref}}</td>
+                                        <td>{{p.note}}</td>
+                                        <td>{{p.resultat}}</td>
+                                        <td>{{p.questionCurrent}}</td>
+                                        <td>
+                                            <button (click)="deleteQuizEtudiants(p)" class="p-button-rounded p-button-danger" icon="pi pi-times"
+                                                    pButton
+                                                    type="button"></button>
+                                            <button (click)="editQuizEtudiants(p)" class="p-button-rounded p-button-success mr-2" icon="pi pi-pencil"
+                                                    pButton
+                                                    type="button"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+                    </p-tabPanel>
+                </p-tabView>
+            </p-tabPanel>
+
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+
+            <button (click)="edit()" icon="pi pi-check" label="{{'validate' | translate}}" pButton pRipple></button>
+
+
+            <button (click)="hideEditDialog()" class="p-button-outlined" icon="pi pi-times" label="{{'cancel' | translate}}" pButton
+                    pRipple></button>
+
+
+        </div>
+    </ng-template>
+
+</p-dialog>

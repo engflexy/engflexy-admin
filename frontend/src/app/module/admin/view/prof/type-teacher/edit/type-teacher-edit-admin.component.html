@@ -1,0 +1,46 @@
+<p-dialog [(visible)]="editDialog" [draggable]="false" [maximizable]="true"
+          [modal]="true" [resizable]="false" [style]="{width: '70vw'}" header="{{'typeTeacher.tabPan' | translate}}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'typeTeacher.tabPan' | translate}}">
+                <div class="grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'typeTeacher.libelle' | translate}}<span style="color: red;">*</span></label>
+                        <input [(ngModel)]="item.libelle" [ngClass]="{'ng-invalid ng-dirty' : !validTypeTeacherLibelle}" class="mb-2 mr-2"
+                               id="1" pInputText placeholder="{{'typeTeacher.libelle' | translate}}"
+                               type="text"/>
+                        <small *ngIf='!validTypeTeacherLibelle' class='p-error'>Libelle est obligatoire.</small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'typeTeacher.code' | translate}}<span style="color: red;">*</span></label>
+                        <input [(ngModel)]="item.code" [ngClass]="{'ng-invalid ng-dirty' : !validTypeTeacherCode}" class="mb-2 mr-2" id="2"
+                               pInputText placeholder="{{'typeTeacher.code' | translate}}"
+                               type="text"/>
+                        <small *ngIf='!validTypeTeacherCode' class='p-error'>Code est obligatoire.</small>
+                    </div>
+
+
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+
+            <button (click)="edit()" icon="pi pi-check" label="{{'validate' | translate}}" pButton pRipple></button>
+
+
+            <button (click)="hideEditDialog()" class="p-button-outlined" icon="pi pi-times" label="{{'cancel' | translate}}" pButton
+                    pRipple></button>
+
+
+        </div>
+    </ng-template>
+
+</p-dialog>

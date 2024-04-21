@@ -1,0 +1,76 @@
+<p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '70vw'}" header="{{'news.tabPan' | translate}}"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'news.tabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'news.ref' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.ref" autofocus class="mb-2 mr-2"
+                               id="1" pInputText placeholder="{{'news.ref' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'news.libelle' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.libelle" autofocus class="mb-2 mr-2"
+                               id="2" pInputText placeholder="{{'news.libelle' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'news.image' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.image" autofocus class="mb-2 mr-2"
+                               id="3" pInputText placeholder="{{'news.image' | translate}}" type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'news.description' | translate}}</label>
+                        <textarea [disabled]="true" [ngModel]="item.description" cols="30" id="4" pInputTextarea
+                                  placeholder="{{'news.description' | translate}}"
+                                  rows="5"></textarea>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="5">{{'news.dateNews' | translate}}</label>
+                        <p-calendar [disabled]="true" [ngModel]="item.dateNews" [showSeconds]="false" [showTime]="true"
+                                    dateFormat="{{dateFormat}}" id="5"
+                                    placeholder="{{'news.dateNews' | translate}}"></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="6">{{'news.dateDebut' | translate}}</label>
+                        <p-calendar [disabled]="true" [ngModel]="item.dateDebut" [showSeconds]="false" [showTime]="true"
+                                    dateFormat="{{dateFormat}}" id="6"
+                                    placeholder="{{'news.dateDebut' | translate}}"></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="7">{{'news.dateFin' | translate}}</label>
+                        <p-calendar [disabled]="true" [ngModel]="item.dateFin" [showSeconds]="false" [showTime]="true"
+                                    dateFormat="{{dateFormat}}" id="7"
+                                    placeholder="{{'news.dateFin' | translate}}"></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="8">{{'news.numeroOrdre' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.numeroOrdre" class="mb-2 mr-2"
+                                       id="8"
+                                       placeholder="{{'news.numeroOrdre' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="9">{{'news.destinataire' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.destinataire" autofocus class="mb-2 mr-2"
+                               id="9" pInputText placeholder="{{'news.destinataire' | translate}}"
+                               type="text">
+                    </div>
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+            <div>
+                <button (click)="hideViewDialog()" class="p-button-outlined" icon="pi pi-times" label="Annuler" pButton
+                        pRipple></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+

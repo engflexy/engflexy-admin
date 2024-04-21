@@ -1,0 +1,430 @@
+<div *ngIf="listActionIsValid" class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button (click)="openCreate('GroupeEtudiant')" *ngIf="createActionIsValid" class="p-button-info mr-2 mb-2" icon="pi pi-plus"
+                            label=" {{'new' | translate}}" pButton
+                            pRipple></button>
+                    <button (click)=deleteMultiple() *ngIf="deleteActionIsValid" [disabled]="isSelectionDisabled()" class="p-button-danger mr-2 mb-2"
+                            icon="pi pi-trash" label=" {{'delete' | translate}}" pButton
+                            pRipple></button>
+                    <button (click)="this.showSearch()" class="p-button-secondary mr-2 mb-2" icon="pi pi-{{findByCriteriaShow?'angle-down':'angle-right'}}"
+                            label=" {{'search' | translate}}"
+                            pButton pRipple></button>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <div class="flex">
+                        <p-splitButton [model]="excelPdfButons" icon="pi pi-download"
+                                       label=" {{'export' | translate}}" styleClass="p-button-secondary"></p-splitButton>
+                    </div>
+                </ng-template>
+
+            </p-toolbar>
+            <p-toolbar *ngIf="findByCriteriaShow">
+
+                <div class="col-12">
+                    <div class="flex flex-wrap p-fluid col-12">
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2" for="1">{{'groupeEtudiant.libelle' | translate}}</label>
+                            <input [(ngModel)]="criteria.libelleLike" class="w-full" id="1" pInputText type="text">
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2" for="2">{{'groupeEtudiant.type' | translate}}</label>
+                            <input [(ngModel)]="criteria.typeLike" class="w-full" id="2" pInputText type="text">
+                        </div>
+
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="3-1">{{'groupeEtudiant.dateDebutMin' | translate}}</label>
+                            <p-calendar [(ngModel)]="criteria.dateDebutFrom" [showIcon]="true"
+                                        class="mr-2" class="p-fluid" dateFormat="dd-MM-yy" id="3-1"></p-calendar>
+                        </div>
+
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="3-2">{{'groupeEtudiant.dateDebutMax' | translate}}</label>
+                            <p-calendar [(ngModel)]="criteria.dateDebutTo" [showIcon]="true"
+                                        class="mr-2" class="p-fluid" dateFormat="dd-MM-yy" id="3-2"></p-calendar>
+                        </div>
+
+
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="4-1">{{'groupeEtudiant.dateFinMin' | translate}}</label>
+                            <p-calendar [(ngModel)]="criteria.dateFinFrom" [showIcon]="true"
+                                        class="mr-2" class="p-fluid" dateFormat="dd-MM-yy" id="4-1"></p-calendar>
+                        </div>
+
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="4-2">{{'groupeEtudiant.dateFinMax' | translate}}</label>
+                            <p-calendar [(ngModel)]="criteria.dateFinTo" [showIcon]="true"
+                                        class="mr-2" class="p-fluid" dateFormat="dd-MM-yy" id="4-2"></p-calendar>
+                        </div>
+
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="5-1">{{'groupeEtudiant.nombrePlaceMin' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nombrePlaceMin" id="5-1"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="5-2">{{'groupeEtudiant.nombrePlaceMax' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nombrePlaceMax" id="5-2"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="6-1">{{'groupeEtudiant.nombrePlacevideMin' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nombrePlacevideMin" id="6-1"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="6-2">{{'groupeEtudiant.nombrePlacevideMax' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nombrePlacevideMax" id="6-2"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="7-1">{{'groupeEtudiant.nombrePlaceNonVideMin' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nombrePlaceNonVideMin" id="7-1"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="7-2">{{'groupeEtudiant.nombrePlaceNonVideMax' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nombrePlaceNonVideMax" id="7-2"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="9-2">{{'groupeEtudiant.groupeEtude' | translate}}</label>
+                            <p-dropdown [(ngModel)]="criteria.groupeEtude" [filter]="true" [options]="groupeEtudes"
+                                        [showClear]="true" class="p-fluid"
+                                        id="9" optionLabel="libelle"
+                                        placeholder="{{'groupeEtudiant.groupeEtude' | translate}}">
+                            </p-dropdown>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="10-2">{{'groupeEtudiant.groupeType' | translate}}</label>
+                            <p-dropdown [(ngModel)]="criteria.groupeType" [filter]="true" [options]="groupeTypes"
+                                        [showClear]="true" class="p-fluid"
+                                        id="10" optionLabel="libelle"
+                                        placeholder="{{'groupeEtudiant.groupeType' | translate}}">
+                            </p-dropdown>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="11-2">{{'groupeEtudiant.groupeEtat' | translate}}</label>
+                            <p-dropdown [(ngModel)]="criteria.groupeEtat" [filter]="true" [options]="groupeEtats"
+                                        [showClear]="true" class="p-fluid"
+                                        id="11" optionLabel="libelle"
+                                        placeholder="{{'groupeEtudiant.groupeEtat' | translate}}">
+                            </p-dropdown>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="12-2">{{'groupeEtudiant.parcours' | translate}}</label>
+                            <p-dropdown [(ngModel)]="criteria.parcours" [filter]="true" [options]="parcourss" [showClear]="true"
+                                        class="p-fluid"
+                                        id="12" optionLabel="libelle"
+                                        placeholder="{{'groupeEtudiant.parcours' | translate}}">
+                            </p-dropdown>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2" for="13-2">{{'groupeEtudiant.prof' | translate}}</label>
+                            <p-dropdown [(ngModel)]="criteria.prof" [filter]="true" [options]="profs" [showClear]="true"
+                                        class="p-fluid"
+                                        id="13" optionLabel="ref"
+                                        placeholder="{{'groupeEtudiant.prof' | translate}}">
+                            </p-dropdown>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="14-1">{{'groupeEtudiant.nreCoursesComingMin' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nreCoursesComingMin" id="14-1"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="14-2">{{'groupeEtudiant.nreCoursesComingMax' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nreCoursesComingMax" id="14-2"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="15-1">{{'groupeEtudiant.nreCoursesCompletedMin' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nreCoursesCompletedMin" id="15-1"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="15-2">{{'groupeEtudiant.nreCoursesCompletedMax' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nreCoursesCompletedMax" id="15-2"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="16-1">{{'groupeEtudiant.nreCoursesMin' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nreCoursesMin" id="16-1"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                        <div class="lg:col-3 md:col-6 sm:col-12 mb-4">
+                            <label class="font-bold block mb-2"
+                                   for="16-2">{{'groupeEtudiant.nreCoursesMax' | translate}}</label>
+                            <p-inputNumber [(ngModel)]="criteria.nreCoursesMax" id="16-2"
+                                           mode="decimal"></p-inputNumber>
+                        </div>
+                    </div>
+                    <div [style]="{ marginTop : '1rem', display: 'flex', justifyContent: 'flex-end' }">
+                        <button (click)="findPaginatedByCriteria()" class="p-button-info mr-2" icon="pi pi-sort-amount-down" label="{{'validate' | translate}}"
+                                pButton pRipple></button>
+                    </div>
+                </div>
+
+
+            </p-toolbar>
+
+
+            <p-table #dt [(selection)]="selections" [columns]="cols" [globalFilterFields]="['libelle', 'type', 'dateDebut', 'dateFin', 'nombrePlace', 'nombrePlacevide', 'nombrePlaceNonVide', 'groupeEtudelibelle', 'groupeTypelibelle', 'groupeEtatlibelle', 'parcourslibelle', 'profref', 'nreCoursesComing', 'nreCoursesCompleted', 'nreCourses']" [paginator]="false"
+                     [rowHover]="true"
+                     [rowsPerPageOptions]="[10,25,50]"
+                     [rows]="8" [showCurrentPageReport]="true" [value]="items"
+                     currentPageReportTemplate="{{'les éléments de {first} à {last} sur {totalRecords} ' | translate}}"
+                     dataKey="id" selectionMode="multiple" styleClass="p-datatable-customers">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column flex-row justify-content-between table-header">
+                        <h5 class="p-m-0">{{'groupeEtudiant.header' | translate}}</h5>
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input (input)="dt.filterGlobal($event.target.value, 'contains')" pInputText placeholder="{{'searchInput' | translate}}"
+                                   type="text"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+
+                        <th pSortableColumn="libelle">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.libelle' | translate}}</span>
+                                <p-sortIcon field="libelle"></p-sortIcon>
+                                <p-columnFilter class="ml-auto" display="menu" field="element.libelle"
+                                                type="text"></p-columnFilter>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="type">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.type' | translate}}</span>
+                                <p-sortIcon field="type"></p-sortIcon>
+                                <p-columnFilter class="ml-auto" display="menu" field="element.type"
+                                                type="text"></p-columnFilter>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="dateDebut">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.dateDebut' | translate}}</span>
+                                <p-sortIcon field="dateDebut"></p-sortIcon>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="dateFin">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.dateFin' | translate}}</span>
+                                <p-sortIcon field="dateFin"></p-sortIcon>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="nombrePlace">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.nombrePlace' | translate}}</span>
+                                <p-sortIcon field="nombrePlace"></p-sortIcon>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="nombrePlacevide">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.nombrePlacevide' | translate}}</span>
+                                <p-sortIcon field="nombrePlacevide"></p-sortIcon>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="nombrePlaceNonVide">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.nombrePlaceNonVide' | translate}}</span>
+                                <p-sortIcon field="nombrePlaceNonVide"></p-sortIcon>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="groupeEtude">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.groupeEtude' | translate}}</span>
+                                <p-sortIcon field="groupeEtude"></p-sortIcon>
+                            </div>
+                        </th>
+
+
+                        <th pSortableColumn="groupeType">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'groupeEtudiant.groupeType' | translate}}</span>
+                                <p-sortIcon field="groupeType"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <!--
+                <th pSortableColumn="groupeEtat">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>{{'groupeEtudiant.groupeEtat' | translate}}</span>
+                        <p-sortIcon field="groupeEtat"></p-sortIcon>
+                    </div>
+                </th>
+                        -->
+                        <!--
+                <th pSortableColumn="parcours">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>{{'groupeEtudiant.parcours' | translate}}</span>
+                        <p-sortIcon field="parcours"></p-sortIcon>
+                    </div>
+                </th>
+                        -->
+                        <!--
+                <th pSortableColumn="prof">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>{{'groupeEtudiant.prof' | translate}}</span>
+                        <p-sortIcon field="prof"></p-sortIcon>
+                    </div>
+                </th>
+                        -->
+                        <!--
+                <th pSortableColumn="nreCoursesComing">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>{{'groupeEtudiant.nreCoursesComing' | translate}}</span>
+                        <p-sortIcon field="nreCoursesComing"></p-sortIcon>
+                    </div>
+                </th>
+                        -->
+                        <!--
+                <th pSortableColumn="nreCoursesCompleted">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>{{'groupeEtudiant.nreCoursesCompleted' | translate}}</span>
+                        <p-sortIcon field="nreCoursesCompleted"></p-sortIcon>
+                    </div>
+                </th>
+                        -->
+                        <!--
+                <th pSortableColumn="nreCourses">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>{{'groupeEtudiant.nreCourses' | translate}}</span>
+                        <p-sortIcon field="nreCourses"></p-sortIcon>
+                    </div>
+                </th>
+                        -->
+                        <th>Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template let-element pTemplate="body">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="element"></p-tableCheckbox>
+                        </td>
+
+                        <td>{{element.libelle}}</td>
+
+
+                        <td>{{element.type}}</td>
+
+
+                        <td>{{element.dateDebut | date :'dd/MM/yyyy HH:mm' }}</td>
+
+
+                        <td>{{element.dateFin | date :'dd/MM/yyyy HH:mm' }}</td>
+
+
+                        <td>{{element.nombrePlace}}</td>
+
+
+                        <td>{{element.nombrePlacevide}}</td>
+
+
+                        <td>{{element.nombrePlaceNonVide}}</td>
+
+
+                        <td>{{element.groupeEtude?.libelle}}</td>
+
+
+                        <td>{{element.groupeType?.libelle}}</td>
+
+                        <!--
+                   <td>{{element.groupeEtat?.libelle}}</td>
+                        -->
+                        <!--
+                   <td>{{element.parcours?.libelle}}</td>
+                        -->
+                        <!--
+                   <td>{{element.prof?.ref}}</td>
+                        -->
+                        <!--
+                   <td>{{element.nreCoursesComing}}</td>
+                        -->
+                        <!--
+                   <td>{{element.nreCoursesCompleted}}</td>
+                        -->
+                        <!--
+                   <td>{{element.nreCourses}}</td>
+                        -->
+                        <td>
+                            <button (click)="edit(element)" *ngIf="editActionIsValid" class="p-button-rounded p-button-info mr-2" icon="pi pi-pencil"
+                                    pButton pRipple></button>
+                            <button (click)="view(element)" *ngIf="viewActionIsValid" class="p-button-rounded p-button-secondary mr-2" icon="pi pi-list"
+                                    pButton pRipple></button>
+                            <button (click)="delete(element)" *ngIf="deleteActionIsValid" class="p-button-rounded p-button-danger mr-2" icon="pi pi-trash"
+                                    pButton pRipple></button>
+                            <button (click)="duplicate(element)" *ngIf="duplicateActionIsValid" class="p-button-rounded p-button-raised p-button-warning mr-2"
+                                    icon="pi pi-copy"
+                                    pButton pRipple></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="summary">
+                    <p-paginator (onPageChange)="onPage($event)" [rows]="10"
+                                 [totalRecords]="totalRecords"></p-paginator>
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        En totale
+                        il {{items ? totalRecords == 1 ? 'y a' : 'y a' : 'y a' }} {{items ? totalRecords : 0 }} {{items ? totalRecords == 1 ? 'groupe etudiant' : 'groupe etudiants' : 0 }}
+                        .
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <app-groupe-etudiant-create-admin
+            *ngIf="createDialog  && createActionIsValid"></app-groupe-etudiant-create-admin>
+        <app-groupe-etudiant-edit-admin *ngIf="editDialog  && editActionIsValid"></app-groupe-etudiant-edit-admin>
+        <app-groupe-etudiant-view-admin *ngIf="viewDialog  && viewActionIsValid"></app-groupe-etudiant-view-admin>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+</div>
+
+<p-card *ngIf="!listActionIsValid" header="Permission not allowed">
+    <p class="m-0">
+        You don't have permission to access !
+    </p>
+</p-card>

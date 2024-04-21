@@ -1,0 +1,43 @@
+<p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '70vw'}"
+          header="{{'classAverageBonus.tabPan' | translate}}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'classAverageBonus.tabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'classAverageBonus.code' | translate}}</label>
+                        <input [disabled]="true" [ngModel]="item.code" autofocus class="mb-2 mr-2"
+                               id="1" pInputText placeholder="{{'classAverageBonus.code' | translate}}"
+                               type="text">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'classAverageBonus.nombreSession' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.nombreSession" class="mb-2 mr-2"
+                                       id="2"
+                                       placeholder="{{'classAverageBonus.nombreSession' | translate}}"></p-inputNumber>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'classAverageBonus.prix' | translate}}</label>
+                        <p-inputNumber [disabled]="true" [ngModel]="item.prix" class="mb-2 mr-2"
+                                       id="3"
+                                       placeholder="{{'classAverageBonus.prix' | translate}}"></p-inputNumber>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-flexbox">
+            <div>
+                <button (click)="hideViewDialog()" class="p-button-outlined" icon="pi pi-times" label="Annuler" pButton
+                        pRipple></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+
