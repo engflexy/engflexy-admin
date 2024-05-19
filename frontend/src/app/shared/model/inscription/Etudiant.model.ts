@@ -1,12 +1,12 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ParcoursDto} from '../course/Parcours.model';
 import {QuizEtudiantDto} from '../quizetudiant/QuizEtudiant.model';
-import {EtatEtudiantScheduleDto} from '../inscriptionref/EtatEtudiantSchedule.model';
 import {InteretEtudiantDto} from '../inscriptionref/InteretEtudiant.model';
 import {StatutSocialDto} from '../inscriptionref/StatutSocial.model';
 import {LangueDto} from '../inscriptionref/Langue.model';
 import {GroupeEtudeDto} from '../grpe/GroupeEtude.model';
+import {CollaboratorDto} from '../vocab/Collaborator.model';
 import {SkillDto} from '../inscriptionref/Skill.model';
 import {FonctionDto} from '../inscriptionref/Fonction.model';
 import {GroupeEtudiantDetailDto} from '../grpe/GroupeEtudiantDetail.model';
@@ -15,8 +15,6 @@ import {TeacherLocalityDto} from '../inscriptionref/TeacherLocality.model';
 import {NiveauEtudeDto} from '../inscriptionref/NiveauEtude.model';
 
 export class EtudiantDto extends BaseDto{
-
-    public ref: string;
 
     public groupOption: string;
 
@@ -37,7 +35,6 @@ export class EtudiantDto extends BaseDto{
     public password: string;
 
     public teacherLocality: TeacherLocalityDto ;
-    public etatEtudiantSchedule: EtatEtudiantScheduleDto ;
     public parcours: ParcoursDto ;
     public groupeEtude: GroupeEtudeDto ;
     public packStudent: PackStudentDto ;
@@ -47,14 +44,14 @@ export class EtudiantDto extends BaseDto{
     public skill: SkillDto ;
     public fonction: FonctionDto ;
     public langue: LangueDto ;
+    public collaborator: CollaboratorDto ;
      public quizEtudiants: Array<QuizEtudiantDto>;
      public groupeEtudiantDetails: Array<GroupeEtudiantDetailDto>;
-    
+
 
     constructor() {
         super();
 
-        this.ref = '';
         this.groupOption = '';
         this.subscribe = null;
         this.credentialsNonExpired = null;
@@ -64,11 +61,6 @@ export class EtudiantDto extends BaseDto{
         this.passwordChanged = null;
         this.username = '';
         this.password = '';
-        this.teacherLocality = new TeacherLocalityDto() ;
-        this.packStudent = new PackStudentDto() ;
-        this.statutSocial = new StatutSocialDto() ;
-        this.skill = new SkillDto() ;
-        this.fonction = new FonctionDto() ;
         this.quizEtudiants = new Array<QuizEtudiantDto>();
         this.groupeEtudiantDetails = new Array<GroupeEtudiantDetailDto>();
 

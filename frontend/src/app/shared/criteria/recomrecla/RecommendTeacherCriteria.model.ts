@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ProfCriteria} from '../prof/ProfCriteria.model';
 
 export class RecommendTeacherCriteria  extends BaseCriteria  {
@@ -22,5 +22,7 @@ export class RecommendTeacherCriteria  extends BaseCriteria  {
     public dateRecommamdation: Date;
     public dateRecommamdationFrom: Date;
     public dateRecommamdationTo: Date;
+  public prof: ProfCriteria ;
+  public profs: Array<ProfCriteria> ;
 
 }

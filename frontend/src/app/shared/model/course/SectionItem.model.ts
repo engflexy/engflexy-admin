@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {SectionDto} from './Section.model';
 
@@ -19,7 +19,7 @@ export class SectionItemDto extends BaseDto{
     public synonyms: string;
 
     public section: SectionDto ;
-    
+
 
     constructor() {
         super();

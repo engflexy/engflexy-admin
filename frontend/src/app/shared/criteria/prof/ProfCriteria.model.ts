@@ -1,10 +1,10 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
+import {CollaboratorCriteria} from '../vocab/CollaboratorCriteria.model';
 import {ParcoursCriteria} from '../course/ParcoursCriteria.model';
 import {TypeTeacherCriteria} from './TypeTeacherCriteria.model';
 import {RecommendTeacherCriteria} from '../recomrecla/RecommendTeacherCriteria.model';
 import {CategorieProfCriteria} from './CategorieProfCriteria.model';
 import {TrancheHoraireProfCriteria} from './TrancheHoraireProfCriteria.model';
-import {ClassRoomCriteria} from '../inscriptionref/ClassRoomCriteria.model';
 
 export class ProfCriteria  extends BaseCriteria  {
 
@@ -22,7 +22,6 @@ export class ProfCriteria  extends BaseCriteria  {
     public password: string;
     public passwordLike: string;
       public trancheHoraireProfs: Array<TrancheHoraireProfCriteria>;
-      public classRooms: Array<ClassRoomCriteria>;
       public recommendTeachers: Array<RecommendTeacherCriteria>;
 
 }

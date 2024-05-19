@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {FaqTypeDto} from './FaqType.model';
 
@@ -9,7 +9,7 @@ export class FaqDto extends BaseDto{
     public libelle: string;
 
     public faqType: FaqTypeDto ;
-    
+
 
     constructor() {
         super();

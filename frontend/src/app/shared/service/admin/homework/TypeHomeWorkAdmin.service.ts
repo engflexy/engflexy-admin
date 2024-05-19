@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {TypeHomeWorkDto} from 'src/app/shared/model/homework/TypeHomeWork.model';
-import {TypeHomeWorkCriteria} from 'src/app/shared/criteria/homework/TypeHomeWorkCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {TypeHomeWorkDto} from '../../../model/homework/TypeHomeWork.model';
+import {TypeHomeWorkCriteria} from '../../../criteria/homework/TypeHomeWorkCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TypeHomeWorkAdminService extends AbstractService<TypeHomeWorkDto, TypeHomeWorkCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/typeHomeWork/';
     }
 
     public constrcutDto(): TypeHomeWorkDto {
@@ -24,9 +27,5 @@ export class TypeHomeWorkAdminService extends AbstractService<TypeHomeWorkDto, T
 
     public constrcutCriteria(): TypeHomeWorkCriteria {
         return new TypeHomeWorkCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/typeHomeWork/';
     }
 }

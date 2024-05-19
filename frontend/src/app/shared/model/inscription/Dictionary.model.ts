@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {EtudiantDto} from './Etudiant.model';
 
@@ -10,10 +10,10 @@ export class DictionaryDto extends BaseDto{
 
    public learned: null | boolean;
 
-   public createdOn: Date;
+    public createdOn: string;
 
     public etudiant: EtudiantDto ;
-    
+
 
     constructor() {
         super();
@@ -21,7 +21,8 @@ export class DictionaryDto extends BaseDto{
         this.word = '';
         this.definition = '';
         this.learned = null;
-        this.createdOn = null;
+        this.createdOn = '';
+        this.etudiant = new EtudiantDto() ;
 
         }
 

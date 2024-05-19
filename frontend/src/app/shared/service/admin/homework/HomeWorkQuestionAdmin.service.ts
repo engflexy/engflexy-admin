@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {HomeWorkQuestionDto} from 'src/app/shared/model/homework/HomeWorkQuestion.model';
-import {HomeWorkQuestionCriteria} from 'src/app/shared/criteria/homework/HomeWorkQuestionCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {HomeWorkQuestionDto} from '../../../model/homework/HomeWorkQuestion.model';
+import {HomeWorkQuestionCriteria} from '../../../criteria/homework/HomeWorkQuestionCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class HomeWorkQuestionAdminService extends AbstractService<HomeWorkQuestionDto, HomeWorkQuestionCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/homeWorkQuestion/';
     }
 
     public constrcutDto(): HomeWorkQuestionDto {
@@ -24,9 +27,5 @@ export class HomeWorkQuestionAdminService extends AbstractService<HomeWorkQuesti
 
     public constrcutCriteria(): HomeWorkQuestionCriteria {
         return new HomeWorkQuestionCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/homeWorkQuestion/';
     }
 }

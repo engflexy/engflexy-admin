@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ParcoursCriteria} from '../course/ParcoursCriteria.model';
 import {QuizCriteria} from '../quiz/QuizCriteria.model';
 import {SkillCriteria} from '../inscriptionref/SkillCriteria.model';
@@ -37,16 +37,12 @@ export class InscriptionCriteria  extends BaseCriteria  {
   public etudiants: Array<EtudiantCriteria> ;
   public etatInscription: EtatInscriptionCriteria ;
   public etatInscriptions: Array<EtatInscriptionCriteria> ;
-  public groupeEtude: GroupeEtudeCriteria ;
-  public groupeEtudes: Array<GroupeEtudeCriteria> ;
-  public groupeType: GroupeTypeCriteria ;
-  public groupeTypes: Array<GroupeTypeCriteria> ;
+  public parcours: ParcoursCriteria ;
+  public parcourss: Array<ParcoursCriteria> ;
   public statutSocial: StatutSocialCriteria ;
   public statutSocials: Array<StatutSocialCriteria> ;
-  public niveauEtude: NiveauEtudeCriteria ;
-  public niveauEtudes: Array<NiveauEtudeCriteria> ;
-  public fonction: FonctionCriteria ;
-  public fonctions: Array<FonctionCriteria> ;
+  public interetEtudiant: InteretEtudiantCriteria ;
+  public interetEtudiants: Array<InteretEtudiantCriteria> ;
   public quiz: QuizCriteria ;
   public quizs: Array<QuizCriteria> ;
   public packStudent: PackStudentCriteria ;

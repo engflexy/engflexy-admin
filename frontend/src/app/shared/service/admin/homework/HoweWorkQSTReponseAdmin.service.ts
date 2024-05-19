@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {HoweWorkQSTReponseDto} from 'src/app/shared/model/homework/HoweWorkQSTReponse.model';
-import {HoweWorkQSTReponseCriteria} from 'src/app/shared/criteria/homework/HoweWorkQSTReponseCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {HoweWorkQSTReponseDto} from '../../../model/homework/HoweWorkQSTReponse.model';
+import {HoweWorkQSTReponseCriteria} from '../../../criteria/homework/HoweWorkQSTReponseCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class HoweWorkQSTReponseAdminService extends AbstractService<HoweWorkQSTReponseDto, HoweWorkQSTReponseCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/howeWorkQSTReponse/';
     }
 
     public constrcutDto(): HoweWorkQSTReponseDto {
@@ -24,9 +27,5 @@ export class HoweWorkQSTReponseAdminService extends AbstractService<HoweWorkQSTR
 
     public constrcutCriteria(): HoweWorkQSTReponseCriteria {
         return new HoweWorkQSTReponseCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/howeWorkQSTReponse/';
     }
 }

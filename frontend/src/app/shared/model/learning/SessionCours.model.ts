@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {SalaryDto} from '../salary/Salary.model';
 import {GroupeEtudiantDto} from '../grpe/GroupeEtudiant.model';
@@ -43,7 +43,7 @@ export class SessionCoursDto extends BaseDto{
     public groupeEtudiant: GroupeEtudiantDto ;
     public salary: SalaryDto ;
      public sessionCoursSections: Array<SessionCoursSectionDto>;
-    
+
 
     constructor() {
         super();
@@ -63,6 +63,9 @@ export class SessionCoursDto extends BaseDto{
         this.nreWords = null;
         this.homeworkFinished = null;
         this.courseFinished = null;
+        this.prof = new ProfDto() ;
+        this.cours = new CoursDto() ;
+        this.salary = new SalaryDto() ;
         this.sessionCoursSections = new Array<SessionCoursSectionDto>();
 
         }

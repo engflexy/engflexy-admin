@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from 'src/environments/environment';
 
-import {ActionPermissionDto} from 'src/app/zynerator/security/shared/model/ActionPermission.model';
-import {ActionPermissionCriteria} from 'src/app/zynerator/security/shared/criteria/ActionPermissionCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
 import {RoleService} from './Role.service';
+import {AbstractService} from "../../../service/AbstractService";
+import {ActionPermissionDto} from "../model/ActionPermission.model";
+import {environment} from "../../../../../environments/environment";
+import {ActionPermissionCriteria} from "../criteria/ActionPermissionCriteria.model";
 
 
 @Injectable({

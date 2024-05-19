@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ParcoursDto} from '../course/Parcours.model';
 import {QuizDto} from '../quiz/Quiz.model';
@@ -43,7 +43,7 @@ export class InscriptionDto extends BaseDto{
     public quiz: QuizDto ;
     public packStudent: PackStudentDto ;
     public skill: SkillDto ;
-    
+
 
     constructor() {
         super();
@@ -58,11 +58,9 @@ export class InscriptionDto extends BaseDto{
         this.skype = '';
         this.etudiant = new EtudiantDto() ;
         this.etatInscription = new EtatInscriptionDto() ;
-        this.groupeEtude = new GroupeEtudeDto() ;
-        this.groupeType = new GroupeTypeDto() ;
+        this.parcours = new ParcoursDto() ;
         this.statutSocial = new StatutSocialDto() ;
-        this.niveauEtude = new NiveauEtudeDto() ;
-        this.fonction = new FonctionDto() ;
+        this.interetEtudiant = new InteretEtudiantDto() ;
         this.quiz = new QuizDto() ;
         this.packStudent = new PackStudentDto() ;
         this.skill = new SkillDto() ;

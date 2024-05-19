@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ProfCriteria} from '../prof/ProfCriteria.model';
 
 export class SalaryCriteria  extends BaseCriteria  {

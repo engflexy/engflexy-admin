@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {FreeTrialTeacherEmailTemplateDto} from './FreeTrialTeacherEmailTemplate.model';
 import {FreeTrialTeacherWhatsTemplateDto} from './FreeTrialTeacherWhatsTemplate.model';
@@ -45,7 +45,7 @@ export class FreeTrialDto extends BaseDto{
     public freeTrialConfiguration: FreeTrialConfigurationDto ;
     public statutFreeTrial: StatutFreeTrialDto ;
      public freeTrialDetails: Array<FreeTrialDetailDto>;
-    
+
 
     constructor() {
         super();
@@ -63,9 +63,6 @@ export class FreeTrialDto extends BaseDto{
         this.nombreStudentAbonne = null;
         this.nombreStudentPresent = null;
         this.prof = new ProfDto() ;
-        this.niveauEtude = new NiveauEtudeDto() ;
-        this.freeTrialStudentWhatsTemplate = new FreeTrialStudentWhatsTemplateDto() ;
-        this.freeTrialTeacherEmailTemplate = new FreeTrialTeacherEmailTemplateDto() ;
         this.freeTrialConfiguration = new FreeTrialConfigurationDto() ;
         this.freeTrialDetails = new Array<FreeTrialDetailDto>();
 

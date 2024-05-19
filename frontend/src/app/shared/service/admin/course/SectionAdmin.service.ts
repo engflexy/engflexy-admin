@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {SectionDto} from 'src/app/shared/model/course/Section.model';
-import {SectionCriteria} from 'src/app/shared/criteria/course/SectionCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {SectionDto} from '../../../model/course/Section.model';
+import {SectionCriteria} from '../../../criteria/course/SectionCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SectionAdminService extends AbstractService<SectionDto, SectionCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/section/';
     }
 
     public constrcutDto(): SectionDto {
@@ -24,9 +27,5 @@ export class SectionAdminService extends AbstractService<SectionDto, SectionCrit
 
     public constrcutCriteria(): SectionCriteria {
         return new SectionCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/section/';
     }
 }

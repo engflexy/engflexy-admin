@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ProfCriteria} from './ProfCriteria.model';
 
 export class TrancheHoraireProfCriteria  extends BaseCriteria  {
@@ -14,5 +14,7 @@ export class TrancheHoraireProfCriteria  extends BaseCriteria  {
      public groupIndex: number;
      public groupIndexMin: number;
      public groupIndexMax: number;
+  public prof: ProfCriteria ;
+  public profs: Array<ProfCriteria> ;
 
 }

@@ -1,16 +1,16 @@
-import {ConfirmationService, MessageService,MenuItem} from 'primeng/api';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
-import {environment} from 'src/environments/environment';
+import {environment} from "../../../environments/environment";
 
-import {RoleService} from 'src/app/zynerator/security/shared/service/Role.service';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {StringUtilService} from 'src/app/zynerator/util/StringUtil.service';
-import {FileTempDto} from 'src/app/zynerator/dto/FileTempDto.model';
-import {ServiceLocator} from 'src/app/zynerator/service/ServiceLocator';
+import {RoleService} from '../security/shared/service/Role.service';
+import {BaseDto} from "../dto/BaseDto.model";
+import {BaseCriteria} from "../criteria/BaseCriteria.model";
+import {AbstractService} from "../service/AbstractService";
+import {StringUtilService} from "../util/StringUtil.service";
+import {ServiceLocator} from "../service/ServiceLocator";
+import {FileTempDto} from "../dto/FileTempDto.model";
+
 @Injectable()
 export class AbstractCreateController<DTO extends BaseDto, CRITERIA extends BaseCriteria, SERVICE extends AbstractService<DTO, CRITERIA>> {
 
@@ -18,20 +18,15 @@ export class AbstractCreateController<DTO extends BaseDto, CRITERIA extends Base
     protected _errorMessages = new Array<string>();
     protected datePipe: DatePipe;
     protected service: SERVICE;
-    protected messageService: MessageService;
-    protected confirmationService: ConfirmationService;
     protected roleService: RoleService;
     protected router: Router;
     protected stringUtilService: StringUtilService;
     protected _activeTab = 0;
 
 
-
     public constructor(service: SERVICE, @Inject(PLATFORM_ID) private platformId?) {
         this.service = service;
         this.datePipe = ServiceLocator.injector.get(DatePipe);
-        this.messageService = ServiceLocator.injector.get(MessageService);
-        this.confirmationService = ServiceLocator.injector.get(ConfirmationService);
         this.roleService = ServiceLocator.injector.get(RoleService);
         this.router = ServiceLocator.injector.get(Router);
         this.stringUtilService = ServiceLocator.injector.get(StringUtilService);
@@ -44,11 +39,7 @@ export class AbstractCreateController<DTO extends BaseDto, CRITERIA extends Base
         if (this.errorMessages.length === 0) {
             this.saveWithShowOption(false);
         } else {
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Erreurs',
-                detail: 'Merci de corrigé les erreurs sur le formulaire'
-            });
+            alert('error')
         }
     }
 
@@ -60,33 +51,36 @@ export class AbstractCreateController<DTO extends BaseDto, CRITERIA extends Base
                 this.submitted = false;
                 this.item = this.service.constrcutDto();
             } else {
-                this.messageService.add({severity: 'error', summary: 'Erreurs', detail: 'Element existant'});
+                alert('Element existant')
             }
 
         }, error => {
             console.log(error);
         });
     }
-    public uploadOne(event, i: number): void{
+
+    public uploadOne(event, i: number): void {
         console.log(event.files[0]);
         let formData = new FormData();
-        formData.append('file',event.files[0]);
-        this.service.upload(formData,i);
+        formData.append('file', event.files[0]);
+        this.service.upload(formData, i);
     }
 
-    public uploadMultiple(event, i: number): void{
+    public uploadMultiple(event, i: number): void {
         console.log(event.files);
         const formData: FormData = new FormData();
         for (let i = 0; i < event.files.length; i++) {
             formData.append('files', event.files[i]);
         }
-        this.service.uploadMultiple(formData,i);
+        this.service.uploadMultiple(formData, i);
     }
+
     public validateForm(): void {
     }
 
     public setValidation(value: boolean) {
     }
+
     public performNext(): void {
         this.service.performNext();
     }
@@ -191,13 +185,6 @@ export class AbstractCreateController<DTO extends BaseDto, CRITERIA extends Base
     set validate(value: boolean) {
         this.service.validate = value;
     }
-    get steps(): MenuItem[] {
-        return this.service.steps;
-    }
-
-    set steps(value: MenuItem[]) {
-        this.service.steps = value;
-    }
 
 
     get activeTab(): number {
@@ -207,6 +194,7 @@ export class AbstractCreateController<DTO extends BaseDto, CRITERIA extends Base
     set activeTab(value: number) {
         this._activeTab = value;
     }
+
     get fileTempDtos(): Array<FileTempDto[]> {
         return this.service.fileTempDtos;
     }

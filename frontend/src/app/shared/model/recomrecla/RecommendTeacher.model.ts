@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ProfDto} from '../prof/Prof.model';
 
@@ -21,7 +21,7 @@ export class RecommendTeacherDto extends BaseDto{
    public dateRecommamdation: Date;
 
     public prof: ProfDto ;
-    
+
 
     constructor() {
         super();
@@ -34,6 +34,7 @@ export class RecommendTeacherDto extends BaseDto{
         this.telephone = '';
         this.login = '';
         this.dateRecommamdation = null;
+        this.prof = new ProfDto() ;
 
         }
 

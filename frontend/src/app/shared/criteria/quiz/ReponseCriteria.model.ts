@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {QuestionCriteria} from './QuestionCriteria.model';
 
 export class ReponseCriteria  extends BaseCriteria  {
@@ -13,7 +13,5 @@ export class ReponseCriteria  extends BaseCriteria  {
      public numero: number;
      public numeroMin: number;
      public numeroMax: number;
-  public question: QuestionCriteria ;
-  public questions: Array<QuestionCriteria> ;
 
 }

@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {InscriptionDto} from 'src/app/shared/model/grpe/Inscription.model';
-import {InscriptionCriteria} from 'src/app/shared/criteria/grpe/InscriptionCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {InscriptionDto} from '../../../model/grpe/Inscription.model';
+import {InscriptionCriteria} from '../../../criteria/grpe/InscriptionCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class InscriptionAdminService extends AbstractService<InscriptionDto, InscriptionCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/inscription/';
     }
 
     public constrcutDto(): InscriptionDto {
@@ -24,9 +27,5 @@ export class InscriptionAdminService extends AbstractService<InscriptionDto, Ins
 
     public constrcutCriteria(): InscriptionCriteria {
         return new InscriptionCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/inscription/';
     }
 }

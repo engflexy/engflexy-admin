@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {TeacherLocalityDto} from 'src/app/shared/model/inscriptionref/TeacherLocality.model';
-import {TeacherLocalityCriteria} from 'src/app/shared/criteria/inscriptionref/TeacherLocalityCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {TeacherLocalityDto} from '../../../model/inscriptionref/TeacherLocality.model';
+import {TeacherLocalityCriteria} from '../../../criteria/inscriptionref/TeacherLocalityCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TeacherLocalityAdminService extends AbstractService<TeacherLocalityDto, TeacherLocalityCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/teacherLocality/';
     }
 
     public constrcutDto(): TeacherLocalityDto {
@@ -24,9 +27,5 @@ export class TeacherLocalityAdminService extends AbstractService<TeacherLocality
 
     public constrcutCriteria(): TeacherLocalityCriteria {
         return new TeacherLocalityCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/teacherLocality/';
     }
 }

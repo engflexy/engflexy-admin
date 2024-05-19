@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 
 export class LangueDto extends BaseDto{
@@ -7,7 +7,7 @@ export class LangueDto extends BaseDto{
 
     public libelle: string;
 
-    
+
 
     constructor() {
         super();

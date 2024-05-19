@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {DictionaryDto} from 'src/app/shared/model/inscription/Dictionary.model';
-import {DictionaryCriteria} from 'src/app/shared/criteria/inscription/DictionaryCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {DictionaryDto} from '../../../model/inscription/Dictionary.model';
+import {DictionaryCriteria} from '../../../criteria/inscription/DictionaryCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class DictionaryAdminService extends AbstractService<DictionaryDto, DictionaryCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/dictionary/';
     }
 
     public constrcutDto(): DictionaryDto {
@@ -24,9 +27,5 @@ export class DictionaryAdminService extends AbstractService<DictionaryDto, Dicti
 
     public constrcutCriteria(): DictionaryCriteria {
         return new DictionaryCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/dictionary/';
     }
 }

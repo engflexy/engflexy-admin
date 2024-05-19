@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {TypeReclamationEtudiantDto} from 'src/app/shared/model/recomrecla/TypeReclamationEtudiant.model';
-import {TypeReclamationEtudiantCriteria} from 'src/app/shared/criteria/recomrecla/TypeReclamationEtudiantCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {TypeReclamationEtudiantDto} from '../../../model/recomrecla/TypeReclamationEtudiant.model';
+import {TypeReclamationEtudiantCriteria} from '../../../criteria/recomrecla/TypeReclamationEtudiantCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TypeReclamationEtudiantAdminService extends AbstractService<TypeReclamationEtudiantDto, TypeReclamationEtudiantCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/typeReclamationEtudiant/';
     }
 
     public constrcutDto(): TypeReclamationEtudiantDto {
@@ -24,9 +27,5 @@ export class TypeReclamationEtudiantAdminService extends AbstractService<TypeRec
 
     public constrcutCriteria(): TypeReclamationEtudiantCriteria {
         return new TypeReclamationEtudiantCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/typeReclamationEtudiant/';
     }
 }

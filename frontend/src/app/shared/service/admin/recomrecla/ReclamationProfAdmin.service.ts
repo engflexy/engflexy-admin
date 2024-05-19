@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {ReclamationProfDto} from 'src/app/shared/model/recomrecla/ReclamationProf.model';
-import {ReclamationProfCriteria} from 'src/app/shared/criteria/recomrecla/ReclamationProfCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {ReclamationProfDto} from '../../../model/recomrecla/ReclamationProf.model';
+import {ReclamationProfCriteria} from '../../../criteria/recomrecla/ReclamationProfCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ReclamationProfAdminService extends AbstractService<ReclamationProfDto, ReclamationProfCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/reclamationProf/';
     }
 
     public constrcutDto(): ReclamationProfDto {
@@ -24,9 +27,5 @@ export class ReclamationProfAdminService extends AbstractService<ReclamationProf
 
     public constrcutCriteria(): ReclamationProfCriteria {
         return new ReclamationProfCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/reclamationProf/';
     }
 }

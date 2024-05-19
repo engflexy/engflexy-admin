@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ParcoursCriteria} from '../course/ParcoursCriteria.model';
 import {PriceCriteria} from '../price/PriceCriteria.model';
 

@@ -1,6 +1,5 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
-import {VocabularyQuizDto} from './VocabularyQuiz.model';
 import {SectionDto} from '../course/Section.model';
 
 export class VocabularyDto extends BaseDto{
@@ -22,8 +21,7 @@ export class VocabularyDto extends BaseDto{
     public image: string;
 
     public section: SectionDto ;
-    public vocabularyQuiz: VocabularyQuizDto ;
-    
+
 
     constructor() {
         super();
@@ -36,7 +34,7 @@ export class VocabularyDto extends BaseDto{
         this.explication = '';
         this.exemple = '';
         this.image = '';
-        this.vocabularyQuiz = new VocabularyQuizDto() ;
+        this.section = new SectionDto() ;
 
         }
 

@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {SalaryCriteria} from '../salary/SalaryCriteria.model';
 import {GroupeEtudiantCriteria} from '../grpe/GroupeEtudiantCriteria.model';
 import {SessionCoursSectionCriteria} from './SessionCoursSectionCriteria.model';
@@ -44,8 +44,12 @@ export class SessionCoursCriteria  extends BaseCriteria  {
      public nreWords: number;
      public nreWordsMin: number;
      public nreWordsMax: number;
-    public homeworkFinished: null | boolean;
-    public courseFinished: null | boolean;
+  public prof: ProfCriteria ;
+  public profs: Array<ProfCriteria> ;
+  public cours: CoursCriteria ;
+  public courss: Array<CoursCriteria> ;
+  public salary: SalaryCriteria ;
+  public salarys: Array<SalaryCriteria> ;
       public sessionCoursSections: Array<SessionCoursSectionCriteria>;
 
 }

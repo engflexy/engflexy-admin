@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ParcoursCriteria} from '../course/ParcoursCriteria.model';
 import {GroupeEtatCriteria} from './GroupeEtatCriteria.model';
 import {GroupeEtudiantDetailCriteria} from './GroupeEtudiantDetailCriteria.model';
@@ -37,8 +37,16 @@ export class GroupeEtudiantCriteria  extends BaseCriteria  {
      public nreCourses: number;
      public nreCoursesMin: number;
      public nreCoursesMax: number;
+  public groupeEtude: GroupeEtudeCriteria ;
+  public groupeEtudes: Array<GroupeEtudeCriteria> ;
   public groupeType: GroupeTypeCriteria ;
   public groupeTypes: Array<GroupeTypeCriteria> ;
+  public groupeEtat: GroupeEtatCriteria ;
+  public groupeEtats: Array<GroupeEtatCriteria> ;
+  public parcours: ParcoursCriteria ;
+  public parcourss: Array<ParcoursCriteria> ;
+  public prof: ProfCriteria ;
+  public profs: Array<ProfCriteria> ;
       public groupeEtudiantDetails: Array<GroupeEtudiantDetailCriteria>;
 
 }

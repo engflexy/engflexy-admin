@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {FreeTrialTeacherEmailTemplateCriteria} from './FreeTrialTeacherEmailTemplateCriteria.model';
 import {FreeTrialTeacherWhatsTemplateCriteria} from './FreeTrialTeacherWhatsTemplateCriteria.model';
 import {StatutFreeTrialCriteria} from './StatutFreeTrialCriteria.model';
@@ -44,12 +44,6 @@ export class FreeTrialCriteria  extends BaseCriteria  {
      public nombreStudentPresentMax: number;
   public prof: ProfCriteria ;
   public profs: Array<ProfCriteria> ;
-  public niveauEtude: NiveauEtudeCriteria ;
-  public niveauEtudes: Array<NiveauEtudeCriteria> ;
-  public freeTrialStudentWhatsTemplate: FreeTrialStudentWhatsTemplateCriteria ;
-  public freeTrialStudentWhatsTemplates: Array<FreeTrialStudentWhatsTemplateCriteria> ;
-  public freeTrialTeacherEmailTemplate: FreeTrialTeacherEmailTemplateCriteria ;
-  public freeTrialTeacherEmailTemplates: Array<FreeTrialTeacherEmailTemplateCriteria> ;
   public freeTrialConfiguration: FreeTrialConfigurationCriteria ;
   public freeTrialConfigurations: Array<FreeTrialConfigurationCriteria> ;
       public freeTrialDetails: Array<FreeTrialDetailCriteria>;

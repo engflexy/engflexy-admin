@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {TypeReclamationEtudiantDto} from './TypeReclamationEtudiant.model';
 
@@ -29,7 +29,7 @@ export class ReclamationEtudiantDto extends BaseDto{
     public username: string;
 
     public typeReclamationEtudiant: TypeReclamationEtudiantDto ;
-    
+
 
     constructor() {
         super();

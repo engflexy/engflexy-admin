@@ -1,15 +1,12 @@
+import * as moment from 'moment/moment';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {PaginatedList} from 'src/app/zynerator/dto/PaginatedList.model';
-import {MenuItem} from 'primeng/api';
-import {FileTempDto} from 'src/app/zynerator/dto/FileTempDto.model';
-import * as moment from 'moment/moment';
-import {environment} from 'src/environments/environment';
 import {ScheduleDto} from '../dto/ScheduleDto.model';
-
+import {BaseDto} from "../dto/BaseDto.model";
+import {BaseCriteria} from "../criteria/BaseCriteria.model";
+import {FileTempDto} from "../dto/FileTempDto.model";
+import {environment} from "../../../environments/environment";
+import {PaginatedList} from "../dto/PaginatedList.model";
 
 
 export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends BaseCriteria> {
@@ -26,7 +23,6 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
     protected _back = false;
     protected _next = true;
     protected _validate = false;
-    protected _steps: MenuItem[];
     protected _fileTempDtosForOne: FileTempDto[];
     protected _fileTempDtos: Array<FileTempDto[]>;
 
@@ -46,7 +42,7 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
     private _duplicateAction = 'duplicate';
     private _entityName: string;
 
-    protected API_PERMISSION: string ;
+    protected API_PERMISSION: string;
 
 
     constructor() {
@@ -81,10 +77,7 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
     }
 
     private performNextOrBack(step: number) {
-        if (this.index + step < this.steps.length && this.index + step >= 0) {
-            this.index += step;
-            this.manageNextAndBack();
-        }
+
     }
 
     public performNext(): void {
@@ -97,8 +90,6 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
 
     public manageNextAndBack() {
         this.index === 0 ? this.back = false : this.back = true;
-        this.index === this.steps.length - 1 ? this.next = false : this.next = true;
-        this.index === this.steps.length - 1 ? this.validate = true : this.validate = false;
     }
 
 
@@ -281,13 +272,6 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
         this._validate = value;
     }
 
-    get steps(): MenuItem[] {
-        return this._steps;
-    }
-
-    set steps(value: MenuItem[]) {
-        this._steps = value;
-    }
 
     get fileTempDtos(): Array<FileTempDto[]> {
         if (this._fileTempDtos == null) {

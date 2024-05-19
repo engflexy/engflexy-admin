@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from "../../../criteria/BaseCriteria.model";
 import {ModelPermissionCriteria} from './ModelPermissionCriteria.model';
 import {UserCriteria} from './UserCriteria.model';
 import {ActionPermissionCriteria} from './ActionPermissionCriteria.model';

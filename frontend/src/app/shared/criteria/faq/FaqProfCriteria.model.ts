@@ -1,6 +1,5 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {FaqTypeCriteria} from './FaqTypeCriteria.model';
-import {AdminCriteria} from '../alc/AdminCriteria.model';
 import {ProfCriteria} from '../prof/ProfCriteria.model';
 
 export class FaqProfCriteria  extends BaseCriteria  {
@@ -12,7 +11,7 @@ export class FaqProfCriteria  extends BaseCriteria  {
     public libelleLike: string;
   public prof: ProfCriteria ;
   public profs: Array<ProfCriteria> ;
-  public admin: AdminCriteria ;
-  public admins: Array<AdminCriteria> ;
+  public faqType: FaqTypeCriteria ;
+  public faqTypes: Array<FaqTypeCriteria> ;
 
 }

@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {ReponseDto} from 'src/app/shared/model/quiz/Reponse.model';
-import {ReponseCriteria} from 'src/app/shared/criteria/quiz/ReponseCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {ReponseDto} from '../../../model/quiz/Reponse.model';
+import {ReponseCriteria} from '../../../criteria/quiz/ReponseCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ReponseAdminService extends AbstractService<ReponseDto, ReponseCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/reponse/';
     }
 
     public constrcutDto(): ReponseDto {
@@ -24,9 +27,5 @@ export class ReponseAdminService extends AbstractService<ReponseDto, ReponseCrit
 
     public constrcutCriteria(): ReponseCriteria {
         return new ReponseCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/reponse/';
     }
 }

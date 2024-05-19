@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 
-import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import {saveAs} from 'file-saver';
 import {Workbook} from 'exceljs/dist/exceljs.min.js';
+// @ts-ignore
+import * as jsPDF from "jspdf";
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ export class ExportService {
         let worksheet = workbook.addWorksheet('liste des ' + filename);
 
 
-        //Add criteria title 
+        //Add criteria title
         let titleRowCR = worksheet.addRow(['Critères']);
         titleRowCR.font = {name: 'Calibri', family: 4, size: 14, underline: 'single', bold: true};
         worksheet.addRow([]);
@@ -45,7 +46,7 @@ export class ExportService {
         // let subTitleRow = worksheet.addRow(['Date : ' + this.datePipe.transform(new Date(), 'medium')])
 
         // worksheet.mergeCells('A1:D2');
-        //Blank Row 
+        //Blank Row
         worksheet.addRow([]);
         //Add Header Row
         let headerRow = worksheet.addRow(header);
@@ -121,7 +122,7 @@ export class ExportService {
         // let subTitleRow = worksheet.addRow(['Date : ' + this.datePipe.transform(new Date(), 'medium')])
 
         // worksheet.mergeCells('A1:D2');
-        //Blank Row 
+        //Blank Row
         worksheetDistinctions.addRow([]);
         worksheetBourses.addRow([]);
         worksheetGestionEquipes.addRow([]);

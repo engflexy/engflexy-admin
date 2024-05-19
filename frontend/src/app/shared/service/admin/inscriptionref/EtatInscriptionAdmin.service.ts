@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {EtatInscriptionDto} from 'src/app/shared/model/inscriptionref/EtatInscription.model';
-import {EtatInscriptionCriteria} from 'src/app/shared/criteria/inscriptionref/EtatInscriptionCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {EtatInscriptionDto} from '../../../model/inscriptionref/EtatInscription.model';
+import {EtatInscriptionCriteria} from '../../../criteria/inscriptionref/EtatInscriptionCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class EtatInscriptionAdminService extends AbstractService<EtatInscriptionDto, EtatInscriptionCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/etatInscription/';
     }
 
     public constrcutDto(): EtatInscriptionDto {
@@ -24,9 +27,5 @@ export class EtatInscriptionAdminService extends AbstractService<EtatInscription
 
     public constrcutCriteria(): EtatInscriptionCriteria {
         return new EtatInscriptionCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/etatInscription/';
     }
 }

@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
-
-import {RoleUserDto} from 'src/app/zynerator/security/shared/model/RoleUser.model';
-import {RoleUserCriteria} from 'src/app/zynerator/security/shared/criteria/RoleUserCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
 import {RoleService} from './Role.service';
+import {AbstractService} from "../../../service/AbstractService";
+import {RoleUserDto} from "../model/RoleUser.model";
+import {RoleUserCriteria} from "../criteria/RoleUserCriteria.model";
+import {environment} from "../../../../../environments/environment";
 
 
 @Injectable({

@@ -1,4 +1,5 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
+import {CollaboratorCriteria} from '../vocab/CollaboratorCriteria.model';
 
 export class ClassAverageBonusCriteria  extends BaseCriteria  {
 

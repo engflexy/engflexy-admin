@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {PackStudentDto} from 'src/app/shared/model/pack/PackStudent.model';
-import {PackStudentCriteria} from 'src/app/shared/criteria/pack/PackStudentCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {PackStudentDto} from '../../../model/pack/PackStudent.model';
+import {PackStudentCriteria} from '../../../criteria/pack/PackStudentCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PackStudentAdminService extends AbstractService<PackStudentDto, PackStudentCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/packStudent/';
     }
 
     public constrcutDto(): PackStudentDto {
@@ -24,9 +27,5 @@ export class PackStudentAdminService extends AbstractService<PackStudentDto, Pac
 
     public constrcutCriteria(): PackStudentCriteria {
         return new PackStudentCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/packStudent/';
     }
 }

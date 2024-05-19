@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {FreeTrialformuleDto} from 'src/app/shared/model/freetrial/FreeTrialformule.model';
-import {FreeTrialformuleCriteria} from 'src/app/shared/criteria/freetrial/FreeTrialformuleCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {FreeTrialformuleDto} from '../../../model/freetrial/FreeTrialformule.model';
+import {FreeTrialformuleCriteria} from '../../../criteria/freetrial/FreeTrialformuleCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FreeTrialformuleAdminService extends AbstractService<FreeTrialformuleDto, FreeTrialformuleCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/freeTrialformule/';
     }
 
     public constrcutDto(): FreeTrialformuleDto {
@@ -24,9 +27,5 @@ export class FreeTrialformuleAdminService extends AbstractService<FreeTrialformu
 
     public constrcutCriteria(): FreeTrialformuleCriteria {
         return new FreeTrialformuleCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/freeTrialformule/';
     }
 }

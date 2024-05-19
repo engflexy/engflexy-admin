@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {HoweWorkQSTReponseDto} from './HoweWorkQSTReponse.model';
 import {TypeDeQuestionDto} from '../quizref/TypeDeQuestion.model';
@@ -19,7 +19,7 @@ export class HomeWorkQuestionDto extends BaseDto{
     public typeDeQuestion: TypeDeQuestionDto ;
     public homeWork: HomeWorkDto ;
      public howeWorkQSTReponses: Array<HoweWorkQSTReponseDto>;
-    
+
 
     constructor() {
         super();
@@ -29,8 +29,6 @@ export class HomeWorkQuestionDto extends BaseDto{
         this.numero = null;
         this.pointReponseJuste = null;
         this.pointReponsefausse = null;
-        this.typeDeQuestion = new TypeDeQuestionDto() ;
-        this.homeWork = new HomeWorkDto() ;
         this.howeWorkQSTReponses = new Array<HoweWorkQSTReponseDto>();
 
         }

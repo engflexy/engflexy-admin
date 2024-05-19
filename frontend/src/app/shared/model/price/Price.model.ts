@@ -1,5 +1,6 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
+import {CollaboratorDto} from '../vocab/Collaborator.model';
 
 export class PriceDto extends BaseDto{
 
@@ -17,7 +18,8 @@ export class PriceDto extends BaseDto{
 
    public forGroup: null | boolean;
 
-    
+    public collaborator: CollaboratorDto ;
+
 
     constructor() {
         super();

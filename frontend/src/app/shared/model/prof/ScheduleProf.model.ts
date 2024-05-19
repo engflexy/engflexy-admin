@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {GroupeEtudiantDto} from '../grpe/GroupeEtudiant.model';
 import {CoursDto} from '../course/Cours.model';
@@ -25,7 +25,7 @@ export class ScheduleProfDto extends BaseDto{
     public groupeEtudiant: GroupeEtudiantDto ;
     public prof: ProfDto ;
     public cours: CoursDto ;
-    
+
 
     constructor() {
         super();

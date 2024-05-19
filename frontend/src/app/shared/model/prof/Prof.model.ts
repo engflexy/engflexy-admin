@@ -1,11 +1,11 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
+import {CollaboratorDto} from '../vocab/Collaborator.model';
 import {ParcoursDto} from '../course/Parcours.model';
 import {TypeTeacherDto} from './TypeTeacher.model';
 import {RecommendTeacherDto} from '../recomrecla/RecommendTeacher.model';
 import {CategorieProfDto} from './CategorieProf.model';
 import {TrancheHoraireProfDto} from './TrancheHoraireProf.model';
-import {ClassRoomDto} from '../inscriptionref/ClassRoom.model';
 
 export class ProfDto extends BaseDto{
 
@@ -30,10 +30,10 @@ export class ProfDto extends BaseDto{
     public parcours: ParcoursDto ;
     public categorieProf: CategorieProfDto ;
     public typeTeacher: TypeTeacherDto ;
+    public collaborator: CollaboratorDto ;
      public trancheHoraireProfs: Array<TrancheHoraireProfDto>;
-     public classRooms: Array<ClassRoomDto>;
      public recommendTeachers: Array<RecommendTeacherDto>;
-    
+
 
     constructor() {
         super();
@@ -48,7 +48,6 @@ export class ProfDto extends BaseDto{
         this.username = '';
         this.password = '';
         this.trancheHoraireProfs = new Array<TrancheHoraireProfDto>();
-        this.classRooms = new Array<ClassRoomDto>();
         this.recommendTeachers = new Array<RecommendTeacherDto>();
 
         }

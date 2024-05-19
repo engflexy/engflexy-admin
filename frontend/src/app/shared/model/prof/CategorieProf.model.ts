@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ProfDto} from './Prof.model';
 
@@ -11,7 +11,7 @@ export class CategorieProfDto extends BaseDto{
     public lessonRate: null | number;
 
      public profs: Array<ProfDto>;
-    
+
 
     constructor() {
         super();

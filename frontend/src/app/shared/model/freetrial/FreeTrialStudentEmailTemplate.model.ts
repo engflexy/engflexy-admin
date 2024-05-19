@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 
 export class FreeTrialStudentEmailTemplateDto extends BaseDto{
@@ -9,7 +9,7 @@ export class FreeTrialStudentEmailTemplateDto extends BaseDto{
 
     public source: string;
 
-    
+
 
     constructor() {
         super();

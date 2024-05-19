@@ -1,7 +1,6 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {TypeReclamationProfDto} from './TypeReclamationProf.model';
-import {AdminDto} from '../alc/Admin.model';
 import {ProfDto} from '../prof/Prof.model';
 
 export class ReclamationProfDto extends BaseDto{
@@ -24,10 +23,9 @@ export class ReclamationProfDto extends BaseDto{
 
     public objetReclamationProf: string;
 
-    public admin: AdminDto ;
     public prof: ProfDto ;
     public typeReclamationProf: TypeReclamationProfDto ;
-    
+
 
     constructor() {
         super();
@@ -41,7 +39,7 @@ export class ReclamationProfDto extends BaseDto{
         this.postView = null;
         this.commentaireTraiteur = '';
         this.objetReclamationProf = '';
-        this.admin = new AdminDto() ;
+        this.prof = new ProfDto() ;
 
         }
 

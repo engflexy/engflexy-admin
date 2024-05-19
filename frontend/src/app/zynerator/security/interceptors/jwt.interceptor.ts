@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
-import {TokenService} from 'src/app/zynerator/security/shared/service/Token.service';
+import {TokenService} from "../shared/service/Token.service";
 
 
 @Injectable()

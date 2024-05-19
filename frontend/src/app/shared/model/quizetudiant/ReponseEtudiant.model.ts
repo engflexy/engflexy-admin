@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {QuizEtudiantDto} from './QuizEtudiant.model';
 import {QuestionDto} from '../quiz/Question.model';
@@ -15,7 +15,7 @@ export class ReponseEtudiantDto extends BaseDto{
     public reponse: ReponseDto ;
     public quizEtudiant: QuizEtudiantDto ;
     public question: QuestionDto ;
-    
+
 
     constructor() {
         super();
@@ -23,6 +23,7 @@ export class ReponseEtudiantDto extends BaseDto{
         this.ref = '';
         this.answer = '';
         this.note = null;
+        this.reponse = new ReponseDto() ;
 
         }
 

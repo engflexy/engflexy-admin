@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ProfDto} from './Prof.model';
 
@@ -13,7 +13,7 @@ export class TrancheHoraireProfDto extends BaseDto{
     public groupIndex: null | number;
 
     public prof: ProfDto ;
-    
+
 
     constructor() {
         super();
@@ -22,6 +22,7 @@ export class TrancheHoraireProfDto extends BaseDto{
         this.endHour = '';
         this.day = null;
         this.groupIndex = null;
+        this.prof = new ProfDto() ;
 
         }
 

@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {EtudiantDto} from '../inscription/Etudiant.model';
 import {FreeTrialDto} from './FreeTrial.model';
@@ -19,7 +19,7 @@ export class FreeTrialDetailDto extends BaseDto{
 
     public freeTrial: FreeTrialDto ;
     public etudiant: EtudiantDto ;
-    
+
 
     constructor() {
         super();
@@ -30,6 +30,8 @@ export class FreeTrialDetailDto extends BaseDto{
         this.emailMessageSent = null;
         this.dateEnvoiEmailMessage = null;
         this.abonne = null;
+        this.freeTrial = new FreeTrialDto() ;
+        this.etudiant = new EtudiantDto() ;
 
         }
 

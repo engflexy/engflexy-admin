@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {SkillDto} from 'src/app/shared/model/inscriptionref/Skill.model';
-import {SkillCriteria} from 'src/app/shared/criteria/inscriptionref/SkillCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {SkillDto} from '../../../model/inscriptionref/Skill.model';
+import {SkillCriteria} from '../../../criteria/inscriptionref/SkillCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SkillAdminService extends AbstractService<SkillDto, SkillCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/skill/';
     }
 
     public constrcutDto(): SkillDto {
@@ -24,9 +27,5 @@ export class SkillAdminService extends AbstractService<SkillDto, SkillCriteria> 
 
     public constrcutCriteria(): SkillCriteria {
         return new SkillCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/skill/';
     }
 }

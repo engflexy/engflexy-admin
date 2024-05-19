@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {EtudiantCriteria} from '../inscription/EtudiantCriteria.model';
 import {CoursCriteria} from '../course/CoursCriteria.model';
 import {ProfCriteria} from '../prof/ProfCriteria.model';
@@ -16,9 +16,5 @@ export class ProfReviewCriteria  extends BaseCriteria  {
     public dateReviewTo: Date;
   public etudiant: EtudiantCriteria ;
   public etudiants: Array<EtudiantCriteria> ;
-  public prof: ProfCriteria ;
-  public profs: Array<ProfCriteria> ;
-  public cours: CoursCriteria ;
-  public courss: Array<CoursCriteria> ;
 
 }

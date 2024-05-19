@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {VocabularyDto} from 'src/app/shared/model/vocab/Vocabulary.model';
-import {VocabularyCriteria} from 'src/app/shared/criteria/vocab/VocabularyCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {VocabularyDto} from '../../../model/vocab/Vocabulary.model';
+import {VocabularyCriteria} from '../../../criteria/vocab/VocabularyCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class VocabularyAdminService extends AbstractService<VocabularyDto, VocabularyCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/vocabulary/';
     }
 
     public constrcutDto(): VocabularyDto {
@@ -24,9 +27,5 @@ export class VocabularyAdminService extends AbstractService<VocabularyDto, Vocab
 
     public constrcutCriteria(): VocabularyCriteria {
         return new VocabularyCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/vocabulary/';
     }
 }

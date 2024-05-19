@@ -1,4 +1,5 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
+import {CollaboratorCriteria} from '../vocab/CollaboratorCriteria.model';
 
 export class ContactCriteria  extends BaseCriteria  {
 
@@ -17,5 +18,7 @@ export class ContactCriteria  extends BaseCriteria  {
     public replied: null | boolean;
     public message: string;
     public messageLike: string;
+  public collaborator: CollaboratorCriteria ;
+  public collaborators: Array<CollaboratorCriteria> ;
 
 }

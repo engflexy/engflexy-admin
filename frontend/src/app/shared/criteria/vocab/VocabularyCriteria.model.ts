@@ -1,5 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {VocabularyQuizCriteria} from './VocabularyQuizCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {SectionCriteria} from '../course/SectionCriteria.model';
 
 export class VocabularyCriteria  extends BaseCriteria  {
@@ -22,7 +21,7 @@ export class VocabularyCriteria  extends BaseCriteria  {
     public exempleLike: string;
     public image: string;
     public imageLike: string;
-  public vocabularyQuiz: VocabularyQuizCriteria ;
-  public vocabularyQuizs: Array<VocabularyQuizCriteria> ;
+  public section: SectionCriteria ;
+  public sections: Array<SectionCriteria> ;
 
 }

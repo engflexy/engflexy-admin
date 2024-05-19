@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {RecommendTeacherDto} from 'src/app/shared/model/recomrecla/RecommendTeacher.model';
-import {RecommendTeacherCriteria} from 'src/app/shared/criteria/recomrecla/RecommendTeacherCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {RecommendTeacherDto} from '../../../model/recomrecla/RecommendTeacher.model';
+import {RecommendTeacherCriteria} from '../../../criteria/recomrecla/RecommendTeacherCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class RecommendTeacherAdminService extends AbstractService<RecommendTeacherDto, RecommendTeacherCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/recommendTeacher/';
     }
 
     public constrcutDto(): RecommendTeacherDto {
@@ -24,9 +27,5 @@ export class RecommendTeacherAdminService extends AbstractService<RecommendTeach
 
     public constrcutCriteria(): RecommendTeacherCriteria {
         return new RecommendTeacherCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/recommendTeacher/';
     }
 }

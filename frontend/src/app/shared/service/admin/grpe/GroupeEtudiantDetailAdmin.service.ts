@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {GroupeEtudiantDetailDto} from 'src/app/shared/model/grpe/GroupeEtudiantDetail.model';
-import {GroupeEtudiantDetailCriteria} from 'src/app/shared/criteria/grpe/GroupeEtudiantDetailCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {GroupeEtudiantDetailDto} from '../../../model/grpe/GroupeEtudiantDetail.model';
+import {GroupeEtudiantDetailCriteria} from '../../../criteria/grpe/GroupeEtudiantDetailCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class GroupeEtudiantDetailAdminService extends AbstractService<GroupeEtudiantDetailDto, GroupeEtudiantDetailCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/groupeEtudiantDetail/';
     }
 
     public constrcutDto(): GroupeEtudiantDetailDto {
@@ -24,9 +27,5 @@ export class GroupeEtudiantDetailAdminService extends AbstractService<GroupeEtud
 
     public constrcutCriteria(): GroupeEtudiantDetailCriteria {
         return new GroupeEtudiantDetailCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/groupeEtudiantDetail/';
     }
 }

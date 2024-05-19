@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from "../../../dto/BaseDto.model";
 
 
 export class RoleDto extends BaseDto {

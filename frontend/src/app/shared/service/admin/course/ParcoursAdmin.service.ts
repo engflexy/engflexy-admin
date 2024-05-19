@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {ParcoursDto} from 'src/app/shared/model/course/Parcours.model';
-import {ParcoursCriteria} from 'src/app/shared/criteria/course/ParcoursCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {ParcoursDto} from '../../../model/course/Parcours.model';
+import {ParcoursCriteria} from '../../../criteria/course/ParcoursCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ParcoursAdminService extends AbstractService<ParcoursDto, ParcoursCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/parcours/';
     }
 
     public constrcutDto(): ParcoursDto {
@@ -24,9 +27,5 @@ export class ParcoursAdminService extends AbstractService<ParcoursDto, ParcoursC
 
     public constrcutCriteria(): ParcoursCriteria {
         return new ParcoursCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/parcours/';
     }
 }

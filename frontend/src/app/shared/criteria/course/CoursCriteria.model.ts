@@ -1,6 +1,5 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ParcoursCriteria} from './ParcoursCriteria.model';
-import {EtatCoursCriteria} from '../courseref/EtatCoursCriteria.model';
 import {SectionCriteria} from './SectionCriteria.model';
 import {HomeWorkCriteria} from '../homework/HomeWorkCriteria.model';
 
@@ -30,8 +29,8 @@ export class CoursCriteria  extends BaseCriteria  {
      public numeroOrder: number;
      public numeroOrderMin: number;
      public numeroOrderMax: number;
-  public etatCours: EtatCoursCriteria ;
-  public etatCourss: Array<EtatCoursCriteria> ;
+  public parcours: ParcoursCriteria ;
+  public parcourss: Array<ParcoursCriteria> ;
       public sections: Array<SectionCriteria>;
       public homeWorks: Array<HomeWorkCriteria>;
 

@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {HomeWorkQuestionCriteria} from './HomeWorkQuestionCriteria.model';
 
 export class HoweWorkQSTReponseCriteria  extends BaseCriteria  {
@@ -13,5 +13,7 @@ export class HoweWorkQSTReponseCriteria  extends BaseCriteria  {
      public numero: number;
      public numeroMin: number;
      public numeroMax: number;
+  public homeWorkQuestion: HomeWorkQuestionCriteria ;
+  public homeWorkQuestions: Array<HomeWorkQuestionCriteria> ;
 
 }

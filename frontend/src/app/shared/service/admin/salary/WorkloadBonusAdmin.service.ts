@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {WorkloadBonusDto} from 'src/app/shared/model/salary/WorkloadBonus.model';
-import {WorkloadBonusCriteria} from 'src/app/shared/criteria/salary/WorkloadBonusCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {WorkloadBonusDto} from '../../../model/salary/WorkloadBonus.model';
+import {WorkloadBonusCriteria} from '../../../criteria/salary/WorkloadBonusCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class WorkloadBonusAdminService extends AbstractService<WorkloadBonusDto, WorkloadBonusCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/workloadBonus/';
     }
 
     public constrcutDto(): WorkloadBonusDto {
@@ -24,9 +27,5 @@ export class WorkloadBonusAdminService extends AbstractService<WorkloadBonusDto,
 
     public constrcutCriteria(): WorkloadBonusCriteria {
         return new WorkloadBonusCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/workloadBonus/';
     }
 }

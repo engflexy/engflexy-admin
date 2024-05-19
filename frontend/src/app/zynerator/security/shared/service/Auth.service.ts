@@ -2,16 +2,15 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {environment} from 'src/environments/environment';
 
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable, of, switchMap} from 'rxjs';
 
 
 import {TokenService} from './Token.service';
 import {UserDto} from '../model/User.model';
 import {RoleDto} from '../model/Role.model';
 import {RoleUserDto} from '../model/RoleUser.model';
-import {MessageService} from 'primeng/api';
+import {environment} from "../../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
@@ -26,48 +25,22 @@ export class AuthService {
     public error: string = null;
 
 
-    constructor(private http: HttpClient, private tokenService: TokenService, private router: Router, private messageService: MessageService) {
+    constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) {
     }
 
-    public login(username: string, password: string) {
-        this.http.post<any>(this.API + 'login', {username, password}, {observe: 'response'}).subscribe(
-            resp => {
-                console.log(resp);
-                this.error = null;
-                const jwt = 'Bearer '+resp.body.accessToken;
-                jwt != null ? this.tokenService.saveToken(jwt) : false;
-                this.loadInfos();
-                console.log('you are logged in successfully');
-                this.router.navigate(['/' + environment.rootAppUrl + '/admin']);
-            }, (error: HttpErrorResponse) => {
-                this.error = error.error.message;
-                if (error.status === 401) {
-                    let errorMessage = '';
-                    if (this.error && error.message) {
-                        errorMessage = error.error.message;
-                    } else {
-                        errorMessage = 'Unauthorized: Invalid credentials';
-                    }
-                    if (errorMessage.toLowerCase().includes('user is disabled')) {
-                        this.messageService.add({
-                            severity: 'error',
-                            summary: 'Error ' + error.status,
-                            detail: 'Unauthorized: User is disabled'
-                        });
-                    } else {
-                        this.messageService.add({severity: 'error', summary: 'Error ' + error.status, detail: errorMessage});
-                    }
-                }else if (error.status === 405) {
-                    this.messageService.add({
-                        severity: 'error',
-                        summary: 'Error ' + error.status,
-                        detail: 'Method Not Allowed: Please check your request method'
-                    });
-                } else {
-                    this.messageService.add({severity: 'error', summary: 'Error ' + error.status, detail: 'An unexpected error occurred'});
-                }
-            }
-        );
+    public login(username: string, password: string): Observable<any> {
+       return  this.http.post<any>(this.API + 'login', {username, password}, {observe: 'response'})
+            .pipe(
+                switchMap((resp: any) => {
+                    console.log(resp);
+                    this.error = null;
+                    const jwt = 'Bearer ' + resp.body.accessToken;
+                    jwt != null ? this.tokenService.saveToken(jwt) : false;
+                    this.loadInfos();
+                    console.log('you are logged in successfully');
+                    return of(resp);
+                })
+            );
     }
 
     public loadInfos() {
@@ -103,9 +76,9 @@ export class AuthService {
     }
 
     public registerAdmin() {
-        this.http.post<any>(this.API + 'api/admin/user/', this.user, {observe: 'response'}).subscribe(
+        this.http.post<any>(this.API + 'api/user/', this.user, {observe: 'response'}).subscribe(
             resp => {
-                this.router.navigate(['admin/admin']);
+                this.router.navigate(['admin/login']);
             }, (error: HttpErrorResponse) => {
                 console.log(error.error);
             }

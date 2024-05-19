@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {HoweWorkQSTReponseCriteria} from './HoweWorkQSTReponseCriteria.model';
 import {HomeWorkEtudiantCriteria} from './HomeWorkEtudiantCriteria.model';
 import {HomeWorkQuestionCriteria} from './HomeWorkQuestionCriteria.model';

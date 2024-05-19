@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 
 export class TypeHomeWorkDto extends BaseDto{
@@ -7,7 +7,7 @@ export class TypeHomeWorkDto extends BaseDto{
 
     public lib: string;
 
-    
+
 
     constructor() {
         super();

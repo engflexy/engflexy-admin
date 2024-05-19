@@ -1,18 +1,20 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
-import {EtudiantDto} from '../inscription/Etudiant.model';
-import {CentreDto} from '../courseref/Centre.model';
+import {CollaboratorDto} from '../vocab/Collaborator.model';
 import {CoursDto} from './Cours.model';
 
-export class ParcoursDto extends BaseDto{
+export class ParcoursDto extends BaseDto {
 
-   public datePublication: Date;
+    public datePublication: Date;
 
-   public dateCreation: Date;
+    public dateCreation: Date;
 
     public description: string;
 
     public code: string;
+    public url: string;
+
+    public color: string;
 
     public libelle: string;
 
@@ -20,10 +22,9 @@ export class ParcoursDto extends BaseDto{
 
     public nombreCours: null | number;
 
-    public centre: CentreDto ;
-     public courss: Array<CoursDto>;
-     public etudiants: Array<EtudiantDto>;
-    
+    public collaborator: CollaboratorDto;
+    public courss: Array<CoursDto>;
+
 
     constructor() {
         super();
@@ -35,10 +36,8 @@ export class ParcoursDto extends BaseDto{
         this.libelle = '';
         this.numeroOrder = null;
         this.nombreCours = null;
-        this.centre = new CentreDto() ;
         this.courss = new Array<CoursDto>();
-        this.etudiants = new Array<EtudiantDto>();
 
-        }
+    }
 
 }

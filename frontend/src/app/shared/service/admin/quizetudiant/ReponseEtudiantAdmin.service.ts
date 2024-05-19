@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {ReponseEtudiantDto} from 'src/app/shared/model/quizetudiant/ReponseEtudiant.model';
-import {ReponseEtudiantCriteria} from 'src/app/shared/criteria/quizetudiant/ReponseEtudiantCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {ReponseEtudiantDto} from '../../../model/quizetudiant/ReponseEtudiant.model';
+import {ReponseEtudiantCriteria} from '../../../criteria/quizetudiant/ReponseEtudiantCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ReponseEtudiantAdminService extends AbstractService<ReponseEtudiantDto, ReponseEtudiantCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/reponseEtudiant/';
     }
 
     public constrcutDto(): ReponseEtudiantDto {
@@ -24,9 +27,5 @@ export class ReponseEtudiantAdminService extends AbstractService<ReponseEtudiant
 
     public constrcutCriteria(): ReponseEtudiantCriteria {
         return new ReponseEtudiantCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/reponseEtudiant/';
     }
 }

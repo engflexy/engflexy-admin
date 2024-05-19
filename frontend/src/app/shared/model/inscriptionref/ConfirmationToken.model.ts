@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {EtudiantDto} from '../inscription/Etudiant.model';
 
@@ -13,7 +13,7 @@ export class ConfirmationTokenDto extends BaseDto{
    public confirmedAt: Date;
 
     public etudiant: EtudiantDto ;
-    
+
 
     constructor() {
         super();

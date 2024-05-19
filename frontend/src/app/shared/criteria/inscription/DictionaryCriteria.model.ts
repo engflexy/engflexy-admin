@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {EtudiantCriteria} from './EtudiantCriteria.model';
 
 export class DictionaryCriteria  extends BaseCriteria  {
@@ -8,9 +8,9 @@ export class DictionaryCriteria  extends BaseCriteria  {
     public wordLike: string;
     public definition: string;
     public definitionLike: string;
-    public learned: null | boolean;
-    public createdOn: Date;
-    public createdOnFrom: Date;
-    public createdOnTo: Date;
+    public createdOn: string;
+    public createdOnLike: string;
+  public etudiant: EtudiantCriteria ;
+  public etudiants: Array<EtudiantCriteria> ;
 
 }

@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {FaqProfDto} from 'src/app/shared/model/faq/FaqProf.model';
-import {FaqProfCriteria} from 'src/app/shared/criteria/faq/FaqProfCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {FaqProfDto} from '../../../model/faq/FaqProf.model';
+import {FaqProfCriteria} from '../../../criteria/faq/FaqProfCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FaqProfAdminService extends AbstractService<FaqProfDto, FaqProfCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/faqProf/';
     }
 
     public constrcutDto(): FaqProfDto {
@@ -24,9 +27,5 @@ export class FaqProfAdminService extends AbstractService<FaqProfDto, FaqProfCrit
 
     public constrcutCriteria(): FaqProfCriteria {
         return new FaqProfCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/faqProf/';
     }
 }

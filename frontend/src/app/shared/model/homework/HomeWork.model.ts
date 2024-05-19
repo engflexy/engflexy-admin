@@ -1,6 +1,5 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
-import {HomeWorkEtudiantDto} from './HomeWorkEtudiant.model';
 import {HomeWorkQuestionDto} from './HomeWorkQuestion.model';
 import {TypeHomeWorkDto} from './TypeHomeWork.model';
 import {CoursDto} from '../course/Cours.model';
@@ -16,8 +15,7 @@ export class HomeWorkDto extends BaseDto{
     public cours: CoursDto ;
     public typeHomeWork: TypeHomeWorkDto ;
      public homeWorkQuestions: Array<HomeWorkQuestionDto>;
-     public homeWorkEtudiants: Array<HomeWorkEtudiantDto>;
-    
+
 
     constructor() {
         super();
@@ -25,8 +23,9 @@ export class HomeWorkDto extends BaseDto{
         this.libelle = '';
         this.urlImage = '';
         this.urlVideo = '';
+        this.cours = new CoursDto() ;
+        this.typeHomeWork = new TypeHomeWorkDto() ;
         this.homeWorkQuestions = new Array<HomeWorkQuestionDto>();
-        this.homeWorkEtudiants = new Array<HomeWorkEtudiantDto>();
 
         }
 

@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {StatutFreeTrialDto} from 'src/app/shared/model/freetrial/StatutFreeTrial.model';
-import {StatutFreeTrialCriteria} from 'src/app/shared/criteria/freetrial/StatutFreeTrialCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {StatutFreeTrialDto} from '../../../model/freetrial/StatutFreeTrial.model';
+import {StatutFreeTrialCriteria} from '../../../criteria/freetrial/StatutFreeTrialCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class StatutFreeTrialAdminService extends AbstractService<StatutFreeTrialDto, StatutFreeTrialCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/statutFreeTrial/';
     }
 
     public constrcutDto(): StatutFreeTrialDto {
@@ -24,9 +27,5 @@ export class StatutFreeTrialAdminService extends AbstractService<StatutFreeTrial
 
     public constrcutCriteria(): StatutFreeTrialCriteria {
         return new StatutFreeTrialCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/statutFreeTrial/';
     }
 }

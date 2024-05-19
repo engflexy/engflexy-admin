@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {QuestionDto} from './Question.model';
 
@@ -13,7 +13,7 @@ export class ReponseDto extends BaseDto{
     public numero: null | number;
 
     public question: QuestionDto ;
-    
+
 
     constructor() {
         super();
@@ -22,7 +22,6 @@ export class ReponseDto extends BaseDto{
         this.lib = '';
         this.etatReponse = '';
         this.numero = null;
-        this.question = new QuestionDto() ;
 
         }
 

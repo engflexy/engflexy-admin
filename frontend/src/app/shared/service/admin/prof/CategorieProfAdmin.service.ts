@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {CategorieProfDto} from 'src/app/shared/model/prof/CategorieProf.model';
-import {CategorieProfCriteria} from 'src/app/shared/criteria/prof/CategorieProfCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {CategorieProfDto} from '../../../model/prof/CategorieProf.model';
+import {CategorieProfCriteria} from '../../../criteria/prof/CategorieProfCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CategorieProfAdminService extends AbstractService<CategorieProfDto, CategorieProfCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/categorieProf/';
     }
 
     public constrcutDto(): CategorieProfDto {
@@ -24,9 +27,5 @@ export class CategorieProfAdminService extends AbstractService<CategorieProfDto,
 
     public constrcutCriteria(): CategorieProfCriteria {
         return new CategorieProfCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/categorieProf/';
     }
 }

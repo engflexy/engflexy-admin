@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {SalaryDto} from './Salary.model';
 import {WorkloadBonusDto} from './WorkloadBonus.model';
@@ -13,15 +13,13 @@ export class WorkloadBonusProfDto extends BaseDto{
     public workloadBonus: WorkloadBonusDto ;
     public prof: ProfDto ;
     public salary: SalaryDto ;
-    
+
 
     constructor() {
         super();
 
         this.mois = null;
         this.annee = null;
-        this.workloadBonus = new WorkloadBonusDto() ;
-        this.prof = new ProfDto() ;
 
         }
 

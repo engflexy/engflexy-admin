@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {EtudiantReviewDto} from 'src/app/shared/model/inscriptionref/EtudiantReview.model';
-import {EtudiantReviewCriteria} from 'src/app/shared/criteria/inscriptionref/EtudiantReviewCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {EtudiantReviewDto} from '../../../model/inscriptionref/EtudiantReview.model';
+import {EtudiantReviewCriteria} from '../../../criteria/inscriptionref/EtudiantReviewCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class EtudiantReviewAdminService extends AbstractService<EtudiantReviewDto, EtudiantReviewCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/etudiantReview/';
     }
 
     public constrcutDto(): EtudiantReviewDto {
@@ -24,9 +27,5 @@ export class EtudiantReviewAdminService extends AbstractService<EtudiantReviewDt
 
     public constrcutCriteria(): EtudiantReviewCriteria {
         return new EtudiantReviewCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/etudiantReview/';
     }
 }

@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {InviteStudentDto} from 'src/app/shared/model/inscriptionref/InviteStudent.model';
-import {InviteStudentCriteria} from 'src/app/shared/criteria/inscriptionref/InviteStudentCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {InviteStudentDto} from '../../../model/inscriptionref/InviteStudent.model';
+import {InviteStudentCriteria} from '../../../criteria/inscriptionref/InviteStudentCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class InviteStudentAdminService extends AbstractService<InviteStudentDto, InviteStudentCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/inviteStudent/';
     }
 
     public constrcutDto(): InviteStudentDto {
@@ -24,9 +27,5 @@ export class InviteStudentAdminService extends AbstractService<InviteStudentDto,
 
     public constrcutCriteria(): InviteStudentCriteria {
         return new InviteStudentCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/inviteStudent/';
     }
 }

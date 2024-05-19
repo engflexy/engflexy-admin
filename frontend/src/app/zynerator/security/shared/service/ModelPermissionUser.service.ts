@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from 'src/environments/environment';
-
-import {ModelPermissionUserDto} from 'src/app/zynerator/security/shared/model/ModelPermissionUser.model';
-import {ModelPermissionUserCriteria} from 'src/app/zynerator/security/shared/criteria/ModelPermissionUserCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
 import {RoleService} from './Role.service';
 import {Observable} from 'rxjs';
 import {PaginatedList} from '../../../dto/PaginatedList.model';
+import {AbstractService} from "../../../service/AbstractService";
+import {ModelPermissionUserDto} from "../model/ModelPermissionUser.model";
+import {ModelPermissionUserCriteria} from "../criteria/ModelPermissionUserCriteria.model";
+import {environment} from "../../../../../environments/environment";
 
 
 @Injectable({

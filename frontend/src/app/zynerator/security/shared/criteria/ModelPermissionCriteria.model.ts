@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from "../../../criteria/BaseCriteria.model";
 
 export class ModelPermissionCriteria  extends BaseCriteria  {
 

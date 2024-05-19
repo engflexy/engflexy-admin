@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {EtudiantCriteria} from '../inscription/EtudiantCriteria.model';
 import {ReponseEtudiantHomeWorkCriteria} from './ReponseEtudiantHomeWorkCriteria.model';
 import {HomeWorkCriteria} from './HomeWorkCriteria.model';
@@ -16,8 +16,6 @@ export class HomeWorkEtudiantCriteria  extends BaseCriteria  {
     public dateHomeWorkTo: Date;
   public etudiant: EtudiantCriteria ;
   public etudiants: Array<EtudiantCriteria> ;
-  public homeWork: HomeWorkCriteria ;
-  public homeWorks: Array<HomeWorkCriteria> ;
       public reponseEtudiantHomeWorks: Array<ReponseEtudiantHomeWorkCriteria>;
 
 }

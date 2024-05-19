@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {NiveauEtudeDto} from 'src/app/shared/model/inscriptionref/NiveauEtude.model';
-import {NiveauEtudeCriteria} from 'src/app/shared/criteria/inscriptionref/NiveauEtudeCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {NiveauEtudeDto} from '../../../model/inscriptionref/NiveauEtude.model';
+import {NiveauEtudeCriteria} from '../../../criteria/inscriptionref/NiveauEtudeCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class NiveauEtudeAdminService extends AbstractService<NiveauEtudeDto, NiveauEtudeCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/niveauEtude/';
     }
 
     public constrcutDto(): NiveauEtudeDto {
@@ -24,9 +27,5 @@ export class NiveauEtudeAdminService extends AbstractService<NiveauEtudeDto, Niv
 
     public constrcutCriteria(): NiveauEtudeCriteria {
         return new NiveauEtudeCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/niveauEtude/';
     }
 }

@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 
 export class StatutFreeTrialDto extends BaseDto{
@@ -9,7 +9,7 @@ export class StatutFreeTrialDto extends BaseDto{
 
     public style: string;
 
-    
+
 
     constructor() {
         super();

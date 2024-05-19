@@ -1,8 +1,7 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {QuizCriteria} from './QuizCriteria.model';
 import {TypeDeQuestionCriteria} from '../quizref/TypeDeQuestionCriteria.model';
 import {ReponseCriteria} from './ReponseCriteria.model';
-import {HomeWorkCriteria} from '../homework/HomeWorkCriteria.model';
 
 export class QuestionCriteria  extends BaseCriteria  {
 
@@ -24,10 +23,8 @@ export class QuestionCriteria  extends BaseCriteria  {
      public pointReponsefausse: number;
      public pointReponsefausseMin: number;
      public pointReponsefausseMax: number;
-  public typeDeQuestion: TypeDeQuestionCriteria ;
-  public typeDeQuestions: Array<TypeDeQuestionCriteria> ;
-  public homeWork: HomeWorkCriteria ;
-  public homeWorks: Array<HomeWorkCriteria> ;
+  public quiz: QuizCriteria ;
+  public quizs: Array<QuizCriteria> ;
       public reponses: Array<ReponseCriteria>;
 
 }

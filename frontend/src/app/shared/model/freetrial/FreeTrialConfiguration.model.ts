@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 
 export class FreeTrialConfigurationDto extends BaseDto{
@@ -11,7 +11,7 @@ export class FreeTrialConfigurationDto extends BaseDto{
 
     public nombreStudentMin: null | number;
 
-    
+
 
     constructor() {
         super();

@@ -1,6 +1,5 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {TypeReclamationProfCriteria} from './TypeReclamationProfCriteria.model';
-import {AdminCriteria} from '../alc/AdminCriteria.model';
 import {ProfCriteria} from '../prof/ProfCriteria.model';
 
 export class ReclamationProfCriteria  extends BaseCriteria  {
@@ -25,7 +24,7 @@ export class ReclamationProfCriteria  extends BaseCriteria  {
     public commentaireTraiteurLike: string;
     public objetReclamationProf: string;
     public objetReclamationProfLike: string;
-  public admin: AdminCriteria ;
-  public admins: Array<AdminCriteria> ;
+  public prof: ProfCriteria ;
+  public profs: Array<ProfCriteria> ;
 
 }

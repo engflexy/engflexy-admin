@@ -1,5 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
-
+import {BaseDto} from "../../../dto/BaseDto.model";
 import {RoleUserDto} from './RoleUser.model';
 import {ModelPermissionUserDto} from './ModelPermissionUser.model';
 

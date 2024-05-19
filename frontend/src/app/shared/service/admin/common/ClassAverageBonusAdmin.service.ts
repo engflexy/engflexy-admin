@@ -1,21 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+// import {environment} from '../../../../../environments/environment';
+import {ClassAverageBonusDto} from '../../../model/common/ClassAverageBonus.model';
 
-import {ClassAverageBonusDto} from 'src/app/shared/model/common/ClassAverageBonus.model';
-import {ClassAverageBonusCriteria} from 'src/app/shared/criteria/common/ClassAverageBonusCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {ClassAverageBonusCriteria} from '../../../criteria/common/ClassAverageBonusCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
+import {environment} from "../../../../../environments/environment";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ClassAverageBonusAdminService extends AbstractService<ClassAverageBonusDto, ClassAverageBonusCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/classAverageBonus/';
     }
 
     public constrcutDto(): ClassAverageBonusDto {
@@ -24,9 +28,5 @@ export class ClassAverageBonusAdminService extends AbstractService<ClassAverageB
 
     public constrcutCriteria(): ClassAverageBonusCriteria {
         return new ClassAverageBonusCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/classAverageBonus/';
     }
 }

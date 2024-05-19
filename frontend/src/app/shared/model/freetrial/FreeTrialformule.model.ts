@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {InscriptionDto} from '../grpe/Inscription.model';
 
@@ -21,7 +21,7 @@ export class FreeTrialformuleDto extends BaseDto{
    public dateConfirmation: Date;
 
     public inscription: InscriptionDto ;
-    
+
 
     constructor() {
         super();

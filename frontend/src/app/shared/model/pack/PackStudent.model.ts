@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ParcoursDto} from '../course/Parcours.model';
 import {PriceDto} from '../price/Price.model';
@@ -31,7 +31,7 @@ export class PackStudentDto extends BaseDto{
 
     public parcours: ParcoursDto ;
     public price: PriceDto ;
-    
+
 
     constructor() {
         super();

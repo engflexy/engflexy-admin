@@ -1,4 +1,4 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ParcoursDto} from '../course/Parcours.model';
 
@@ -9,7 +9,7 @@ export class LevelTestConfigurationDto extends BaseDto{
     public noteMax: null | number;
 
     public parcours: ParcoursDto ;
-    
+
 
     constructor() {
         super();

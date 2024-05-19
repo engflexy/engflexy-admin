@@ -1,5 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {QuizEtudiantCriteria} from '../quizetudiant/QuizEtudiantCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {QuestionCriteria} from './QuestionCriteria.model';
 import {SectionCriteria} from '../course/SectionCriteria.model';
 
@@ -23,6 +22,5 @@ export class QuizCriteria  extends BaseCriteria  {
      public seuilReussiteMin: number;
      public seuilReussiteMax: number;
       public questions: Array<QuestionCriteria>;
-      public quizEtudiants: Array<QuizEtudiantCriteria>;
 
 }

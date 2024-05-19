@@ -1,7 +1,6 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {ParcoursDto} from './Parcours.model';
-import {EtatCoursDto} from '../courseref/EtatCours.model';
 import {SectionDto} from './Section.model';
 import {HomeWorkDto} from '../homework/HomeWork.model';
 
@@ -25,11 +24,10 @@ export class CoursDto extends BaseDto{
 
     public numeroOrder: null | number;
 
-    public etatCours: EtatCoursDto ;
     public parcours: ParcoursDto ;
      public sections: Array<SectionDto>;
      public homeWorks: Array<HomeWorkDto>;
-    
+
 
     constructor() {
         super();
@@ -43,7 +41,7 @@ export class CoursDto extends BaseDto{
         this.nombreLinkEnCours = null;
         this.nombreLinkFinalise = null;
         this.numeroOrder = null;
-        this.etatCours = new EtatCoursDto() ;
+        this.parcours = new ParcoursDto() ;
         this.sections = new Array<SectionDto>();
         this.homeWorks = new Array<HomeWorkDto>();
 

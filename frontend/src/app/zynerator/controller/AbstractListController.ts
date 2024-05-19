@@ -1,20 +1,17 @@
-import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
-
-import {environment} from 'src/environments/environment';
-
-import {ExportService} from 'src/app/zynerator/util/Export.service';
-import {RoleService} from 'src/app/zynerator/security/shared/service/Role.service';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {ServiceLocator} from 'src/app/zynerator/service/ServiceLocator';
-import {StringUtilService} from 'src/app/zynerator/util/StringUtil.service';
-
-import {AuthService} from 'src/app/zynerator/security/shared/service/Auth.service';
 import {catchError, forkJoin, Observable, of, tap} from "rxjs";
+
+import {environment} from "../../../environments/environment";
+import {RoleService} from '../security/shared/service/Role.service';
+import {BaseDto} from "../dto/BaseDto.model";
+import {BaseCriteria} from "../criteria/BaseCriteria.model";
+import {AbstractService} from "../service/AbstractService";
+import {StringUtilService} from "../util/StringUtil.service";
+import {ServiceLocator} from "../service/ServiceLocator";
+import {ExportService} from "../util/Export.service";
+import {AuthService} from "../security/shared/service/Auth.service";
 
 
 @Injectable()
@@ -22,7 +19,6 @@ export class AbstractListController<DTO extends BaseDto, CRITERIA extends BaseCr
 
     protected findByCriteriaShow = false;
     protected cols: any[] = [];
-    protected excelPdfButons: MenuItem[];
     protected exportData: any[] = [];
     protected criteriaData: any[] = [];
     protected fileName: string;
@@ -32,8 +28,6 @@ export class AbstractListController<DTO extends BaseDto, CRITERIA extends BaseCr
 
     protected datePipe: DatePipe;
     protected service: SERVICE;
-    protected messageService: MessageService;
-    protected confirmationService: ConfirmationService;
     protected roleService: RoleService;
     protected router: Router;
     protected stringUtilService: StringUtilService;
@@ -46,8 +40,6 @@ export class AbstractListController<DTO extends BaseDto, CRITERIA extends BaseCr
     constructor(service: SERVICE) {
         this.service = service;
         this.datePipe = ServiceLocator.injector.get(DatePipe);
-        this.messageService = ServiceLocator.injector.get(MessageService);
-        this.confirmationService = ServiceLocator.injector.get(ConfirmationService);
         this.roleService = ServiceLocator.injector.get(RoleService);
         this.router = ServiceLocator.injector.get(Router);
         this.authService = ServiceLocator.injector.get(AuthService);
@@ -228,24 +220,25 @@ export class AbstractListController<DTO extends BaseDto, CRITERIA extends BaseCr
     }
 
     public async deleteMultiple() {
-        this.confirmationService.confirm({
-            message: 'Voulez-vous supprimer ces éléments ?',
-            header: 'Confirmation',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.deleteMultiple().subscribe(() => {
-                    this.items = this.items.filter(item => !this.selections.includes(item));
-                    this.selections = new Array<DTO>();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Succès',
-                        detail: 'Les éléments sélectionnés ont été supprimés',
-                        life: 3000
-                    });
+        // this.confirmationService.confirm({
+        //     message: 'Voulez-vous supprimer ces éléments ?',
+        //     header: 'Confirmation',
+        //     icon: 'pi pi-exclamation-triangle',
+        //     accept: () => {
+        //
+        //     }
+        // });
+        this.service.deleteMultiple().subscribe(() => {
+            this.items = this.items.filter(item => !this.selections.includes(item));
+            this.selections = new Array<DTO>();
+            // this.messageService.add({
+            //     severity: 'success',
+            //     summary: 'Succès',
+            //     detail: 'Les éléments sélectionnés ont été supprimés',
+            //     life: 3000
+            // });
 
-                }, error => console.log(error));
-            }
-        });
+        }, error => console.log(error));
     }
 
 
@@ -256,26 +249,27 @@ export class AbstractListController<DTO extends BaseDto, CRITERIA extends BaseCr
 
     public async delete(dto: DTO) {
 
-        this.confirmationService.confirm({
-            message: 'Voulez-vous supprimer cet élément ?',
-            header: 'Confirmation',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.delete(dto).subscribe(status => {
-                    if (status > 0) {
-                        const position = this.items.indexOf(dto);
-                        position > -1 ? this.items.splice(position, 1) : false;
-                        this.messageService.add({
-                            severity: 'success',
-                            summary: 'Succès',
-                            detail: 'Element Supprimé',
-                            life: 3000
-                        });
-                    }
-
-                }, error => console.log(error));
+        // this.confirmationService.confirm({
+        //     message: 'Voulez-vous supprimer cet élément ?',
+        //     header: 'Confirmation',
+        //     icon: 'pi pi-exclamation-triangle',
+        //     accept: () => {
+        //
+        //     }
+        // });
+        this.service.delete(dto).subscribe(status => {
+            if (status > 0) {
+                const position = this.items.indexOf(dto);
+                position > -1 ? this.items.splice(position, 1) : false;
+                // this.messageService.add({
+                //     severity: 'success',
+                //     summary: 'Succès',
+                //     detail: 'Element Supprimé',
+                //     life: 3000
+                // });
             }
-        });
+
+        }, error => console.log(error));
 
     }
 
@@ -294,26 +288,7 @@ export class AbstractListController<DTO extends BaseDto, CRITERIA extends BaseCr
 
     // TODO : check if correct
     public initExport(): void {
-        this.excelPdfButons = [
-            {
-                label: 'CSV', icon: 'pi pi-file', command: () => {
-                    this.prepareColumnExport();
-                    this.exportService.exporterCSV(this.criteriaData, this.exportData, this.fileName);
-                }
-            },
-            {
-                label: 'XLS', icon: 'pi pi-file-excel', command: () => {
-                    this.prepareColumnExport();
-                    this.exportService.exporterExcel(this.criteriaData, this.exportData, this.fileName);
-                }
-            },
-            {
-                label: 'PDF', icon: 'pi pi-file-pdf', command: () => {
-                    this.prepareColumnExport();
-                    this.exportService.exporterPdf(this.criteriaData, this.exportData, this.fileName);
-                }
-            }
-        ];
+
     }
 
     public exportPdf(dto: DTO): void {

@@ -1,6 +1,9 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
+import {GroupeEtudiantCriteria} from '../grpe/GroupeEtudiantCriteria.model';
+import {CoursCriteria} from '../course/CoursCriteria.model';
+import {ProfCriteria} from './ProfCriteria.model';
 
-export class ScheduleProfCriteria extends BaseCriteria {
+export class ScheduleProfCriteria  extends BaseCriteria  {
 
     public id: number;
     public subject: string;
@@ -17,9 +20,8 @@ export class ScheduleProfCriteria extends BaseCriteria {
     public grpNameLike: string;
     public profName: string;
     public profNameLike: string;
-    public profsId: number;
-    public profsIdMin: number;
-    public profsIdMax: number;
-    public courseFinished: null | boolean;
+     public profsId: number;
+     public profsIdMin: number;
+     public profsIdMax: number;
 
 }

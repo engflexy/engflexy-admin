@@ -1,5 +1,6 @@
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
+import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
+import {CollaboratorDto} from '../vocab/Collaborator.model';
 
 export class NewsDto extends BaseDto{
 
@@ -21,7 +22,8 @@ export class NewsDto extends BaseDto{
 
     public destinataire: string;
 
-    
+    public collaborator: CollaboratorDto ;
+
 
     constructor() {
         super();

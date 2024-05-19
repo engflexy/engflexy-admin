@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {StatutSocialDto} from 'src/app/shared/model/inscriptionref/StatutSocial.model';
-import {StatutSocialCriteria} from 'src/app/shared/criteria/inscriptionref/StatutSocialCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {StatutSocialDto} from '../../../model/inscriptionref/StatutSocial.model';
+import {StatutSocialCriteria} from '../../../criteria/inscriptionref/StatutSocialCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class StatutSocialAdminService extends AbstractService<StatutSocialDto, StatutSocialCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/statutSocial/';
     }
 
     public constrcutDto(): StatutSocialDto {
@@ -24,9 +27,5 @@ export class StatutSocialAdminService extends AbstractService<StatutSocialDto, S
 
     public constrcutCriteria(): StatutSocialCriteria {
         return new StatutSocialCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/statutSocial/';
     }
 }

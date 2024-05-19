@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {InscriptionCriteria} from '../grpe/InscriptionCriteria.model';
 
 export class FreeTrialformuleCriteria  extends BaseCriteria  {

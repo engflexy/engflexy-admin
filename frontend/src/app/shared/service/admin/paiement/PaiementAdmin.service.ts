@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {PaiementDto} from 'src/app/shared/model/paiement/Paiement.model';
-import {PaiementCriteria} from 'src/app/shared/criteria/paiement/PaiementCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {PaiementDto} from '../../../model/paiement/Paiement.model';
+import {PaiementCriteria} from '../../../criteria/paiement/PaiementCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PaiementAdminService extends AbstractService<PaiementDto, PaiementCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/paiement/';
     }
 
     public constrcutDto(): PaiementDto {
@@ -24,9 +27,5 @@ export class PaiementAdminService extends AbstractService<PaiementDto, PaiementC
 
     public constrcutCriteria(): PaiementCriteria {
         return new PaiementCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/paiement/';
     }
 }

@@ -1,15 +1,14 @@
-import {ConfirmationService, MessageService} from 'primeng/api';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 
-import {environment} from 'src/environments/environment';
 
-import {RoleService} from 'src/app/zynerator/security/shared/service/Role.service';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {StringUtilService} from 'src/app/zynerator/util/StringUtil.service';
+import {environment} from "../../../environments/environment";
+import {RoleService} from '../security/shared/service/Role.service';
+import {BaseDto} from "../dto/BaseDto.model";
+import {BaseCriteria} from "../criteria/BaseCriteria.model";
+import {AbstractService} from "../service/AbstractService";
+import {StringUtilService} from "../util/StringUtil.service";
 import {ServiceLocator} from "../service/ServiceLocator";
 
 
@@ -21,8 +20,6 @@ export class AbstractViewController<DTO extends BaseDto, CRITERIA extends BaseCr
 
     protected datePipe: DatePipe;
     protected service: SERVICE;
-    protected messageService: MessageService;
-    protected confirmationService: ConfirmationService;
     protected roleService: RoleService;
     protected router: Router;
     protected stringUtilService: StringUtilService;
@@ -30,13 +27,12 @@ export class AbstractViewController<DTO extends BaseDto, CRITERIA extends BaseCr
     public constructor(service: SERVICE, @Inject(PLATFORM_ID) private platformId?) {
         this.datePipe = ServiceLocator.injector.get(DatePipe);
         this.service = service;
-        this.messageService = ServiceLocator.injector.get(MessageService);
-        this.confirmationService = ServiceLocator.injector.get(ConfirmationService);
         this.roleService = ServiceLocator.injector.get(RoleService);
         this.router = ServiceLocator.injector.get(Router);
         this.stringUtilService = ServiceLocator.injector.get(StringUtilService);
 
     }
+
     public hideViewDialog() {
         this.viewDialog = false;
     }
@@ -73,11 +69,11 @@ export class AbstractViewController<DTO extends BaseDto, CRITERIA extends BaseCr
         this.service.criteria = value;
     }
 
-    get dateFormat(){
+    get dateFormat() {
         return environment.dateFormatView;
     }
 
-    get dateFormatColumn(){
+    get dateFormatColumn() {
         return environment.dateFormatList;
     }
 

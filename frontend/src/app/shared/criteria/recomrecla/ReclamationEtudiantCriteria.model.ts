@@ -1,4 +1,4 @@
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
+import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {TypeReclamationEtudiantCriteria} from './TypeReclamationEtudiantCriteria.model';
 
 export class ReclamationEtudiantCriteria  extends BaseCriteria  {

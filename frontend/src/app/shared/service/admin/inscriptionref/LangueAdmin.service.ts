@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {LangueDto} from 'src/app/shared/model/inscriptionref/Langue.model';
-import {LangueCriteria} from 'src/app/shared/criteria/inscriptionref/LangueCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {LangueDto} from '../../../model/inscriptionref/Langue.model';
+import {LangueCriteria} from '../../../criteria/inscriptionref/LangueCriteria.model';
+import {AbstractService} from "../../../../zynerator/service/AbstractService";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class LangueAdminService extends AbstractService<LangueDto, LangueCriteria> {
-     constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+    get API() {
+        return environment.apiUrlAlcservice + 'admin/langue/';
     }
 
     public constrcutDto(): LangueDto {
@@ -24,9 +27,5 @@ export class LangueAdminService extends AbstractService<LangueDto, LangueCriteri
 
     public constrcutCriteria(): LangueCriteria {
         return new LangueCriteria();
-    }
-
-    get API() {
-        return environment.apiUrlZynservice + 'admin/langue/';
     }
 }

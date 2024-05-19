@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-
-import {environment} from 'src/environments/environment';
-
-import {UserDto} from 'src/app/zynerator/security/shared/model/User.model';
-import {UserCriteria} from 'src/app/zynerator/security/shared/criteria/UserCriteria.model';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
+import {environment} from "../../../../../environments/environment";
 import {RoleService} from './Role.service';
+import {AbstractService} from "../../../service/AbstractService";
+import {UserDto} from "../model/User.model";
+import {UserCriteria} from "../criteria/UserCriteria.model";
 
 
 @Injectable({

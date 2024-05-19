@@ -1,16 +1,14 @@
-import {ConfirmationService, MessageService} from 'primeng/api';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 
-import {environment} from 'src/environments/environment';
-
-import {RoleService} from 'src/app/zynerator/security/shared/service/Role.service';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {StringUtilService} from 'src/app/zynerator/util/StringUtil.service';
-import {ServiceLocator} from 'src/app/zynerator/service/ServiceLocator';
+import {environment} from "../../../environments/environment";
+import {RoleService} from '../security/shared/service/Role.service';
+import {BaseDto} from "../dto/BaseDto.model";
+import {BaseCriteria} from "../criteria/BaseCriteria.model";
+import {AbstractService} from "../service/AbstractService";
+import {StringUtilService} from "../util/StringUtil.service";
+import {ServiceLocator} from "../service/ServiceLocator";
 
 
 @Injectable()
@@ -21,8 +19,6 @@ export class AbstractEditController<DTO extends BaseDto, CRITERIA extends BaseCr
 
     protected datePipe: DatePipe;
     protected service: SERVICE;
-    protected messageService: MessageService;
-    protected confirmationService: ConfirmationService;
     protected roleService: RoleService;
     protected router: Router;
     protected stringUtilService: StringUtilService;
@@ -33,8 +29,6 @@ export class AbstractEditController<DTO extends BaseDto, CRITERIA extends BaseCr
     public constructor(service: SERVICE, @Inject(PLATFORM_ID) private platformId?) {
         this.datePipe = ServiceLocator.injector.get(DatePipe);
         this.service = service;
-        this.messageService = ServiceLocator.injector.get(MessageService);
-        this.confirmationService = ServiceLocator.injector.get(ConfirmationService);
         this.roleService = ServiceLocator.injector.get(RoleService);
         this.router = ServiceLocator.injector.get(Router);
         this.stringUtilService = ServiceLocator.injector.get(StringUtilService);
@@ -48,22 +42,18 @@ export class AbstractEditController<DTO extends BaseDto, CRITERIA extends BaseCr
         if (this.errorMessages.length === 0) {
             this.editWithShowOption(false);
         } else {
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Erreurs',
-                detail: 'Merci de corrigé les erreurs sur le formulaire'
-            });
+            alert('Merci de corrigé les erreurs sur le formulaire')
         }
     }
 
     public editWithShowOption(showList: boolean) {
-        this.service.edit().subscribe(religion=>{
+        this.service.edit().subscribe(religion => {
             const myIndex = this.items.findIndex(e => e.id === this.item.id);
             this.items[myIndex] = religion;
             this.editDialog = false;
             this.submitted = false;
             this.item = this.service.constrcutDto();
-        } , error =>{
+        }, error => {
             console.log(error);
         });
     }
@@ -72,23 +62,24 @@ export class AbstractEditController<DTO extends BaseDto, CRITERIA extends BaseCr
     public prepareEdit() {
 
     }
-    public uploadOne(event, i: number): void{
+
+    public uploadOne(event, i: number): void {
         this.file = event.files[0];
         console.log(event.files[0]);
         console.log(this.file);
         let formData = new FormData();
-        formData.append('file',this.file);
-        this.service.upload(formData,i);
+        formData.append('file', this.file);
+        this.service.upload(formData, i);
     }
 
-    public uploadMultiple(event, i: number): void{
+    public uploadMultiple(event, i: number): void {
         this.files = event.files;
         console.log(event.files);
         const formData: FormData = new FormData();
         for (let i = 0; i < this.files.length; i++) {
             formData.append('files', this.files[i]);
         }
-        this.service.uploadMultiple(formData,i);
+        this.service.uploadMultiple(formData, i);
     }
 
     public validateForm(): void {
