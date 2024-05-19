@@ -1,0 +1,58 @@
+{
+    "code": "#string",
+    "libelle": "#string",
+    "description": "#string",
+    "cours": {"id": "#number"},
+
+    "quizs": [
+      {
+        "ref":"#string",}
+        "lib":"#string",}
+        "numero":"#number",}
+        "seuilReussite":"#number"}
+      },
+      {
+        "ref":"#string",}
+        "lib":"#string",}
+        "numero":"#number",}
+        "seuilReussite":"#number"}
+      },
+      {
+        "ref":"#string",}
+        "lib":"#string",}
+        "numero":"#number",}
+        "seuilReussite":"#number"}
+      }
+    ],
+    "exercices": [
+      {
+        "content":"#string",}
+        "description":"#string",}
+        "libelle":"#string",}
+        "numero":"#number",}
+        "contentType":{"id": "#number"}}
+      },
+      {
+        "content":"#string",}
+        "description":"#string",}
+        "libelle":"#string",}
+        "numero":"#number",}
+        "contentType":{"id": "#number"}}
+      },
+      {
+        "content":"#string",}
+        "description":"#string",}
+        "libelle":"#string",}
+        "numero":"#number",}
+        "contentType":{"id": "#number"}}
+      }
+    ]
+}
+
+
+
+
+
+
+
+

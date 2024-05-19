@@ -1,0 +1,17 @@
+{
+    "content": "#string",
+    "description": "#string",
+    "libelle": "#string",
+    "numero": "#number",
+    "contentType": {"id": "#number"},
+    "section": {"id": "#number"}
+
+}
+
+
+
+
+
+
+
+

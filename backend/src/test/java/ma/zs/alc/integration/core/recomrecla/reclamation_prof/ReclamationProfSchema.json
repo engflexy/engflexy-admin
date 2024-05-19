@@ -1,0 +1,19 @@
+{
+    "reference": "#string",
+    "message": "#string",
+    "traite": "#bool",
+    "postView": "#bool",
+    "commentaireTraiteur": "#string",
+    "objetReclamationProf": "#string",
+    "prof": {"id": "#number"},
+    "typeReclamationProf": {"id": "#number"}
+
+}
+
+
+
+
+
+
+
+

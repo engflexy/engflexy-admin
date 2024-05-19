@@ -1,0 +1,15 @@
+{
+    "code": "#string",
+    "nombreSession": "#number",
+    "prix": "#number",
+    "collaborator": {"id": "#number"}
+
+}
+
+
+
+
+
+
+
+

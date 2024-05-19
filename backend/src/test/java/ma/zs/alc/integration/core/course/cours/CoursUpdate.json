@@ -1,0 +1,68 @@
+{
+    "id": 1,
+    "code": "code-11",
+    "id": 1,
+    "libelle": "libelle-11",
+    "id": 1,
+    "description": "description-11",
+    "id": 1,
+    "image": "image-11",
+    "id": 1,
+    "parcours": {"id": "1"},
+    "id": 1,
+    "nombreSectionFinalise": "101",
+    "id": 1,
+    "nombreSectionEnCours": "101",
+    "id": 1,
+    "nombreLinkEnCours": "101",
+    "id": 1,
+    "nombreLinkFinalise": "101",
+    "id": 1,
+    "numeroOrder": "101",
+
+    "sections": [
+        {
+            "code":"code-1",
+            "libelle":"libelle-1",
+            "description":"description-1"
+        },
+        {
+            "code":"code-2",
+            "libelle":"libelle-2",
+            "description":"description-2"
+        },
+        {
+            "code":"code-3",
+            "libelle":"libelle-3",
+            "description":"description-3"
+        }
+    ],
+    "homeWorks": [
+        {
+            "libelle":"libelle-1",
+            "urlImage":"urlImage-1",
+            "urlVideo":"urlVideo-1",
+            "typeHomeWork":{"id": "1"}
+        },
+        {
+            "libelle":"libelle-2",
+            "urlImage":"urlImage-2",
+            "urlVideo":"urlVideo-2",
+            "typeHomeWork":{"id": "2"}
+        },
+        {
+            "libelle":"libelle-3",
+            "urlImage":"urlImage-3",
+            "urlVideo":"urlVideo-3",
+            "typeHomeWork":{"id": "3"}
+        }
+    ]
+}
+
+
+
+
+
+
+
+

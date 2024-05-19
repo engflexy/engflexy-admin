@@ -1,0 +1,44 @@
+{
+    "libelle": "#string",
+    "description": "#string",
+    "typeCollaborator": {"id": "#number"},
+    "credentialsNonExpired": "#bool",
+    "enabled": "#bool",
+    "accountNonExpired": "#bool",
+    "accountNonLocked": "#bool",
+    "passwordChanged": "#bool",
+    "username": "#string",
+    "password": "#string",
+
+    "parcourss": [
+      {
+        "description":"#string",}
+        "code":"#string",}
+        "libelle":"#string",}
+        "numeroOrder":"#number",}
+        "nombreCours":"#number"}
+      },
+      {
+        "description":"#string",}
+        "code":"#string",}
+        "libelle":"#string",}
+        "numeroOrder":"#number",}
+        "nombreCours":"#number"}
+      },
+      {
+        "description":"#string",}
+        "code":"#string",}
+        "libelle":"#string",}
+        "numeroOrder":"#number",}
+        "nombreCours":"#number"}
+      }
+    ]
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+{
+    "reference": "reference-1",
+    "prof": {"id": "1"},
+    "cours": {"id": "1"},
+    "groupeEtudiant": {"id": "1"},
+    "duree": "10",
+    "totalheure": "10",
+    "mois": "10",
+    "annee": "10",
+    "payer": "true",
+    "nreKeySectionFinished": "10",
+    "nreAddSectionFinished": "10",
+    "totalKeySection": "10",
+    "totalAddSection": "10",
+    "nreWords": "10",
+    "homeworkFinished": "true",
+    "courseFinished": "true",
+    "salary": {"id": "1"},
+
+    "sessionCoursSections": [
+        {
+            "section":{"id": "1"}
+        },
+        {
+            "section":{"id": "2"}
+        },
+        {
+            "section":{"id": "3"}
+        }
+    ]
+}
+
+
+
+
+
+
+
+

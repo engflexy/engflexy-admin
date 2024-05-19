@@ -1,0 +1,39 @@
+{
+    "reference": "#string",
+    "prof": {"id": "#number"},
+    "cours": {"id": "#number"},
+    "groupeEtudiant": {"id": "#number"},
+    "duree": "#number",
+    "totalheure": "#number",
+    "mois": "#number",
+    "annee": "#number",
+    "payer": "#bool",
+    "nreKeySectionFinished": "#number",
+    "nreAddSectionFinished": "#number",
+    "totalKeySection": "#number",
+    "totalAddSection": "#number",
+    "nreWords": "#number",
+    "homeworkFinished": "#bool",
+    "courseFinished": "#bool",
+    "salary": {"id": "#number"},
+
+    "sessionCoursSections": [
+      {
+        "section":{"id": "#number"}}
+      },
+      {
+        "section":{"id": "#number"}}
+      },
+      {
+        "section":{"id": "#number"}}
+      }
+    ]
+}
+
+
+
+
+
+
+
+

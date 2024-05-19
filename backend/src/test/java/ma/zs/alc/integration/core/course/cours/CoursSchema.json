@@ -1,0 +1,58 @@
+{
+    "code": "#string",
+    "libelle": "#string",
+    "description": "#string",
+    "image": "#string",
+    "parcours": {"id": "#number"},
+    "nombreSectionFinalise": "#number",
+    "nombreSectionEnCours": "#number",
+    "nombreLinkEnCours": "#number",
+    "nombreLinkFinalise": "#number",
+    "numeroOrder": "#number",
+
+    "sections": [
+      {
+        "code":"#string",}
+        "libelle":"#string",}
+        "description":"#string"}
+      },
+      {
+        "code":"#string",}
+        "libelle":"#string",}
+        "description":"#string"}
+      },
+      {
+        "code":"#string",}
+        "libelle":"#string",}
+        "description":"#string"}
+      }
+    ],
+    "homeWorks": [
+      {
+        "libelle":"#string",}
+        "urlImage":"#string",}
+        "urlVideo":"#string",}
+        "typeHomeWork":{"id": "#number"}}
+      },
+      {
+        "libelle":"#string",}
+        "urlImage":"#string",}
+        "urlVideo":"#string",}
+        "typeHomeWork":{"id": "#number"}}
+      },
+      {
+        "libelle":"#string",}
+        "urlImage":"#string",}
+        "urlVideo":"#string",}
+        "typeHomeWork":{"id": "#number"}}
+      }
+    ]
+}
+
+
+
+
+
+
+
+

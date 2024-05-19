@@ -1,0 +1,15 @@
+{
+    "description": "#string",
+    "libelle": "#string",
+    "prof": {"id": "#number"},
+    "faqType": {"id": "#number"}
+
+}
+
+
+
+
+
+
+
+
