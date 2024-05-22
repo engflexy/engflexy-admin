@@ -71,6 +71,7 @@ import ma.zs.alc.zynerator.security.bean.*;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -87,6 +88,8 @@ import java.util.List;
 //@EnableFeignClients
 public class AlcApplication {
     public static ConfigurableApplicationContext ctx;
+    @Value("${engflexy.front.url}")
+    private String FRONT_URL;
 
     public static void main(String[] args) {
         ctx = SpringApplication.run(AlcApplication.class, args);
@@ -113,6 +116,19 @@ public class AlcApplication {
     @Bean
     public CommandLineRunner demo(UserService userService, RoleService roleService, ModelPermissionService modelPermissionService, ActionPermissionService actionPermissionService, ModelPermissionUserService modelPermissionUserService) {
         return (args) -> {
+            if (false) {
+                ContentType type0 = new ContentType("IMAGE", "Image");
+                ContentType type1 = new ContentType("MULTI_IMAGE", "Multi-Image");
+                ContentType type2 = new ContentType("VIDEO", "Video");
+                ContentType type3 = new ContentType("CONTENT", "Content");
+                ContentType type4 = new ContentType("QUIZ", "Quiz");
+                contentTypeService.create(type0);
+                contentTypeService.create(type1);
+                contentTypeService.create(type2);
+                contentTypeService.create(type3);
+                contentTypeService.create(type4);
+
+            }
             if (false) {
 /*
             createContentType();
@@ -208,8 +224,7 @@ public class AlcApplication {
                 Role savedRoleForAdmin = roleService.create(roleForAdmin);
                 RoleUser roleUserForAdmin = new RoleUser();
                 roleUserForAdmin.setRole(savedRoleForAdmin);
-                if (userForAdmin.getRoleUsers() == null)
-                    userForAdmin.setRoleUsers(new ArrayList<>());
+                if (userForAdmin.getRoleUsers() == null) userForAdmin.setRoleUsers(new ArrayList<>());
 
                 userForAdmin.getRoleUsers().add(roleUserForAdmin);
                 if (userForAdmin.getModelPermissionUsers() == null)
@@ -231,8 +246,7 @@ public class AlcApplication {
                 Role savedRoleForCollaborator = roleService.create(roleForCollaborator);
                 RoleUser roleUserForCollaborator = new RoleUser();
                 roleUserForCollaborator.setRole(savedRoleForCollaborator);
-                if (userForCollaborator.getRoleUsers() == null)
-                    userForCollaborator.setRoleUsers(new ArrayList<>());
+                if (userForCollaborator.getRoleUsers() == null) userForCollaborator.setRoleUsers(new ArrayList<>());
                 userForCollaborator.getRoleUsers().add(roleUserForCollaborator);
                 if (userForCollaborator.getModelPermissionUsers() == null)
                     userForCollaborator.setModelPermissionUsers(new ArrayList<>());

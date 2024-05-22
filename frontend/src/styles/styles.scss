@@ -48,3 +48,31 @@
     font-weight: 700;
     font-style: italic;
 }
+
+.vignette {
+    position: relative;
+    display: inline-block;
+}
+
+.vignette::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: radial-gradient(circle, rgb(221 221 221 / 4%) 19%, rgb(0 0 0 / 29%) 100%);
+}
+
+.video {
+    width: 100%;
+    min-height: 25rem;
+    margin-bottom: 10px
+}
+
+#video-call-container {
+    video {
+        margin: 0 !important;
+    }
+}

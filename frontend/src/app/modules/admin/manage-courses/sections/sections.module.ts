@@ -35,10 +35,18 @@ import {MatBadgeModule} from "@angular/material/badge";
 import {FuseCardComponent} from "../../../../../@fuse/components/card";
 import {SectionsRoutes} from "./sections.routes";
 import {ClassroomComponent} from "./classroom/classroom.component";
+import {TypeExercisesComponent} from './type-exercises/type-exercises.component';
+import {MatDividerModule} from "@angular/material/divider";
+import {CreateExerciseComponent} from './create-exercise/create-exercise.component';
+import {NgImageSliderModule} from "ng-image-slider";
+import {DisplayMultiImagesComponent} from './classroom/display-multi-images/display-multi-images.component';
+import {DisplayVideoComponent} from './classroom/display-video/display-video.component';
+import {SafePipe} from "../../../../shared/utils/safe.pipe";
+import {AngularEditorModule} from "@kolkov/angular-editor";
 
 
 @NgModule({
-    declarations: [ClassroomComponent],
+    declarations: [SafePipe, ClassroomComponent, TypeExercisesComponent, CreateExerciseComponent, DisplayMultiImagesComponent, DisplayVideoComponent],
     imports: [
         SectionsRoutes,
         CommonModule,
@@ -67,7 +75,8 @@ import {ClassroomComponent} from "./classroom/classroom.component";
         CdkDropList,
         MatTooltipModule,
         MatAutocompleteModule, MatDialogModule, MatPaginatorModule,
-        MatButtonToggleModule, NgApexchartsModule, MatMenuModule, MatBadgeModule,
+        MatButtonToggleModule, NgApexchartsModule, MatMenuModule, MatBadgeModule, MatDividerModule,
+        NgImageSliderModule, AngularEditorModule,
 
 
     ],

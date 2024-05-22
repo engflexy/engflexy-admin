@@ -1,17 +1,16 @@
 package  ma.zs.alc.ws.dto.quiz;
 
+import ma.zs.alc.bean.core.course.Exercice;
+import ma.zs.alc.ws.dto.course.ExerciceDto;
 import ma.zs.alc.zynerator.audit.Log;
 import ma.zs.alc.zynerator.dto.AuditBaseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
-import java.util.Date;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
-import ma.zs.alc.ws.dto.quizref.TypeDeQuestionDto;
 import ma.zs.alc.ws.dto.course.SectionDto;
 
 
@@ -25,7 +24,7 @@ public class QuizDto  extends AuditBaseDto {
     private Long numero  ;
     private Long seuilReussite  ;
 
-    private SectionDto section ;
+    private ExerciceDto exercice;
 
     private List<QuestionDto> questions ;
 
@@ -87,12 +86,12 @@ public class QuizDto  extends AuditBaseDto {
     }
 
 
-    public SectionDto getSection(){
-        return this.section;
+    public ExerciceDto getExercice(){
+        return this.exercice;
     }
 
-    public void setSection(SectionDto section){
-        this.section = section;
+    public void setExercice(ExerciceDto exercice){
+        this.exercice = exercice;
     }
 
 

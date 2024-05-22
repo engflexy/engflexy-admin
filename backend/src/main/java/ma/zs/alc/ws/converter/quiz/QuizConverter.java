@@ -1,38 +1,32 @@
-package  ma.zs.alc.ws.converter.quiz;
+package ma.zs.alc.ws.converter.quiz;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ma.zs.alc.zynerator.util.ListUtil;
-
+import ma.zs.alc.bean.core.course.Exercice;
+import ma.zs.alc.bean.core.quiz.Quiz;
+import ma.zs.alc.ws.converter.course.ExerciceConverter;
 import ma.zs.alc.ws.converter.quizref.TypeDeQuestionConverter;
-import ma.zs.alc.ws.converter.quiz.QuestionConverter;
-import ma.zs.alc.ws.converter.quiz.ReponseConverter;
-import ma.zs.alc.ws.converter.course.SectionConverter;
-
-import ma.zs.alc.bean.core.course.Section;
-
-
-import ma.zs.alc.zynerator.util.StringUtil;
+import ma.zs.alc.ws.dto.quiz.QuizDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.DateUtil;
-import ma.zs.alc.bean.core.quiz.Quiz;
-import ma.zs.alc.ws.dto.quiz.QuizDto;
+import ma.zs.alc.zynerator.util.ListUtil;
+import ma.zs.alc.zynerator.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class QuizConverter extends AbstractConverter<Quiz, QuizDto> {
 
     @Autowired
-    private TypeDeQuestionConverter typeDeQuestionConverter ;
+    private TypeDeQuestionConverter typeDeQuestionConverter;
     @Autowired
-    private QuestionConverter questionConverter ;
+    private QuestionConverter questionConverter;
     @Autowired
-    private ReponseConverter reponseConverter ;
+    private ReponseConverter reponseConverter;
     @Autowired
-    private SectionConverter sectionConverter ;
+    private ExerciceConverter exerciceConverter;
     private boolean section;
     private boolean questions;
 
-    public  QuizConverter() {
+    public QuizConverter() {
         super(Quiz.class, QuizDto.class);
         init(true);
     }
@@ -42,33 +36,33 @@ public class QuizConverter extends AbstractConverter<Quiz, QuizDto> {
         if (dto == null) {
             return null;
         } else {
-        Quiz item = new Quiz();
-            if(StringUtil.isNotEmpty(dto.getId()))
+            Quiz item = new Quiz();
+            if (StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
-            if(StringUtil.isNotEmpty(dto.getRef()))
+            if (StringUtil.isNotEmpty(dto.getRef()))
                 item.setRef(dto.getRef());
-            if(StringUtil.isNotEmpty(dto.getLib()))
+            if (StringUtil.isNotEmpty(dto.getLib()))
                 item.setLib(dto.getLib());
-            if(StringUtil.isNotEmpty(dto.getDateDebut()))
+            if (StringUtil.isNotEmpty(dto.getDateDebut()))
                 item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut()));
-            if(StringUtil.isNotEmpty(dto.getDateFin()))
+            if (StringUtil.isNotEmpty(dto.getDateFin()))
                 item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin()));
-            if(StringUtil.isNotEmpty(dto.getNumero()))
+            if (StringUtil.isNotEmpty(dto.getNumero()))
                 item.setNumero(dto.getNumero());
-            if(StringUtil.isNotEmpty(dto.getSeuilReussite()))
+            if (StringUtil.isNotEmpty(dto.getSeuilReussite()))
                 item.setSeuilReussite(dto.getSeuilReussite());
-            if(dto.getSection() != null && dto.getSection().getId() != null){
-                item.setSection(new Section());
-                item.getSection().setId(dto.getSection().getId());
-                item.getSection().setLibelle(dto.getSection().getLibelle());
+            if (dto.getExercice() != null && dto.getExercice().getId() != null) {
+                item.setExercice(new Exercice());
+                item.getExercice().setId(dto.getExercice().getId());
+                item.getExercice().setLibelle(dto.getExercice().getLibelle());
             }
 
 
-            if(this.questions && ListUtil.isNotEmpty(dto.getQuestions()))
+            if (this.questions && ListUtil.isNotEmpty(dto.getQuestions()))
                 item.setQuestions(questionConverter.toItem(dto.getQuestions()));
 
 
-        return item;
+            return item;
         }
     }
 
@@ -78,43 +72,43 @@ public class QuizConverter extends AbstractConverter<Quiz, QuizDto> {
             return null;
         } else {
             QuizDto dto = new QuizDto();
-            if(StringUtil.isNotEmpty(item.getId()))
+            if (StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
-            if(StringUtil.isNotEmpty(item.getRef()))
+            if (StringUtil.isNotEmpty(item.getRef()))
                 dto.setRef(item.getRef());
-            if(StringUtil.isNotEmpty(item.getLib()))
+            if (StringUtil.isNotEmpty(item.getLib()))
                 dto.setLib(item.getLib());
-            if(item.getDateDebut()!=null)
+            if (item.getDateDebut() != null)
                 dto.setDateDebut(DateUtil.dateTimeToString(item.getDateDebut()));
-            if(item.getDateFin()!=null)
+            if (item.getDateFin() != null)
                 dto.setDateFin(DateUtil.dateTimeToString(item.getDateFin()));
-            if(StringUtil.isNotEmpty(item.getNumero()))
+            if (StringUtil.isNotEmpty(item.getNumero()))
                 dto.setNumero(item.getNumero());
-            if(StringUtil.isNotEmpty(item.getSeuilReussite()))
+            if (StringUtil.isNotEmpty(item.getSeuilReussite()))
                 dto.setSeuilReussite(item.getSeuilReussite());
-            if(this.section && item.getSection()!=null) {
-                dto.setSection(sectionConverter.toDto(item.getSection())) ;
+            if (this.section && item.getExercice() != null) {
+                dto.setExercice(exerciceConverter.toDto(item.getExercice()));
 
             }
-        if(this.questions && ListUtil.isNotEmpty(item.getQuestions())){
-            questionConverter.init(true);
-            questionConverter.setQuiz(false);
-            dto.setQuestions(questionConverter.toDto(item.getQuestions()));
-            questionConverter.setQuiz(true);
+            if (this.questions && ListUtil.isNotEmpty(item.getQuestions())) {
+                questionConverter.init(true);
+                questionConverter.setQuiz(false);
+                dto.setQuestions(questionConverter.toDto(item.getQuestions()));
+                questionConverter.setQuiz(true);
 
-        }
+            }
 
 
-        return dto;
+            return dto;
         }
     }
 
     public void copy(QuizDto dto, Quiz t) {
-    super.copy(dto, t);
-    if (dto.getQuestions() != null)
-        t.setQuestions(questionConverter.copy(dto.getQuestions()));
-    if (dto.getSection() != null)
-        sectionConverter.copy(dto.getSection(), t.getSection());
+        super.copy(dto, t);
+        if (dto.getQuestions() != null)
+            t.setQuestions(questionConverter.copy(dto.getQuestions()));
+        if (dto.getExercice() != null)
+            exerciceConverter.copy(dto.getExercice(), t.getExercice());
     }
 
 
@@ -127,40 +121,51 @@ public class QuizConverter extends AbstractConverter<Quiz, QuizDto> {
     }
 
 
-    public TypeDeQuestionConverter getTypeDeQuestionConverter(){
+    public TypeDeQuestionConverter getTypeDeQuestionConverter() {
         return this.typeDeQuestionConverter;
     }
-    public void setTypeDeQuestionConverter(TypeDeQuestionConverter typeDeQuestionConverter ){
+
+    public void setTypeDeQuestionConverter(TypeDeQuestionConverter typeDeQuestionConverter) {
         this.typeDeQuestionConverter = typeDeQuestionConverter;
     }
-    public QuestionConverter getQuestionConverter(){
+
+    public QuestionConverter getQuestionConverter() {
         return this.questionConverter;
     }
-    public void setQuestionConverter(QuestionConverter questionConverter ){
+
+    public void setQuestionConverter(QuestionConverter questionConverter) {
         this.questionConverter = questionConverter;
     }
-    public ReponseConverter getReponseConverter(){
+
+    public ReponseConverter getReponseConverter() {
         return this.reponseConverter;
     }
-    public void setReponseConverter(ReponseConverter reponseConverter ){
+
+    public void setReponseConverter(ReponseConverter reponseConverter) {
         this.reponseConverter = reponseConverter;
     }
-    public SectionConverter getSectionConverter(){
-        return this.sectionConverter;
+
+    public ExerciceConverter getExerciceConverter() {
+        return this.exerciceConverter;
     }
-    public void setSectionConverter(SectionConverter sectionConverter ){
-        this.sectionConverter = sectionConverter;
+
+    public void setExerciceConverter(ExerciceConverter exerciceConverter) {
+        this.exerciceConverter = exerciceConverter;
     }
-    public boolean  isSection(){
+
+    public boolean isSection() {
         return this.section;
     }
-    public void  setSection(boolean section){
+
+    public void setSection(boolean section) {
         this.section = section;
     }
-    public boolean  isQuestions(){
-        return this.questions ;
+
+    public boolean isQuestions() {
+        return this.questions;
     }
-    public void  setQuestions(boolean questions ){
-        this.questions  = questions ;
+
+    public void setQuestions(boolean questions) {
+        this.questions = questions;
     }
 }

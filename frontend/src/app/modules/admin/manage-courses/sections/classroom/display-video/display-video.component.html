@@ -1,0 +1,8 @@
+<div class="w-full flex flex-col items-center gap-3 justify-start">
+    <div class="w-full text-start text-2xl ubuntu-bold-italic">{{exercise?.libelle}}</div>
+    <iframe [src]='video | safe' allowfullscreen
+            loading="lazy" class="video"></iframe>
+
+    <div class="w-full text-start ubuntu-regular">{{exercise?.description}}</div>
+
+</div>

@@ -1,25 +1,23 @@
 import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {QuestionDto} from './Question.model';
-import {SectionDto} from '../course/Section.model';
+import {ExerciceDto} from "../course/Exercice.model";
 
-export class QuizDto extends BaseDto{
+export class QuizDto extends BaseDto {
 
     public ref: string;
 
     public lib: string;
 
-   public dateDebut: Date;
+    public dateDebut: Date;
 
-   public dateFin: Date;
+    public dateFin: Date;
 
     public numero: null | number;
 
     public seuilReussite: null | number;
-
-    public section: SectionDto ;
-     public questions: Array<QuestionDto>;
-
+    public questions: Array<QuestionDto>;
+    public exercice: ExerciceDto;
 
     constructor() {
         super();
@@ -32,6 +30,6 @@ export class QuizDto extends BaseDto{
         this.seuilReussite = null;
         this.questions = new Array<QuestionDto>();
 
-        }
+    }
 
 }
