@@ -12,7 +12,7 @@ public interface SectionAdminService extends  IService<Section,SectionCriteria> 
     List<Section> findByCoursId(Long id);
     int deleteByCoursId(Long id);
     long countByCoursCode(String code);
-
+    public Section updateField(Section section);
 
 
 

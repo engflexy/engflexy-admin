@@ -29,7 +29,7 @@ public class TypeReclamationProfCollaboratorServiceImpl extends AbstractServiceI
 
 
     public TypeReclamationProf findByReferenceEntity(TypeReclamationProf t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

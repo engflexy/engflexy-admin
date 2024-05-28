@@ -29,7 +29,7 @@ public class ServicesCollaboratorServiceImpl extends AbstractServiceImpl<Service
 
 
     public Services findByReferenceEntity(Services t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

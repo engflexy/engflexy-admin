@@ -29,7 +29,7 @@ public class GroupeTypeCollaboratorServiceImpl extends AbstractServiceImpl<Group
 
 
     public GroupeType findByReferenceEntity(GroupeType t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

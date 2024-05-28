@@ -1,5 +1,5 @@
-import {Component, Inject} from '@angular/core';
-import {ContentType, TYPE_QUESTION} from "../../../../../shared/utils/enums";
+import {Component, Inject, OnInit} from '@angular/core';
+import {ContentType} from "../../../../../shared/utils/enums";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ExerciceDto} from "../../../../../shared/model/course/Exercice.model";
 import {ImagesService} from "../../../../../shared/service/public/images.service";
@@ -14,16 +14,16 @@ import {
     ExerciceCollaboratorService
 } from "../../../../../shared/service/collaborator/course/ExerciceCollaborator.service";
 import {AngularEditorConfig} from "@kolkov/angular-editor";
+import {QuizDto} from "../../../../../shared/model/quiz/Quiz.model";
+import {QuizCollaboratorService} from "../../../../../shared/service/collaborator/quiz/QuizCollaborator.service";
 
 @Component({
     selector: 'app-create-exercise',
     templateUrl: './create-exercise.component.html',
 })
-export class CreateExerciseComponent {
-    protected readonly TYPE_QUESTION = TYPE_QUESTION;
+export class CreateExerciseComponent implements OnInit {
     protected readonly ContentType = ContentType
     selectedFile: File | null = null;
-    showEdit: string = null
     imagesList: Array<{ url, desc }> = new Array<{ url; desc }>()
     editorConfig: AngularEditorConfig = {
         editable: true,
@@ -69,11 +69,19 @@ export class CreateExerciseComponent {
     constructor(@Inject(MAT_DIALOG_DATA) public _data: { type: string, quizType: string },
                 private imageService: ImagesService,
                 private alert: FuseAlertService,
+                private quizService: QuizCollaboratorService,
                 private sectionService: SectionCollaboratorService,
                 private exerciseService: ExerciceCollaboratorService,
                 private refDialog: MatDialogRef<CreateExerciseComponent>,) {
     }
 
+    get quiz(): QuizDto {
+        return this.quizService.item
+    }
+
+    set quiz(item: QuizDto) {
+        this.quizService.item = item
+    }
 
     get exercise(): ExerciceDto {
         return this.exerciseService.item
@@ -83,13 +91,6 @@ export class CreateExerciseComponent {
         this.exerciseService.item = item
     }
 
-    get sections(): SectionDto[] {
-        return this.sectionService.items
-    }
-
-    set sections(item: SectionDto[]) {
-        this.sectionService.items = item
-    }
 
     get selectedSection(): SectionDto {
         return this.sectionService.item
@@ -99,10 +100,45 @@ export class CreateExerciseComponent {
         this.sectionService.item = item
     }
 
+    ngOnInit() {
+        console.log(this.exercise)
+        if (this.exercise?.id) {
+            if (this.exercise.contentType.code === ContentType.IMAGE) {
+                this.extract()
+            }
+        }
+    }
+
+    private extract() {
+        const images = this.exercise.content.split(';')
+        const titles = this.exercise.description.split(';')
+        for (let i = 0; i < images.length; i++) {
+            const imageObject = {url: null, desc: null}
+            if (images[i] !== null && images[i]?.length > 5) {
+                imageObject.url = images[i]
+            }
+
+            if (titles[i] !== null && titles[i]?.length > 5)
+                imageObject.desc = titles[i]
+            if (imageObject?.url)
+                this.imagesList.push({...imageObject})
+        }
+        this.exercise.content = ''
+        this.exercise.description = ''
+    }
+
     save() {
         this.exercise.contentType = new ContentTypeDto(this._data?.type)
-        this.exercise.section = this.selectedSection
-        this.exercise.numero = this.selectedSection?.exercices?.length + 1
+        this.exercise.section = new SectionDto(this.selectedSection.id)
+        if (!this.exercise.id) {
+            if (this.selectedSection?.exercices?.length)
+                this.exercise.numero = this.selectedSection?.exercices?.length + 1
+            else
+                this.exercise.numero = 1
+        }
+
+        if (this.exercise.contentType.code === this.ContentType.QUIZ)
+            this.exercise.quiz = this.quiz
 
         //custom edit for the image type
         if (this._data?.type === this.ContentType?.IMAGE) {
@@ -112,14 +148,17 @@ export class CreateExerciseComponent {
             })
         }
 
-
+        console.log(this.exercise)
         this.exerciseService.save().subscribe(res => {
-            if (this.selectedSection?.exercices?.length >= 0)
-                this.selectedSection.exercices.push({...res})
-            else {
-                this.selectedSection.exercices = new Array<ExerciceDto>()
-                this.selectedSection.exercices.push({...res})
+            if (this.exercise?.id === null || this.exercise?.id === undefined) {
+                if (this.selectedSection?.exercices?.length >= 0)
+                    this.selectedSection.exercices.push({...res})
+                else {
+                    this.selectedSection.exercices = new Array<ExerciceDto>()
+                    this.selectedSection.exercices.push({...res})
+                }
             }
+            console.log(this.selectedSection)
             this.refDialog.close()
         })
     }
@@ -150,7 +189,7 @@ export class CreateExerciseComponent {
     }
 
     private isImageFile(file: File): boolean {
-        return ["image/gif", "image/jpeg", "image/png"].includes(file.type);
+        return ["image/gif", "image/webp", "image/jpeg", "image/png"].includes(file.type);
     }
 
     removeImage(item: { url; desc }, i: number) {

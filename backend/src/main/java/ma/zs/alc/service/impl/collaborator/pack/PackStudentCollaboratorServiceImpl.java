@@ -33,7 +33,7 @@ public class PackStudentCollaboratorServiceImpl extends AbstractServiceImpl<Pack
 
 
     public PackStudent findByReferenceEntity(PackStudent t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
     public void findOrSaveAssociatedObject(PackStudent t){
         if( t != null) {

@@ -1,7 +1,21 @@
-<mat-dialog-content class="mat-typography w-full md:w-[70vw] overflow-x-hidden">
-    <div class="w-full flex flex-col gap-4">
+<mat-dialog-content class="mat-typography  overflow-x-hidden">
+
+
+    <div class="w-full items-center flex flex-col gap-4">
+
         <ng-container *ngIf="_data?.type === ContentType?.CONTENT">
-            <div class="w-full flex  flex-col gap-4 items-center justify-start content-center">
+            <div class="w-full flex  md:w-[70vw]  flex-col gap-4 items-center justify-start content-center">
+                <ng-container *ngIf="exercise?.id">
+                    <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                        <mat-label>Order</mat-label>
+                        <input type="number"
+                               matInput
+                               [placeholder]="'numero'"
+                               [(ngModel)]="exercise.numero"
+                               name="numero">
+                    </mat-form-field>
+                </ng-container>
+
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>Title</mat-label>
                     <textarea
@@ -20,7 +34,18 @@
         </ng-container>
 
         <ng-container *ngIf="_data?.type === ContentType?.VIDEO">
-            <div class="w-full flex  flex-col gap-4 items-center justify-start content-center">
+            <div class="w-full md:w-[70vw] flex  flex-col gap-4 items-center justify-start content-center">
+                <ng-container *ngIf="exercise?.id">
+                    <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                        <mat-label>Order</mat-label>
+                        <input type="number"
+                               matInput
+                               [placeholder]="'numero'"
+                               [(ngModel)]="exercise.numero"
+                               name="numero">
+                    </mat-form-field>
+                </ng-container>
+
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>Title</mat-label>
                     <textarea
@@ -55,7 +80,17 @@
 
 
         <ng-container *ngIf="_data?.type === ContentType?.IMAGE">
-            <div class="w-full flex  flex-col gap-4 items-center justify-start content-center">
+            <ng-container *ngIf="exercise?.id">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Order</mat-label>
+                    <input type="number"
+                           matInput
+                           [placeholder]="'numero'"
+                           [(ngModel)]="exercise.numero"
+                           name="numero">
+                </mat-form-field>
+            </ng-container>
+            <div class="w-full md:w-[70vw] flex  flex-col gap-4 items-center justify-start content-center">
                 <label for="uploadFile1"
                        class="bg-white text-gray-500 font-semibold text-base rounded max-w-lg
                         h-30 flex flex-col px-4 items-center justify-center cursor-pointer border-2
@@ -132,6 +167,12 @@
 
 
         </ng-container>
+
+
+        <div class="w-full max-w-5xl" *ngIf="_data?.type === ContentType?.QUIZ">
+            <app-create-quiz [type]="_data.quizType"></app-create-quiz>
+        </div>
+
     </div>
 
 </mat-dialog-content>

@@ -17,6 +17,13 @@ import {TypeExercisesComponent} from "../type-exercises/type-exercises.component
 import {MatTabGroup} from "@angular/material/tabs";
 import {FuseAlertService} from "../../../../../../@fuse/components/alert";
 import {ContentType} from "../../../../../shared/utils/enums";
+import {ExerciceDto} from "../../../../../shared/model/course/Exercice.model";
+import {QuizDto} from "../../../../../shared/model/quiz/Quiz.model";
+import {QuizCollaboratorService} from "../../../../../shared/service/collaborator/quiz/QuizCollaborator.service";
+import {
+    ExerciceCollaboratorService
+} from "../../../../../shared/service/collaborator/course/ExerciceCollaborator.service";
+import {CreateExerciseComponent} from "../create-exercise/create-exercise.component";
 
 @Component({
     selector: 'app-classroom',
@@ -42,8 +49,26 @@ export class ClassroomComponent implements OnInit {
                 @Inject(DOCUMENT) private _document: Document,
                 private parcourService: ParcoursCollaboratorService,
                 private _matDialog: MatDialog,
+                private quizService: QuizCollaboratorService,
+                private exerciseService: ExerciceCollaboratorService,
                 private route: ActivatedRoute
     ) {
+    }
+
+    get quiz(): QuizDto {
+        return this.quizService.item
+    }
+
+    set quiz(item: QuizDto) {
+        this.quizService.item = item
+    }
+
+    get exercise(): ExerciceDto {
+        return this.exerciseService.item
+    }
+
+    set exercise(item: ExerciceDto) {
+        this.exerciseService.item = item
     }
 
     get sections(): SectionDto[] {
@@ -80,13 +105,14 @@ export class ClassroomComponent implements OnInit {
                 .subscribe(res => {
                     this.selectedCourse = res
                     this.sections = res?.sections
+                    console.log(this.sections)
                 })
         } else {
             this.router.navigate(['/admin/manage-courses']);
         }
     }
 
-    trackByFn(index: number, item: SectionDto): any {
+    trackByFn(index: number, item: any): any {
         return item?.numero || index;
     }
 
@@ -104,6 +130,8 @@ export class ClassroomComponent implements OnInit {
 
         //extract content of the section
         this.selectedSection = this.sections.at(step)
+        this.selectedSection.exercices = this.sections.at(step).exercices.sort((a, b) => a.numero - b.numero)
+
         console.log(this.selectedSection)
 
         // Mark for check
@@ -212,4 +240,29 @@ export class ClassroomComponent implements OnInit {
     }
 
     protected readonly ContentType = ContentType;
+
+    edit(exercise: ExerciceDto, section) {
+        let quizType = null
+        this.exercise = exercise
+        this.selectedSection = section
+        if (exercise?.quiz) {
+            this.quiz = exercise.quiz
+            quizType = exercise.quiz?.questions?.at(0)?.typeDeQuestion?.ref
+        }
+
+        this._matDialog.open(CreateExerciseComponent, {
+            autoFocus: false,
+            data: {type: exercise.contentType.code, quizType: quizType},
+            height: "auto",
+            width: "calc(100% - 30px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+    }
+
+    updateFields(section: SectionDto) {
+        this.editSection = null
+        this.sectionService.updateFields(section).subscribe()
+    }
 }

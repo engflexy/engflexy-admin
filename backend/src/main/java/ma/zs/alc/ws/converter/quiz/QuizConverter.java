@@ -86,10 +86,6 @@ public class QuizConverter extends AbstractConverter<Quiz, QuizDto> {
                 dto.setNumero(item.getNumero());
             if (StringUtil.isNotEmpty(item.getSeuilReussite()))
                 dto.setSeuilReussite(item.getSeuilReussite());
-            if (this.section && item.getExercice() != null) {
-                dto.setExercice(exerciceConverter.toDto(item.getExercice()));
-
-            }
             if (this.questions && ListUtil.isNotEmpty(item.getQuestions())) {
                 questionConverter.init(true);
                 questionConverter.setQuiz(false);

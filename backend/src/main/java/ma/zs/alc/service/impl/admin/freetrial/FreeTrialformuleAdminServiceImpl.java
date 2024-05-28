@@ -31,7 +31,7 @@ public class FreeTrialformuleAdminServiceImpl extends AbstractServiceImpl<FreeTr
 
 
     public FreeTrialformule findByReferenceEntity(FreeTrialformule t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
     public void findOrSaveAssociatedObject(FreeTrialformule t){
         if( t != null) {

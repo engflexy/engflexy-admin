@@ -29,7 +29,7 @@ public class NiveauEtudeAdminServiceImpl extends AbstractServiceImpl<NiveauEtude
 
 
     public NiveauEtude findByReferenceEntity(NiveauEtude t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

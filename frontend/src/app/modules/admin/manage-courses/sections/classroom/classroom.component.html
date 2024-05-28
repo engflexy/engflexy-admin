@@ -1,4 +1,4 @@
-<div class="inset-0 flex flex-col min-w-0 overflow-hidden">
+<div class="inset-0 relative md:mt-[80px] flex flex-col min-w-0 overflow-hidden">
 
     <mat-drawer-container class="flex-auto h-full">
 
@@ -9,12 +9,12 @@
             [autoFocus]="false"
             [mode]="drawerMode"
             [opened]="drawerOpened"
-            class="w-64 min-h-screen dark:bg-gray-900">
+            class="w-64 fixed md:mt-[80px]  overflow-y-auto  dark:bg-gray-900">
             <div class="flex flex-col items-start p-8 border-b">
 
                 <!-- Back to courses -->
-                <a
-                    class="inline-flex items-center leading-6 text-primary hover:underline">
+                <a routerLink="/admin/manage-courses"
+                   class="inline-flex items-center cursor-pointer leading-6 text-primary hover:underline">
                     <span class="inline-flex items-center">
                         <mat-icon
                             [svgIcon]="'heroicons_solid:arrow-small-left'"
@@ -42,8 +42,8 @@
             </div>
 
             <!-- Steps -->
-            <div class="py-2 px-8">
-                <ol>
+            <div class="py-2 overflow-y-auto px-8">
+                <ol class="overflow-y-auto">
                     <li class="relative group py-6">
                         <div
                             (click)="createNewSection()"
@@ -106,15 +106,8 @@
         </mat-drawer>
 
         <!-- Drawer content -->
-        <mat-drawer-content class="flex flex-col min-h-screen overflow-hidden">
+        <mat-drawer-content class="flex flex-col min-h-screen overflow-hidden overflow-y-auto">
 
-            <!-- Header -->
-            <div
-                class="lg:hidden flex flex-0 items-center py-2 pl-4 pr-6 sm:py-4 md:pl-6 md:pr-8 border-b lg:border-b-0 bg-card dark:bg-transparent">
-                <h2 [innerHTML]="selectedCourse?.libelle"
-                    class="ml-2.5 text-md sm:text-xl font-medium tracking-tight truncate">
-                </h2>
-            </div>
             <mat-progress-bar
                 [value]="100 * (currentStep + 1) / sections?.length"
                 class="hidden lg:block flex-0 h-0.5 w-full"></mat-progress-bar>
@@ -155,7 +148,7 @@
                                                 <mat-form-field class="w-full fuse-mat-dense">
                                                     <input
                                                         [(ngModel)]="step.libelle"
-                                                        (focusout)="editSection=null"
+                                                        (focusout)="updateFields(step)"
                                                         name="libelle"
                                                         matInput>
                                                 </mat-form-field>
@@ -177,7 +170,7 @@
                                                 <mat-form-field class="w-full fuse-mat-dense">
                                                     <input
                                                         [(ngModel)]="step.description"
-                                                        (focusout)="editSection=null"
+                                                        (focusout)="updateFields(step)"
                                                         name="description"
                                                         matInput>
                                                 </mat-form-field>
@@ -188,12 +181,19 @@
                                             <div class=" w-full mt-5 flex-col gap-2 flex items-center">
                                                 <div class="w-full border-2 rounded-md p-2  border-dashed
                                                  border-gray-100 dark:border-gray-600"
-                                                     *ngFor="let exercise of step.exercices">
+                                                     *ngFor="let exercise of step.exercices;let order = index; trackBy: trackByFn">
+
+                                                    <div class="w-full  flex flex-row-reverse">
+                                                        <mat-icon class="text-hint icon-size-4 cursor-pointer"
+                                                                  (click)="edit(exercise,step)"
+                                                                  svgIcon="heroicons_solid:pencil-square"></mat-icon>
+                                                    </div>
 
                                                     <ng-container
                                                         *ngIf="exercise?.contentType?.code === ContentType.CONTENT">
-                                                        <div
-                                                            class="w-full text-2xl ubuntu-bold-italic">{{exercise?.libelle}}</div>
+                                                        <div class="w-full text-2xl mb-3 ubuntu-bold-italic">
+                                                            {{exercise?.numero}} - {{exercise?.libelle}}
+                                                        </div>
                                                         <div class="w-full"
                                                              [innerHTML]="exercise?.content"></div>
                                                     </ng-container>
@@ -202,15 +202,26 @@
                                                     <ng-container
                                                         *ngIf="exercise?.contentType?.code === ContentType.MULTI_IMAGE ||
                                                             exercise?.contentType?.code === ContentType.IMAGE">
+                                                        <div class="w-full text-2xl mb-3 ubuntu-bold-italic">
+                                                            {{exercise?.numero}} - {{exercise?.libelle}}
+                                                        </div>
                                                         <app-display-multi-images
                                                             [exercise]="exercise"></app-display-multi-images>
-                                                        <p class="text-start w-full ubuntu-regular">{{exercise?.libelle}}</p>
                                                     </ng-container>
 
                                                     <ng-container
                                                         *ngIf="exercise?.contentType?.code === ContentType.VIDEO">
+                                                        <div class="w-full text-2xl mb-3 ubuntu-bold-italic">
+                                                            {{exercise?.numero}} - {{exercise?.libelle}}
+                                                        </div>
                                                         <app-display-video
                                                             [exercise]="exercise"></app-display-video>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="exercise?.contentType?.code === ContentType.QUIZ">
+                                                        <app-quiz [exercise]="exercise"
+                                                                  [selectedQuiz]="exercise.quiz"></app-quiz>
                                                     </ng-container>
 
                                                 </div>

@@ -55,7 +55,7 @@ public class ExerciceAdminServiceImpl extends AbstractServiceImpl<Exercice, Exer
     }
 
     public List<Exercice> findBySectionId(Long id) {
-        return dao.findBySectionId(id);
+        return dao.findBySectionIdOrderByNumeroAsc(id);
     }
 
     public int deleteBySectionId(Long id) {

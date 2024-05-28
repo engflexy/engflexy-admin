@@ -29,7 +29,7 @@ public class FonctionCollaboratorServiceImpl extends AbstractServiceImpl<Fonctio
 
 
     public Fonction findByReferenceEntity(Fonction t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

@@ -31,7 +31,7 @@ public class ClassAverageBonusCollaboratorServiceImpl extends AbstractServiceImp
 
 
     public ClassAverageBonus findByReferenceEntity(ClassAverageBonus t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
     public void findOrSaveAssociatedObject(ClassAverageBonus t){
         if( t != null) {

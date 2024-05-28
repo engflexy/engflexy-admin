@@ -43,10 +43,38 @@ import {DisplayMultiImagesComponent} from './classroom/display-multi-images/disp
 import {DisplayVideoComponent} from './classroom/display-video/display-video.component';
 import {SafePipe} from "../../../../shared/utils/safe.pipe";
 import {AngularEditorModule} from "@kolkov/angular-editor";
+import {CreateQuizComponent} from './quiz/create-quiz/create-quiz.component';
+import {TypesQuestionComponent} from './quiz/types-question/types-question.component';
+import {QuizComponent} from "./quiz/quiz/quiz.component";
+import {CorrectTheMistakeComponent} from "./quiz/quiz/correct-the-mistake/correct-the-mistake.component";
+import {
+    ChooseCorrectAlternativeComponent
+} from "./quiz/quiz/choose-correct-alternative/choose-correct-alternative.component";
+import {DragAndDropComponent} from "./quiz/quiz/drag-and-drop/drag-and-drop.component";
+import {PutInOrderComponent} from "./quiz/quiz/put-in-order/put-in-order.component";
+import {TranslatePhraseComponent} from "./quiz/quiz/translate-phrase/translate-phrase.component";
+import {TrueOrFalseComponent} from "./quiz/quiz/true-or-false/true-or-false.component";
+import {WriteCorrectFormComponent} from "./quiz/quiz/write-correct-form/write-correct-form.component";
+import {DividerComponent} from "../../../landing/divider/divider.component";
+import {MatExpansionModule} from "@angular/material/expansion";
+import { EditAnswersComponent } from './quiz/create-quiz/edit-answers/edit-answers.component';
 
 
 @NgModule({
-    declarations: [SafePipe, ClassroomComponent, TypeExercisesComponent, CreateExerciseComponent, DisplayMultiImagesComponent, DisplayVideoComponent],
+    declarations: [SafePipe, ClassroomComponent,
+        TypeExercisesComponent, CreateExerciseComponent,
+        DisplayMultiImagesComponent, DisplayVideoComponent
+        , CreateQuizComponent, TypesQuestionComponent,
+        QuizComponent,
+        CorrectTheMistakeComponent,
+        ChooseCorrectAlternativeComponent,
+        DragAndDropComponent,
+        PutInOrderComponent,
+        TranslatePhraseComponent,
+        TrueOrFalseComponent,
+        WriteCorrectFormComponent,
+        EditAnswersComponent
+    ],
     imports: [
         SectionsRoutes,
         CommonModule,
@@ -76,7 +104,7 @@ import {AngularEditorModule} from "@kolkov/angular-editor";
         MatTooltipModule,
         MatAutocompleteModule, MatDialogModule, MatPaginatorModule,
         MatButtonToggleModule, NgApexchartsModule, MatMenuModule, MatBadgeModule, MatDividerModule,
-        NgImageSliderModule, AngularEditorModule,
+        NgImageSliderModule, AngularEditorModule, DividerComponent, MatExpansionModule,
 
 
     ],

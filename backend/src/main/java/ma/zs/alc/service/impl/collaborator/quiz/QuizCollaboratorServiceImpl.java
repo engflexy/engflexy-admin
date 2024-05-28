@@ -24,15 +24,27 @@ public class QuizCollaboratorServiceImpl extends AbstractServiceImpl<Quiz, QuizC
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Quiz create(Quiz t) {
-        Quiz saved = super.create(t);
-        if (saved != null && t.getQuestions() != null) {
-            t.getQuestions().forEach(element -> {
-                element.setQuiz(saved);
-                questionService.create(element);
-            });
+        if (t != null) {
+            Quiz saved = new Quiz();
+            if (t.getId() != null) {
+                saved = findById(t.getId());
+            }
+            saved.setNumero(t.getNumero());
+            saved.setLib(t.getLib());
+            saved.setRef(t.getRef());
+            saved.setSeuilReussite(t.getSeuilReussite());
+            saved = dao.save(saved);
+            if (!t.getQuestions().isEmpty()) {
+                Quiz finalSaved = saved;
+                t.getQuestions().forEach(qst -> {
+                    qst.setQuiz(finalSaved);
+                    qst = questionService.create(qst);
+                });
+                saved.setQuestions(t.getQuestions());
+            }
+            return saved;
         }
-        return saved;
-
+        return null;
     }
 
     public Quiz findWithAssociatedLists(Long id) {
@@ -60,7 +72,7 @@ public class QuizCollaboratorServiceImpl extends AbstractServiceImpl<Quiz, QuizC
 
 
     public Quiz findByReferenceEntity(Quiz t) {
-        return t == null ? null : dao.findByRef(t.getRef());
+        return (t != null && t.getId() != null) ? dao.findById(t.getId()).orElse(null) : null;
     }
 
     public void findOrSaveAssociatedObject(Quiz t) {

@@ -21,7 +21,7 @@ public abstract class ImageUtil {
         if (img != null) {
             System.out.println("img = " + img.getSize());
             System.out.println("img = " + img.getContentType());
-            if (!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(img.getContentType())) {
+            if (!Arrays.asList(IMAGE_JPEG_VALUE, "image/webp", IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(img.getContentType())) {
                 throw new RuntimeException(img.getOriginalFilename() + NOT_AN_IMAGE_FILE);
             }
             Path userFolder;

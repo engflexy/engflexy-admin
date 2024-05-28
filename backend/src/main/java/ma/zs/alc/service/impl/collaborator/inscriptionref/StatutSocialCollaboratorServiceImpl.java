@@ -29,7 +29,7 @@ public class StatutSocialCollaboratorServiceImpl extends AbstractServiceImpl<Sta
 
 
     public StatutSocial findByReferenceEntity(StatutSocial t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

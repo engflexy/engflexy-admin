@@ -29,7 +29,7 @@ public class SkillCollaboratorServiceImpl extends AbstractServiceImpl<Skill, Ski
 
 
     public Skill findByReferenceEntity(Skill t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

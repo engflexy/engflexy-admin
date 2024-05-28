@@ -29,7 +29,7 @@ public class SkillAdminServiceImpl extends AbstractServiceImpl<Skill, SkillCrite
 
 
     public Skill findByReferenceEntity(Skill t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

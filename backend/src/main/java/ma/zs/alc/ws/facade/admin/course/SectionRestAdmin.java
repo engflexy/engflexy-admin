@@ -1,38 +1,24 @@
-package  ma.zs.alc.ws.facade.admin.course;
+package ma.zs.alc.ws.facade.admin.course;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.dao.criteria.core.course.SectionCriteria;
 import ma.zs.alc.service.facade.admin.course.SectionAdminService;
 import ma.zs.alc.ws.converter.course.SectionConverter;
 import ma.zs.alc.ws.dto.course.SectionDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
+import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
-
-
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
-
-
-import org.springframework.web.multipart.MultipartFile;
-import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/admin/section/")
-public class SectionRestAdmin  extends AbstractController<Section, SectionDto, SectionCriteria, SectionAdminService, SectionConverter> {
-
+public class SectionRestAdmin extends AbstractController<Section, SectionDto, SectionCriteria, SectionAdminService, SectionConverter> {
 
 
     @Operation(summary = "upload one section")
@@ -40,6 +26,7 @@ public class SectionRestAdmin  extends AbstractController<Section, SectionDto, S
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple sections")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -76,15 +63,22 @@ public class SectionRestAdmin  extends AbstractController<Section, SectionDto, S
         return super.update(dto);
     }
 
+    @Operation(summary = "Updates the specified  section")
+    @PutMapping("/fields")
+    public Section updateField(@RequestBody Section dto) {
+        return service.updateField(dto);
+    }
+
     @Operation(summary = "Delete list of section")
     @PostMapping("multiple")
     public ResponseEntity<List<SectionDto>> delete(@RequestBody List<SectionDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified section")
     @DeleteMapping("")
     public ResponseEntity<SectionDto> delete(@RequestBody SectionDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified section")
@@ -92,21 +86,23 @@ public class SectionRestAdmin  extends AbstractController<Section, SectionDto, S
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple sections by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "find by cours id")
     @GetMapping("cours/id/{id}")
-    public List<SectionDto> findByCoursId(@PathVariable Long id){
+    public List<SectionDto> findByCoursId(@PathVariable Long id) {
         return findDtos(service.findByCoursId(id));
     }
+
     @Operation(summary = "delete by cours id")
     @DeleteMapping("cours/id/{id}")
-    public int deleteByCoursId(@PathVariable Long id){
+    public int deleteByCoursId(@PathVariable Long id) {
         return service.deleteByCoursId(id);
     }
 
@@ -141,12 +137,9 @@ public class SectionRestAdmin  extends AbstractController<Section, SectionDto, S
     }
 
 
-
-    public SectionRestAdmin (SectionAdminService service, SectionConverter converter) {
+    public SectionRestAdmin(SectionAdminService service, SectionConverter converter) {
         super(service, converter);
     }
-
-
 
 
 }

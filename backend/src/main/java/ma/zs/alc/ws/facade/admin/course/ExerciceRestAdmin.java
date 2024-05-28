@@ -1,38 +1,24 @@
-package  ma.zs.alc.ws.facade.admin.course;
+package ma.zs.alc.ws.facade.admin.course;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import ma.zs.alc.bean.core.course.Exercice;
 import ma.zs.alc.dao.criteria.core.course.ExerciceCriteria;
 import ma.zs.alc.service.facade.admin.course.ExerciceAdminService;
 import ma.zs.alc.ws.converter.course.ExerciceConverter;
 import ma.zs.alc.ws.dto.course.ExerciceDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
+import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
-
-
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
-
-
-import org.springframework.web.multipart.MultipartFile;
-import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/admin/exercice/")
-public class ExerciceRestAdmin  extends AbstractController<Exercice, ExerciceDto, ExerciceCriteria, ExerciceAdminService, ExerciceConverter> {
-
+public class ExerciceRestAdmin extends AbstractController<Exercice, ExerciceDto, ExerciceCriteria, ExerciceAdminService, ExerciceConverter> {
 
 
     @Operation(summary = "upload one exercice")
@@ -40,6 +26,7 @@ public class ExerciceRestAdmin  extends AbstractController<Exercice, ExerciceDto
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple exercices")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -81,10 +68,11 @@ public class ExerciceRestAdmin  extends AbstractController<Exercice, ExerciceDto
     public ResponseEntity<List<ExerciceDto>> delete(@RequestBody List<ExerciceDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified exercice")
     @DeleteMapping("")
     public ResponseEntity<ExerciceDto> delete(@RequestBody ExerciceDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified exercice")
@@ -92,31 +80,35 @@ public class ExerciceRestAdmin  extends AbstractController<Exercice, ExerciceDto
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple exercices by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "find by contentType id")
     @GetMapping("contentType/id/{id}")
-    public List<ExerciceDto> findByContentTypeId(@PathVariable Long id){
+    public List<ExerciceDto> findByContentTypeId(@PathVariable Long id) {
         return findDtos(service.findByContentTypeId(id));
     }
+
     @Operation(summary = "delete by contentType id")
     @DeleteMapping("contentType/id/{id}")
-    public int deleteByContentTypeId(@PathVariable Long id){
+    public int deleteByContentTypeId(@PathVariable Long id) {
         return service.deleteByContentTypeId(id);
     }
+
     @Operation(summary = "find by section id")
     @GetMapping("section/id/{id}")
-    public List<ExerciceDto> findBySectionId(@PathVariable Long id){
+    public List<ExerciceDto> findBySectionId(@PathVariable Long id) {
         return findDtos(service.findBySectionId(id));
     }
+
     @Operation(summary = "delete by section id")
     @DeleteMapping("section/id/{id}")
-    public int deleteBySectionId(@PathVariable Long id){
+    public int deleteBySectionId(@PathVariable Long id) {
         return service.deleteBySectionId(id);
     }
 
@@ -151,12 +143,9 @@ public class ExerciceRestAdmin  extends AbstractController<Exercice, ExerciceDto
     }
 
 
-
-    public ExerciceRestAdmin (ExerciceAdminService service, ExerciceConverter converter) {
+    public ExerciceRestAdmin(ExerciceAdminService service, ExerciceConverter converter) {
         super(service, converter);
     }
-
-
 
 
 }

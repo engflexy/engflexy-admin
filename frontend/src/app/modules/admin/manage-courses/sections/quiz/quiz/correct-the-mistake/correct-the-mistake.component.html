@@ -1,0 +1,45 @@
+<div *ngIf="!showError" class="flex items-center my-2 flex-row gap-1 flex-wrap">
+    <div class="ubuntu-bold-italic mr-1 text-md">
+        {{question?.numero}}.
+    </div>
+
+    <button
+        [disabled]="!checked"
+        (click)="sound(correctAnswer)"
+        mat-icon-button>
+        <mat-icon
+            class="icon-size-5"
+            [svgIcon]="'heroicons_solid:speaker-wave'"></mat-icon>
+    </button>
+
+    <label [class.hidden]="!is_correct && checked" class="relative block grow overflow-hidden">
+                <textarea [disabled]="checked"
+                          (mouseenter)="showMeAnswer(true)"
+                          (mouseleave)="showMeAnswer(false)"
+                          [class.hidden]="!is_correct && checked"
+                          [(ngModel)]="value"
+                          [class.correct]="is_correct===true"
+                          [class.incorrect]="is_correct===false"
+                          [class.border-b]="is_correct===null"
+                          [class.border-gray-100]="is_correct===null"
+                          (focusout)="check()"
+                          name="sentence"
+                          class="w-full  pb-0 font-ubuntu   bg-transparent focus-within:border-blue-600
+                      p-2.5 placeholder-transparent focus:border-blue-600 focus:outline-none focus:ring-0">
+                </textarea>
+    </label>
+    <div *ngIf="!is_correct && checked" class="flex flex-col items-center">
+        <p class="font-ubuntu p-2 font-bold m-0 correct-answer ">{{correctAnswer}}</p>
+        <p class="font-ubuntu line-through m-0">{{value}}</p>
+    </div>
+
+</div>
+
+<div *ngIf="showMe" class="w-full my-2 rounded-lg bg-green-200">
+    <p class="font-ubuntu text-green-800 p-2 font-bold m-0 ">{{correctAnswer}}</p>
+</div>
+
+
+<div *ngIf="showError" class="w-full  text-center flex-col items-center p-4">
+    can't load question!
+</div>

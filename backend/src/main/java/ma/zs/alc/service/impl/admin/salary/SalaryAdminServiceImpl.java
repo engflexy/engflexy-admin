@@ -31,7 +31,7 @@ public class SalaryAdminServiceImpl extends AbstractServiceImpl<Salary, SalaryCr
 
 
     public Salary findByReferenceEntity(Salary t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
     public void findOrSaveAssociatedObject(Salary t){
         if( t != null) {

@@ -29,7 +29,7 @@ public class InteretEtudiantCollaboratorServiceImpl extends AbstractServiceImpl<
 
 
     public InteretEtudiant findByReferenceEntity(InteretEtudiant t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

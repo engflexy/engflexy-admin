@@ -7,3 +7,12 @@ export function generateRandomString(length: number): string {
     }
     return result;
 }
+
+// global-methods.ts
+export function compareObjects(object1: any, object2: any) {
+    return object1 && object2 && object1.id === object2.id;
+}
+
+export function compareObjectsName(object1: any, object2: any) {
+    return object1 && object2 && object1.name === object2.name;
+}

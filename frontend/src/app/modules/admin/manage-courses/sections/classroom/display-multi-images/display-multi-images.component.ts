@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ExerciceDto} from "../../../../../../shared/model/course/Exercice.model";
 
-class ImageObject {
+export class ImageObject {
     image: string
     thumbImage: string
     alt: string

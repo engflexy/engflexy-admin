@@ -11,7 +11,6 @@ export class ExerciceDto extends BaseDto {
     public description: string;
 
     public libelle: string;
-
     public numero: null | number;
     public contentType: ContentTypeDto;
     public section: SectionDto;

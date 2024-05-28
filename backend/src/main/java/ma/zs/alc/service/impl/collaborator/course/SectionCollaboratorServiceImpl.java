@@ -45,6 +45,18 @@ public class SectionCollaboratorServiceImpl extends AbstractServiceImpl<Section,
         return result;
     }
 
+    public List<Section> findListWithAssociatedListsByCoursId(Long id) {
+        List<Section> sections = findByCoursId(id);
+        if (!sections.isEmpty()) {
+            sections.forEach(result -> {
+                if (result != null && result.getId() != null) {
+                    result.setExercices(exerciceService.findBySectionId(id));
+                }
+            });
+        }
+        return sections;
+    }
+
     @Transactional
     public void deleteAssociatedLists(Long id) {
         quizService.deleteBySectionId(id);
@@ -61,6 +73,15 @@ public class SectionCollaboratorServiceImpl extends AbstractServiceImpl<Section,
         }
     }
 
+    public Section updateField(Section section) {
+        if (section.getId() != null) {
+            Section saved = findById(section.getId());
+            saved.setDescription(section.getDescription());
+            saved.setLibelle(section.getLibelle());
+            section = dao.save(saved);
+        }
+        return section;
+    }
 
     public void findOrSaveAssociatedObject(Section t) {
         if (t != null) {
@@ -69,7 +90,7 @@ public class SectionCollaboratorServiceImpl extends AbstractServiceImpl<Section,
     }
 
     public List<Section> findByCoursId(Long id) {
-        return dao.findByCoursId(id);
+        return dao.findByCoursIdOrderByNumeroAsc(id);
     }
 
     public int deleteByCoursId(Long id) {

@@ -1,27 +1,17 @@
 package ma.zs.alc.bean.core.quiz;
 
-import java.util.Objects;
-
-
-
-
-
-import ma.zs.alc.bean.core.quiz.Question;
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
+import ma.zs.alc.zynerator.audit.AuditBusinessObject;
+
 import java.util.Objects;
-
-
 
 
 @Entity
 @Table(name = "reponse")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class Reponse   extends AuditBusinessObject     {
+public class Reponse extends AuditBusinessObject {
 
     private Long id;
 
@@ -29,71 +19,80 @@ public class Reponse   extends AuditBusinessObject     {
     private String ref;
     @Column(length = 500)
     private String lib;
-    @Column(length = 500)
-    private String etatReponse;
-    private Long numero ;
+    private Boolean etatReponse;
+    private Long numero;
 
-    private Question question ;
+    private Question question;
 
 
-    public Reponse(){
+    public Reponse() {
         super();
     }
 
-    public Reponse(Long id){
+    public Reponse(Long id) {
         this.id = id;
     }
 
-    public Reponse(Long id,String lib){
+    public Reponse(Long id, String lib) {
         this.id = id;
-        this.lib = lib ;
-    }
-    public Reponse(String lib){
-        this.lib = lib ;
+        this.lib = lib;
     }
 
-
+    public Reponse(String lib) {
+        this.lib = lib;
+    }
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    public Long getId(){
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
         return this.id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getRef(){
+
+    public String getRef() {
         return this.ref;
     }
-    public void setRef(String ref){
+
+    public void setRef(String ref) {
         this.ref = ref;
     }
-    public String getLib(){
+
+    public String getLib() {
         return this.lib;
     }
-    public void setLib(String lib){
+
+    public void setLib(String lib) {
         this.lib = lib;
     }
-    public String getEtatReponse(){
+
+    public Boolean getEtatReponse() {
         return this.etatReponse;
     }
-    public void setEtatReponse(String etatReponse){
+
+    public void setEtatReponse(Boolean etatReponse) {
         this.etatReponse = etatReponse;
     }
-    public Long getNumero(){
+
+    public Long getNumero() {
         return this.numero;
     }
-    public void setNumero(Long numero){
+
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question")
-    public Question getQuestion(){
+    public Question getQuestion() {
         return this.question;
     }
-    public void setQuestion(Question question){
+
+    public void setQuestion(Question question) {
         this.question = question;
     }
 

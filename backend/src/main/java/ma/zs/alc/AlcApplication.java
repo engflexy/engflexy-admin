@@ -333,7 +333,7 @@ public class AlcApplication {
             Reponse item = new Reponse();
             item.setRef(fakeString(ref, i));
             item.setLib(fakeString(lib, i));
-            item.setEtatReponse(fakeString(etatReponse, i));
+            item.setEtatReponse(true);
             item.setNumero(fakeLong(numero, i));
             reponseService.create(item);
         }

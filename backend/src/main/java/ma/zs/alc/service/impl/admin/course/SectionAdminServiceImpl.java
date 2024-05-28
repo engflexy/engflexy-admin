@@ -3,7 +3,6 @@ package ma.zs.alc.service.impl.admin.course;
 
 import ma.zs.alc.bean.core.course.Exercice;
 import ma.zs.alc.bean.core.course.Section;
-import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.dao.criteria.core.course.SectionCriteria;
 import ma.zs.alc.dao.facade.core.course.SectionDao;
 import ma.zs.alc.dao.specification.core.course.SectionSpecification;
@@ -37,6 +36,16 @@ public class SectionAdminServiceImpl extends AbstractServiceImpl<Section, Sectio
 
     }
 
+    public Section updateField(Section section) {
+        if (section.getId() != null) {
+            Section saved = findById(section.getId());
+            saved.setDescription(section.getDescription());
+            saved.setLibelle(section.getLibelle());
+            section = dao.save(saved);
+        }
+        return section;
+    }
+
     public Section findWithAssociatedLists(Long id) {
         Section result = dao.findById(id).orElse(null);
         if (result != null && result.getId() != null) {
@@ -62,7 +71,6 @@ public class SectionAdminServiceImpl extends AbstractServiceImpl<Section, Sectio
     }
 
 
-
     public void findOrSaveAssociatedObject(Section t) {
         if (t != null) {
             t.setCours(coursService.findOrSave(t.getCours()));
@@ -70,7 +78,7 @@ public class SectionAdminServiceImpl extends AbstractServiceImpl<Section, Sectio
     }
 
     public List<Section> findByCoursId(Long id) {
-        return dao.findByCoursId(id);
+        return dao.findByCoursIdOrderByNumeroAsc(id);
     }
 
     public int deleteByCoursId(Long id) {

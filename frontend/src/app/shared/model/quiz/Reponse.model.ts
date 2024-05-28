@@ -2,17 +2,17 @@ import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {QuestionDto} from './Question.model';
 
-export class ReponseDto extends BaseDto{
+export class ReponseDto extends BaseDto {
 
     public ref: string;
 
     public lib: string;
 
-    public etatReponse: string;
+    public etatReponse: boolean;
 
     public numero: null | number;
 
-    public question: QuestionDto ;
+    public question: QuestionDto;
 
 
     constructor() {
@@ -20,9 +20,9 @@ export class ReponseDto extends BaseDto{
 
         this.ref = '';
         this.lib = '';
-        this.etatReponse = '';
-        this.numero = null;
+        this.etatReponse = false;
+        this.numero = 0;
 
-        }
+    }
 
 }

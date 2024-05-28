@@ -4,13 +4,14 @@ package ma.zs.alc.service.impl.collaborator.course;
 import ma.zs.alc.bean.core.course.Exercice;
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.bean.core.courseref.ContentType;
+import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.dao.criteria.core.course.ExerciceCriteria;
 import ma.zs.alc.dao.facade.core.course.ExerciceDao;
-import ma.zs.alc.dao.facade.core.quiz.QuizDao;
 import ma.zs.alc.dao.specification.core.course.ExerciceSpecification;
 import ma.zs.alc.service.facade.collaborator.course.ExerciceCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.SectionCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.courseref.ContentTypeCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.quiz.QuizCollaboratorService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,17 @@ public class ExerciceCollaboratorServiceImpl extends AbstractServiceImpl<Exercic
         Section section = sectionService.findById(exercice.getSection().getId());
         exercice.setContentType(type);
         exercice.setSection(section);
+        Quiz quiz = null;
         if (exercice.getQuiz() != null) {
-            exercice.setQuiz(quizDao.findById(exercice.getQuiz().getId()).orElse(null));
-        } else {
-            exercice.setQuiz(null);
+            quiz = quizCollaboratorService.create(exercice.getQuiz());
         }
-        return dao.save(exercice);
+        exercice.setQuiz(quiz);
+        Exercice ex = dao.save(exercice);
+        if (quiz != null) {
+            quiz.setExercice(ex);
+            quizCollaboratorService.update(quiz);
+        }
+        return ex;
     }
 
 
@@ -56,7 +62,7 @@ public class ExerciceCollaboratorServiceImpl extends AbstractServiceImpl<Exercic
     }
 
     public List<Exercice> findBySectionId(Long id) {
-        return dao.findBySectionId(id);
+        return dao.findBySectionIdOrderByNumeroAsc(id);
     }
 
     public int deleteBySectionId(Long id) {
@@ -82,7 +88,7 @@ public class ExerciceCollaboratorServiceImpl extends AbstractServiceImpl<Exercic
     @Autowired
     private SectionCollaboratorService sectionService;
     @Autowired
-    private QuizDao quizDao;
+    private QuizCollaboratorService quizCollaboratorService;
 
     public ExerciceCollaboratorServiceImpl(ExerciceDao dao) {
         super(dao);

@@ -31,7 +31,7 @@ public class InviteStudentAdminServiceImpl extends AbstractServiceImpl<InviteStu
 
 
     public InviteStudent findByReferenceEntity(InviteStudent t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
     public void findOrSaveAssociatedObject(InviteStudent t){
         if( t != null) {

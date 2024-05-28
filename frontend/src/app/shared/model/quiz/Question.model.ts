@@ -4,7 +4,7 @@ import {QuizDto} from './Quiz.model';
 import {TypeDeQuestionDto} from '../quizref/TypeDeQuestion.model';
 import {ReponseDto} from './Reponse.model';
 
-export class QuestionDto extends BaseDto{
+export class QuestionDto extends BaseDto {
 
     public ref: string;
 
@@ -20,9 +20,9 @@ export class QuestionDto extends BaseDto{
 
     public pointReponsefausse: null | number;
 
-    public typeDeQuestion: TypeDeQuestionDto ;
-    public quiz: QuizDto ;
-     public reponses: Array<ReponseDto>;
+    public typeDeQuestion: TypeDeQuestionDto;
+    public quiz: QuizDto;
+    public reponses: Array<ReponseDto>;
 
 
     constructor() {
@@ -32,12 +32,11 @@ export class QuestionDto extends BaseDto{
         this.libelle = '';
         this.urlImg = '';
         this.urlVideo = '';
-        this.numero = null;
-        this.pointReponseJuste = null;
-        this.pointReponsefausse = null;
-        this.quiz = new QuizDto() ;
+        this.numero = 1;
+        this.pointReponseJuste = 1;
+        this.pointReponsefausse = 0;
+        this.quiz = new QuizDto();
         this.reponses = new Array<ReponseDto>();
-
-        }
+    }
 
 }

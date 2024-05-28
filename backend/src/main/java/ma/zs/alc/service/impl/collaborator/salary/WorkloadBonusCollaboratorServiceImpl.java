@@ -29,7 +29,7 @@ public class WorkloadBonusCollaboratorServiceImpl extends AbstractServiceImpl<Wo
 
 
     public WorkloadBonus findByReferenceEntity(WorkloadBonus t){
-        return t==null? null : dao.findByCode(t.getCode());
+        return t.getId() == null ? null : dao.findById(t.getId()).orElse(null);
     }
 
 

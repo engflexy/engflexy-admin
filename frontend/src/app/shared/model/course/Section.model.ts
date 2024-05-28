@@ -15,9 +15,10 @@ export class SectionDto extends BaseDto {
     public exercices: Array<ExerciceDto>;
 
 
-    constructor() {
+    constructor(id?: number) {
         super();
 
+        this.id = id ? id : null;
         this.code = '';
         this.libelle = '';
         this.description = '';

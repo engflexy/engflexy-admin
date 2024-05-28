@@ -27,9 +27,8 @@ public class Quiz extends AuditBusinessObject {
     private LocalDateTime dateFin;
     private Long numero;
     private Long seuilReussite;
-
+    @JsonIgnore
     private Exercice exercice;
-
     private List<Question> questions;
 
     public Quiz() {
@@ -104,7 +103,6 @@ public class Quiz extends AuditBusinessObject {
     }
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     public Exercice getExercice() {
         return this.exercice;
     }
