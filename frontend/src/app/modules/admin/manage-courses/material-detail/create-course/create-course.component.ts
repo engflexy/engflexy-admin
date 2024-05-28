@@ -87,7 +87,7 @@ export class CreateCourseComponent {
     }
 
     private isImageFile(file: File): boolean {
-        return ["image/gif", "image/jpeg", "image/png"].includes(file.type);
+        return ["image/gif", "image/webp", "image/jpeg", "image/png"].includes(file.type);
     }
 
     save() {

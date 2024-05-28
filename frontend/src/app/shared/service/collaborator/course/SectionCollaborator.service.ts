@@ -33,4 +33,9 @@ export class SectionCollaboratorService extends AbstractService<SectionDto, Sect
     findAllByCourseId(courseId: number): Observable<SectionDto[]> {
         return this.http.get<SectionDto[]>(this.API + `cours/id/${courseId}`)
     }
+
+    updateFields(section: SectionDto): Observable<SectionDto> {
+        return this.http.put<SectionDto>(this.API + `fields`, section)
+    }
+
 }
