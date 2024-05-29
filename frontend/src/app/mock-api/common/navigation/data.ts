@@ -42,16 +42,16 @@ export const classroomNavigation: FuseNavigationItem[] = [
         id: 'Lesson',
         title: 'Lesson',
         type: 'basic',
-        icon: 'heroicons_outline:chart-pie',
-        relativeToRoute: 'lesson',
-        //link: 'lesson'
+        icon: 'heroicons_solid:briefcase',
+        relativeToRoute: 'true',
+        link: 'lesson'
     }, {
         id: 'homework',
         title: 'Homework',
         type: 'basic',
-        relativeToRoute: 'homework',
-        icon: 'heroicons_outline:chart-pie',
-        //link: 'homework'
+        relativeToRoute: 'true',
+        icon: 'mat_outline:collections_bookmark',
+        link: 'homework'
     },
 ];
 

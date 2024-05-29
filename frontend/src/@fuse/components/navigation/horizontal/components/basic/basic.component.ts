@@ -83,7 +83,13 @@ export class FuseHorizontalNavigationBasicItemComponent implements OnInit, OnDes
     }
 
     navigateTo(link: string | undefined) {
-        const url = this.router.url
+        let url = this.router.url
+        url = url.slice(0, url.lastIndexOf('/'))
         this.router.navigate([`${url}/${link}`])
+    }
+
+    isActive(link): boolean {
+        const url = this.router.url
+        return url.includes(link)
     }
 }

@@ -1,6 +1,7 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {ClassroomComponent} from "./classroom/classroom.component";
+import {HomeworkComponent} from "./homework/homework.component";
 
 @NgModule({
     imports: [
@@ -14,6 +15,10 @@ import {ClassroomComponent} from "./classroom/classroom.component";
                 {
                     path: 'lesson',
                     component: ClassroomComponent
+                },
+                {
+                    path: 'homework',
+                    component: HomeworkComponent
                 },
             ]
         ),

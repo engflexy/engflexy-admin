@@ -164,6 +164,10 @@ public class Parcours extends AuditBusinessObject {
         return label;
     }
 
+    public void increaseNreCourse() {
+        this.nombreCours++;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

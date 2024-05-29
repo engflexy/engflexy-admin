@@ -22,6 +22,12 @@ import {ReponseDto} from "../../../../../../shared/model/quiz/Reponse.model";
 import {MatDialog} from "@angular/material/dialog";
 import {TypesQuestionComponent} from "../types-question/types-question.component";
 import {EditAnswersComponent} from "./edit-answers/edit-answers.component";
+import {
+    ReponseCollaboratorService
+} from "../../../../../../shared/service/collaborator/quiz/ReponseCollaborator.service";
+import {
+    QuestionCollaboratorService
+} from "../../../../../../shared/service/collaborator/quiz/QuestionCollaborator.service";
 
 @Component({
     selector: 'app-create-quiz',
@@ -41,12 +47,16 @@ export class CreateQuizComponent implements OnInit {
     editField: number = -1;
     editQstField: number = -1;
     editing: boolean = false
+    selectedQuestion: QuestionDto
+
     constructor(
         private imageService: ImagesService,
         private alert: FuseAlertService,
         private dialog: MatDialog,
         private ref: ChangeDetectorRef,
         private quizService: QuizCollaboratorService,
+        private reponseService: ReponseCollaboratorService,
+        private questionService: QuestionCollaboratorService,
         private typeQuestion: TypeDeQuestionCollaboratorService,
         private sectionService: SectionCollaboratorService,
         private exerciseService: ExerciceCollaboratorService,) {
@@ -190,19 +200,25 @@ export class CreateQuizComponent implements OnInit {
         this.answer = new ReponseDto()
     }
 
-    delete(i: number) {
+    delete(i: number, answer: ReponseDto) {
         this.question.reponses.splice(i, 1)
         //update order of questions
         for (let j = 0; j < this.question.reponses.length; j++) {
             this.question.reponses[j].numero = j + 1
         }
+        if (answer?.id && answer?.id !== 0) {
+            this.reponseService.delete(answer).subscribe(res => console.log(res))
+        }
     }
 
-    deleteQst(i: number) {
+    deleteQst(i: number, qst: QuestionDto) {
         this.quiz.questions.splice(i, 1)
         //update order of questions
         for (let j = 0; j < this.quiz.questions.length; j++) {
             this.quiz.questions[j].numero = j + 1
+        }
+        if (qst?.id && qst?.id !== 0) {
+            this.questionService.delete(qst).subscribe(res => console.log(res))
         }
     }
 
@@ -212,16 +228,21 @@ export class CreateQuizComponent implements OnInit {
     }
 
 
-
-
     openAnswers(question: QuestionDto) {
-        this.dialog.open(EditAnswersComponent, {
+        const dlg = this.dialog.open(EditAnswersComponent, {
             autoFocus: false,
             data: question.reponses,
             height: "auto",
+            disableClose: true,
             width: "calc(100% - 30px)",
             maxWidth: "100%",
             maxHeight: "100%"
         });
+        dlg.afterClosed().subscribe(result => {
+            console.log(result)
+            if (result && result?.length > 0) {
+                question.reponses = result
+            }
+        })
     }
 }

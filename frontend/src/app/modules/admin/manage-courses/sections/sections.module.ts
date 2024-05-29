@@ -58,6 +58,7 @@ import {WriteCorrectFormComponent} from "./quiz/quiz/write-correct-form/write-co
 import {DividerComponent} from "../../../landing/divider/divider.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { EditAnswersComponent } from './quiz/create-quiz/edit-answers/edit-answers.component';
+import { HomeworkComponent } from './homework/homework.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { EditAnswersComponent } from './quiz/create-quiz/edit-answers/edit-answe
         TranslatePhraseComponent,
         TrueOrFalseComponent,
         WriteCorrectFormComponent,
-        EditAnswersComponent
+        EditAnswersComponent,
+        HomeworkComponent
     ],
     imports: [
         SectionsRoutes,

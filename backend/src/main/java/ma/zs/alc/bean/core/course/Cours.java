@@ -173,6 +173,10 @@ public class Cours extends AuditBusinessObject {
         return label;
     }
 
+    public void increaseNreSection() {
+        this.nombreSectionFinalise++;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

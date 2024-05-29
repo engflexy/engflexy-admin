@@ -34,10 +34,6 @@ public class ExerciceCollaboratorServiceImpl extends AbstractServiceImpl<Exercic
         }
         exercice.setQuiz(quiz);
         Exercice ex = dao.save(exercice);
-        if (quiz != null) {
-            quiz.setExercice(ex);
-            quizCollaboratorService.update(quiz);
-        }
         return ex;
     }
 

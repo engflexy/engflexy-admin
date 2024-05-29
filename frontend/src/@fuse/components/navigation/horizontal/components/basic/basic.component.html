@@ -7,7 +7,21 @@
 
     <!-- Item with an internal link -->
     <ng-container
-        *ngIf="item.link && !item.externalLink && !item.function && !item.disabled">
+        *ngIf="item.link && !item.externalLink && !item.function && !item.disabled && item.relativeToRoute === 'true'">
+        <div
+            class="fuse-horizontal-navigation-item"
+            [ngClass]="{'fuse-horizontal-navigation-item-active-forced': isActive(item.link)}"
+            (click)="navigateTo(item.link)"
+            [routerLinkActive]="'fuse-horizontal-navigation-item-active'"
+            [routerLinkActiveOptions]="isActiveMatchOptions"
+            [matTooltip]="item.tooltip || ''">
+            <ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+        </div>
+    </ng-container>
+
+    <!-- Item with an internal link -->
+    <ng-container
+        *ngIf="item.link && !item.externalLink && !item.function && !item.disabled && item.relativeToRoute!== 'true'">
         <div
             class="fuse-horizontal-navigation-item"
             [ngClass]="{'fuse-horizontal-navigation-item-active-forced': item.active}"
@@ -24,7 +38,8 @@
     </ng-container>
 
     <!-- Item with an external link -->
-    <ng-container *ngIf="item.link && item.externalLink && !item.function && !item.disabled">
+    <ng-container
+        *ngIf="item.link && item.externalLink && !item.function && !item.disabled  && item.relativeToRoute!== 'true'">
         <a
             class="fuse-horizontal-navigation-item"
             [href]="item.link"
@@ -35,7 +50,7 @@
     </ng-container>
 
     <!-- Item with a function -->
-    <ng-container *ngIf="!item.link && item.function && !item.disabled">
+    <ng-container *ngIf="!item.link && item.function && !item.disabled  && item.relativeToRoute!== 'true'">
         <div
             class="fuse-horizontal-navigation-item"
             [ngClass]="{'fuse-horizontal-navigation-item-active-forced': item.active}"
@@ -46,7 +61,8 @@
     </ng-container>
 
     <!-- Item with an internal link and function -->
-    <ng-container *ngIf="item.link && !item.externalLink && item.function && !item.disabled">
+    <ng-container
+        *ngIf="item.link && !item.externalLink && item.function && !item.disabled  && item.relativeToRoute!== 'true'">
         <div
             class="fuse-horizontal-navigation-item"
             [ngClass]="{'fuse-horizontal-navigation-item-active-forced': item.active}"
@@ -64,7 +80,8 @@
     </ng-container>
 
     <!-- Item with an external link and function -->
-    <ng-container *ngIf="item.link && item.externalLink && item.function && !item.disabled">
+    <ng-container
+        *ngIf="item.link && item.externalLink && item.function && !item.disabled  && item.relativeToRoute!== 'true'">
         <a
             class="fuse-horizontal-navigation-item"
             [href]="item.link"
@@ -77,7 +94,7 @@
     </ng-container>
 
     <!-- Item with a no link and no function -->
-    <ng-container *ngIf="!item.link && !item.function && !item.disabled && !item.relativeToRoute">
+    <ng-container *ngIf="!item.link && !item.function && !item.disabled  && item.relativeToRoute!== 'true'">
         <div
             class="fuse-horizontal-navigation-item"
             [ngClass]="{'fuse-horizontal-navigation-item-active-forced': item.active}"
@@ -86,16 +103,6 @@
         </div>
     </ng-container>
 
-    <!-- Item with route a no link and no function -->
-    <ng-container *ngIf="item?.relativeToRoute && !item.link && !item.function && !item.disabled">
-        <div
-            (click)="navigateTo(item?.relativeToRoute)"
-            class="fuse-horizontal-navigation-item"
-            [ngClass]="{'fuse-horizontal-navigation-item-active-forced': item.active}"
-            [matTooltip]="item.tooltip || ''">
-            <ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
-        </div>
-    </ng-container>
 
     <!-- Item is disabled -->
     <ng-container *ngIf="item.disabled">

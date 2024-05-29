@@ -21,7 +21,6 @@ public class Reponse extends AuditBusinessObject {
     private String lib;
     private Boolean etatReponse;
     private Long numero;
-
     private Question question;
 
 

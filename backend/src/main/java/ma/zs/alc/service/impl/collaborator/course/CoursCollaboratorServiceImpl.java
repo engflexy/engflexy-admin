@@ -2,10 +2,12 @@ package ma.zs.alc.service.impl.collaborator.course;
 
 
 import ma.zs.alc.bean.core.course.Cours;
+import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.bean.core.homework.HomeWork;
 import ma.zs.alc.dao.criteria.core.course.CoursCriteria;
 import ma.zs.alc.dao.facade.core.course.CoursDao;
+import ma.zs.alc.dao.facade.core.course.ParcoursDao;
 import ma.zs.alc.dao.specification.core.course.CoursSpecification;
 import ma.zs.alc.service.facade.collaborator.course.CoursCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
@@ -27,17 +29,23 @@ public class CoursCollaboratorServiceImpl extends AbstractServiceImpl<Cours, Cou
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Cours create(Cours t) {
         Cours saved = super.create(t);
-        if (saved != null && t.getSections() != null) {
-            t.getSections().forEach(element -> {
-                element.setCours(saved);
-                sectionService.create(element);
-            });
-        }
-        if (saved != null && t.getHomeWorks() != null) {
-            t.getHomeWorks().forEach(element -> {
-                element.setCours(saved);
-                homeWorkService.create(element);
-            });
+        if (saved != null) {
+            Parcours parcours = parcoursService.findById(saved.getParcours().getId());
+            parcours.increaseNreCourse();
+            parcoursDao.save(parcours);
+
+            if (t.getSections() != null) {
+                t.getSections().forEach(element -> {
+                    element.setCours(saved);
+                    sectionService.create(element);
+                });
+            }
+            if (t.getHomeWorks() != null) {
+                t.getHomeWorks().forEach(element -> {
+                    element.setCours(saved);
+                    homeWorkService.create(element);
+                });
+            }
         }
         return saved;
 
@@ -107,6 +115,8 @@ public class CoursCollaboratorServiceImpl extends AbstractServiceImpl<Cours, Cou
 
     @Autowired
     private ParcoursCollaboratorService parcoursService;
+    @Autowired
+    private ParcoursDao parcoursDao;
     @Autowired
     private SectionCollaboratorService sectionService;
     @Autowired

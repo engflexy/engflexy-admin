@@ -1,9 +1,11 @@
 package ma.zs.alc.service.impl.collaborator.course;
 
 
+import ma.zs.alc.bean.core.course.Cours;
 import ma.zs.alc.bean.core.course.Exercice;
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.dao.criteria.core.course.SectionCriteria;
+import ma.zs.alc.dao.facade.core.course.CoursDao;
 import ma.zs.alc.dao.facade.core.course.SectionDao;
 import ma.zs.alc.dao.specification.core.course.SectionSpecification;
 import ma.zs.alc.service.facade.collaborator.course.CoursCollaboratorService;
@@ -26,13 +28,19 @@ public class SectionCollaboratorServiceImpl extends AbstractServiceImpl<Section,
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Section create(Section t) {
         Section saved = super.create(t);
-
-        if (saved != null && t.getExercices() != null) {
-            t.getExercices().forEach(element -> {
-                element.setSection(saved);
-                exerciceService.create(element);
-            });
+        if (saved != null) {
+            Cours cours = coursService.findById(saved.getCours().getId());
+            cours.increaseNreSection();
+            System.out.println("LINK FINALIST ==> " + cours.getNombreSectionFinalise());
+            coursDao.save(cours);
+            if (t.getExercices() != null) {
+                t.getExercices().forEach(element -> {
+                    element.setSection(saved);
+                    exerciceService.create(element);
+                });
+            }
         }
+
         return saved;
 
     }
@@ -117,6 +125,8 @@ public class SectionCollaboratorServiceImpl extends AbstractServiceImpl<Section,
     private ExerciceCollaboratorService exerciceService;
     @Autowired
     private CoursCollaboratorService coursService;
+    @Autowired
+    private CoursDao coursDao;
 
     public SectionCollaboratorServiceImpl(SectionDao dao) {
         super(dao);

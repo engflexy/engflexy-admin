@@ -86,6 +86,6 @@ export class MaterialDetailComponent implements OnInit {
     }
 
     navigateToSections(item: CoursDto) {
-        this.router.navigate([`courses/${item?.id}`], {relativeTo: this.route});
+        this.router.navigate([`courses/${item?.id}/lesson`], {relativeTo: this.route});
     }
 }

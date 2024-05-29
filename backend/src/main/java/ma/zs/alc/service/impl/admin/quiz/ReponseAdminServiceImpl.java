@@ -26,26 +26,42 @@ import java.util.List;
 public class ReponseAdminServiceImpl extends AbstractServiceImpl<Reponse, ReponseCriteria, ReponseDao> implements ReponseAdminService {
 
 
-
-
-
-
-    public Reponse findByReferenceEntity(Reponse t){
-        return t==null? null : dao.findByRef(t.getRef());
+    public Reponse findByReferenceEntity(Reponse t) {
+        return (t != null && t.getId() != null) ? dao.findById(t.getId()).orElse(null) : null;
     }
-    public void findOrSaveAssociatedObject(Reponse t){
-        if( t != null) {
+
+    @Override
+    public Reponse create(Reponse reponse) {
+        if (reponse != null) {
+            Reponse saved = new Reponse();
+            if (reponse.getId() != null) saved = findById(reponse.getId());
+            saved.setEtatReponse(reponse.getEtatReponse());
+            saved.setLib(reponse.getLib());
+            saved.setRef(reponse.getRef());
+            saved.setQuestion(reponse.getQuestion());
+            saved.setNumero(reponse.getNumero());
+            System.out.println("ID ===> " + saved.getId());
+            reponse = dao.save(saved);
+            System.out.println("reponse ===> " + reponse.getId());
+        }
+        return reponse;
+    }
+
+    public void findOrSaveAssociatedObject(Reponse t) {
+        if (t != null) {
             t.setQuestion(questionService.findOrSave(t.getQuestion()));
         }
     }
 
-    public List<Reponse> findByQuestionId(Long id){
+    public List<Reponse> findByQuestionId(Long id) {
         return dao.findByQuestionId(id);
     }
-    public int deleteByQuestionId(Long id){
+
+    public int deleteByQuestionId(Long id) {
         return dao.deleteByQuestionId(id);
     }
-    public long countByQuestionLibelle(String libelle){
+
+    public long countByQuestionLibelle(String libelle) {
         return dao.countByQuestionLibelle(libelle);
     }
 
@@ -53,9 +69,10 @@ public class ReponseAdminServiceImpl extends AbstractServiceImpl<Reponse, Repons
         return dao.findAllOptimized();
     }
 
-
-
-
+    @Override
+    public Reponse update(Reponse reponse) {
+        return create(reponse);
+    }
 
     public void configure() {
         super.configure(Reponse.class, ReponseSpecification.class);
