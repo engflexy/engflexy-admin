@@ -59,11 +59,8 @@ public class UserConverter extends AbstractConverter<User, UserDto> {
             if(dto.getPasswordChanged() != null)
                 item.setPasswordChanged(dto.getPasswordChanged());
 
-            if(StringUtil.isNotEmpty(dto.getFirstName()))
-                item.setFirstName(dto.getFirstName());
-
-            if(StringUtil.isNotEmpty(dto.getLastName()))
-                item.setLastName(dto.getLastName());
+            if(StringUtil.isNotEmpty(dto.getFullName()))
+                item.setFullName(dto.getFullName());
 
             if(StringUtil.isNotEmpty(dto.getPhone()))
                 item.setPhone(dto.getPhone());

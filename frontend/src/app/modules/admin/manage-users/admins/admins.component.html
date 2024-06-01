@@ -1,0 +1,98 @@
+<div class="w-full">
+    <!-- Card #24 -->
+    <fuse-card class="flex flex-col w-full px-8 pt-6 pb-4 filter-list">
+        <div class="flex  items-center gap-2 justify-between">
+
+            <div class="text-xl cursor-pointer border-dotted border-2 flex items-center
+            p-5 bg-gray-100 dark:bg-gray-600
+            rounded-sm content-center flex-grow gap-3 font-semibold leading-tight">
+                <div class="w-full  group items-center justify-center flex text-hint">
+                    <span>create new student</span>
+                    <mat-icon class="mr-2 text-hint" svgIcon="heroicons_mini:plus"></mat-icon>
+                </div>
+            </div>
+
+            <div class="-mr-3">
+                <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="listCard02Menu">
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:ellipsis-vertical'"></mat-icon>
+                </button>
+                <mat-menu #listCard02Menu="matMenu">
+                    <button mat-menu-item>Search for groups</button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <app-divider class="my-6" color="white" text=" "></app-divider>
+
+        <div class="flex gap-4 flex-col mt-5">
+            <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
+                <img
+                    class="w-14 h-14 mr-4 rounded-none object-cover"
+                    src="assets/images/cards/coffee-shop-01-320x200.jpg"
+                    alt="Card cover image">
+
+                <div class="flex flex-grow flex-col min-w-0">
+                    <div class="font-medium leading-none">The Port Cafe</div>
+                    <div class="text-md truncate leading-none mt-1">Best cafe of the downtown New York</div>
+                    <div class="text-md leading-none text-secondary mt-2">1.2k followers</div>
+                </div>
+
+                <div class="flex flex-row flex-wrap gap-2">
+                    <button
+                        mat-icon-button color="primary">
+                        <mat-icon class="icon-size-4"
+                                  svgIcon="heroicons_mini:arrow-uturn-right"></mat-icon>
+                    </button>
+
+                    <button mat-icon-button color="warn">
+                        <mat-icon class="icon-size-4"
+                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                    </button>
+
+                </div>
+            </div>
+            <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
+                <div
+                    class="w-14 h-14 mr-4 bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-hint text-2xl">
+                    <span>T</span>
+                </div>
+
+                <div class="flex flex-grow flex-col min-w-0">
+                    <div class="font-medium leading-none">The Port Cafe</div>
+                    <div class="text-md truncate leading-none mt-1">Best cafe of the downtown New York</div>
+                    <div class="text-md leading-none text-secondary mt-2">1.2k followers</div>
+                </div>
+
+                <div class="flex flex-row flex-wrap gap-2">
+                    <button
+                        mat-icon-button color="primary">
+                        <mat-icon class="icon-size-4"
+                                  svgIcon="heroicons_mini:arrow-uturn-right"></mat-icon>
+                    </button>
+
+                    <button mat-icon-button color="warn">
+                        <mat-icon class="icon-size-4"
+                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- load more events -->
+        <div class="w-full  flex justify-center items-center my-5">
+            <mat-paginator
+                (page)="handle_pageable_change($event)"
+                [length]="criteria?.totalElements"
+                [pageSize]="criteria?.size"
+                [pageSizeOptions]="[5,10,25]"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </fuse-card>
+
+</div>

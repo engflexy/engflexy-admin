@@ -2,58 +2,40 @@ package ma.zs.alc.service.impl.collaborator.grpe;
 
 
 import ma.zs.alc.bean.core.grpe.Inscription;
+import ma.zs.alc.bean.core.inscriptionref.EtatInscription;
 import ma.zs.alc.dao.criteria.core.grpe.InscriptionCriteria;
 import ma.zs.alc.dao.facade.core.grpe.InscriptionDao;
 import ma.zs.alc.dao.specification.core.grpe.InscriptionSpecification;
+import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudeCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.grpe.GroupeTypeCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.grpe.InscriptionCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.inscription.EtudiantCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.inscriptionref.*;
+import ma.zs.alc.service.facade.collaborator.pack.PackStudentCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.quiz.QuizCollaboratorService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
-import ma.zs.alc.zynerator.util.ListUtil;
-import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.ArrayList;
-
-
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService ;
-import ma.zs.alc.bean.core.course.Parcours ;
-import ma.zs.alc.service.facade.collaborator.quiz.QuizCollaboratorService ;
-import ma.zs.alc.bean.core.quiz.Quiz ;
-import ma.zs.alc.service.facade.collaborator.inscriptionref.SkillCollaboratorService ;
-import ma.zs.alc.bean.core.inscriptionref.Skill ;
-import ma.zs.alc.service.facade.collaborator.inscriptionref.InteretEtudiantCollaboratorService ;
-import ma.zs.alc.bean.core.inscriptionref.InteretEtudiant ;
-import ma.zs.alc.service.facade.collaborator.inscriptionref.FonctionCollaboratorService ;
-import ma.zs.alc.bean.core.inscriptionref.Fonction ;
-import ma.zs.alc.service.facade.collaborator.inscription.EtudiantCollaboratorService ;
-import ma.zs.alc.bean.core.inscription.Etudiant ;
-import ma.zs.alc.service.facade.collaborator.inscriptionref.EtatInscriptionCollaboratorService ;
-import ma.zs.alc.bean.core.inscriptionref.EtatInscription ;
-import ma.zs.alc.service.facade.collaborator.grpe.GroupeTypeCollaboratorService ;
-import ma.zs.alc.bean.core.grpe.GroupeType ;
-import ma.zs.alc.service.facade.collaborator.inscriptionref.StatutSocialCollaboratorService ;
-import ma.zs.alc.bean.core.inscriptionref.StatutSocial ;
-import ma.zs.alc.service.facade.collaborator.pack.PackStudentCollaboratorService ;
-import ma.zs.alc.bean.core.pack.PackStudent ;
-import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudeCollaboratorService ;
-import ma.zs.alc.bean.core.grpe.GroupeEtude ;
-import ma.zs.alc.service.facade.collaborator.inscriptionref.NiveauEtudeCollaboratorService ;
-import ma.zs.alc.bean.core.inscriptionref.NiveauEtude ;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class InscriptionCollaboratorServiceImpl extends AbstractServiceImpl<Inscription, InscriptionCriteria, InscriptionDao> implements InscriptionCollaboratorService {
 
 
+    @Override
+    public Inscription create(Inscription inscription) {
+        if (inscription != null) {
+            EtatInscription etat = etatInscriptionService.findByReferenceEntity(inscription.getEtatInscription());
+            inscription.setEtatInscription(etat);
+            return dao.save(inscription);
+        }
+        return null;
+    }
 
-
-
-
-    public void findOrSaveAssociatedObject(Inscription t){
-        if( t != null) {
+    public void findOrSaveAssociatedObject(Inscription t) {
+        if (t != null) {
             t.setEtudiant(etudiantService.findOrSave(t.getEtudiant()));
             t.setEtatInscription(etatInscriptionService.findOrSave(t.getEtatInscription()));
             t.setParcours(parcoursService.findOrSave(t.getParcours()));
@@ -69,118 +51,149 @@ public class InscriptionCollaboratorServiceImpl extends AbstractServiceImpl<Insc
         }
     }
 
-    public List<Inscription> findByEtudiantId(Long id){
+    public List<Inscription> findByEtudiantId(Long id) {
         return dao.findByEtudiantId(id);
     }
-    public int deleteByEtudiantId(Long id){
+
+    public int deleteByEtudiantId(Long id) {
         return dao.deleteByEtudiantId(id);
     }
-    public long countByEtudiantId(Long id){
+
+    public long countByEtudiantId(Long id) {
         return dao.countByEtudiantId(id);
     }
-    public List<Inscription> findByEtatInscriptionId(Long id){
+
+    public List<Inscription> findByEtatInscriptionId(Long id) {
         return dao.findByEtatInscriptionId(id);
     }
-    public int deleteByEtatInscriptionId(Long id){
+
+    public int deleteByEtatInscriptionId(Long id) {
         return dao.deleteByEtatInscriptionId(id);
     }
-    public long countByEtatInscriptionLibelle(String libelle){
+
+    public long countByEtatInscriptionLibelle(String libelle) {
         return dao.countByEtatInscriptionLibelle(libelle);
     }
-    public List<Inscription> findByParcoursId(Long id){
+
+    public List<Inscription> findByParcoursId(Long id) {
         return dao.findByParcoursId(id);
     }
-    public int deleteByParcoursId(Long id){
+
+    public int deleteByParcoursId(Long id) {
         return dao.deleteByParcoursId(id);
     }
-    public long countByParcoursCode(String code){
+
+    public long countByParcoursCode(String code) {
         return dao.countByParcoursCode(code);
     }
-    public List<Inscription> findByGroupeEtudeId(Long id){
+
+    public List<Inscription> findByGroupeEtudeId(Long id) {
         return dao.findByGroupeEtudeId(id);
     }
-    public int deleteByGroupeEtudeId(Long id){
+
+    public int deleteByGroupeEtudeId(Long id) {
         return dao.deleteByGroupeEtudeId(id);
     }
-    public long countByGroupeEtudeId(Long id){
+
+    public long countByGroupeEtudeId(Long id) {
         return dao.countByGroupeEtudeId(id);
     }
-    public List<Inscription> findByGroupeTypeId(Long id){
+
+    public List<Inscription> findByGroupeTypeId(Long id) {
         return dao.findByGroupeTypeId(id);
     }
-    public int deleteByGroupeTypeId(Long id){
+
+    public int deleteByGroupeTypeId(Long id) {
         return dao.deleteByGroupeTypeId(id);
     }
-    public long countByGroupeTypeCode(String code){
+
+    public long countByGroupeTypeCode(String code) {
         return dao.countByGroupeTypeCode(code);
     }
-    public List<Inscription> findByStatutSocialId(Long id){
+
+    public List<Inscription> findByStatutSocialId(Long id) {
         return dao.findByStatutSocialId(id);
     }
-    public int deleteByStatutSocialId(Long id){
+
+    public int deleteByStatutSocialId(Long id) {
         return dao.deleteByStatutSocialId(id);
     }
-    public long countByStatutSocialCode(String code){
+
+    public long countByStatutSocialCode(String code) {
         return dao.countByStatutSocialCode(code);
     }
-    public List<Inscription> findByInteretEtudiantId(Long id){
+
+    public List<Inscription> findByInteretEtudiantId(Long id) {
         return dao.findByInteretEtudiantId(id);
     }
-    public int deleteByInteretEtudiantId(Long id){
+
+    public int deleteByInteretEtudiantId(Long id) {
         return dao.deleteByInteretEtudiantId(id);
     }
-    public long countByInteretEtudiantCode(String code){
+
+    public long countByInteretEtudiantCode(String code) {
         return dao.countByInteretEtudiantCode(code);
     }
-    public List<Inscription> findByNiveauEtudeId(Long id){
+
+    public List<Inscription> findByNiveauEtudeId(Long id) {
         return dao.findByNiveauEtudeId(id);
     }
-    public int deleteByNiveauEtudeId(Long id){
+
+    public int deleteByNiveauEtudeId(Long id) {
         return dao.deleteByNiveauEtudeId(id);
     }
-    public long countByNiveauEtudeCode(String code){
+
+    public long countByNiveauEtudeCode(String code) {
         return dao.countByNiveauEtudeCode(code);
     }
-    public List<Inscription> findByFonctionId(Long id){
+
+    public List<Inscription> findByFonctionId(Long id) {
         return dao.findByFonctionId(id);
     }
-    public int deleteByFonctionId(Long id){
+
+    public int deleteByFonctionId(Long id) {
         return dao.deleteByFonctionId(id);
     }
-    public long countByFonctionCode(String code){
+
+    public long countByFonctionCode(String code) {
         return dao.countByFonctionCode(code);
     }
-    public List<Inscription> findByQuizId(Long id){
+
+    public List<Inscription> findByQuizId(Long id) {
         return dao.findByQuizId(id);
     }
-    public int deleteByQuizId(Long id){
+
+    public int deleteByQuizId(Long id) {
         return dao.deleteByQuizId(id);
     }
-    public long countByQuizRef(String ref){
+
+    public long countByQuizRef(String ref) {
         return dao.countByQuizRef(ref);
     }
-    public List<Inscription> findByPackStudentId(Long id){
+
+    public List<Inscription> findByPackStudentId(Long id) {
         return dao.findByPackStudentId(id);
     }
-    public int deleteByPackStudentId(Long id){
+
+    public int deleteByPackStudentId(Long id) {
         return dao.deleteByPackStudentId(id);
     }
-    public long countByPackStudentCode(String code){
+
+    public long countByPackStudentCode(String code) {
         return dao.countByPackStudentCode(code);
     }
-    public List<Inscription> findBySkillId(Long id){
+
+    public List<Inscription> findBySkillId(Long id) {
         return dao.findBySkillId(id);
     }
-    public int deleteBySkillId(Long id){
+
+    public int deleteBySkillId(Long id) {
         return dao.deleteBySkillId(id);
     }
-    public long countBySkillCode(String code){
+
+    public long countBySkillCode(String code) {
         return dao.countBySkillCode(code);
     }
-
-
-
-
 
 
     public void configure() {
@@ -189,29 +202,29 @@ public class InscriptionCollaboratorServiceImpl extends AbstractServiceImpl<Insc
 
 
     @Autowired
-    private ParcoursCollaboratorService parcoursService ;
+    private ParcoursCollaboratorService parcoursService;
     @Autowired
-    private QuizCollaboratorService quizService ;
+    private QuizCollaboratorService quizService;
     @Autowired
-    private SkillCollaboratorService skillService ;
+    private SkillCollaboratorService skillService;
     @Autowired
-    private InteretEtudiantCollaboratorService interetEtudiantService ;
+    private InteretEtudiantCollaboratorService interetEtudiantService;
     @Autowired
-    private FonctionCollaboratorService fonctionService ;
+    private FonctionCollaboratorService fonctionService;
     @Autowired
-    private EtudiantCollaboratorService etudiantService ;
+    private EtudiantCollaboratorService etudiantService;
     @Autowired
-    private EtatInscriptionCollaboratorService etatInscriptionService ;
+    private EtatInscriptionCollaboratorService etatInscriptionService;
     @Autowired
-    private GroupeTypeCollaboratorService groupeTypeService ;
+    private GroupeTypeCollaboratorService groupeTypeService;
     @Autowired
-    private StatutSocialCollaboratorService statutSocialService ;
+    private StatutSocialCollaboratorService statutSocialService;
     @Autowired
-    private PackStudentCollaboratorService packStudentService ;
+    private PackStudentCollaboratorService packStudentService;
     @Autowired
-    private GroupeEtudeCollaboratorService groupeEtudeService ;
+    private GroupeEtudeCollaboratorService groupeEtudeService;
     @Autowired
-    private NiveauEtudeCollaboratorService niveauEtudeService ;
+    private NiveauEtudeCollaboratorService niveauEtudeService;
 
     public InscriptionCollaboratorServiceImpl(InscriptionDao dao) {
         super(dao);

@@ -7,13 +7,11 @@ export class UserDto extends BaseDto {
     public credentialsNonExpired: null | boolean;
 
     public enabled: null | boolean;
-
     public email: string;
     public accountNonExpired: null | boolean;
-    public firstName: string;
-    public lastName: string;
+    public fullName: string;
     public phone: string;
-
+    public avatar: string;
     public accountNonLocked: null | boolean;
 
     public username: string;
@@ -34,14 +32,14 @@ export class UserDto extends BaseDto {
     constructor() {
         super();
 
-        this.credentialsNonExpired = null;
-        this.enabled = null;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
         this.email = '';
-        this.accountNonExpired = null;
-        this.accountNonLocked = null;
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
         this.username = '';
-        this.password = '';
-        this.passwordChanged = null;
+        this.password = null;
+        this.passwordChanged = false;
         this.modelPermissionUsers = new Array<ModelPermissionUserDto>();
         this.roleUsers = new Array<RoleUserDto>();
 

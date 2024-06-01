@@ -88,6 +88,14 @@ export const appRoutes: Route[] = [
                 path: 'manage-courses',
                 loadChildren: () => import('app/modules/admin/manage-courses/manage-course.routes')
             },
+            {
+                path: 'manage-users',
+                loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
+            },
+            // {
+            //     path: 'manage-inscriptions',
+            //     loadChildren: () => import('app/modules/admin/manage-users/manage-users.module')
+            // },
         ]
     }
 ];

@@ -20,8 +20,7 @@ public class UserDto  extends AuditBaseDto {
     private String password  ;
     private Boolean passwordChanged  ;
 
-    protected String firstName;
-    protected String lastName;
+    protected String fullName;
     protected String phone;
 
     private List<ModelPermissionUserDto> modelPermissionUsers ;
@@ -105,21 +104,14 @@ public class UserDto  extends AuditBaseDto {
     public void setRoleUsers(List<RoleUserDto> roleUsers){
         this.roleUsers = roleUsers;
     }
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getPhone() {
         return phone;

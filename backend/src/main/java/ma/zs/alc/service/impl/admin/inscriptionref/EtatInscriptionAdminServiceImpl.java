@@ -29,7 +29,7 @@ public class EtatInscriptionAdminServiceImpl extends AbstractServiceImpl<EtatIns
 
 
     public EtatInscription findByReferenceEntity(EtatInscription t){
-        return t==null? null : dao.findByLibelle(t.getLibelle());
+        return t==null? null : dao.findByRef(t.getRef());
     }
 
 

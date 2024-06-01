@@ -2,11 +2,10 @@ package ma.zs.alc.zynerator.service;
 
 import ma.zs.alc.zynerator.bean.BusinessObject;
 import ma.zs.alc.zynerator.criteria.BaseCriteria;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
 import ma.zs.alc.zynerator.security.bean.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface IService<T extends BusinessObject, Criteria extends BaseCriteria> {
 
@@ -14,7 +13,7 @@ public interface IService<T extends BusinessObject, Criteria extends BaseCriteri
 
     T update(T t);
 
-    List<T> update(List<T> ts,boolean createIfNotExist);
+    List<T> update(List<T> ts, boolean createIfNotExist);
 
     T findById(Long id);
 
@@ -48,7 +47,7 @@ public interface IService<T extends BusinessObject, Criteria extends BaseCriteri
 
     List<T> importerData(List<T> items);
 
-    public String uploadFile(String checksumOld, String tempUpladedFile,String destinationFilePath) throws Exception ;
+    public String uploadFile(String checksumOld, String tempUpladedFile, String destinationFilePath) throws Exception;
 
     List<T> importExcel(MultipartFile file);
 }

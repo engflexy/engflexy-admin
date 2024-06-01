@@ -16,6 +16,11 @@ public class RoleServiceImpl extends AbstractServiceImpl<Role, RoleCriteria, Rol
 
 
     @Override
+    public Role create(Role role) {
+        return dao.saveAndFlush(role);
+    }
+
+    @Override
     public Role findByAuthority(String authority) {
         return dao.findByAuthority(authority);
     }
@@ -26,9 +31,8 @@ public class RoleServiceImpl extends AbstractServiceImpl<Role, RoleCriteria, Rol
     }
 
 
-
-    public Role findByReferenceEntity(Role t){
-        return  dao.findByAuthority(t.getAuthority());
+    public Role findByReferenceEntity(Role t) {
+        return dao.findByAuthority(t.getAuthority());
     }
 
 
@@ -37,13 +41,9 @@ public class RoleServiceImpl extends AbstractServiceImpl<Role, RoleCriteria, Rol
     }
 
 
-
-
-
     public void configure() {
         super.configure(Role.class, RoleSpecification.class);
     }
-
 
 
     public RoleServiceImpl(RoleDao dao) {

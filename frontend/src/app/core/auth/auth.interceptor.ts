@@ -1,8 +1,8 @@
 import {HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest} from '@angular/common/http';
 import {inject} from '@angular/core';
-import {AuthService} from 'app/core/auth/auth.service';
 import {AuthUtils} from 'app/core/auth/auth.utils';
 import {catchError, Observable, throwError} from 'rxjs';
+import {AuthService} from "../../zynerator/security/shared/service/Auth.service";
 
 /**
  * Intercept
@@ -36,8 +36,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
             // Catch "401 Unauthorized" responses
             if (error instanceof HttpErrorResponse && error.status === 401) {
                 // Sign out
-                authService.signOut();
-
+                authService.logout();
             }
 
             return throwError(error);

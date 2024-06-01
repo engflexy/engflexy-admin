@@ -1,26 +1,17 @@
 package ma.zs.alc.bean.core.inscriptionref;
 
-import java.util.Objects;
-
-
-
-
-
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
+import ma.zs.alc.zynerator.audit.AuditBusinessObject;
+
 import java.util.Objects;
-
-
 
 
 @Entity
 @Table(name = "etat_inscription")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class EtatInscription   extends AuditBusinessObject     {
+public class EtatInscription extends AuditBusinessObject {
 
     private Long id;
 
@@ -30,45 +21,48 @@ public class EtatInscription   extends AuditBusinessObject     {
     private String libelle;
 
 
-
-    public EtatInscription(){
+    public EtatInscription() {
         super();
     }
 
-    public EtatInscription(Long id){
+    public EtatInscription(Long id) {
         this.id = id;
     }
 
-    public EtatInscription(Long id,String libelle){
+    public EtatInscription(Long id, String libelle) {
         this.id = id;
-        this.libelle = libelle ;
-    }
-    public EtatInscription(String libelle){
-        this.libelle = libelle ;
+        this.libelle = libelle;
     }
 
-
+    public EtatInscription(String ref) {
+        this.ref = ref;
+    }
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    public Long getId(){
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
         return this.id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getRef(){
+
+    public String getRef() {
         return this.ref;
     }
-    public void setRef(String ref){
+
+    public void setRef(String ref) {
         this.ref = ref;
     }
-    public String getLibelle(){
+
+    public String getLibelle() {
         return this.libelle;
     }
-    public void setLibelle(String libelle){
+
+    public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
 

@@ -1,36 +1,25 @@
 package ma.zs.alc.bean.core.vocab;
 
-import java.util.Objects;
-import java.util.List;
-
-
-
-
-
-import ma.zs.alc.bean.core.course.Parcours;
-import ma.zs.alc.bean.core.course.Cours;
-import ma.zs.alc.bean.core.prof.TypeCollaborator;
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
-import java.util.Objects;
-
-
-
+import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.bean.core.prof.TypeCollaborator;
 import ma.zs.alc.zynerator.security.bean.User;
+
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "collaborator")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class Collaborator  extends User    {
+public class Collaborator extends User {
 
 
     public Collaborator(String username) {
         super(username);
     }
+
     @Column(length = 500)
     private String libelle;
     @Column(length = 500)
@@ -50,99 +39,119 @@ public class Collaborator  extends User    {
     @Column(length = 500)
     private String password;
 
-    private TypeCollaborator typeCollaborator ;
+    private TypeCollaborator typeCollaborator;
 
-    private List<Parcours> parcourss ;
+    private List<Parcours> parcourss;
 
-    public Collaborator(){
+    public Collaborator() {
         super();
     }
 
-    public Collaborator(Long id){
+    public Collaborator(Long id) {
         this.id = id;
     }
-
-
-
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    public Long getId(){
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
         return this.id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getLibelle(){
+
+    public String getLibelle() {
         return this.libelle;
     }
-    public void setLibelle(String libelle){
+
+    public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return this.description;
     }
-    public void setDescription(String description){
+
+    public void setDescription(String description) {
         this.description = description;
     }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_collaborator")
-    public TypeCollaborator getTypeCollaborator(){
+    public TypeCollaborator getTypeCollaborator() {
         return this.typeCollaborator;
     }
-    public void setTypeCollaborator(TypeCollaborator typeCollaborator){
+
+    public void setTypeCollaborator(TypeCollaborator typeCollaborator) {
         this.typeCollaborator = typeCollaborator;
     }
+
     @OneToMany(mappedBy = "collaborator")
 
-    public List<Parcours> getParcourss(){
+    public List<Parcours> getParcourss() {
         return this.parcourss;
     }
-    public void setParcourss(List<Parcours> parcourss){
+
+    public void setParcourss(List<Parcours> parcourss) {
         this.parcourss = parcourss;
     }
-    public boolean  getCredentialsNonExpired(){
+
+    public boolean getCredentialsNonExpired() {
         return this.credentialsNonExpired;
     }
-    public void setCredentialsNonExpired(boolean credentialsNonExpired){
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
     }
-    public boolean  getEnabled(){
+
+    public boolean getEnabled() {
         return this.enabled;
     }
-    public void setEnabled(boolean enabled){
+
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    public boolean  getAccountNonExpired(){
+
+    public boolean getAccountNonExpired() {
         return this.accountNonExpired;
     }
-    public void setAccountNonExpired(boolean accountNonExpired){
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
     }
-    public boolean  getAccountNonLocked(){
+
+    public boolean getAccountNonLocked() {
         return this.accountNonLocked;
     }
-    public void setAccountNonLocked(boolean accountNonLocked){
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
     }
-    public boolean  getPasswordChanged(){
+
+    public boolean getPasswordChanged() {
         return this.passwordChanged;
     }
-    public void setPasswordChanged(boolean passwordChanged){
+
+    public void setPasswordChanged(boolean passwordChanged) {
         this.passwordChanged = passwordChanged;
     }
-    public String getUsername(){
+
+    public String getUsername() {
         return this.username;
     }
-    public void setUsername(String username){
+
+    public void setUsername(String username) {
         this.username = username;
     }
-    public String getPassword(){
+
+    public String getPassword() {
         return this.password;
     }
-    public void setPassword(String password){
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
