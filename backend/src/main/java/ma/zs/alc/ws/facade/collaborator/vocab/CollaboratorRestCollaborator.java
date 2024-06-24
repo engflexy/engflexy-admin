@@ -1,18 +1,13 @@
 package  ma.zs.alc.ws.facade.collaborator.vocab;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-import ma.zs.alc.bean.core.vocab.Collaborator;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
 import ma.zs.alc.service.facade.collaborator.vocab.CollaboratorCollaboratorService;
 import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.vocab.CollaboratorDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
 
 
@@ -23,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
 
 
 import org.springframework.web.multipart.MultipartFile;

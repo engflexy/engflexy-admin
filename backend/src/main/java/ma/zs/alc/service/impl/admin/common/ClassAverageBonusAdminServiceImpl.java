@@ -7,21 +7,14 @@ import ma.zs.alc.dao.facade.core.common.ClassAverageBonusDao;
 import ma.zs.alc.dao.specification.core.common.ClassAverageBonusSpecification;
 import ma.zs.alc.service.facade.admin.common.ClassAverageBonusAdminService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
-import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
-
-
-
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ma.zs.alc.service.facade.admin.vocab.CollaboratorAdminService ;
-import ma.zs.alc.bean.core.vocab.Collaborator ;
 
-import java.util.List;
 @Service
 public class ClassAverageBonusAdminServiceImpl extends AbstractServiceImpl<ClassAverageBonus, ClassAverageBonusCriteria, ClassAverageBonusDao> implements ClassAverageBonusAdminService {
 

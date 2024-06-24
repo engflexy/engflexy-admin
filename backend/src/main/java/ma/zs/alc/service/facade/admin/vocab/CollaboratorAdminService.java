@@ -1,7 +1,7 @@
 package ma.zs.alc.service.facade.admin.vocab;
 
 import java.util.List;
-import ma.zs.alc.bean.core.vocab.Collaborator;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
 import ma.zs.alc.zynerator.service.IService;
 

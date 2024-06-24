@@ -4,21 +4,9 @@ import java.util.Objects;
 import java.util.List;
 
 
-
-
-
-import ma.zs.alc.bean.core.vocab.Collaborator;
-import ma.zs.alc.bean.core.course.Parcours;
-import ma.zs.alc.bean.core.prof.TypeTeacher;
-import ma.zs.alc.bean.core.recomrecla.RecommendTeacher;
-import ma.zs.alc.bean.core.prof.Prof;
-import ma.zs.alc.bean.core.prof.TrancheHoraireProf;
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
-import java.util.Objects;
 
 
 import java.math.BigDecimal;

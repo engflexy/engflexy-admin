@@ -1,13 +1,12 @@
 package ma.zs.alc.service.impl.admin.vocab;
 
 
-import ma.zs.alc.bean.core.vocab.Collaborator;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.vocab.CollaboratorDao;
 import ma.zs.alc.dao.specification.core.vocab.CollaboratorSpecification;
 import ma.zs.alc.service.facade.admin.vocab.CollaboratorAdminService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
-import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,13 +16,9 @@ import java.util.ArrayList;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService ;
-import ma.zs.alc.bean.core.course.Parcours ;
 import ma.zs.alc.service.facade.admin.prof.TypeCollaboratorAdminService ;
-import ma.zs.alc.bean.core.prof.TypeCollaborator ;
 
 import java.time.LocalDateTime;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
@@ -32,8 +27,7 @@ import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
-import java.util.Collection;
-import java.util.List;
+
 @Service
 public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborator, CollaboratorCriteria, CollaboratorDao> implements CollaboratorAdminService {
 

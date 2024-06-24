@@ -7,7 +7,6 @@ import ma.zs.alc.dao.facade.core.prof.ProfDao;
 import ma.zs.alc.dao.specification.core.prof.ProfSpecification;
 import ma.zs.alc.service.facade.admin.prof.ProfAdminService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
-import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,21 +16,13 @@ import java.util.ArrayList;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import ma.zs.alc.service.facade.admin.vocab.CollaboratorAdminService ;
-import ma.zs.alc.bean.core.vocab.Collaborator ;
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService ;
-import ma.zs.alc.bean.core.course.Parcours ;
 import ma.zs.alc.service.facade.admin.prof.TypeTeacherAdminService ;
-import ma.zs.alc.bean.core.prof.TypeTeacher ;
 import ma.zs.alc.service.facade.admin.recomrecla.RecommendTeacherAdminService ;
-import ma.zs.alc.bean.core.recomrecla.RecommendTeacher ;
 import ma.zs.alc.service.facade.admin.prof.CategorieProfAdminService ;
-import ma.zs.alc.bean.core.prof.CategorieProf ;
 import ma.zs.alc.service.facade.admin.prof.TrancheHoraireProfAdminService ;
-import ma.zs.alc.bean.core.prof.TrancheHoraireProf ;
 
 import java.time.LocalDateTime;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
@@ -40,8 +31,7 @@ import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
-import java.util.Collection;
-import java.util.List;
+
 @Service
 public class ProfAdminServiceImpl extends AbstractServiceImpl<Prof, ProfCriteria, ProfDao> implements ProfAdminService {
 

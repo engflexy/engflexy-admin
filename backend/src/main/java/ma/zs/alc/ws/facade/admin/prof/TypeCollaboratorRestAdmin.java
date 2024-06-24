@@ -1,18 +1,13 @@
 package  ma.zs.alc.ws.facade.admin.prof;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-import ma.zs.alc.bean.core.prof.TypeCollaborator;
+import ma.zs.alc.bean.core.common.TypeCollaborator;
 import ma.zs.alc.dao.criteria.core.prof.TypeCollaboratorCriteria;
 import ma.zs.alc.service.facade.admin.prof.TypeCollaboratorAdminService;
 import ma.zs.alc.ws.converter.prof.TypeCollaboratorConverter;
 import ma.zs.alc.ws.dto.prof.TypeCollaboratorDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
 
 
@@ -22,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
 
 
 import org.springframework.web.multipart.MultipartFile;

@@ -10,10 +10,6 @@ import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
-
-
-
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +17,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ma.zs.alc.service.facade.admin.vocab.CollaboratorAdminService ;
-import ma.zs.alc.bean.core.vocab.Collaborator ;
 import ma.zs.alc.service.facade.admin.course.CoursAdminService ;
 import ma.zs.alc.bean.core.course.Cours ;
 
-import java.util.List;
 @Service
 public class ParcoursAdminServiceImpl extends AbstractServiceImpl<Parcours, ParcoursCriteria, ParcoursDao> implements ParcoursAdminService {
 

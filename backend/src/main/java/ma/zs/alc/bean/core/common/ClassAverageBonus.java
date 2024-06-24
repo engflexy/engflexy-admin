@@ -3,16 +3,9 @@ package ma.zs.alc.bean.core.common;
 import java.util.Objects;
 
 
-
-
-
-import ma.zs.alc.bean.core.vocab.Collaborator;
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
-import java.util.Objects;
 
 
 import java.math.BigDecimal;

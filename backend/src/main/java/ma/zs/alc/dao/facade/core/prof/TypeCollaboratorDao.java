@@ -2,9 +2,9 @@ package ma.zs.alc.dao.facade.core.prof;
 
 import org.springframework.data.jpa.repository.Query;
 import ma.zs.alc.zynerator.repository.AbstractRepository;
-import ma.zs.alc.bean.core.prof.TypeCollaborator;
+import ma.zs.alc.bean.core.common.TypeCollaborator;
 import org.springframework.stereotype.Repository;
-import ma.zs.alc.bean.core.prof.TypeCollaborator;
+
 import java.util.List;
 
 

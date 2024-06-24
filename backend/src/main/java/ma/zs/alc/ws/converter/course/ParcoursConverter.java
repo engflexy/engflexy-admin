@@ -1,7 +1,7 @@
 package ma.zs.alc.ws.converter.course;
 
 import ma.zs.alc.bean.core.course.Parcours;
-import ma.zs.alc.bean.core.vocab.Collaborator;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.ws.converter.homework.HomeWorkConverter;
 import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.course.ParcoursDto;

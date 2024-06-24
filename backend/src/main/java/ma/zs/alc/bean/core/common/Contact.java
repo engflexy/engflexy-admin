@@ -5,19 +5,9 @@ import java.util.Objects;
 import java.time.LocalDateTime;
 
 
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-
-import ma.zs.alc.bean.core.vocab.Collaborator;
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
-import java.util.Objects;
-
-
 
 
 @Entity

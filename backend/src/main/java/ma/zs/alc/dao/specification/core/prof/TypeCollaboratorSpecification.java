@@ -1,7 +1,7 @@
 package  ma.zs.alc.dao.specification.core.prof;
 
 import ma.zs.alc.dao.criteria.core.prof.TypeCollaboratorCriteria;
-import ma.zs.alc.bean.core.prof.TypeCollaborator;
+import ma.zs.alc.bean.core.common.TypeCollaborator;
 import ma.zs.alc.zynerator.specification.AbstractSpecification;
 
 

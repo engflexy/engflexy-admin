@@ -1,7 +1,7 @@
 package  ma.zs.alc.dao.specification.core.vocab;
 
 import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
-import ma.zs.alc.bean.core.vocab.Collaborator;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.zynerator.specification.AbstractSpecification;
 
 
