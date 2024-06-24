@@ -924,8 +924,6 @@ public class AlcApplication {
             item.setQuizFinished(fakeBoolean(quizFinished, i));
             item.setSubscriptionFinished(fakeBoolean(subscriptionFinished, i));
             item.setDateRegistration(fakeString(dateRegistration, i));
-            item.setDatedebutinscription(fakeLocalDateTime(datedebutinscription, i));
-            item.setDatefininscription(fakeLocalDateTime(datefininscription, i));
             item.setSkype(fakeString(skype, i));
             inscriptionService.create(item);
         }

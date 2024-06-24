@@ -19,6 +19,7 @@ import { SearchComponent } from 'app/layout/common/search/search.component';
 import { ShortcutsComponent } from 'app/layout/common/shortcuts/shortcuts.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
+import {UserDto} from "../../../../zynerator/security/shared/model/User.model";
 
 @Component({
     selector     : 'classy-layout',
@@ -31,7 +32,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
     isScreenSmall: boolean;
     navigation: Navigation;
-    user: User;
+    user: UserDto;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -80,7 +81,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         // Subscribe to the user service
         this._userService.user$
             .pipe((takeUntil(this._unsubscribeAll)))
-            .subscribe((user: User) =>
+            .subscribe((user: UserDto) =>
             {
                 this.user = user;
             });

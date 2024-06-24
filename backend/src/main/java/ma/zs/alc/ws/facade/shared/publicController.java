@@ -1,6 +1,17 @@
 package ma.zs.alc.ws.facade.shared;
 
+import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.bean.core.grpe.GroupeEtude;
+import ma.zs.alc.bean.core.inscriptionref.*;
+import ma.zs.alc.bean.core.pack.PackStudent;
+import ma.zs.alc.bean.core.prof.TypeTeacher;
+import ma.zs.alc.dao.facade.core.course.ParcoursDao;
+import ma.zs.alc.dao.facade.core.grpe.GroupeEtudeDao;
+import ma.zs.alc.dao.facade.core.inscriptionref.*;
+import ma.zs.alc.dao.facade.core.pack.PackStudentDao;
+import ma.zs.alc.dao.facade.core.prof.TypeTeacherDao;
 import ma.zs.alc.util.ImageUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static ma.zs.alc.util.UtilConstant.FORWARD_SLASH;
 import static ma.zs.alc.util.UtilConstant.IMAGE_FOLDER;
@@ -31,4 +43,87 @@ public class publicController {
         return Files.readAllBytes(Paths.get(IMAGE_FOLDER + entity + FORWARD_SLASH + image));
     }
 
+
+    @GetMapping("optimized/fonction")
+    public List<Fonction> findAllFonction() {
+        return fonctionDao.findAllOptimized();
+    }
+
+    @GetMapping("optimized/teacher-locality")
+    public List<TypeTeacher> findTeacherLocality() {
+        return typeTeacherDao.findAllOptimized();
+    }
+
+    @GetMapping("optimized/skill")
+    public List<Skill> findAllSkill() {
+        return skillDao.findAllOptimized();
+    }
+
+    @GetMapping("optimized/niveau")
+    public List<NiveauEtude> findAllNiveau() {
+        return niveauEtudeDao.findAllOptimized();
+    }
+
+
+    @GetMapping("optimized/interets")
+    public List<InteretEtudiant> findAllInterets() {
+        return interetEtudiantDao.findAllOptimized();
+    }
+
+
+    @GetMapping("optimized/status")
+    public List<StatutSocial> findAllStatus() {
+        return statutSocialDao.findAllOptimized();
+    }
+
+    @GetMapping("optimized/group-student")
+    public List<GroupeEtude> findAllGroupeEtude() {
+        return groupeEtudeDao.findAllOptimized();
+    }
+
+
+    @GetMapping("optimized/levels")
+    public List<Parcours> findAllParcours() {
+        return parcoursDao.findAllOptimized();
+    }
+
+    @GetMapping("optimized/packs")
+    public List<PackStudent> findAllPacks() {
+        return packStudentDao.findAllOptimized();
+    }
+
+    @GetMapping("optimized/languages")
+    public List<Langue> findAllLanguages() {
+        return langueDao.findAllOptimized();
+    }
+
+    @Autowired
+    private ParcoursDao parcoursDao;
+
+    @Autowired
+    private TypeTeacherDao typeTeacherDao;
+
+    @Autowired
+    private GroupeEtudeDao groupeEtudeDao;
+
+    @Autowired
+    private PackStudentDao packStudentDao;
+
+    @Autowired
+    private StatutSocialDao statutSocialDao;
+
+    @Autowired
+    private InteretEtudiantDao interetEtudiantDao;
+
+    @Autowired
+    private NiveauEtudeDao niveauEtudeDao;
+
+    @Autowired
+    private SkillDao skillDao;
+
+    @Autowired
+    private FonctionDao fonctionDao;
+
+    @Autowired
+    private LangueDao langueDao;
 }

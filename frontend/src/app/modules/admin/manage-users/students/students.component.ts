@@ -9,7 +9,7 @@ import {AuthService} from "../../../../zynerator/security/shared/service/Auth.se
 import {Pageable} from "../../../../shared/utils/Pageable";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateStudentComponent} from "./create-student/create-student.component";
-import {StudentCriteria} from "../../../../core/criteria/student-criteria";
+import {UserCriteria} from "../../../../core/criteria/user-criteria";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -18,7 +18,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class StudentsComponent implements OnInit {
 
-    criteria: Criteria<StudentCriteria>
+    criteria: Criteria<UserCriteria>
     pageable: Pageable = new Pageable(0, 5)
 
     constructor(private etudiantService: EtudiantCollaboratorService,
@@ -54,7 +54,7 @@ export class StudentsComponent implements OnInit {
     }
 
     createNewStudent() {
-        this._matDialog.open(CreateStudentComponent, {
+        const dialog = this._matDialog.open(CreateStudentComponent, {
             autoFocus: false,
             height: "auto",
             width: "calc(100% - 100px)",
@@ -62,9 +62,12 @@ export class StudentsComponent implements OnInit {
             disableClose: true,
             maxHeight: "100%"
         });
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) this.criteria.content.unshift({...res})
+        })
     }
 
-    navigateToDetail(item: StudentCriteria) {
+    navigateToDetail(item: UserCriteria) {
         this.router.navigate([`student/${item.id}`], {relativeTo: this.route})
     }
 }

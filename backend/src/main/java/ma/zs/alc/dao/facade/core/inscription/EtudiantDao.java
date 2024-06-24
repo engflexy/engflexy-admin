@@ -68,17 +68,12 @@ public interface EtudiantDao extends AbstractRepository<Etudiant, Long> {
 
     long countByFonctionCode(String code);
 
-    List<Etudiant> findByLangueId(Long id);
-
-    int deleteByLangueId(Long id);
-
-    long countByLangueRef(String ref);
 
     List<Etudiant> findByCollaboratorId(Long id);
 
-    @Query("select new ma.zs.alc.dao.facade.core.inscription.StudentCriteria(etd) " +
+    @Query("select new ma.zs.alc.dao.facade.core.inscription.UserPageable(etd) " +
             "from Etudiant etd where etd.collaborator.id=:id")
-    Page<StudentCriteria> findByCollaboratorId(@Param("id") Long id, Pageable pageable);
+    Page<UserPageable> findByCollaboratorId(@Param("id") Long id, Pageable pageable);
 
     int deleteByCollaboratorId(Long id);
 

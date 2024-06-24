@@ -1,16 +1,14 @@
-package ma.zs.alc.bean.core.vocab;
+package ma.zs.alc.bean.core.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import ma.zs.alc.bean.core.course.Parcours;
-import ma.zs.alc.bean.core.prof.TypeCollaborator;
 import ma.zs.alc.zynerator.security.bean.User;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "collaborator")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class Collaborator extends User {
@@ -24,21 +22,6 @@ public class Collaborator extends User {
     private String libelle;
     @Column(length = 500)
     private String description;
-    @Column(columnDefinition = "boolean default false")
-    private boolean credentialsNonExpired = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean enabled = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean accountNonExpired = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean accountNonLocked = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean passwordChanged = false;
-    @Column(length = 500)
-    private String username;
-    @Column(length = 500)
-    private String password;
-
     private TypeCollaborator typeCollaborator;
 
     private List<Parcours> parcourss;
@@ -97,62 +80,6 @@ public class Collaborator extends User {
 
     public void setParcourss(List<Parcours> parcourss) {
         this.parcourss = parcourss;
-    }
-
-    public boolean getCredentialsNonExpired() {
-        return this.credentialsNonExpired;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public boolean getEnabled() {
-        return this.enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public boolean getAccountNonExpired() {
-        return this.accountNonExpired;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public boolean getAccountNonLocked() {
-        return this.accountNonLocked;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public boolean getPasswordChanged() {
-        return this.passwordChanged;
-    }
-
-    public void setPasswordChanged(boolean passwordChanged) {
-        this.passwordChanged = passwordChanged;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 

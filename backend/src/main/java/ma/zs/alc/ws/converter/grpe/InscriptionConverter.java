@@ -91,9 +91,9 @@ public class InscriptionConverter extends AbstractConverter<Inscription, Inscrip
             if(StringUtil.isNotEmpty(dto.getDateRegistration()))
                 item.setDateRegistration(dto.getDateRegistration());
             if(StringUtil.isNotEmpty(dto.getDatedebutinscription()))
-                item.setDatedebutinscription(DateUtil.stringEnToDate(dto.getDatedebutinscription()));
+                item.setDatedebutinscription(dto.getDatedebutinscription());
             if(StringUtil.isNotEmpty(dto.getDatefininscription()))
-                item.setDatefininscription(DateUtil.stringEnToDate(dto.getDatefininscription()));
+                item.setDatefininscription(dto.getDatefininscription());
             if(StringUtil.isNotEmpty(dto.getSkype()))
                 item.setSkype(dto.getSkype());
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
@@ -165,9 +165,11 @@ public class InscriptionConverter extends AbstractConverter<Inscription, Inscrip
             if(StringUtil.isNotEmpty(item.getDateRegistration()))
                 dto.setDateRegistration(item.getDateRegistration());
             if(item.getDatedebutinscription()!=null)
-                dto.setDatedebutinscription(DateUtil.dateTimeToString(item.getDatedebutinscription()));
+                dto.setDatedebutinscription(item.getDatedebutinscription());
+
             if(item.getDatefininscription()!=null)
-                dto.setDatefininscription(DateUtil.dateTimeToString(item.getDatefininscription()));
+                dto.setDatefininscription(item.getDatefininscription());
+
             if(StringUtil.isNotEmpty(item.getSkype()))
                 dto.setSkype(item.getSkype());
             if(this.etudiant && item.getEtudiant()!=null) {

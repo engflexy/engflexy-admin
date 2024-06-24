@@ -9,7 +9,7 @@ import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
 import {Observable} from "rxjs";
 import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
-import {StudentCriteria} from "../../../../core/criteria/student-criteria";
+import {UserCriteria} from "../../../../core/criteria/user-criteria";
 
 
 @Injectable({
@@ -33,8 +33,8 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
         return new EtudiantCriteria();
     }
 
-    findByCollaboratorId(id: number, pageable: Pageable): Observable<Criteria<StudentCriteria>> {
-        return this.http.get<Criteria<StudentCriteria>>(this.API + `pageable/collaborator/id/${id}`,
+    findByCollaboratorId(id: number, pageable: Pageable): Observable<Criteria<UserCriteria>> {
+        return this.http.get<Criteria<UserCriteria>>(this.API + `pageable/collaborator/id/${id}`,
             {
                 params: {
                     'page': pageable.page,
@@ -45,6 +45,10 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
 
     create(student: EtudiantDto): Observable<EtudiantDto> {
         return this.http.post<EtudiantDto>(this.API + 'create', student);
+    }
+
+    update(user: EtudiantDto): Observable<EtudiantDto> {
+        return this.http.put<EtudiantDto>(this.API, user);
     }
 
 }

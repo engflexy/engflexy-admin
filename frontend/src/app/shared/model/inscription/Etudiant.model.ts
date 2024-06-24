@@ -12,6 +12,7 @@ import {PackStudentDto} from '../pack/PackStudent.model';
 import {TeacherLocalityDto} from '../inscriptionref/TeacherLocality.model';
 import {NiveauEtudeDto} from '../inscriptionref/NiveauEtude.model';
 import {UserDto} from "../../../zynerator/security/shared/model/User.model";
+import {InscriptionDto} from "../grpe/Inscription.model";
 
 export class EtudiantDto extends UserDto {
 
@@ -28,19 +29,20 @@ export class EtudiantDto extends UserDto {
     public niveauEtude: NiveauEtudeDto;
     public skill: SkillDto;
     public fonction: FonctionDto;
-    public langue: LangueDto;
     public collaborator: CollaboratorDto;
     public quizEtudiants: Array<QuizEtudiantDto>;
+    public inscriptions: Array<InscriptionDto>;
     public groupeEtudiantDetails: Array<GroupeEtudiantDetailDto>;
 
 
-    constructor() {
-        super();
+    constructor(id?: number) {
+        super(id);
 
         this.groupOption = null;
         this.subscribe = true;
         this.quizEtudiants = new Array<QuizEtudiantDto>();
         this.groupeEtudiantDetails = new Array<GroupeEtudiantDetailDto>();
+        this.inscriptions = new Array<InscriptionDto>();
 
     }
 

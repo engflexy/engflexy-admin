@@ -30,60 +30,47 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     public User create(User t) {
         User foundedUserByUsername = findByUsername(t.getUsername());
         User foundedUserByEmail = dao.findByEmail(t.getEmail());
-        if (foundedUserByUsername != null || foundedUserByEmail != null) return null;
-        else {
+
+        if (foundedUserByUsername != null || foundedUserByEmail != null) {
+            throw new RuntimeException("Email already exist.");
+        } else {
             if (t.getPassword() == null || t.getPassword().isEmpty()) {
-            t.setPassword(bCryptPasswordEncoder.encode(t.getUsername()));
+                t.setPassword(t.getUsername());
+            } else {
+                t.setPassword(t.getPassword());
             }
-            else {
-            t.setPassword(bCryptPasswordEncoder.encode(t.getPassword()));
-            }
-            //t.setPassword(bCryptPasswordEncoder.encode("123"));
             t.setAccountNonExpired(true);
             t.setAccountNonLocked(true);
             t.setCredentialsNonExpired(true);
             t.setEnabled(true);
             t.setPasswordChanged(false);
             t.setCreatedAt(LocalDateTime.now());
-//            Role roleFor = roleService.findByAuthority(AuthoritiesConstants.);
-//            if(t.getRoleUsers()==null)
-//                t.setRoleUsers(new ArrayList<>());
-//
-//            t.getRoleUsers().add(roleFor);
-//
-//            if (t.getRoleUsers() != null) {
-//                Collection<Role> roles = new ArrayList<Role>();
-//                for (Role role : t.getRoles()) {
-//                    roles.add(roleService.save(role));
-//                }
-//                t.getRoleUsers(roles);
-//            }
             super.create(t);
             if (t.getModelPermissionUsers() != null) {
                 t.getModelPermissionUsers().forEach(e -> {
                     e.setUser(t);
-                    modelPermissionUserService.create(e);
                 });
+                modelPermissionUserService.update(t.getModelPermissionUsers(), true);
             }
             if (t.getRoleUsers() != null) {
-                t.getRoleUsers().forEach(element-> {
+                t.getRoleUsers().forEach(element -> {
                     element.setUser(t);
-                    roleUserService.create(element);
                 });
+                roleUserService.update(t.getRoleUsers(),true);
             }
             return t;
         }
 
     }
 
-    public User findWithAssociatedLists(Long id){
-        User result = dao.findById(id).orElse(null);
-        if(result!=null && result.getId() != null) {
-            result.setModelPermissionUsers(modelPermissionUserService.findByUserId(id));
-            result.setRoleUsers(roleUserService.findByUserId(id));
-        }
+    public User findWithAssociatedLists(Long id) {
+        User result = dao.findUserById(id);
+//        if (result != null && result.getId() != null) {
+//            result.setRoleUsers(roleUserService.findByUserId(id));
+//        }
         return result;
     }
+
     @Transactional
     public void deleteAssociatedLists(Long id) {
         modelPermissionUserService.deleteByUserId(id);
@@ -91,24 +78,24 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     }
 
 
-    public void updateWithAssociatedLists(User user){
-    if(user !=null && user.getId() != null){
-            List<List<ModelPermissionUser>> resultModelPermissionUsers= modelPermissionUserService.getToBeSavedAndToBeDeleted(modelPermissionUserService.findByUserId(user.getId()),user.getModelPermissionUsers());
+    public void updateWithAssociatedLists(User user) {
+        if (user != null && user.getId() != null) {
+            List<List<ModelPermissionUser>> resultModelPermissionUsers = modelPermissionUserService.getToBeSavedAndToBeDeleted(modelPermissionUserService.findByUserId(user.getId()), user.getModelPermissionUsers());
             modelPermissionUserService.delete(resultModelPermissionUsers.get(1));
             ListUtil.emptyIfNull(resultModelPermissionUsers.get(0)).forEach(e -> e.setUser(user));
-            modelPermissionUserService.update(resultModelPermissionUsers.get(0),true);
-            List<List<RoleUser>> resultRoleUsers= roleUserService.getToBeSavedAndToBeDeleted(roleUserService.findByUserId(user.getId()),user.getRoleUsers());
+            modelPermissionUserService.update(resultModelPermissionUsers.get(0), true);
+            List<List<RoleUser>> resultRoleUsers = roleUserService.getToBeSavedAndToBeDeleted(roleUserService.findByUserId(user.getId()), user.getRoleUsers());
             roleUserService.delete(resultRoleUsers.get(1));
             ListUtil.emptyIfNull(resultRoleUsers.get(0)).forEach(e -> e.setUser(user));
-            roleUserService.update(resultRoleUsers.get(0),true);
-    }
+            roleUserService.update(resultRoleUsers.get(0), true);
+        }
     }
 
 
-
-    public User findByReferenceEntity(User t){
-        return  dao.findByEmail(t.getEmail());
+    public User findByReferenceEntity(User t) {
+        return dao.findByEmail(t.getEmail());
     }
+
     @Override
     public User findByUsername(String username) {
         if (username == null)
@@ -123,7 +110,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     @Override
     public String cryptPassword(String value) {
-        return value == null ? null : bCryptPasswordEncoder.encode(value);
+        return value;
+//        return value == null ? null : bCryptPasswordEncoder.encode(value);
     }
 
     @Override
@@ -137,12 +125,14 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         }
         return false;
     }
+
     @Override
     public User findByUsernameWithRoles(String username) {
         if (username == null)
             return null;
         return dao.findByUsername(username);
     }
+
     @Override
     @Transactional
     public int deleteByUsername(String username) {
@@ -160,13 +150,13 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
 
     @Autowired
-    private RoleUserService roleUserService ;
+    private RoleUserService roleUserService;
     @Autowired
-    private ModelPermissionService modelPermissionService ;
+    private ModelPermissionService modelPermissionService;
     @Autowired
-    private ActionPermissionService actionPermissionService ;
+    private ActionPermissionService actionPermissionService;
     @Autowired
-    private ModelPermissionUserService modelPermissionUserService ;
+    private ModelPermissionUserService modelPermissionUserService;
     @Autowired
     private RoleService roleService;
 

@@ -3,8 +3,10 @@ package ma.zs.alc.service.facade.collaborator.prof;
 import java.util.List;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
+import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.zynerator.service.IService;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface ProfCollaboratorService extends  IService<Prof,ProfCriteria>  {
@@ -21,6 +23,7 @@ public interface ProfCollaboratorService extends  IService<Prof,ProfCriteria>  {
     int deleteByTypeTeacherId(Long id);
     long countByTypeTeacherCode(String code);
     List<Prof> findByCollaboratorId(Long id);
+    Page<UserPageable> findByCollaboratorId(Long id, Pageable pageable);
     int deleteByCollaboratorId(Long id);
     long countByCollaboratorId(Long id);
 

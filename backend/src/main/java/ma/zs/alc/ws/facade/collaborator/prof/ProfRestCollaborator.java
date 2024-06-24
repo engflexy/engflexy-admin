@@ -1,39 +1,28 @@
-package  ma.zs.alc.ws.facade.collaborator.prof;
+package ma.zs.alc.ws.facade.collaborator.prof;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
+import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.service.facade.collaborator.prof.ProfCollaboratorService;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
 import ma.zs.alc.ws.dto.prof.ProfDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
-import ma.zs.alc.zynerator.util.PaginatedList;
-
-
+import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.security.bean.User;
+import ma.zs.alc.zynerator.util.PaginatedList;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
-
-
-import org.springframework.web.multipart.MultipartFile;
-import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/collaborator/prof/")
-public class ProfRestCollaborator  extends AbstractController<Prof, ProfDto, ProfCriteria, ProfCollaboratorService, ProfConverter> {
-
+public class ProfRestCollaborator extends AbstractController<Prof, ProfDto, ProfCriteria, ProfCollaboratorService, ProfConverter> {
 
 
     @Operation(summary = "upload one prof")
@@ -41,6 +30,7 @@ public class ProfRestCollaborator  extends AbstractController<Prof, ProfDto, Pro
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple profs")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -67,14 +57,14 @@ public class ProfRestCollaborator  extends AbstractController<Prof, ProfDto, Pro
 
     @Operation(summary = "Saves the specified  prof")
     @PostMapping("")
-    public ResponseEntity<ProfDto> save(@RequestBody ProfDto dto) throws Exception {
-        return super.save(dto);
+    public Prof save(@RequestBody Prof dto) throws Exception {
+        return service.create(dto);
     }
 
     @Operation(summary = "Updates the specified  prof")
     @PutMapping("")
-    public ResponseEntity<ProfDto> update(@RequestBody ProfDto dto) throws Exception {
-        return super.update(dto);
+    public Prof update(@RequestBody Prof dto) throws Exception {
+        return service.update(dto);
     }
 
     @Operation(summary = "Delete list of prof")
@@ -82,10 +72,11 @@ public class ProfRestCollaborator  extends AbstractController<Prof, ProfDto, Pro
     public ResponseEntity<List<ProfDto>> delete(@RequestBody List<ProfDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified prof")
     @DeleteMapping("")
     public ResponseEntity<ProfDto> delete(@RequestBody ProfDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified prof")
@@ -93,51 +84,64 @@ public class ProfRestCollaborator  extends AbstractController<Prof, ProfDto, Pro
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple profs by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "find by parcours id")
     @GetMapping("parcours/id/{id}")
-    public List<ProfDto> findByParcoursId(@PathVariable Long id){
+    public List<ProfDto> findByParcoursId(@PathVariable Long id) {
         return findDtos(service.findByParcoursId(id));
     }
+
     @Operation(summary = "delete by parcours id")
     @DeleteMapping("parcours/id/{id}")
-    public int deleteByParcoursId(@PathVariable Long id){
+    public int deleteByParcoursId(@PathVariable Long id) {
         return service.deleteByParcoursId(id);
     }
+
     @Operation(summary = "find by categorieProf id")
     @GetMapping("categorieProf/id/{id}")
-    public List<ProfDto> findByCategorieProfId(@PathVariable Long id){
+    public List<ProfDto> findByCategorieProfId(@PathVariable Long id) {
         return findDtos(service.findByCategorieProfId(id));
     }
+
     @Operation(summary = "delete by categorieProf id")
     @DeleteMapping("categorieProf/id/{id}")
-    public int deleteByCategorieProfId(@PathVariable Long id){
+    public int deleteByCategorieProfId(@PathVariable Long id) {
         return service.deleteByCategorieProfId(id);
     }
+
     @Operation(summary = "find by typeTeacher id")
     @GetMapping("typeTeacher/id/{id}")
-    public List<ProfDto> findByTypeTeacherId(@PathVariable Long id){
+    public List<ProfDto> findByTypeTeacherId(@PathVariable Long id) {
         return findDtos(service.findByTypeTeacherId(id));
     }
+
     @Operation(summary = "delete by typeTeacher id")
     @DeleteMapping("typeTeacher/id/{id}")
-    public int deleteByTypeTeacherId(@PathVariable Long id){
+    public int deleteByTypeTeacherId(@PathVariable Long id) {
         return service.deleteByTypeTeacherId(id);
     }
+
     @Operation(summary = "find by collaborator id")
     @GetMapping("collaborator/id/{id}")
-    public List<ProfDto> findByCollaboratorId(@PathVariable Long id){
+    public List<ProfDto> findByCollaboratorId(@PathVariable Long id) {
         return findDtos(service.findByCollaboratorId(id));
     }
+
+    @GetMapping("pageable/collaborator/id/{id}")
+    public Page<UserPageable> findByCollaboratorId(@PathVariable Long id, @RequestParam("page") int page, @RequestParam("size") int size) {
+        return service.findByCollaboratorId(id, PageRequest.of(page, size));
+    }
+
     @Operation(summary = "delete by collaborator id")
     @DeleteMapping("collaborator/id/{id}")
-    public int deleteByCollaboratorId(@PathVariable Long id){
+    public int deleteByCollaboratorId(@PathVariable Long id) {
         return service.deleteByCollaboratorId(id);
     }
 
@@ -172,17 +176,15 @@ public class ProfRestCollaborator  extends AbstractController<Prof, ProfDto, Pro
     }
 
 
-
     @Operation(summary = "Change password to the specified  utilisateur")
     @PutMapping("changePassword")
     public boolean changePassword(@RequestBody User dto) throws Exception {
-        return service.changePassword(dto.getUsername(),dto.getPassword());
+        return service.changePassword(dto.getUsername(), dto.getPassword());
     }
-    public ProfRestCollaborator (ProfCollaboratorService service, ProfConverter converter) {
+
+    public ProfRestCollaborator(ProfCollaboratorService service, ProfConverter converter) {
         super(service, converter);
     }
-
-
 
 
 }

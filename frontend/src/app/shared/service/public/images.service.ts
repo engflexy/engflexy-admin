@@ -20,4 +20,8 @@ export class ImagesService {
     }
 
 
+    findOptimized(link): Observable<any> {
+        return this.http.get<any>(this.API + `optimized/${link}`);
+    }
+
 }

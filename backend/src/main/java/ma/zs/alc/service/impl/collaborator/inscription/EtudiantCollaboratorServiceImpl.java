@@ -1,13 +1,15 @@
 package ma.zs.alc.service.impl.collaborator.inscription;
 
 
+import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.bean.core.grpe.GroupeEtude;
 import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.bean.core.inscription.Etudiant;
-import ma.zs.alc.bean.core.inscriptionref.EtatInscription;
-import ma.zs.alc.bean.core.vocab.Collaborator;
+import ma.zs.alc.bean.core.inscriptionref.*;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.dao.criteria.core.inscription.EtudiantCriteria;
 import ma.zs.alc.dao.facade.core.inscription.EtudiantDao;
-import ma.zs.alc.dao.facade.core.inscription.StudentCriteria;
+import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.dao.specification.core.inscription.EtudiantSpecification;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudeCollaboratorService;
@@ -25,6 +27,7 @@ import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
+import ma.zs.alc.zynerator.util.DateUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -163,23 +166,13 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         return dao.countByFonctionCode(code);
     }
 
-    public List<Etudiant> findByLangueId(Long id) {
-        return dao.findByLangueId(id);
-    }
 
-    public int deleteByLangueId(Long id) {
-        return dao.deleteByLangueId(id);
-    }
-
-    public long countByLangueRef(String ref) {
-        return dao.countByLangueRef(ref);
-    }
 
     public List<Etudiant> findByCollaboratorId(Long id) {
         return dao.findByCollaboratorId(id);
     }
 
-    public Page<StudentCriteria> findByCollaboratorId(Long id, Pageable pageable) {
+    public Page<UserPageable> findByCollaboratorId(Long id, Pageable pageable) {
         return dao.findByCollaboratorId(id, pageable);
     }
 
@@ -194,11 +187,13 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
 
     @Override
     public Etudiant create(Etudiant t) {
-        if (findByUsername(t.getUsername()) != null) return null;
+        if (t.getUsername() == null || findByUsername(t.getUsername()) != null) {
+            throw new RuntimeException("Email already exist.");
+        }
         String password = null;
         if (t.getPassword() != null) password = t.getPassword();
         else password = generatePassword();
-        t.setPassword(userService.cryptPassword(password));
+        t.setPassword(password);
         t.setEnabled(true);
         t.setAccountNonExpired(true);
         t.setAccountNonLocked(true);
@@ -231,7 +226,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         //create student inscription
         Inscription ins = new Inscription();
         ins.setEtudiant(mySaved);
-        ins.setDatedebutinscription(LocalDateTime.now());
+        ins.setDatedebutinscription(DateUtil.getCurrentDateTime());
         ins.setEtatInscription(new EtatInscription("E1"));
         ins.setNumeroInscription(1);
         ins.setSubscriptionFinished(false);
@@ -250,7 +245,74 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
                 groupeEtudiantDetailService.create(element);
             });
         }
+        if (t.getInscriptions() != null) {
+            t.getInscriptions().forEach(element -> {
+                element.setEtudiant(mySaved);
+                inscriptionService.create(element);
+            });
+        }
+        System.out.println("mySaved = " + mySaved);
+        mySaved.setModelPermissionUsers(null);
+        System.out.println("mySaved = " + mySaved);
         return mySaved;
+    }
+
+    @Override
+    public Etudiant update(Etudiant t) {
+        Etudiant student = this.findById(t.getId());
+        if (student == null) {
+            throw new RuntimeException("Account not found.");
+        } else {
+            student.setFullName(t.getFullName());
+            student.setAvatar(t.getAvatar());
+            student.setEmail(t.getEmail());
+            student.setPhone(t.getPhone());
+            student.setCountry(t.getCountry());
+            student.setAbout(t.getAbout());
+
+            if (t.getLangue() != null && t.getLangue().getId() != null) {
+                Langue langue = langueService.findById(t.getLangue().getId());
+                student.setLangue(langue);
+            }
+
+            if (t.getParcours() != null && t.getParcours().getId() != null) {
+                Parcours parcours = parcoursService.findById(t.getParcours().getId());
+                student.setParcours(parcours);
+            }
+
+            if (t.getTeacherLocality() != null && t.getTeacherLocality().getId() != null) {
+                TeacherLocality locality = teacherLocalityService.findById(t.getTeacherLocality().getId());
+                student.setTeacherLocality(locality);
+            }
+
+
+            if (t.getStatutSocial() != null && t.getStatutSocial().getId() != null) {
+                StatutSocial statutSocial = statutSocialService.findById(t.getStatutSocial().getId());
+                student.setStatutSocial(statutSocial);
+            }
+
+
+            if (t.getGroupeEtude() != null && t.getGroupeEtude().getId() != null) {
+                GroupeEtude groupeEtude = groupeEtudeService.findById(t.getGroupeEtude().getId());
+                student.setGroupeEtude(groupeEtude);
+            }
+
+            if (t.getSkill() != null && t.getSkill().getId() != null) {
+                Skill skill = skillService.findById(t.getSkill().getId());
+                student.setSkill(skill);
+            }
+
+            if (t.getFonction() != null && t.getFonction().getId() != null) {
+                Fonction fonction = fonctionService.findById(t.getFonction().getId());
+                student.setFonction(fonction);
+            }
+
+            if (t.getInteretEtudiant() != null && t.getInteretEtudiant().getId() != null) {
+                InteretEtudiant interetEtudiant = interetEtudiantService.findById(t.getInteretEtudiant().getId());
+                student.setInteretEtudiant(interetEtudiant);
+            }
+            return dao.save(student);
+        }
     }
 
     public Etudiant findByUsername(String username) {

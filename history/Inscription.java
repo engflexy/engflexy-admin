@@ -1,0 +1,250 @@
+package ma.zs.alc.bean.history;//package ma.zs.alc.bean.core .grpe;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
+import ma.zs.alc.bean.history.*; //.course.Parcours;
+import ma.zs.alc.bean.history.*; //.inscription.Etudiant;
+import ma.zs.alc.bean.history.*; //.pack.PackStudent;
+import ma.zs.alc.bean.history.*; //.quiz.Quiz;
+import ma.zs.alc.zynerator.audit.AuditBusinessObject;
+
+import java.math.BigDecimal;
+import java.util.Objects;
+
+
+@Entity
+@Table(name = "inscription")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+
+public class Inscription extends AuditBusinessObject {
+
+    private Long id;
+
+    private Integer numeroInscription = 0;
+    private BigDecimal noteQuizNiveau = BigDecimal.ZERO;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean quizFinished = false;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean subscriptionFinished = false;
+    @Column(length = 500)
+    private String dateRegistration;
+    private String datedebutinscription;
+    private String datefininscription;
+    @Column(length = 500)
+    private String skype;
+
+    @JsonIgnore
+    private Etudiant etudiant;
+    private EtatInscription etatInscription;
+    private Parcours parcours;
+    private GroupeEtude groupeEtude;
+    private GroupeType groupeType;
+    private StatutSocial statutSocial;
+    private NiveauEtude niveauEtude;
+    private Quiz quiz;
+    private PackStudent packStudent;
+    private Skill skill;
+
+
+    public Inscription() {
+        super();
+    }
+
+    public Inscription(Long id) {
+        this.id = id;
+    }
+
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getNumeroInscription() {
+        return this.numeroInscription;
+    }
+
+    public void setNumeroInscription(Integer numeroInscription) {
+        this.numeroInscription = numeroInscription;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "etudiant")
+    @JsonIgnore
+    public Etudiant getEtudiant() {
+        return this.etudiant;
+    }
+
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "etat_inscription")
+    public EtatInscription getEtatInscription() {
+        return this.etatInscription;
+    }
+
+    public void setEtatInscription(EtatInscription etatInscription) {
+        this.etatInscription = etatInscription;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parcours")
+    public Parcours getParcours() {
+        return this.parcours;
+    }
+
+    public void setParcours(Parcours parcours) {
+        this.parcours = parcours;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupe_etude")
+    public GroupeEtude getGroupeEtude() {
+        return this.groupeEtude;
+    }
+
+    public void setGroupeEtude(GroupeEtude groupeEtude) {
+        this.groupeEtude = groupeEtude;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupe_type")
+    public GroupeType getGroupeType() {
+        return this.groupeType;
+    }
+
+    public void setGroupeType(GroupeType groupeType) {
+        this.groupeType = groupeType;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "statut_social")
+    public StatutSocial getStatutSocial() {
+        return this.statutSocial;
+    }
+
+    public void setStatutSocial(StatutSocial statutSocial) {
+        this.statutSocial = statutSocial;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "niveau_etude")
+    public NiveauEtude getNiveauEtude() {
+        return this.niveauEtude;
+    }
+
+    public void setNiveauEtude(NiveauEtude niveauEtude) {
+        this.niveauEtude = niveauEtude;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quiz")
+    public Quiz getQuiz() {
+        return this.quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public BigDecimal getNoteQuizNiveau() {
+        return this.noteQuizNiveau;
+    }
+
+    public void setNoteQuizNiveau(BigDecimal noteQuizNiveau) {
+        this.noteQuizNiveau = noteQuizNiveau;
+    }
+
+    public Boolean getQuizFinished() {
+        return this.quizFinished;
+    }
+
+    public void setQuizFinished(Boolean quizFinished) {
+        this.quizFinished = quizFinished;
+    }
+
+    public Boolean getSubscriptionFinished() {
+        return this.subscriptionFinished;
+    }
+
+    public void setSubscriptionFinished(Boolean subscriptionFinished) {
+        this.subscriptionFinished = subscriptionFinished;
+    }
+
+    public String getDateRegistration() {
+        return this.dateRegistration;
+    }
+
+    public void setDateRegistration(String dateRegistration) {
+        this.dateRegistration = dateRegistration;
+    }
+
+    public String getDatedebutinscription() {
+        return this.datedebutinscription;
+    }
+
+    public void setDatedebutinscription(String datedebutinscription) {
+        this.datedebutinscription = datedebutinscription;
+    }
+
+    public String getDatefininscription() {
+        return this.datefininscription;
+    }
+
+    public void setDatefininscription(String datefininscription) {
+        this.datefininscription = datefininscription;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pack_student")
+    public PackStudent getPackStudent() {
+        return this.packStudent;
+    }
+
+    public void setPackStudent(PackStudent packStudent) {
+        this.packStudent = packStudent;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "skill")
+    public Skill getSkill() {
+        return this.skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
+    }
+
+    public String getSkype() {
+        return this.skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Inscription inscription = (Inscription) o;
+        return id != null && id.equals(inscription.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+}
+

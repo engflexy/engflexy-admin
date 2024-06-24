@@ -1,5 +1,6 @@
 package ma.zs.alc.zynerator.security.ws.converter;
 
+import ma.zs.alc.ws.converter.inscriptionref.LangueConverter;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.security.ws.dto.UserDto;
@@ -12,19 +13,21 @@ import org.springframework.stereotype.Component;
 public class UserConverter extends AbstractConverter<User, UserDto> {
 
     @Autowired
-    private RoleUserConverter roleUserConverter ;
+    private RoleUserConverter roleUserConverter;
     @Autowired
-    private ModelPermissionConverter modelPermissionConverter ;
+    private LangueConverter langueConverter;
     @Autowired
-    private RoleConverter roleConverter ;
+    private ModelPermissionConverter modelPermissionConverter;
     @Autowired
-    private ModelPermissionUserConverter modelPermissionUserConverter ;
+    private RoleConverter roleConverter;
     @Autowired
-    private ActionPermissionConverter actionPermissionConverter ;
+    private ModelPermissionUserConverter modelPermissionUserConverter;
+    @Autowired
+    private ActionPermissionConverter actionPermissionConverter;
     private boolean modelPermissionUsers;
     private boolean roleUsers;
 
-    public  UserConverter(){//RoleUser roleUserModelPermission modelPermissionRole roleModelPermissionUser modelPermissionUserActionPermission actionPermission,){
+    public UserConverter() {//RoleUser roleUserModelPermission modelPermissionRole roleModelPermissionUser modelPermissionUserActionPermission actionPermission,){
         super(User.class, UserDto.class);
         init(true);
         //this.roleUser =  roleUser ;
@@ -39,39 +42,44 @@ public class UserConverter extends AbstractConverter<User, UserDto> {
         if (dto == null) {
             return null;
         } else {
-        User item = new User();
-            if(StringUtil.isNotEmpty(dto.getId()))
+            User item = new User();
+            if (StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
-            if(dto.getCredentialsNonExpired() != null)
+            if (dto.getCredentialsNonExpired() != null)
                 item.setCredentialsNonExpired(dto.getCredentialsNonExpired());
-            if(dto.getEnabled() != null)
+            if (dto.getEnabled() != null)
                 item.setEnabled(dto.getEnabled());
-            if(StringUtil.isNotEmpty(dto.getEmail()))
-                item.setEmail(dto.getEmail());
-            if(dto.getAccountNonExpired() != null)
+            if (StringUtil.isNotEmpty(dto.getEmail())) item.setEmail(dto.getEmail());
+
+            if (StringUtil.isNotEmpty(dto.getCountry())) item.setCountry(dto.getCountry());
+            if (StringUtil.isNotEmpty(dto.getAbout())) item.setAbout(dto.getAbout());
+
+            if (dto.getAccountNonExpired() != null)
                 item.setAccountNonExpired(dto.getAccountNonExpired());
-            if(dto.getAccountNonLocked() != null)
+            if (dto.getAccountNonLocked() != null)
                 item.setAccountNonLocked(dto.getAccountNonLocked());
-            if(StringUtil.isNotEmpty(dto.getUsername()))
+            if (StringUtil.isNotEmpty(dto.getUsername()))
                 item.setUsername(dto.getUsername());
-            if(StringUtil.isNotEmpty(dto.getPassword()))
+            if (StringUtil.isNotEmpty(dto.getPassword()))
                 item.setPassword(dto.getPassword());
-            if(dto.getPasswordChanged() != null)
+            if (dto.getPasswordChanged() != null)
                 item.setPasswordChanged(dto.getPasswordChanged());
 
-            if(StringUtil.isNotEmpty(dto.getFullName()))
+            if (StringUtil.isNotEmpty(dto.getFullName()))
                 item.setFullName(dto.getFullName());
+            if (StringUtil.isNotEmpty(dto.getAvatar())) item.setAvatar(dto.getAvatar());
 
-            if(StringUtil.isNotEmpty(dto.getPhone()))
+            if (StringUtil.isNotEmpty(dto.getPhone()))
                 item.setPhone(dto.getPhone());
 
+            if (dto.getLangue() != null) item.setLangue(langueConverter.toItem(dto.getLangue()));
 
-            if(this.modelPermissionUsers && ListUtil.isNotEmpty(dto.getModelPermissionUsers()))
+            if (this.modelPermissionUsers && ListUtil.isNotEmpty(dto.getModelPermissionUsers()))
                 item.setModelPermissionUsers(modelPermissionUserConverter.toItem(dto.getModelPermissionUsers()));
-            if(this.roleUsers && ListUtil.isNotEmpty(dto.getRoleUsers()))
+            if (this.roleUsers && ListUtil.isNotEmpty(dto.getRoleUsers()))
                 item.setRoleUsers(roleUserConverter.toItem(dto.getRoleUsers()));
 
-        return item;
+            return item;
         }
     }
 
@@ -81,38 +89,46 @@ public class UserConverter extends AbstractConverter<User, UserDto> {
             return null;
         } else {
             UserDto dto = new UserDto();
-            if(StringUtil.isNotEmpty(item.getId()))
+            if (StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
-            if(StringUtil.isNotEmpty(item.isCredentialsNonExpired()))
+            if (StringUtil.isNotEmpty(item.isCredentialsNonExpired()))
                 dto.setCredentialsNonExpired(item.isCredentialsNonExpired());
-            if(StringUtil.isNotEmpty(item.isEnabled()))
+            if (StringUtil.isNotEmpty(item.isEnabled()))
                 dto.setEnabled(item.isEnabled());
-            if(StringUtil.isNotEmpty(item.getEmail()))
-                dto.setEmail(item.getEmail());
-            if(StringUtil.isNotEmpty(item.isAccountNonExpired()))
-                dto.setAccountNonExpired(item.isAccountNonExpired());
-            if(StringUtil.isNotEmpty(item.isAccountNonLocked()))
-                dto.setAccountNonLocked(item.isAccountNonLocked());
-            if(StringUtil.isNotEmpty(item.getUsername()))
-                dto.setUsername(item.getUsername());
-            if(StringUtil.isNotEmpty(item.getPassword()))
-                dto.setPassword(item.getPassword());
-            if(StringUtil.isNotEmpty(item.getPasswordChanged()))
-                dto.setPasswordChanged(item.getPasswordChanged());
-        if(this.modelPermissionUsers && ListUtil.isNotEmpty(item.getModelPermissionUsers())){
-            modelPermissionUserConverter.init(true);
-            modelPermissionUserConverter.setUser(false);
-            dto.setModelPermissionUsers(modelPermissionUserConverter.toDto(item.getModelPermissionUsers()));
-            modelPermissionUserConverter.setUser(true);
 
-        }
-        if(this.roleUsers && ListUtil.isNotEmpty(item.getRoleUsers())){
-            roleUserConverter.init(true);
-            roleUserConverter.setUser(false);
-            dto.setRoleUsers(roleUserConverter.toDto(item.getRoleUsers()));
-            roleUserConverter.setUser(true);
-        }
-        return dto;
+            if (StringUtil.isNotEmpty(item.getEmail())) dto.setEmail(item.getEmail());
+            if (StringUtil.isNotEmpty(item.getAvatar())) dto.setAvatar(item.getAvatar());
+
+            if (StringUtil.isNotEmpty(item.getCountry())) dto.setCountry(item.getCountry());
+            if (StringUtil.isNotEmpty(item.getAbout())) dto.setAbout(item.getAbout());
+
+            if (StringUtil.isNotEmpty(item.isAccountNonExpired()))
+                dto.setAccountNonExpired(item.isAccountNonExpired());
+            if (StringUtil.isNotEmpty(item.isAccountNonLocked()))
+                dto.setAccountNonLocked(item.isAccountNonLocked());
+            if (StringUtil.isNotEmpty(item.getUsername()))
+                dto.setUsername(item.getUsername());
+            if (StringUtil.isNotEmpty(item.getPassword()))
+                dto.setPassword(item.getPassword());
+            if (StringUtil.isNotEmpty(item.getPasswordChanged()))
+                dto.setPasswordChanged(item.getPasswordChanged());
+            if (this.modelPermissionUsers && ListUtil.isNotEmpty(item.getModelPermissionUsers())) {
+                modelPermissionUserConverter.init(true);
+                modelPermissionUserConverter.setUser(false);
+                dto.setModelPermissionUsers(modelPermissionUserConverter.toDto(item.getModelPermissionUsers()));
+                modelPermissionUserConverter.setUser(true);
+
+            }
+            if (this.roleUsers && ListUtil.isNotEmpty(item.getRoleUsers())) {
+                roleUserConverter.init(true);
+                roleUserConverter.setUser(false);
+                dto.setRoleUsers(roleUserConverter.toDto(item.getRoleUsers()));
+                roleUserConverter.setUser(true);
+            }
+            if ( item.getLangue() != null) {
+                dto.setLangue(langueConverter.toDto(item.getLangue()));
+            }
+            return dto;
         }
     }
 
@@ -125,46 +141,59 @@ public class UserConverter extends AbstractConverter<User, UserDto> {
     }
 
 
-    public RoleUserConverter getRoleUserConverter(){
+    public RoleUserConverter getRoleUserConverter() {
         return this.roleUserConverter;
     }
-    public void setRoleUserConverter(RoleUserConverter roleUserConverter ){
+
+    public void setRoleUserConverter(RoleUserConverter roleUserConverter) {
         this.roleUserConverter = roleUserConverter;
     }
-    public ModelPermissionConverter getModelPermissionConverter(){
+
+    public ModelPermissionConverter getModelPermissionConverter() {
         return this.modelPermissionConverter;
     }
-    public void setModelPermissionConverter(ModelPermissionConverter modelPermissionConverter ){
+
+    public void setModelPermissionConverter(ModelPermissionConverter modelPermissionConverter) {
         this.modelPermissionConverter = modelPermissionConverter;
     }
-    public RoleConverter getRoleConverter(){
+
+    public RoleConverter getRoleConverter() {
         return this.roleConverter;
     }
-    public void setRoleConverter(RoleConverter roleConverter ){
+
+    public void setRoleConverter(RoleConverter roleConverter) {
         this.roleConverter = roleConverter;
     }
-    public ModelPermissionUserConverter getModelPermissionUserConverter(){
+
+    public ModelPermissionUserConverter getModelPermissionUserConverter() {
         return this.modelPermissionUserConverter;
     }
-    public void setModelPermissionUserConverter(ModelPermissionUserConverter modelPermissionUserConverter ){
+
+    public void setModelPermissionUserConverter(ModelPermissionUserConverter modelPermissionUserConverter) {
         this.modelPermissionUserConverter = modelPermissionUserConverter;
     }
-    public ActionPermissionConverter getActionPermissionConverter(){
+
+    public ActionPermissionConverter getActionPermissionConverter() {
         return this.actionPermissionConverter;
     }
-    public void setActionPermissionConverter(ActionPermissionConverter actionPermissionConverter ){
+
+    public void setActionPermissionConverter(ActionPermissionConverter actionPermissionConverter) {
         this.actionPermissionConverter = actionPermissionConverter;
     }
-    public boolean  isModelPermissionUsers(){
-        return this.modelPermissionUsers ;
+
+    public boolean isModelPermissionUsers() {
+        return this.modelPermissionUsers;
     }
-    public void  setModelPermissionUsers(boolean modelPermissionUsers ){
-        this.modelPermissionUsers  = modelPermissionUsers ;
+
+    public void setModelPermissionUsers(boolean modelPermissionUsers) {
+        this.modelPermissionUsers = modelPermissionUsers;
     }
-    public boolean  isRoleUsers(){
-        return this.roleUsers ;
+
+    public boolean isRoleUsers() {
+        return this.roleUsers;
     }
-    public void  setRoleUsers(boolean roleUsers ){
-        this.roleUsers  = roleUsers ;
+
+    public void setRoleUsers(boolean roleUsers) {
+        this.roleUsers = roleUsers;
     }
 }

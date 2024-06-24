@@ -91,7 +91,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
     public T create(T t) {
         T loaded = findByReferenceEntity(t);
         if (loaded == null) {
-            T saved = dao.save(t);
+            T saved = dao.saveAndFlush(t);
             return saved;
         } else {
             return loaded;

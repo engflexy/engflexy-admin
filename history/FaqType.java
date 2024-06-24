@@ -1,49 +1,42 @@
-package ma.zs.alc.bean.core.prof;
-
-import java.util.Objects;
-
-
-
-
-
-
+package ma.zs.alc.bean.history;//package ma.zs.alc.bean.core .faq;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
+import ma.zs.alc.zynerator.audit.AuditBusinessObject;
+
+import java.util.List;
 import java.util.Objects;
 
 
 
 
 @Entity
-@Table(name = "type_collaborator")
+@Table(name = "faq_type")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class TypeCollaborator   extends AuditBusinessObject     {
+public class FaqType   extends AuditBusinessObject     {
 
     private Long id;
 
     @Column(length = 500)
-    private String libelle;
+    private String destinataire;
     @Column(length = 500)
-    private String code;
-
-
-
-    public TypeCollaborator(){
+    private String libelle;
+    @OneToMany
+    private List<Faq> faqs;
+    public FaqType(){
         super();
     }
 
-    public TypeCollaborator(Long id){
+    public FaqType(Long id){
         this.id = id;
     }
 
-    public TypeCollaborator(Long id,String libelle){
+    public FaqType(Long id,String libelle){
         this.id = id;
         this.libelle = libelle ;
     }
-    public TypeCollaborator(String libelle){
+    public FaqType(String libelle){
         this.libelle = libelle ;
     }
 
@@ -59,17 +52,17 @@ public class TypeCollaborator   extends AuditBusinessObject     {
     public void setId(Long id){
         this.id = id;
     }
+    public String getDestinataire(){
+        return this.destinataire;
+    }
+    public void setDestinataire(String destinataire){
+        this.destinataire = destinataire;
+    }
     public String getLibelle(){
         return this.libelle;
     }
     public void setLibelle(String libelle){
         this.libelle = libelle;
-    }
-    public String getCode(){
-        return this.code;
-    }
-    public void setCode(String code){
-        this.code = code;
     }
 
     @Transient
@@ -82,8 +75,8 @@ public class TypeCollaborator   extends AuditBusinessObject     {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TypeCollaborator typeCollaborator = (TypeCollaborator) o;
-        return id != null && id.equals(typeCollaborator.id);
+        FaqType faqType = (FaqType) o;
+        return id != null && id.equals(faqType.id);
     }
 
     @Override

@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import ma.zs.alc.zynerator.bean.BusinessObject;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +14,6 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(EntityListener.class)
 public class AuditBusinessObject extends BusinessObject {
-
 
     protected LocalDateTime createdOn;
     protected LocalDateTime updatedOn;

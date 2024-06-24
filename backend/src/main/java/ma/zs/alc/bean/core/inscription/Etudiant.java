@@ -5,17 +5,17 @@ import jakarta.persistence.*;
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.grpe.GroupeEtude;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiantDetail;
+import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.bean.core.inscriptionref.*;
 import ma.zs.alc.bean.core.pack.PackStudent;
 import ma.zs.alc.bean.core.quizetudiant.QuizEtudiant;
-import ma.zs.alc.bean.core.vocab.Collaborator;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.zynerator.security.bean.User;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "etudiant")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class Etudiant extends User {
@@ -30,20 +30,6 @@ public class Etudiant extends User {
     @Column(columnDefinition = "boolean default false")
     private Boolean subscribe = false;
     @Column(columnDefinition = "boolean default false")
-    private boolean credentialsNonExpired = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean enabled = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean accountNonExpired = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean accountNonLocked = false;
-    @Column(columnDefinition = "boolean default false")
-    private boolean passwordChanged = false;
-    @Column(length = 500)
-    private String username;
-    @Column(length = 500)
-    private String password;
-
     private TeacherLocality teacherLocality;
     private Parcours parcours;
     private GroupeEtude groupeEtude;
@@ -55,8 +41,8 @@ public class Etudiant extends User {
     private Fonction fonction;
     private Langue langue;
     private Collaborator collaborator;
-
     private List<QuizEtudiant> quizEtudiants;
+    private List<Inscription> inscriptions;
     private List<GroupeEtudiantDetail> groupeEtudiantDetails;
 
     public Etudiant() {
@@ -127,13 +113,21 @@ public class Etudiant extends User {
     }
 
     @OneToMany(mappedBy = "etudiant")
-
     public List<GroupeEtudiantDetail> getGroupeEtudiantDetails() {
         return this.groupeEtudiantDetails;
     }
 
     public void setGroupeEtudiantDetails(List<GroupeEtudiantDetail> groupeEtudiantDetails) {
         this.groupeEtudiantDetails = groupeEtudiantDetails;
+    }
+
+    @OneToMany(mappedBy = "etudiant")
+    public List<Inscription> getInscriptions() {
+        return inscriptions;
+    }
+
+    public void setInscriptions(List<Inscription> inscriptions) {
+        this.inscriptions = inscriptions;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -222,62 +216,6 @@ public class Etudiant extends User {
 
     public void setCollaborator(Collaborator collaborator) {
         this.collaborator = collaborator;
-    }
-
-    public boolean getCredentialsNonExpired() {
-        return this.credentialsNonExpired;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public boolean getEnabled() {
-        return this.enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public boolean getAccountNonExpired() {
-        return this.accountNonExpired;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public boolean getAccountNonLocked() {
-        return this.accountNonLocked;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public boolean getPasswordChanged() {
-        return this.passwordChanged;
-    }
-
-    public void setPasswordChanged(boolean passwordChanged) {
-        this.passwordChanged = passwordChanged;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 

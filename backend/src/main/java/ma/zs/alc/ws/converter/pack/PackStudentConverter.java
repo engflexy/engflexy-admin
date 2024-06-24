@@ -58,9 +58,9 @@ public class PackStudentConverter extends AbstractConverter<PackStudent, PackStu
             if (StringUtil.isNotEmpty(dto.getOldPrice()))
                 item.setOldPrice(dto.getOldPrice());
             if (dto.getParcours() != null && dto.getParcours().getId() != null) {
-                item.setParcours(new Parcours());
-                item.getParcours().setId(dto.getParcours().getId());
-                item.getParcours().setLibelle(dto.getParcours().getLibelle());
+                item.setLevel(new Parcours());
+                item.getLevel().setId(dto.getParcours().getId());
+                item.getLevel().setLibelle(dto.getParcours().getLibelle());
             }
 
             if (this.price && dto.getPrice() != null)
@@ -102,8 +102,8 @@ public class PackStudentConverter extends AbstractConverter<PackStudent, PackStu
                 dto.setRating(item.getRating());
             if (StringUtil.isNotEmpty(item.getOldPrice()))
                 dto.setOldPrice(item.getOldPrice());
-            if (this.parcours && item.getParcours() != null) {
-                dto.setParcours(parcoursConverter.toDto(item.getParcours()));
+            if (this.parcours && item.getLevel() != null) {
+                dto.setParcours(parcoursConverter.toDto(item.getLevel()));
 
             }
             if (this.price && item.getPrice() != null) {
@@ -119,7 +119,7 @@ public class PackStudentConverter extends AbstractConverter<PackStudent, PackStu
     public void copy(PackStudentDto dto, PackStudent t) {
         super.copy(dto, t);
         if (dto.getParcours() != null)
-            parcoursConverter.copy(dto.getParcours(), t.getParcours());
+            parcoursConverter.copy(dto.getParcours(), t.getLevel());
         if (dto.getPrice() != null)
             priceConverter.copy(dto.getPrice(), t.getPrice());
     }

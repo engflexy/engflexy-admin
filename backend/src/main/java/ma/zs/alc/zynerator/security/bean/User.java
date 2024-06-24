@@ -1,7 +1,9 @@
 package ma.zs.alc.zynerator.security.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import ma.zs.alc.bean.core.inscriptionref.Langue;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,28 +17,35 @@ import java.util.Objects;
 @Table(name = "user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@SequenceGenerator(name = "user_app_seq", sequenceName = "user_app_seq", allocationSize = 1, initialValue = 1)
 public class User extends AuditBusinessObject implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_app_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    protected boolean credentialsNonExpired = true;
+
     protected boolean enabled = true;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
     protected String email;
     protected boolean accountNonExpired = true;
     protected boolean accountNonLocked = true;
+    protected boolean passwordChanged = false;
+    protected boolean credentialsNonExpired = true;
     protected String username;
     protected String password;
-    protected boolean passwordChanged = false;
+
     protected String fullName;
     protected String avatar;
     protected String phone;
+    protected String country;
+    protected String about;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "langue")
+    protected Langue langue;
 
     @Transient
     protected Collection<GrantedAuthority> authorities;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     protected List<ModelPermissionUser> modelPermissionUsers;
     @OneToMany(mappedBy = "user")
     protected List<RoleUser> roleUsers;
@@ -51,6 +60,16 @@ public class User extends AuditBusinessObject implements UserDetails {
         this.password = username;
         this.email = username;
     }
+
+
+    public Langue getLangue() {
+        return this.langue;
+    }
+
+    public void setLangue(Langue langue) {
+        this.langue = langue;
+    }
+
 
     public String getAvatar() {
         return avatar;
@@ -196,6 +215,7 @@ public class User extends AuditBusinessObject implements UserDetails {
     }
 
 
+    @JsonIgnore
     public List<ModelPermissionUser> getModelPermissionUsers() {
         return this.modelPermissionUsers;
     }
@@ -204,6 +224,21 @@ public class User extends AuditBusinessObject implements UserDetails {
         this.modelPermissionUsers = modelPermissionUsers;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 
     public List<RoleUser> getRoleUsers() {
         return this.roleUsers;

@@ -1,0 +1,199 @@
+package ma.zs.alc.bean.history;//package ma.zs.alc.bean.core .grpe;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
+import ma.zs.alc.bean.history.*; //.course.Parcours;
+import ma.zs.alc.bean.history.*; //.grpe.GroupeEtat;
+import ma.zs.alc.bean.history.*; //.grpe.GroupeEtude;
+import ma.zs.alc.bean.history.*; //.grpe.GroupeEtudiantDetail;
+import ma.zs.alc.bean.history.*; //.grpe.GroupeType;
+import ma.zs.alc.bean.history.*; //.prof.Prof;
+import ma.zs.alc.zynerator.audit.AuditBusinessObject;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
+
+
+
+
+@Entity
+@Table(name = "groupe_etudiant")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+
+public class GroupeEtudiant   extends AuditBusinessObject     {
+
+    private Long id;
+
+    @Column(length = 500)
+    private String libelle;
+    @Column(length = 500)
+    private String type;
+    private LocalDateTime dateDebut ;
+    private LocalDateTime dateFin ;
+    private Long nombrePlace ;
+    private Long nombrePlacevide ;
+    private Long nombrePlaceNonVide ;
+    private Long nreCoursesComing ;
+    private Long nreCoursesCompleted ;
+    private Long nreCourses ;
+    @OneToMany
+    private List<Paiement> paiements;
+    private GroupeEtude groupeEtude ;
+    private GroupeType groupeType ;
+    private GroupeEtat groupeEtat ;
+    private Parcours parcours ;
+    private Prof prof ;
+    @OneToMany
+    private List<SessionCours> sessionCours ;
+
+    private List<GroupeEtudiantDetail> groupeEtudiantDetails ;
+    @OneToMany
+    private List<ScheduleProf> scheduleProfs ;
+
+    public GroupeEtudiant(){
+        super();
+    }
+
+    public GroupeEtudiant(Long id){
+        this.id = id;
+    }
+
+
+
+
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    public Long getId(){
+        return this.id;
+    }
+    public void setId(Long id){
+        this.id = id;
+    }
+    public String getLibelle(){
+        return this.libelle;
+    }
+    public void setLibelle(String libelle){
+        this.libelle = libelle;
+    }
+    public String getType(){
+        return this.type;
+    }
+    public void setType(String type){
+        this.type = type;
+    }
+    public LocalDateTime getDateDebut(){
+        return this.dateDebut;
+    }
+    public void setDateDebut(LocalDateTime dateDebut){
+        this.dateDebut = dateDebut;
+    }
+    public LocalDateTime getDateFin(){
+        return this.dateFin;
+    }
+    public void setDateFin(LocalDateTime dateFin){
+        this.dateFin = dateFin;
+    }
+    public Long getNombrePlace(){
+        return this.nombrePlace;
+    }
+    public void setNombrePlace(Long nombrePlace){
+        this.nombrePlace = nombrePlace;
+    }
+    public Long getNombrePlacevide(){
+        return this.nombrePlacevide;
+    }
+    public void setNombrePlacevide(Long nombrePlacevide){
+        this.nombrePlacevide = nombrePlacevide;
+    }
+    public Long getNombrePlaceNonVide(){
+        return this.nombrePlaceNonVide;
+    }
+    public void setNombrePlaceNonVide(Long nombrePlaceNonVide){
+        this.nombrePlaceNonVide = nombrePlaceNonVide;
+    }
+    @OneToMany(mappedBy = "groupeEtudiant")
+
+    public List<GroupeEtudiantDetail> getGroupeEtudiantDetails(){
+        return this.groupeEtudiantDetails;
+    }
+    public void setGroupeEtudiantDetails(List<GroupeEtudiantDetail> groupeEtudiantDetails){
+        this.groupeEtudiantDetails = groupeEtudiantDetails;
+    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupe_etude")
+    public GroupeEtude getGroupeEtude(){
+        return this.groupeEtude;
+    }
+    public void setGroupeEtude(GroupeEtude groupeEtude){
+        this.groupeEtude = groupeEtude;
+    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupe_type")
+    public GroupeType getGroupeType(){
+        return this.groupeType;
+    }
+    public void setGroupeType(GroupeType groupeType){
+        this.groupeType = groupeType;
+    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupe_etat")
+    public GroupeEtat getGroupeEtat(){
+        return this.groupeEtat;
+    }
+    public void setGroupeEtat(GroupeEtat groupeEtat){
+        this.groupeEtat = groupeEtat;
+    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parcours")
+    public Parcours getParcours(){
+        return this.parcours;
+    }
+    public void setParcours(Parcours parcours){
+        this.parcours = parcours;
+    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prof")
+    public Prof getProf(){
+        return this.prof;
+    }
+    public void setProf(Prof prof){
+        this.prof = prof;
+    }
+    public Long getNreCoursesComing(){
+        return this.nreCoursesComing;
+    }
+    public void setNreCoursesComing(Long nreCoursesComing){
+        this.nreCoursesComing = nreCoursesComing;
+    }
+    public Long getNreCoursesCompleted(){
+        return this.nreCoursesCompleted;
+    }
+    public void setNreCoursesCompleted(Long nreCoursesCompleted){
+        this.nreCoursesCompleted = nreCoursesCompleted;
+    }
+    public Long getNreCourses(){
+        return this.nreCourses;
+    }
+    public void setNreCourses(Long nreCourses){
+        this.nreCourses = nreCourses;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupeEtudiant groupeEtudiant = (GroupeEtudiant) o;
+        return id != null && id.equals(groupeEtudiant.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+}
+

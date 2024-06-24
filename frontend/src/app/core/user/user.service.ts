@@ -1,18 +1,19 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { User } from 'app/core/user/user.types';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {User} from 'app/core/user/user.types';
+import {map, Observable, ReplaySubject, tap} from 'rxjs';
+import {environment} from "../../../environments/environment";
+import {UserDto} from "../../zynerator/security/shared/model/User.model";
 
 @Injectable({providedIn: 'root'})
-export class UserService
-{
-    private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
+export class UserService {
+    API = environment.apiUrl + 'api/user'
+    private _user: ReplaySubject<UserDto> = new ReplaySubject<UserDto>(1);
 
     /**
      * Constructor
      */
-    constructor(private _httpClient: HttpClient)
-    {
+    constructor(private _httpClient: HttpClient) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -24,14 +25,12 @@ export class UserService
      *
      * @param value
      */
-    set user(value: User)
-    {
+    set user(value: UserDto) {
         // Store the value
         this._user.next(value);
     }
 
-    get user$(): Observable<User>
-    {
+    get user$(): Observable<UserDto> {
         return this._user.asObservable();
     }
 
@@ -42,11 +41,9 @@ export class UserService
     /**
      * Get the current logged in user data
      */
-    get(): Observable<User>
-    {
-        return this._httpClient.get<User>('api/common/user').pipe(
-            tap((user) =>
-            {
+    get(id: number): Observable<UserDto> {
+        return this._httpClient.get<UserDto>(`${this.API}/id/${id}`).pipe(
+            tap((user) => {
                 this._user.next(user);
             }),
         );
@@ -57,11 +54,9 @@ export class UserService
      *
      * @param user
      */
-    update(user: User): Observable<any>
-    {
-        return this._httpClient.patch<User>('api/common/user', {user}).pipe(
-            map((response) =>
-            {
+    update(user: UserDto): Observable<any> {
+        return this._httpClient.patch<UserDto>('api/common/user', {user}).pipe(
+            map((response) => {
                 this._user.next(response);
             }),
         );

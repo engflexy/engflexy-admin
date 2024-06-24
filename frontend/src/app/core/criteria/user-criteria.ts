@@ -1,4 +1,4 @@
-export class StudentCriteria {
+export class UserCriteria {
     public id: number
     public email: string
     public avatar: string

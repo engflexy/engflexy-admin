@@ -1,14 +1,18 @@
 package ma.zs.alc.service.impl.admin.inscription;
 
 
+import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.bean.core.inscription.Etudiant;
+import ma.zs.alc.bean.core.inscriptionref.EtatInscription;
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.dao.criteria.core.inscription.EtudiantCriteria;
 import ma.zs.alc.dao.facade.core.inscription.EtudiantDao;
-import ma.zs.alc.dao.facade.core.inscription.StudentCriteria;
+import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.dao.specification.core.inscription.EtudiantSpecification;
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService;
 import ma.zs.alc.service.facade.admin.grpe.GroupeEtudeAdminService;
 import ma.zs.alc.service.facade.admin.grpe.GroupeEtudiantDetailAdminService;
+import ma.zs.alc.service.facade.admin.grpe.InscriptionAdminService;
 import ma.zs.alc.service.facade.admin.inscription.EtudiantAdminService;
 import ma.zs.alc.service.facade.admin.inscriptionref.*;
 import ma.zs.alc.service.facade.admin.pack.PackStudentAdminService;
@@ -21,6 +25,8 @@ import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
+import ma.zs.alc.zynerator.util.DateUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -158,23 +164,12 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
         return dao.countByFonctionCode(code);
     }
 
-    public List<Etudiant> findByLangueId(Long id) {
-        return dao.findByLangueId(id);
-    }
-
-    public int deleteByLangueId(Long id) {
-        return dao.deleteByLangueId(id);
-    }
-
-    public long countByLangueRef(String ref) {
-        return dao.countByLangueRef(ref);
-    }
 
     public List<Etudiant> findByCollaboratorId(Long id) {
         return dao.findByCollaboratorId(id);
     }
 
-    public Page<StudentCriteria> findByCollaboratorId(Long id, Pageable pageable) {
+    public Page<UserPageable> findByCollaboratorId(Long id, Pageable pageable) {
         return dao.findByCollaboratorId(id, pageable);
     }
 
@@ -189,14 +184,18 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
 
     @Override
     public Etudiant create(Etudiant t) {
-        if (findByUsername(t.getUsername()) != null || t.getPassword() == null) return null;
-        t.setPassword(userService.cryptPassword(t.getPassword()));
+        if (t.getUsername() == null || findByUsername(t.getUsername()) != null) {
+            throw new RuntimeException("Email already exist.");
+        }
+        String password = null;
+        if (t.getPassword() != null) password = t.getPassword();
+        else password = generatePassword();
+        t.setPassword(userService.cryptPassword(password));
         t.setEnabled(true);
         t.setAccountNonExpired(true);
         t.setAccountNonLocked(true);
         t.setCredentialsNonExpired(true);
         t.setPasswordChanged(false);
-
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.STUDENT);
         role.setCreatedAt(LocalDateTime.now());
@@ -210,7 +209,25 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
 
         t.setModelPermissionUsers(modelPermissionUserService.initModelPermissionUser());
 
+        if (t.getCollaborator() != null) {
+            System.out.println("COLLABORATOR==> " + t.getCollaborator().getId());
+            Collaborator c = collaboratorService.findById(t.getCollaborator().getId());
+            if (c == null) {
+                throw new RuntimeException("Collaborator account with username '" + t.getCollaborator().getUsername() + "' not found");
+            }
+            System.out.println("COLLABORATOR==> " + c);
+            t.setCollaborator(c);
+        }
+
         Etudiant mySaved = (Etudiant) userService.create(t);
+        //create student inscription
+        Inscription ins = new Inscription();
+        ins.setEtudiant(mySaved);
+        ins.setDatedebutinscription(DateUtil.getCurrentDateTime());
+        ins.setEtatInscription(new EtatInscription("E1"));
+        ins.setNumeroInscription(1);
+        ins.setSubscriptionFinished(false);
+        inscriptionService.create(ins);
 
         if (t.getQuizEtudiants() != null) {
             t.getQuizEtudiants().forEach(element -> {
@@ -218,12 +235,20 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
                 quizEtudiantService.create(element);
             });
         }
+
         if (t.getGroupeEtudiantDetails() != null) {
             t.getGroupeEtudiantDetails().forEach(element -> {
                 element.setEtudiant(mySaved);
                 groupeEtudiantDetailService.create(element);
             });
         }
+        if (t.getInscriptions() != null) {
+            t.getInscriptions().forEach(element -> {
+                element.setEtudiant(mySaved);
+                inscriptionService.create(element);
+            });
+        }
+
         return mySaved;
     }
 
@@ -237,6 +262,10 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
 
     public void configure() {
         super.configure(Etudiant.class, EtudiantSpecification.class);
+    }
+
+    public String generatePassword() {
+        return RandomStringUtils.randomAlphanumeric(10);
     }
 
     private @Autowired UserService userService;
@@ -269,6 +298,8 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
     private TeacherLocalityAdminService teacherLocalityService;
     @Autowired
     private NiveauEtudeAdminService niveauEtudeService;
+    @Autowired
+    private InscriptionAdminService inscriptionService;
 
     public EtudiantAdminServiceImpl(EtudiantDao dao) {
         super(dao);

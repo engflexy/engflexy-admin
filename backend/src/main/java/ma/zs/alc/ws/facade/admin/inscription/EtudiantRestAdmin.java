@@ -3,7 +3,7 @@ package ma.zs.alc.ws.facade.admin.inscription;
 import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.dao.criteria.core.inscription.EtudiantCriteria;
-import ma.zs.alc.dao.facade.core.inscription.StudentCriteria;
+import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.service.facade.admin.inscription.EtudiantAdminService;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
 import ma.zs.alc.ws.dto.inscription.EtudiantDto;
@@ -195,17 +195,6 @@ public class EtudiantRestAdmin extends AbstractController<Etudiant, EtudiantDto,
         return service.deleteByFonctionId(id);
     }
 
-    @Operation(summary = "find by langue id")
-    @GetMapping("langue/id/{id}")
-    public List<EtudiantDto> findByLangueId(@PathVariable Long id) {
-        return findDtos(service.findByLangueId(id));
-    }
-
-    @Operation(summary = "delete by langue id")
-    @DeleteMapping("langue/id/{id}")
-    public int deleteByLangueId(@PathVariable Long id) {
-        return service.deleteByLangueId(id);
-    }
 
     @Operation(summary = "find by collaborator id")
     @GetMapping("collaborator/id/{id}")
@@ -250,9 +239,9 @@ public class EtudiantRestAdmin extends AbstractController<Etudiant, EtudiantDto,
     }
 
     @GetMapping("pageable/collaborator/id/{id}")
-    public Page<StudentCriteria> findByCollaboratorId(@PathVariable Long id,
-                                                      @RequestParam("page") int page,
-                                                      @RequestParam("size") int size) {
+    public Page<UserPageable> findByCollaboratorId(@PathVariable Long id,
+                                                   @RequestParam("page") int page,
+                                                   @RequestParam("size") int size) {
         return service.findByCollaboratorId(id, PageRequest.of(page, size));
     }
 

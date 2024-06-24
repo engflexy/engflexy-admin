@@ -6,26 +6,11 @@ import {TypeTeacherDto} from './TypeTeacher.model';
 import {RecommendTeacherDto} from '../recomrecla/RecommendTeacher.model';
 import {CategorieProfDto} from './CategorieProf.model';
 import {TrancheHoraireProfDto} from './TrancheHoraireProf.model';
+import {UserDto} from "../../../zynerator/security/shared/model/User.model";
 
-export class ProfDto extends BaseDto{
+export class ProfDto extends UserDto{
 
     public ref: string;
-
-    public about: string;
-
-   public credentialsNonExpired: null | boolean;
-
-   public enabled: null | boolean;
-
-   public accountNonExpired: null | boolean;
-
-   public accountNonLocked: null | boolean;
-
-   public passwordChanged: null | boolean;
-
-    public username: string;
-
-    public password: string;
 
     public parcours: ParcoursDto ;
     public categorieProf: CategorieProfDto ;
@@ -35,8 +20,8 @@ export class ProfDto extends BaseDto{
      public recommendTeachers: Array<RecommendTeacherDto>;
 
 
-    constructor() {
-        super();
+    constructor(id?: number) {
+        super(id);
 
         this.ref = '';
         this.about = '';

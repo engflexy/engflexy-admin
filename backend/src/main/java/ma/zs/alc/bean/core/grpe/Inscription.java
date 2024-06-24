@@ -1,5 +1,6 @@
 package ma.zs.alc.bean.core.grpe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import ma.zs.alc.bean.core.course.Parcours;
@@ -10,7 +11,6 @@ import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 
@@ -30,11 +30,12 @@ public class Inscription extends AuditBusinessObject {
     private Boolean subscriptionFinished = false;
     @Column(length = 500)
     private String dateRegistration;
-    private LocalDateTime datedebutinscription;
-    private LocalDateTime datefininscription;
+    private String datedebutinscription;
+    private String datefininscription;
     @Column(length = 500)
     private String skype;
 
+    @JsonIgnore
     private Etudiant etudiant;
     private EtatInscription etatInscription;
     private Parcours parcours;
@@ -79,6 +80,7 @@ public class Inscription extends AuditBusinessObject {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etudiant")
+    @JsonIgnore
     public Etudiant getEtudiant() {
         return this.etudiant;
     }
@@ -209,19 +211,19 @@ public class Inscription extends AuditBusinessObject {
         this.dateRegistration = dateRegistration;
     }
 
-    public LocalDateTime getDatedebutinscription() {
+    public String getDatedebutinscription() {
         return this.datedebutinscription;
     }
 
-    public void setDatedebutinscription(LocalDateTime datedebutinscription) {
+    public void setDatedebutinscription(String datedebutinscription) {
         this.datedebutinscription = datedebutinscription;
     }
 
-    public LocalDateTime getDatefininscription() {
+    public String getDatefininscription() {
         return this.datefininscription;
     }
 
-    public void setDatefininscription(LocalDateTime datefininscription) {
+    public void setDatefininscription(String datefininscription) {
         this.datefininscription = datefininscription;
     }
 

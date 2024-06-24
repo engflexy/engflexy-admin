@@ -6,7 +6,6 @@ import {AuthService} from "../../../zynerator/security/shared/service/Auth.servi
 export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) =>
 {
     const router: Router = inject(Router);
-
     // Check the authentication status
     return inject(AuthService).check().pipe(
         switchMap((authenticated) =>

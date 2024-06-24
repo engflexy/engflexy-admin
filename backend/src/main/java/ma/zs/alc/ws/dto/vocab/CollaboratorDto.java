@@ -12,20 +12,14 @@ import java.util.List;
 import ma.zs.alc.ws.dto.course.ParcoursDto;
 import ma.zs.alc.ws.dto.course.CoursDto;
 import ma.zs.alc.ws.dto.prof.TypeCollaboratorDto;
+import ma.zs.alc.zynerator.security.ws.dto.UserDto;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CollaboratorDto  extends AuditBaseDto {
+public class CollaboratorDto  extends UserDto {
 
     private String libelle  ;
     private String description  ;
-    private Boolean credentialsNonExpired  ;
-    private Boolean enabled  ;
-    private Boolean accountNonExpired  ;
-    private Boolean accountNonLocked  ;
-    private Boolean passwordChanged  ;
-    private String username  ;
-    private String password  ;
 
     private TypeCollaboratorDto typeCollaborator ;
 
@@ -53,62 +47,6 @@ public class CollaboratorDto  extends AuditBaseDto {
     }
     public void setDescription(String description){
         this.description = description;
-    }
-
-    @Log
-    public Boolean getCredentialsNonExpired(){
-        return this.credentialsNonExpired;
-    }
-    public void setCredentialsNonExpired(Boolean credentialsNonExpired){
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    @Log
-    public Boolean getEnabled(){
-        return this.enabled;
-    }
-    public void setEnabled(Boolean enabled){
-        this.enabled = enabled;
-    }
-
-    @Log
-    public Boolean getAccountNonExpired(){
-        return this.accountNonExpired;
-    }
-    public void setAccountNonExpired(Boolean accountNonExpired){
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    @Log
-    public Boolean getAccountNonLocked(){
-        return this.accountNonLocked;
-    }
-    public void setAccountNonLocked(Boolean accountNonLocked){
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    @Log
-    public Boolean getPasswordChanged(){
-        return this.passwordChanged;
-    }
-    public void setPasswordChanged(Boolean passwordChanged){
-        this.passwordChanged = passwordChanged;
-    }
-
-    @Log
-    public String getUsername(){
-        return this.username;
-    }
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    @Log
-    public String getPassword(){
-        return this.password;
-    }
-    public void setPassword(String password){
-        this.password = password;
     }
 
 

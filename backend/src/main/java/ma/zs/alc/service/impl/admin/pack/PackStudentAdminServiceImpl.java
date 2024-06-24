@@ -7,23 +7,15 @@ import ma.zs.alc.dao.facade.core.pack.PackStudentDao;
 import ma.zs.alc.dao.specification.core.pack.PackStudentSpecification;
 import ma.zs.alc.service.facade.admin.pack.PackStudentAdminService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
-import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
-
-
-
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService ;
-import ma.zs.alc.bean.core.course.Parcours ;
 import ma.zs.alc.service.facade.admin.price.PriceAdminService ;
-import ma.zs.alc.bean.core.price.Price ;
 
-import java.util.List;
 @Service
 public class PackStudentAdminServiceImpl extends AbstractServiceImpl<PackStudent, PackStudentCriteria, PackStudentDao> implements PackStudentAdminService {
 
@@ -37,19 +29,19 @@ public class PackStudentAdminServiceImpl extends AbstractServiceImpl<PackStudent
     }
     public void findOrSaveAssociatedObject(PackStudent t){
         if( t != null) {
-            t.setParcours(parcoursService.findOrSave(t.getParcours()));
+            t.setLevel(parcoursService.findOrSave(t.getLevel()));
             t.setPrice(priceService.findOrSave(t.getPrice()));
         }
     }
 
     public List<PackStudent> findByParcoursId(Long id){
-        return dao.findByParcoursId(id);
+        return dao.findByLevelId(id);
     }
     public int deleteByParcoursId(Long id){
-        return dao.deleteByParcoursId(id);
+        return dao.deleteByLevelId(id);
     }
     public long countByParcoursCode(String code){
-        return dao.countByParcoursCode(code);
+        return dao.countByLevelCode(code);
     }
     public List<PackStudent> findByPriceId(Long id){
         return dao.findByPriceId(id);
