@@ -35,9 +35,9 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
             throw new RuntimeException("Email already exist.");
         } else {
             if (t.getPassword() == null || t.getPassword().isEmpty()) {
-                t.setPassword(t.getUsername());
+                t.setPassword(bCryptPasswordEncoder.encode(t.getUsername()));
             } else {
-                t.setPassword(t.getPassword());
+                t.setPassword(bCryptPasswordEncoder.encode(t.getPassword()));
             }
             t.setAccountNonExpired(true);
             t.setAccountNonLocked(true);
@@ -56,7 +56,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
                 t.getRoleUsers().forEach(element -> {
                     element.setUser(t);
                 });
-                roleUserService.update(t.getRoleUsers(),true);
+                roleUserService.update(t.getRoleUsers(), true);
             }
             return t;
         }

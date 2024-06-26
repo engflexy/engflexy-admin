@@ -127,7 +127,6 @@ public class AlcApplication {
                 contentTypeService.create(type2);
                 contentTypeService.create(type3);
                 contentTypeService.create(type4);
-
             }
             if (false) {
 /*
@@ -215,7 +214,7 @@ public class AlcApplication {
 
 
                 // User Admin
-                User userForAdmin = new User("admin");
+                User userForAdmin = new User("admin1");
                 userForAdmin.setPassword("123");
                 // Role Admin
                 Role roleForAdmin = new Role();
@@ -237,7 +236,7 @@ public class AlcApplication {
 
 
                 // User Collaborator
-                User userForCollaborator = new User("collaborator");
+                User userForCollaborator = new User("collaborator1");
                 userForCollaborator.setPassword("123");
                 // Role Collaborator
                 Role roleForCollaborator = new Role();
