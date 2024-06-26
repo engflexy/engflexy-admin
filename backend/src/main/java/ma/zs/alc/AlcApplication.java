@@ -214,7 +214,7 @@ public class AlcApplication {
 
 
                 // User Admin
-                User userForAdmin = new User("admin1");
+                User userForAdmin = new User("admin");
                 userForAdmin.setPassword("123");
                 // Role Admin
                 Role roleForAdmin = new Role();
@@ -236,7 +236,7 @@ public class AlcApplication {
 
 
                 // User Collaborator
-                User userForCollaborator = new User("collaborator1");
+                User userForCollaborator = new User("collaborator");
                 userForCollaborator.setPassword("123");
                 // Role Collaborator
                 Role roleForCollaborator = new Role();
