@@ -56,10 +56,8 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
                 item.setUsername(dto.getUsername());
             if (dto.getPasswordChanged() != null)
                 item.setPasswordChanged(dto.getPasswordChanged());
-
             if (StringUtil.isNotEmpty(dto.getFullName()))
                 item.setFullName(dto.getFullName());
-
             if (StringUtil.isNotEmpty(dto.getPhone()))
                 item.setPhone(dto.getPhone());
             if (this.parcourss && ListUtil.isNotEmpty(dto.getParcourss()))

@@ -33,6 +33,10 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
         return new EtudiantCriteria();
     }
 
+    findAllByCollaboratorId(id: number): Observable<Array<UserCriteria>> {
+        return this.http.get<Array<UserCriteria>>(this.API + `collaborator/id/${id}`);
+    }
+
     findByCollaboratorId(id: number, pageable: Pageable): Observable<Criteria<UserCriteria>> {
         return this.http.get<Criteria<UserCriteria>>(this.API + `pageable/collaborator/id/${id}`,
             {

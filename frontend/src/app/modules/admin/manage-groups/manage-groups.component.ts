@@ -1,26 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {MatTabsModule} from "@angular/material/tabs";
+import {Component} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule, PageEvent} from "@angular/material/paginator";
-import {
-    InscriptionCollaboratorService
-} from "../../../shared/service/collaborator/grpe/InscriptionCollaborator.service";
-import {InscriptionCriteria} from "../../../shared/criteria/grpe/InscriptionCriteria.model";
-import {PaginatedList} from "../../../zynerator/dto/PaginatedList.model";
-import {InscriptionDto} from "../../../shared/model/grpe/Inscription.model";
-import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {TYPE_INSCRIPTION} from "../../../shared/utils/enums";
-import {CreateInscriptionComponent} from "./create-inscription/create-inscription.component";
+import {PaginatedList} from "../../../zynerator/dto/PaginatedList.model";
 import {MatDialog} from "@angular/material/dialog";
+import {CreateInscriptionComponent} from "../manage-inscriptions/create-inscription/create-inscription.component";
+import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
+import {
+    GroupeEtudiantCollaboratorService
+} from "../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
+import {GroupeEtudiantCriteria} from "../../../shared/criteria/grpe/GroupeEtudiantCriteria.model";
 
 @Component({
-    selector: 'app-manage-inscriptions',
-    templateUrl: './manage-inscriptions.component.html',
+    selector: 'app-manage-groups',
+    templateUrl: './manage-groups.component.html',
     imports: [
-        MatTabsModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -28,16 +26,17 @@ import {MatDialog} from "@angular/material/dialog";
         MatPaginatorModule,
         NgForOf,
         NgIf,
-        NgOptimizedImage
+        NgClass
     ],
     standalone: true
 })
-export class ManageInscriptionsComponent implements OnInit {
+export class ManageGroupsComponent {
     status = TYPE_INSCRIPTION
-    criteria: PaginatedList<InscriptionDto> = new PaginatedList<InscriptionDto>()
-    pageable: InscriptionCriteria = new InscriptionCriteria();
+    criteria: PaginatedList<GroupeEtudiantDto> = new PaginatedList<GroupeEtudiantDto>()
+    pageable: GroupeEtudiantCriteria = new GroupeEtudiantCriteria();
+    active_status = 1;
 
-    constructor(private service: InscriptionCollaboratorService,
+    constructor(private service: GroupeEtudiantCollaboratorService,
                 private _matDialog: MatDialog) {
     }
 
@@ -74,4 +73,3 @@ export class ManageInscriptionsComponent implements OnInit {
         })
     }
 }
-

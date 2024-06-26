@@ -46,7 +46,7 @@ export enum Role {
     STUDENT = "STUDENT"
 }
 
-export enum InscriptionStatus {
+export enum TYPE_INSCRIPTION {
     PENDING = "Pending",
     VALIDATE = "Validated",
     PAID = "PAID",

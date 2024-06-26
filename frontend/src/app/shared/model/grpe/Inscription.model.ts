@@ -13,36 +13,36 @@ import {PackStudentDto} from '../pack/PackStudent.model';
 import {GroupeEtudeDto} from './GroupeEtude.model';
 import {NiveauEtudeDto} from '../inscriptionref/NiveauEtude.model';
 
-export class InscriptionDto extends BaseDto{
+export class InscriptionDto extends BaseDto {
 
     public numeroInscription: null | number;
 
     public noteQuizNiveau: null | number;
 
-   public quizFinished: null | boolean;
+    public quizFinished: null | boolean;
 
-   public subscriptionFinished: null | boolean;
+    public subscriptionFinished: null | boolean;
 
     public dateRegistration: string;
 
-   public datedebutinscription: Date;
+    public datedebutinscription: Date;
 
-   public datefininscription: Date;
+    public datefininscription: Date;
 
     public skype: string;
 
-    public etudiant: EtudiantDto ;
-    public etatInscription: EtatInscriptionDto ;
-    public parcours: ParcoursDto ;
-    public groupeEtude: GroupeEtudeDto ;
-    public groupeType: GroupeTypeDto ;
-    public statutSocial: StatutSocialDto ;
-    public interetEtudiant: InteretEtudiantDto ;
-    public niveauEtude: NiveauEtudeDto ;
-    public fonction: FonctionDto ;
-    public quiz: QuizDto ;
-    public packStudent: PackStudentDto ;
-    public skill: SkillDto ;
+    public etudiant: EtudiantDto;
+    public etatInscription: EtatInscriptionDto;
+    public parcours: ParcoursDto;
+    public groupeEtude: GroupeEtudeDto;
+    public groupeType: GroupeTypeDto;
+    public statutSocial: StatutSocialDto;
+    public interetEtudiant: InteretEtudiantDto;
+    public niveauEtude: NiveauEtudeDto;
+    public fonction: FonctionDto;
+    public quiz: QuizDto;
+    public packStudent: PackStudentDto;
+    public skill: SkillDto;
 
 
     constructor() {
@@ -56,15 +56,15 @@ export class InscriptionDto extends BaseDto{
         this.datedebutinscription = null;
         this.datefininscription = null;
         this.skype = '';
-        this.etudiant = new EtudiantDto() ;
-        this.etatInscription = new EtatInscriptionDto() ;
-        this.parcours = new ParcoursDto() ;
-        this.statutSocial = new StatutSocialDto() ;
-        this.interetEtudiant = new InteretEtudiantDto() ;
-        this.quiz = new QuizDto() ;
-        this.packStudent = new PackStudentDto() ;
-        this.skill = new SkillDto() ;
+        this.etudiant = new EtudiantDto();
+        this.etatInscription = new EtatInscriptionDto();
+        this.parcours = new ParcoursDto();
+        this.statutSocial = new StatutSocialDto();
+        this.interetEtudiant = new InteretEtudiantDto();
+        this.quiz = new QuizDto();
+        this.packStudent = new PackStudentDto();
+        this.skill = new SkillDto();
 
-        }
+    }
 
 }

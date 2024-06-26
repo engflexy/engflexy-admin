@@ -5,14 +5,61 @@
                 <div class="sm:flex sm:items-center sm:justify-between">
                     <div class="text-center sm:text-left">
                         <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                            Manage your subscriptions
+                            Manage your groups
                         </h1>
                     </div>
                     <button mat-button (click)="create()"
-                            mat-stroked-button color="primary">create new subscription</button>
+                            mat-stroked-button color="primary">create new group
+                    </button>
                 </div>
             </div>
         </header>
+
+        <div class="sm:hidden relative w-11/12 mx-auto bg-white dark:bg-gray-700 rounded">
+            <div class="absolute inset-0 m-auto mr-4 z-0 w-6 h-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-selector" width="24"
+                     height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#A0AEC0" fill="none"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z"/>
+                    <polyline points="8 9 12 5 16 9"/>
+                    <polyline points="16 15 12 19 8 15"/>
+                </svg>
+            </div>
+            <select aria-label="Selected tab"
+                    class="form-select block w-full p-3 border border-gray-300 rounded text-gray-600 appearance-none bg-transparent relative z-10">
+                <option class="text-sm text-gray-600">inactive</option>
+                <option class="text-sm text-gray-600">inactive</option>
+                <option selected class="text-sm text-gray-600">Active</option>
+            </select>
+        </div>
+        <div class="xl:w-full xl:mx-0 h-12 hidden sm:block bg-white dark:bg-gray-700 shadow rounded">
+            <ul class="flex px-5">
+                <li (click)="this.active_status = 1"
+                    [ngClass]="active_status == 1 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
+                    <div class="flex items-center mb-3">
+                        <span>
+                            <mat-icon [color]="active_status === 1 ? 'primary':'accent'" class="icon-size-4"
+                                      svgIcon="heroicons_solid:user-group"></mat-icon>
+                        </span>
+                        <span class="ml-1 text-lg ubuntu-medium">Groups</span>
+                    </div>
+                    <div *ngIf="active_status == 1" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
+                </li>
+
+                <li (click)="this.active_status = 2"
+                    [ngClass]="active_status == 2 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
+                    <div class="flex items-center mb-3">
+                        <span>
+                            <mat-icon [color]="active_status === 2 ? 'primary':'accent'" class="icon-size-4"
+                                      svgIcon="heroicons_solid:user"></mat-icon>
+                        </span>
+                        <span class="ml-1 text-lg ubuntu-medium">Individual</span>
+                    </div>
+                    <div *ngIf="active_status == 2" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
+                </li>
+
+            </ul>
+        </div>
 
 
         <section class="container px-4 mx-auto">
@@ -52,7 +99,7 @@
                                     <th scope="col"
                                         class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         <button class="flex items-center gap-x-2">
-                                            <span>Status</span>
+                                            <span>type</span>
 
                                             <svg class="h-3" viewBox="0 0 10 11" fill="none"
                                                  xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +119,7 @@
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         <button class="flex items-center gap-x-2">
-                                            <span>Level</span>
+                                            <span>Material</span>
 
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                  stroke-width="2" stroke="currentColor" class="w-4 h-4">
@@ -84,7 +131,7 @@
 
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Email address
+                                        N° courses
                                     </th>
 
                                     <th scope="col" class="relative py-3.5 px-4">
@@ -101,68 +148,44 @@
                                                        class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
 
                                                 <div class="flex items-center gap-x-2">
-                                                    <ng-container *ngIf="item?.etudiant?.avatar else showContainer">
-                                                        <img class="object-cover w-10 h-10 rounded-full"
-                                                             src="{{item?.etudiant?.avatar}}"
-                                                             width="40"
-                                                             height="40"
-                                                             alt="{{item?.etudiant?.fullName?.at(0)}}">
-                                                    </ng-container>
-                                                    <ng-template #showContainer>
-                                                        <div
-                                                            class="object-cover flex items-center justify-center
+                                                    <div
+                                                        class="object-cover flex items-center justify-center
                                                              uppercase bg-gray-100 text-center dark:bg-gray-600 w-10 h-10
                                                               rounded-full">
-                                                            <strong>{{ item?.etudiant?.fullName?.at(0) }}</strong>
-                                                        </div>
-                                                    </ng-template>
+                                                        <strong>{{ item?.libelle?.at(0) }}</strong>
+                                                    </div>
 
                                                     <div>
                                                         <h2 class="font-medium text-gray-800 dark:text-white ">
-                                                            {{ item?.etudiant?.fullName }}</h2>
+                                                            {{ item?.libelle }}</h2>
                                                         <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                            {{ item?.etudiant?.phone }}</p>
+                                                            {{ item?.groupeType?.libelle }}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
 
-                                            <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2
-                                            container-{{item?.etatInscription?.libelle}} dark:bg-gray-800">
-                                                <span
-                                                    class="h-1.5 w-1.5 rounded-full type-{{item?.etatInscription?.libelle}}"></span>
-
-                                                <h2 class="text-sm font-normal text-{{item?.etatInscription?.libelle}}">{{ item?.etatInscription?.libelle }}</h2>
-                                            </div>
+                                            {{ item?.parcours?.libelle }}
 
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             {{ item?.parcours?.libelle }}
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.etudiant?.email }}
+                                            {{ item?.nreCourses }}
                                         </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div class="flex items-center gap-x-6">
                                                 <button
                                                     class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                         viewBox="0 0 24 24"
-                                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
-                                                    </svg>
+                                                    <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
+
                                                 </button>
 
                                                 <button
                                                     class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                         viewBox="0 0 24 24"
-                                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
-                                                    </svg>
+                                                    <mat-icon svgIcon="heroicons_solid:pencil"></mat-icon>
                                                 </button>
                                             </div>
                                         </td>

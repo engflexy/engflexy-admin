@@ -4,7 +4,8 @@ import {AuthGuard} from 'app/core/auth/guards/auth.guard';
 import {NoAuthGuard} from 'app/core/auth/guards/noAuth.guard';
 import {LayoutComponent} from 'app/layout/layout.component';
 import {AdminDashboardComponent} from "./modules/admin/admin-dashboard/admin-dashboard.component";
-import {ManageCoursesComponent} from "./modules/admin/manage-courses/manage-courses.component";
+import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/manage-inscriptions.component";
+import {ManageGroupsComponent} from "./modules/admin/manage-groups/manage-groups.component";
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -92,10 +93,14 @@ export const appRoutes: Route[] = [
                 path: 'manage-users',
                 loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
             },
-            // {
-            //     path: 'manage-inscriptions',
-            //     loadChildren: () => import('app/modules/admin/manage-users/manage-users.module')
-            // },
+            {
+                path: 'manage-inscriptions',
+                component: ManageInscriptionsComponent
+            },
+            {
+                path: 'manage-groups',
+                component: ManageGroupsComponent
+            },
         ]
     }
 ];

@@ -2,6 +2,7 @@ package ma.zs.alc.dao.facade.core.inscription;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.prof.Prof;
+import ma.zs.alc.zynerator.security.bean.User;
 
 public class UserPageable {
     public Long id;
@@ -11,7 +12,7 @@ public class UserPageable {
     public String phone;
     public boolean enabled;
 
-    public UserPageable(Etudiant etd) {
+    public UserPageable(User etd) {
         this.id = etd.getId();
         this.email = etd.getEmail();
         this.avatar = etd.getAvatar();
@@ -20,12 +21,4 @@ public class UserPageable {
         this.enabled = etd.isEnabled();
     }
 
-    public UserPageable(Prof prof) {
-        this.id = prof.getId();
-        this.email = prof.getEmail();
-        this.avatar = prof.getAvatar();
-        this.fullName = prof.getFullName();
-        this.phone = prof.getPhone();
-        this.enabled = prof.isEnabled();
-    }
 }

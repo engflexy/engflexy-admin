@@ -1,5 +1,6 @@
 package ma.zs.alc.dao.facade.core.prof;
 
+import com.linecorp.armeria.client.circuitbreaker.CircuitBreakerRule;
 import org.springframework.data.jpa.repository.Query;
 import ma.zs.alc.zynerator.repository.AbstractRepository;
 import ma.zs.alc.bean.core.common.TypeCollaborator;
@@ -17,4 +18,5 @@ public interface TypeCollaboratorDao extends AbstractRepository<TypeCollaborator
     @Query("SELECT NEW TypeCollaborator(item.id,item.libelle) FROM TypeCollaborator item")
     List<TypeCollaborator> findAllOptimized();
 
+    TypeCollaborator findByLibelle(String libelle);
 }

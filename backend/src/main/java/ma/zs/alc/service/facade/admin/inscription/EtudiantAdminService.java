@@ -70,7 +70,7 @@ public interface EtudiantAdminService extends IService<Etudiant, EtudiantCriteri
     long countByFonctionCode(String code);
 
 
-    List<Etudiant> findByCollaboratorId(Long id);
+    List<UserPageable> findByCollaboratorId(Long id);
 
     Page<UserPageable> findByCollaboratorId(Long id, Pageable pageable);
 

@@ -151,22 +151,22 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
 
     @Override
     public Prof update(Prof t) {
-        Prof student = this.findById(t.getId());
-        if (student == null) {
+        Prof prof = this.findById(t.getId());
+        if (prof == null) {
             throw new RuntimeException("Account not found.");
         } else {
-            student.setFullName(t.getFullName());
-            student.setAvatar(t.getAvatar());
-            student.setEmail(t.getEmail());
-            student.setPhone(t.getPhone());
-            student.setCountry(t.getCountry());
-            student.setAbout(t.getAbout());
+            prof.setFullName(t.getFullName());
+            prof.setAvatar(t.getAvatar());
+            prof.setEmail(t.getEmail());
+            prof.setPhone(t.getPhone());
+            prof.setCountry(t.getCountry());
+            prof.setAbout(t.getAbout());
 
             if (t.getLangue() != null && t.getLangue().getId() != null) {
                 Langue langue = langueService.findById(t.getLangue().getId());
-                student.setLangue(langue);
+                prof.setLangue(langue);
             }
-            return dao.save(student);
+            return dao.save(prof);
         }
     }
 

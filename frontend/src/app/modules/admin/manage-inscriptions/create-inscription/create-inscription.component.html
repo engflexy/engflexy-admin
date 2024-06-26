@@ -1,0 +1,120 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden">
+    <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+        <form
+            #ngForm="ngForm"
+            class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+            justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a student</mat-label>
+                <input #student type="text"
+                       placeholder="choose a student"
+                       aria-label="fullName"
+                       (input)="filterStudent(student.value)"
+                       label="fullName"
+                       [(ngModel)]="inscription.etudiant"
+                       name="etudiant"
+                       matInput
+                       [matAutocomplete]="auto">
+                <mat-autocomplete  aria-label="fullName"  #auto="matAutocomplete">
+                    <mat-option *ngFor="let item of students" class="border-b border-solid" [value]="item">
+                        <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
+                            <ng-container *ngIf="item?.avatar else noImg">
+                                <img
+                                    class="w-14 h-14 mr-4 rounded-none object-cover"
+                                    src="{{item?.avatar}}"
+                                    width="56"
+                                    height="56"
+                                    alt="Card cover image">
+                            </ng-container>
+                            <ng-template #noImg>
+                                <div
+                                    class="w-14 h-14 mr-4 uppercase bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-hint text-2xl">
+                                    <span>{{ item?.email?.at(0) }}</span>
+                                </div>
+                            </ng-template>
+
+
+                            <div class="flex flex-grow flex-col min-w-0">
+                                <div class="font-medium leading-none">
+                                    {{ item?.fullName }}
+                                </div>
+
+                                <div class="text-md truncate leading-none mt-1">
+                                    {{ item?.email }}
+                                </div>
+
+                                <div class="text-md flex flex-row items-center leading-none text-secondary mt-2">
+
+                                    <div
+                                        [class.bg-orange-200]="!item?.enabled"
+                                        [class.bg-green-200]="item?.enabled"
+                                        class="flex  px-2 rounded-full font-bold flex-row items-center gap-1">
+                                        <mat-icon class=" icon-size-4"
+                                                  [class.text-orange-500]="!item?.enabled"
+                                                  [class.text-green-500]="item?.enabled"
+                                                  [matTooltip]="item?.enabled ? 'activated':'locked'"
+                                                  matTooltipPosition="above"
+                                                  [svgIcon]="item?.enabled ? 'mat_outline:check_circle':'mat_outline:block'"
+                                        ></mat-icon>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a student</mat-label>
+                <input required
+                       matInput
+                       [placeholder]="'fullName'"
+                       name="fullName">
+                <mat-error>
+                    Full name is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>student email</mat-label>
+                <input required
+                       type="email"
+                       matInput
+                       autocomplete="email"
+                       [placeholder]="'email'"
+                       name="email">
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>phone number</mat-label>
+                <input
+                    matInput
+                    [placeholder]="'Ex: +212 6xxxxxxxx'"
+                    name="phone">
+            </mat-form-field>
+
+        </form>
+
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>
+        Cancel
+    </button>
+    <button
+        class="px-6 ml-3"
+        [disabled]="ngForm.disabled"
+        (click)="save()"
+        mat-flat-button
+        [color]="'primary'">
+        Create
+    </button>
+
+</mat-dialog-actions>

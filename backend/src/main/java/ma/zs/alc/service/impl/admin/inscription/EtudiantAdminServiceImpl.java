@@ -165,7 +165,7 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
     }
 
 
-    public List<Etudiant> findByCollaboratorId(Long id) {
+    public List<UserPageable> findByCollaboratorId(Long id) {
         return dao.findByCollaboratorId(id);
     }
 

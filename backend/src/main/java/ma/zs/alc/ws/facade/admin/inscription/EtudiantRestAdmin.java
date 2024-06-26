@@ -198,8 +198,8 @@ public class EtudiantRestAdmin extends AbstractController<Etudiant, EtudiantDto,
 
     @Operation(summary = "find by collaborator id")
     @GetMapping("collaborator/id/{id}")
-    public List<EtudiantDto> findByCollaboratorId(@PathVariable Long id) {
-        return findDtos(service.findByCollaboratorId(id));
+    public List<UserPageable> findByCollaboratorId(@PathVariable Long id) {
+        return service.findByCollaboratorId(id);
     }
 
     @Operation(summary = "delete by collaborator id")

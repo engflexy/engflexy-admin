@@ -35,12 +35,16 @@ import {PriceFormatPipe} from "../../../core/pipes/PriceFormatPipe";
 import { CreateTeacherComponent } from './teachers/create-teacher/create-teacher.component';
 import { TeacherDetailsComponent } from './teachers/teacher-details/teacher-details.component';
 import { TeacherProfileComponent } from './teachers/teacher-details/teacher-profile/teacher-profile.component';
+import { CreateCollaboratorComponent } from './collaborators/create-collaborator/create-collaborator.component';
+import { CollaboratorDetialsComponent } from './collaborators/collaborator-detials/collaborator-detials.component';
+import { CollaboratorProfileComponent } from './collaborators/collaborator-detials/collaborator-profile/collaborator-profile.component';
 
 
 const userRoutes: Route[] = [
     {path: '', component: ManageUsersComponent},
     {path: 'student/:id', component: StudentSettingsComponent},
     {path: 'teacher/:id', component: TeacherDetailsComponent},
+    {path: 'collaborator/:id', component: CollaboratorDetialsComponent},
 ]
 
 @NgModule({
@@ -50,7 +54,7 @@ const userRoutes: Route[] = [
         SettingsNotificationsComponent,
         SettingsPlanBillingComponent,
         SettingsSecurityComponent,
-        SettingsTeamComponent, StudentSettingsComponent, CreateTeacherComponent, TeacherDetailsComponent, TeacherProfileComponent],
+        SettingsTeamComponent, StudentSettingsComponent, CreateTeacherComponent, TeacherDetailsComponent, TeacherProfileComponent, CreateCollaboratorComponent, CollaboratorDetialsComponent, CollaboratorProfileComponent],
     imports: [
         RouterModule.forChild(userRoutes),
         CommonModule,

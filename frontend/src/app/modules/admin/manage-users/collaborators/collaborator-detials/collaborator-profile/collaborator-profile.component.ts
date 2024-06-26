@@ -5,20 +5,22 @@ import {ImagesService} from "../../../../../../shared/service/public/images.serv
 import {ActivatedRoute} from "@angular/router";
 import {compareObjects} from "../../../../../../shared/constant/global-funsctions";
 import {countries} from 'app/core/countries/data';
-import {ProfDto} from "../../../../../../shared/model/prof/Prof.model";
-import {ProfCollaboratorService} from "../../../../../../shared/service/collaborator/prof/ProfCollaborator.service";
+import {CollaboratorDto} from "../../../../../../shared/model/vocab/Collaborator.model";
+import {CollaboratorAdminService} from "../../../../../../shared/service/admin/vocab/CollaboratorAdmin.service";
+import {TypeCollaboratorDto} from "../../../../../../shared/model/prof/TypeCollaborator.model";
+import {TypeCollaboratorAdminService} from "../../../../../../shared/service/admin/prof/TypeCollaboratorAdmin.service";
 
 @Component({
-    selector: 'app-teacher-profile',
-    templateUrl: './teacher-profile.component.html'
+    selector: 'app-collaborator-profile',
+    templateUrl: './collaborator-profile.component.html'
 })
-export class TeacherProfileComponent
-    implements OnInit {
+export class CollaboratorProfileComponent implements OnInit {
     protected readonly compareObjects = compareObjects;
-    user: ProfDto = new ProfDto();
+    user: CollaboratorDto = new CollaboratorDto();
     selectedFile: File | null = null;
     countries = countries;
     public langues: LangueDto[];
+    public types: TypeCollaboratorDto[];
 
     /**
      * Constructor
@@ -26,7 +28,8 @@ export class TeacherProfileComponent
     constructor(
         private alert: FuseAlertService,
         private ref: ChangeDetectorRef,
-        private service: ProfCollaboratorService,
+        private typeService: TypeCollaboratorAdminService,
+        private service: CollaboratorAdminService,
         private imageService: ImagesService,
         private route: ActivatedRoute,
     ) {
@@ -39,7 +42,7 @@ export class TeacherProfileComponent
     ngOnInit(): void {
         const id = this.route.snapshot.params.id
         if (id) {
-            this.service.findByIdWithAssociatedList(new ProfDto(id))
+            this.service.findByIdWithAssociatedList(new CollaboratorDto(id))
                 .subscribe(res => {
                     this.user = res
                     this.ref.markForCheck()
@@ -49,6 +52,7 @@ export class TeacherProfileComponent
             .subscribe(response => {
                 this.langues = response;
             })
+        this.typeService.findAll().subscribe(res => this.types = res)
     }
 
     onFileSelected(event: any): void {
