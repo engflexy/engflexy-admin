@@ -69,12 +69,6 @@ export const adminNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_solid:briefcase',
         link: '/admin/manage-courses'
     }, {
-        id: 'manage-inscriptions',
-        title: 'Inscriptions',
-        type: 'basic',
-        icon: 'heroicons_solid:identification',
-        link: '/admin/manage-inscriptions'
-    }, {
         id: 'manage-users',
         title: 'Manage Users',
         type: 'basic',
@@ -98,6 +92,18 @@ export const adminNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_solid:calendar-days',
         link: '/admin/schedule'
+    }, {
+        id: 'manage-inscriptions',
+        title: 'Inscriptions',
+        type: 'basic',
+        icon: 'heroicons_solid:identification',
+        link: '/admin/manage-inscriptions'
+    }, {
+        id: 'manage-salary',
+        title: 'Salary',
+        type: 'basic',
+        icon: 'heroicons_solid:identification',
+        link: '/admin/teacher-salary'
     }, {
         id: 'FAQS & News',
         title: 'FAQS & News',

@@ -44,7 +44,13 @@
         "rxjs": "7.8.1",
         "tslib": "2.5.2",
         "@kolkov/angular-editor": "^3.0.0-beta.0",
-        "zone.js": "0.13.0"
+        "zone.js": "0.13.0",
+        "@fullcalendar/angular": "^6.1.8",
+        "@fullcalendar/core": "^6.1.8",
+        "@fullcalendar/daygrid": "^6.1.8",
+        "@fullcalendar/interaction": "^6.1.8",
+        "@fullcalendar/list": "^6.1.8",
+        "@fullcalendar/timegrid": "^6.1.8"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "16.0.3",

@@ -6,6 +6,10 @@ import {LayoutComponent} from 'app/layout/layout.component';
 import {AdminDashboardComponent} from "./modules/admin/admin-dashboard/admin-dashboard.component";
 import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/manage-inscriptions.component";
 import {ManageGroupsComponent} from "./modules/admin/manage-groups/manage-groups.component";
+import {ScheduleComponent} from "./modules/admin/schedule/schedule.component";
+import {ManageFaqNewsComponent} from "./modules/admin/manage-faq-news/manage-faq-news.component";
+import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
+import {ManagePackPricesComponent} from "./modules/admin/manage-pack-prices/manage-pack-prices.component";
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -80,7 +84,6 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         children: [
-            {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
             {
                 path: 'dashboard',
                 component: AdminDashboardComponent
@@ -100,6 +103,22 @@ export const appRoutes: Route[] = [
             {
                 path: 'manage-groups',
                 component: ManageGroupsComponent
+            },
+            {
+                path: 'schedule',
+                component: ScheduleComponent
+            },
+            {
+                path: 'faqs-news',
+                component: ManageFaqNewsComponent
+            },
+            {
+                path: 'teacher-salary',
+                component: ManageSalaryComponent
+            },
+            {
+                path: 'manage-pack-prices',
+                component: ManagePackPricesComponent
             },
         ]
     }

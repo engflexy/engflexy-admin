@@ -11,10 +11,12 @@ import {provideIcons} from 'app/core/icons/icons.provider';
 import {provideTransloco} from 'app/core/transloco/transloco.provider';
 import {mockApiServices} from 'app/mock-api';
 import {SafePipe} from "./shared/utils/safe.pipe";
+import {DatePipe} from "@angular/common";
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideAnimations(),
+        DatePipe,
         provideHttpClient(),
         provideRouter(appRoutes,
             withPreloading(PreloadAllModules),

@@ -38,6 +38,7 @@ public class ScheduleProf   extends AuditBusinessObject     {
     private String ref;
     @Column(length = 500)
     private String grpName;
+    private String color = "#e76f51";
     @Column(length = 500)
     private String profName;
     private Long profsId ;
@@ -148,6 +149,14 @@ public class ScheduleProf   extends AuditBusinessObject     {
     }
     public void setCourseFinished(Boolean courseFinished){
         this.courseFinished = courseFinished;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @Transient
