@@ -7,7 +7,7 @@ import {EtudiantDto} from '../../../model/inscription/Etudiant.model';
 import {EtudiantCriteria} from '../../../criteria/inscription/EtudiantCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {UserCriteria} from "../../../../core/criteria/user-criteria";
 
@@ -16,9 +16,21 @@ import {UserCriteria} from "../../../../core/criteria/user-criteria";
     providedIn: 'root'
 })
 export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, EtudiantCriteria> {
+    private _students: Array<UserCriteria> = new Array<UserCriteria>();
+
+
     constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+
+    get students(): Array<UserCriteria> {
+        return this._students;
+    }
+
+    set students(value: Array<UserCriteria>) {
+        this._students = value;
     }
 
     get API() {
@@ -34,7 +46,12 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     }
 
     findAllByCollaboratorId(id: number): Observable<Array<UserCriteria>> {
-        return this.http.get<Array<UserCriteria>>(this.API + `collaborator/id/${id}`);
+        return this.http.get<Array<UserCriteria>>(this.API + `collaborator/id/${id}`)
+            .pipe(
+                tap((response) => {
+                    this._students = response
+                }),
+            );
     }
 
     findByCollaboratorId(id: number, pageable: Pageable): Observable<Criteria<UserCriteria>> {

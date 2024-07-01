@@ -1,8 +1,12 @@
 package ma.zs.alc.service.impl.collaborator.grpe;
 
 
+import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.bean.core.grpe.GroupeEtude;
 import ma.zs.alc.bean.core.grpe.Inscription;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.inscriptionref.EtatInscription;
+import ma.zs.alc.bean.core.pack.PackStudent;
 import ma.zs.alc.dao.criteria.core.grpe.InscriptionCriteria;
 import ma.zs.alc.dao.facade.core.grpe.InscriptionDao;
 import ma.zs.alc.dao.specification.core.grpe.InscriptionSpecification;
@@ -27,8 +31,29 @@ public class InscriptionCollaboratorServiceImpl extends AbstractServiceImpl<Insc
     @Override
     public Inscription create(Inscription inscription) {
         if (inscription != null) {
-            EtatInscription etat = etatInscriptionService.findByReferenceEntity(inscription.getEtatInscription());
-            inscription.setEtatInscription(etat);
+            if (inscription.getEtatInscription() != null) {
+                EtatInscription etat = etatInscriptionService.findById(inscription.getEtatInscription().getId());
+                inscription.setEtatInscription(etat);
+            }
+            if (inscription.getEtudiant() != null) {
+                Etudiant etudiant = etudiantService.findById(inscription.getEtudiant().getId());
+                inscription.setEtudiant(etudiant);
+                //update numero d'inscription
+                inscription.setNumeroInscription((int) (countByEtudiantId(etudiant.getId()) + 1));
+            }
+            if (inscription.getGroupeEtude() != null) {
+                GroupeEtude item = groupeEtudeService.findById(inscription.getGroupeEtude().getId());
+                inscription.setGroupeEtude(item);
+            }
+            if (inscription.getPackStudent() != null) {
+                PackStudent item = packStudentService.findById(inscription.getPackStudent().getId());
+                inscription.setPackStudent(item);
+            }
+            if (inscription.getParcours() != null) {
+                Parcours item = parcoursService.findById(inscription.getParcours().getId());
+                inscription.setParcours(item);
+            }
+
             return dao.save(inscription);
         }
         return null;

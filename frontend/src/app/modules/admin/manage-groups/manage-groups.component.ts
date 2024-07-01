@@ -9,11 +9,13 @@ import {TYPE_INSCRIPTION} from "../../../shared/utils/enums";
 import {PaginatedList} from "../../../zynerator/dto/PaginatedList.model";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateInscriptionComponent} from "../manage-inscriptions/create-inscription/create-inscription.component";
-import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
 import {
     GroupeEtudiantCollaboratorService
 } from "../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
 import {GroupeEtudiantCriteria} from "../../../shared/criteria/grpe/GroupeEtudiantCriteria.model";
+import {ParcoursDto} from "../../../shared/model/course/Parcours.model";
+import {ProfDto} from "../../../shared/model/prof/Prof.model";
+import {GroupeTypeDto} from "../../../shared/model/grpe/GroupeType.model";
 
 @Component({
     selector: 'app-manage-groups',
@@ -32,7 +34,7 @@ import {GroupeEtudiantCriteria} from "../../../shared/criteria/grpe/GroupeEtudia
 })
 export class ManageGroupsComponent {
     status = TYPE_INSCRIPTION
-    criteria: PaginatedList<GroupeEtudiantDto> = new PaginatedList<GroupeEtudiantDto>()
+    criteria: PaginatedList<any> = new PaginatedList<any>()
     pageable: GroupeEtudiantCriteria = new GroupeEtudiantCriteria();
     active_status = 1;
 
@@ -43,7 +45,67 @@ export class ManageGroupsComponent {
     ngOnInit() {
         this.pageable.page = 0
         this.pageable.maxResults = 5
-        this.fetchData();
+        this.criteria =
+            {
+                dataSize: 10,
+                list: [
+                    {
+                        libelle: 'Lorim upsol',
+                        type: 'PAID',
+                        nreCourses: 20,
+                        parcours: new ParcoursDto('Elementary'),
+                        prof: new ProfDto(1, 'Youssef EL MOUDENE'),
+                        nombrePlace: 5,
+                        nombrePlaceNonVide: 2,
+                        nombrePlacevide: 3,
+                        groupeType: new GroupeTypeDto('Individual')
+                    },
+                    {
+                        libelle: 'Lorim upsol',
+                        type: 'PAID',
+                        nreCourses: 20,
+                        parcours: new ParcoursDto('Elementary'),
+                        prof: new ProfDto(1, 'Youssef EL MOUDENE'),
+                        nombrePlace: 1,
+                        nombrePlaceNonVide: 1,
+                        nombrePlacevide: 0,
+                        groupeType: new GroupeTypeDto('Individual')
+                    },
+                    {
+                        libelle: 'Rhoncus nec erat',
+                        type: 'TRIAL',
+                        nreCourses: 20,
+                        parcours: new ParcoursDto('Elementary'),
+                        prof: new ProfDto(1, 'Youssef EL MOUDENE'),
+                        nombrePlace: 1,
+                        nombrePlaceNonVide: 1,
+                        nombrePlacevide: 0,
+                        groupeType: new GroupeTypeDto('Individual')
+                    },
+                    {
+                        libelle: 'Dictumst ac venenatis',
+                        type: 'PAID',
+                        nreCourses: 20,
+                        parcours: new ParcoursDto('Elementary'),
+                        prof: new ProfDto(1, 'Youssef EL MOUDENE'),
+                        nombrePlace: 1,
+                        nombrePlaceNonVide: 1,
+                        nombrePlacevide: 0,
+                        groupeType: new GroupeTypeDto('Individual')
+                    },
+                    {
+                        libelle: 'Donec porttitor',
+                        type: 'PAID',
+                        nreCourses: 20,
+                        parcours: new ParcoursDto('Elementary'),
+                        prof: new ProfDto(1, 'Youssef EL MOUDENE'),
+                        nombrePlace: 1,
+                        nombrePlaceNonVide: 1,
+                        nombrePlacevide: 0,
+                        groupeType: new GroupeTypeDto('Individual')
+                    },
+                ]
+            }
     }
 
     private fetchData() {

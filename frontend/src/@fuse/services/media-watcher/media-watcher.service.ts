@@ -19,7 +19,8 @@ export class FuseMediaWatcherService
     {
         this._fuseConfigService.config$.pipe(
             map(config => fromPairs(Object.entries(config.screens).map(([alias, screen]) => ([alias, `(min-width: ${screen})`])))),
-            switchMap(screens => this._breakpointObserver.observe(Object.values(screens)).pipe(
+            switchMap(screens => this._breakpointObserver.observe(Object.values(screens))
+                .pipe(
                 map((state) =>
                 {
                     // Prepare the observable values and set their defaults

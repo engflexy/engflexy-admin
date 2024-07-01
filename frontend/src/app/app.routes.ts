@@ -7,7 +7,6 @@ import {AdminDashboardComponent} from "./modules/admin/admin-dashboard/admin-das
 import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/manage-inscriptions.component";
 import {ManageGroupsComponent} from "./modules/admin/manage-groups/manage-groups.component";
 import {ScheduleComponent} from "./modules/admin/schedule/schedule.component";
-import {ManageFaqNewsComponent} from "./modules/admin/manage-faq-news/manage-faq-news.component";
 import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
 import {ManagePackPricesComponent} from "./modules/admin/manage-pack-prices/manage-pack-prices.component";
 
@@ -93,6 +92,10 @@ export const appRoutes: Route[] = [
                 loadChildren: () => import('app/modules/admin/manage-courses/manage-course.routes')
             },
             {
+                path: 'chat',
+                loadChildren: () => import('app/modules/admin/chat-component/chat/chat.routes')
+            },
+            {
                 path: 'manage-users',
                 loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
             },
@@ -110,7 +113,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'faqs-news',
-                component: ManageFaqNewsComponent
+                loadChildren: () => import('app/modules/admin/manage-faq-news/help-center.routes')
             },
             {
                 path: 'teacher-salary',

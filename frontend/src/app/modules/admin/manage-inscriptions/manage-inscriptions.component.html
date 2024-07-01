@@ -5,7 +5,7 @@
                 <div class="sm:flex sm:items-center sm:justify-between">
                     <div class="text-center sm:text-left">
                         <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                            Manage your subscriptions
+                            Manage student's subscription
                         </h1>
                     </div>
                     <button mat-button (click)="create()"
@@ -146,6 +146,7 @@
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div class="flex items-center gap-x-6">
                                                 <button
+                                                    (click)="delete(item)"
                                                     class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                          viewBox="0 0 24 24"
@@ -156,6 +157,7 @@
                                                 </button>
 
                                                 <button
+                                                    (click)="edit(item)"
                                                     class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                          viewBox="0 0 24 24"
