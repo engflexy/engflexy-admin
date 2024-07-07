@@ -11,4 +11,10 @@ export class GroupeEtudeCriteria  extends BaseCriteria  {
      public nombreEtudiantMin: number;
      public nombreEtudiantMax: number;
 
+
+    constructor(id?: number, libelle?: string) {
+        super();
+        this.id = id;
+        this.libelle = libelle;
+    }
 }

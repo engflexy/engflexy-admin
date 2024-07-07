@@ -1,218 +1,233 @@
-        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
-            <div class="w-full  items-center justify-center flex flex-col gap-4">
+<mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+    <div class="w-full  items-center justify-center flex flex-col gap-4">
 
-                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+        <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
                     justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
-                                <div class="grid">
 
-                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                                                    <mat-label>NumeroInscription</mat-label>
-                                                    <input required type="number" matInput placeholder="NumeroInscription"  [(ngModel)]="item.numeroInscription"  name="numeroInscription">
-                                                </mat-form-field>
-
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>Etudiant</mat-label>
-                                            <input type="text" matInput (input)="filterEtudiant(etudiantInput.value)" #etudiantInput [matAutocomplete]="etudiantAutocomplete"  [(ngModel)]="item.etudiant"  name="etudiant">
-
-                                            <mat-autocomplete #etudiantAutocomplete="matAutocomplete" [displayWith]="displayEtudiant" >
-                                              <mat-option *ngFor="let etudiant of _etudiantsFilter" [value]="etudiant">
-                                                {{etudiant.id}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>EtatInscription</mat-label>
-                                            <input type="text" matInput (input)="filterEtatInscription(etatInscriptionInput.value)" #etatInscriptionInput [matAutocomplete]="etatInscriptionAutocomplete"  [(ngModel)]="item.etatInscription"  name="etatInscription">
-
-                                            <mat-autocomplete #etatInscriptionAutocomplete="matAutocomplete" [displayWith]="displayEtatInscription" >
-                                              <mat-option *ngFor="let etatInscription of _etatInscriptionsFilter" [value]="etatInscription">
-                                                {{etatInscription.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>Parcours</mat-label>
-                                            <input type="text" matInput (input)="filterParcours(parcoursInput.value)" #parcoursInput [matAutocomplete]="parcoursAutocomplete"  [(ngModel)]="item.parcours"  name="parcours">
-
-                                            <mat-autocomplete #parcoursAutocomplete="matAutocomplete" [displayWith]="displayParcours" >
-                                              <mat-option *ngFor="let parcours of _parcourssFilter" [value]="parcours">
-                                                {{parcours.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>GroupeEtude</mat-label>
-                                            <input type="text" matInput (input)="filterGroupeEtude(groupeEtudeInput.value)" #groupeEtudeInput [matAutocomplete]="groupeEtudeAutocomplete"  [(ngModel)]="item.groupeEtude"  name="groupeEtude">
-
-                                            <mat-autocomplete #groupeEtudeAutocomplete="matAutocomplete" [displayWith]="displayGroupeEtude" >
-                                              <mat-option *ngFor="let groupeEtude of _groupeEtudesFilter" [value]="groupeEtude">
-                                                {{groupeEtude.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>GroupeType</mat-label>
-                                            <input type="text" matInput (input)="filterGroupeType(groupeTypeInput.value)" #groupeTypeInput [matAutocomplete]="groupeTypeAutocomplete"  [(ngModel)]="item.groupeType"  name="groupeType">
-
-                                            <mat-autocomplete #groupeTypeAutocomplete="matAutocomplete" [displayWith]="displayGroupeType" >
-                                              <mat-option *ngFor="let groupeType of _groupeTypesFilter" [value]="groupeType">
-                                                {{groupeType.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>StatutSocial</mat-label>
-                                            <input type="text" matInput (input)="filterStatutSocial(statutSocialInput.value)" #statutSocialInput [matAutocomplete]="statutSocialAutocomplete"  [(ngModel)]="item.statutSocial"  name="statutSocial">
-
-                                            <mat-autocomplete #statutSocialAutocomplete="matAutocomplete" [displayWith]="displayStatutSocial" >
-                                              <mat-option *ngFor="let statutSocial of _statutSocialsFilter" [value]="statutSocial">
-                                                {{statutSocial.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>InteretEtudiant</mat-label>
-                                            <input type="text" matInput (input)="filterInteretEtudiant(interetEtudiantInput.value)" #interetEtudiantInput [matAutocomplete]="interetEtudiantAutocomplete"  [(ngModel)]="item.interetEtudiant"  name="interetEtudiant">
-
-                                            <mat-autocomplete #interetEtudiantAutocomplete="matAutocomplete" [displayWith]="displayInteretEtudiant" >
-                                              <mat-option *ngFor="let interetEtudiant of _interetEtudiantsFilter" [value]="interetEtudiant">
-                                                {{interetEtudiant.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>NiveauEtude</mat-label>
-                                            <input type="text" matInput (input)="filterNiveauEtude(niveauEtudeInput.value)" #niveauEtudeInput [matAutocomplete]="niveauEtudeAutocomplete"  [(ngModel)]="item.niveauEtude"  name="niveauEtude">
-
-                                            <mat-autocomplete #niveauEtudeAutocomplete="matAutocomplete" [displayWith]="displayNiveauEtude" >
-                                              <mat-option *ngFor="let niveauEtude of _niveauEtudesFilter" [value]="niveauEtude">
-                                                {{niveauEtude.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>Fonction</mat-label>
-                                            <input type="text" matInput (input)="filterFonction(fonctionInput.value)" #fonctionInput [matAutocomplete]="fonctionAutocomplete"  [(ngModel)]="item.fonction"  name="fonction">
-
-                                            <mat-autocomplete #fonctionAutocomplete="matAutocomplete" [displayWith]="displayFonction" >
-                                              <mat-option *ngFor="let fonction of _fonctionsFilter" [value]="fonction">
-                                                {{fonction.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>Quiz</mat-label>
-                                            <input type="text" matInput (input)="filterQuiz(quizInput.value)" #quizInput [matAutocomplete]="quizAutocomplete"  [(ngModel)]="item.quiz"  name="quiz">
-
-                                            <mat-autocomplete #quizAutocomplete="matAutocomplete" [displayWith]="displayQuiz" >
-                                              <mat-option *ngFor="let quiz of _quizsFilter" [value]="quiz">
-                                                {{quiz.lib}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                                                    <mat-label>NoteQuizNiveau</mat-label>
-                                                    <input required type="number" matInput placeholder="NoteQuizNiveau"  [(ngModel)]="item.noteQuizNiveau"  name="noteQuizNiveau">
-                                                </mat-form-field>
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>NumeroInscription</mat-label>
+                <input required type="number" matInput placeholder="NumeroInscription"
+                       [(ngModel)]="item.numeroInscription" name="numeroInscription">
+            </mat-form-field>
 
 
-                                                <div>
-                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.quizFinished"  name="quizFinished"  >
-                                                    {{ item.quizFinished? 'Checked' : 'Unchecked' }}
-                                                  </mat-checkbox>
-                                                </div>
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Etudiant</mat-label>
+                <input type="text" matInput (input)="filterEtudiant(etudiantInput.value)" #etudiantInput
+                       [matAutocomplete]="etudiantAutocomplete" [(ngModel)]="item.etudiant" name="etudiant">
+
+                <mat-autocomplete #etudiantAutocomplete="matAutocomplete" [displayWith]="displayEtudiant">
+                    <mat-option *ngFor="let etudiant of _etudiantsFilter" [value]="etudiant">
+                        {{ etudiant.fullName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>EtatInscription</mat-label>
+                <input type="text" matInput (input)="filterEtatInscription(etatInscriptionInput.value)"
+                       #etatInscriptionInput [matAutocomplete]="etatInscriptionAutocomplete"
+                       [(ngModel)]="item.etatInscription" name="etatInscription">
+
+                <mat-autocomplete #etatInscriptionAutocomplete="matAutocomplete"
+                                  [displayWith]="displayEtatInscription">
+                    <mat-option *ngFor="let etatInscription of _etatInscriptionsFilter" [value]="etatInscription">
+                        {{ etatInscription.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Parcours</mat-label>
+                <input type="text" matInput (input)="filterParcours(parcoursInput.value)" #parcoursInput
+                       [matAutocomplete]="parcoursAutocomplete" [(ngModel)]="item.parcours" name="parcours">
+
+                <mat-autocomplete #parcoursAutocomplete="matAutocomplete" [displayWith]="displayParcours">
+                    <mat-option *ngFor="let parcours of _parcourssFilter" [value]="parcours">
+                        {{ parcours.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>GroupeEtude</mat-label>
+                <input type="text" matInput (input)="filterGroupeEtude(groupeEtudeInput.value)" #groupeEtudeInput
+                       [matAutocomplete]="groupeEtudeAutocomplete" [(ngModel)]="item.groupeEtude"
+                       name="groupeEtude">
+
+                <mat-autocomplete #groupeEtudeAutocomplete="matAutocomplete" [displayWith]="displayGroupeEtude">
+                    <mat-option *ngFor="let groupeEtude of _groupeEtudesFilter" [value]="groupeEtude">
+                        {{ groupeEtude.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>GroupeType</mat-label>
+                <input type="text" matInput (input)="filterGroupeType(groupeTypeInput.value)" #groupeTypeInput
+                       [matAutocomplete]="groupeTypeAutocomplete" [(ngModel)]="item.groupeType" name="groupeType">
+
+                <mat-autocomplete #groupeTypeAutocomplete="matAutocomplete" [displayWith]="displayGroupeType">
+                    <mat-option *ngFor="let groupeType of _groupeTypesFilter" [value]="groupeType">
+                        {{ groupeType.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>StatutSocial</mat-label>
+                <input type="text" matInput (input)="filterStatutSocial(statutSocialInput.value)" #statutSocialInput
+                       [matAutocomplete]="statutSocialAutocomplete" [(ngModel)]="item.statutSocial"
+                       name="statutSocial">
+
+                <mat-autocomplete #statutSocialAutocomplete="matAutocomplete" [displayWith]="displayStatutSocial">
+                    <mat-option *ngFor="let statutSocial of _statutSocialsFilter" [value]="statutSocial">
+                        {{ statutSocial.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>InteretEtudiant</mat-label>
+                <input type="text" matInput (input)="filterInteretEtudiant(interetEtudiantInput.value)"
+                       #interetEtudiantInput [matAutocomplete]="interetEtudiantAutocomplete"
+                       [(ngModel)]="item.interetEtudiant" name="interetEtudiant">
+
+                <mat-autocomplete #interetEtudiantAutocomplete="matAutocomplete"
+                                  [displayWith]="displayInteretEtudiant">
+                    <mat-option *ngFor="let interetEtudiant of _interetEtudiantsFilter" [value]="interetEtudiant">
+                        {{ interetEtudiant.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>NiveauEtude</mat-label>
+                <input type="text" matInput (input)="filterNiveauEtude(niveauEtudeInput.value)" #niveauEtudeInput
+                       [matAutocomplete]="niveauEtudeAutocomplete" [(ngModel)]="item.niveauEtude"
+                       name="niveauEtude">
+
+                <mat-autocomplete #niveauEtudeAutocomplete="matAutocomplete" [displayWith]="displayNiveauEtude">
+                    <mat-option *ngFor="let niveauEtude of _niveauEtudesFilter" [value]="niveauEtude">
+                        {{ niveauEtude.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Fonction</mat-label>
+                <input type="text" matInput (input)="filterFonction(fonctionInput.value)" #fonctionInput
+                       [matAutocomplete]="fonctionAutocomplete" [(ngModel)]="item.fonction" name="fonction">
+
+                <mat-autocomplete #fonctionAutocomplete="matAutocomplete" [displayWith]="displayFonction">
+                    <mat-option *ngFor="let fonction of _fonctionsFilter" [value]="fonction">
+                        {{ fonction.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Quiz</mat-label>
+                <input type="text" matInput (input)="filterQuiz(quizInput.value)" #quizInput
+                       [matAutocomplete]="quizAutocomplete" [(ngModel)]="item.quiz" name="quiz">
+
+                <mat-autocomplete #quizAutocomplete="matAutocomplete" [displayWith]="displayQuiz">
+                    <mat-option *ngFor="let quiz of _quizsFilter" [value]="quiz">
+                        {{ quiz.lib }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>NoteQuizNiveau</mat-label>
+                <input required type="number" matInput placeholder="NoteQuizNiveau"
+                       [(ngModel)]="item.noteQuizNiveau" name="noteQuizNiveau">
+            </mat-form-field>
 
 
-
-                                                <div>
-                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.subscriptionFinished"  name="subscriptionFinished"  >
-                                                    {{ item.subscriptionFinished? 'Checked' : 'Unchecked' }}
-                                                  </mat-checkbox>
-                                                </div>
-
+            <div>
+                <mat-checkbox class="w-full" [(ngModel)]="item.quizFinished" name="quizFinished">
+                    {{ item.quizFinished ? 'Checked' : 'Unchecked' }}
+                </mat-checkbox>
+            </div>
 
 
-                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                                                    <mat-label>dateRegistration</mat-label>
-                                                    <input required type="text" matInput autocomplete="off" placeholder="DateRegistration"  [(ngModel)]="item.dateRegistration"  name="dateRegistration">
-                                                </mat-form-field>
+            <div>
+                <mat-checkbox class="w-full" [(ngModel)]="item.subscriptionFinished" name="subscriptionFinished">
+                    {{ item.subscriptionFinished ? 'Checked' : 'Unchecked' }}
+                </mat-checkbox>
+            </div>
 
 
-
-                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                                                    <mat-label>datedebutinscription</mat-label>
-                                                    <input required type="date" matInput placeholder="Datedebutinscription" [(ngModel)]="item.datedebutinscription" name="datedebutinscription">
-                                                </mat-form-field>
-
-
-
-                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                                                    <mat-label>datefininscription</mat-label>
-                                                    <input required type="date" matInput placeholder="Datefininscription" [(ngModel)]="item.datefininscription" name="datefininscription">
-                                                </mat-form-field>
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>dateRegistration</mat-label>
+                <input required type="text" matInput autocomplete="off" placeholder="DateRegistration"
+                       [(ngModel)]="item.dateRegistration" name="dateRegistration">
+            </mat-form-field>
 
 
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>PackStudent</mat-label>
-                                            <input type="text" matInput (input)="filterPackStudent(packStudentInput.value)" #packStudentInput [matAutocomplete]="packStudentAutocomplete"  [(ngModel)]="item.packStudent"  name="packStudent">
-
-                                            <mat-autocomplete #packStudentAutocomplete="matAutocomplete" [displayWith]="displayPackStudent" >
-                                              <mat-option *ngFor="let packStudent of _packStudentsFilter" [value]="packStudent">
-                                                {{packStudent.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                        <mat-form-field class="w-full">
-                                            <mat-label>Skill</mat-label>
-                                            <input type="text" matInput (input)="filterSkill(skillInput.value)" #skillInput [matAutocomplete]="skillAutocomplete"  [(ngModel)]="item.skill"  name="skill">
-
-                                            <mat-autocomplete #skillAutocomplete="matAutocomplete" [displayWith]="displaySkill" >
-                                              <mat-option *ngFor="let skill of _skillsFilter" [value]="skill">
-                                                {{skill.libelle}}
-                                              </mat-option>
-                                            </mat-autocomplete>
-                                            </mat-form-field>
-
-                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                                                    <mat-label>skype</mat-label>
-                                                    <input required type="text" matInput autocomplete="off" placeholder="Skype"  [(ngModel)]="item.skype"  name="skype">
-                                                </mat-form-field>
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>datedebutinscription</mat-label>
+                <input required type="date" matInput placeholder="Datedebutinscription"
+                       [(ngModel)]="item.datedebutinscription" name="datedebutinscription">
+            </mat-form-field>
 
 
-
-                                </div>
-
-
-
-                <div class="w-full flex flex-row-reverse gap-2">
-
-                            <button mat-button color="primary"  (click)="save()">
-                                 {{translate('validate')}}
-                            </button>
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>datefininscription</mat-label>
+                <input required type="date" matInput placeholder="Datefininscription"
+                       [(ngModel)]="item.datefininscription" name="datefininscription">
+            </mat-form-field>
 
 
-                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
-                                {{translate('cancel')}}
-                            </button>
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>PackStudent</mat-label>
+                <input type="text" matInput (input)="filterPackStudent(packStudentInput.value)" #packStudentInput
+                       [matAutocomplete]="packStudentAutocomplete" [(ngModel)]="item.packStudent"
+                       name="packStudent">
 
+                <mat-autocomplete #packStudentAutocomplete="matAutocomplete" [displayWith]="displayPackStudent">
+                    <mat-option *ngFor="let packStudent of _packStudentsFilter" [value]="packStudent">
+                        {{ packStudent.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
 
-                </div>
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Skill</mat-label>
+                <input type="text" matInput (input)="filterSkill(skillInput.value)" #skillInput
+                       [matAutocomplete]="skillAutocomplete" [(ngModel)]="item.skill" name="skill">
 
-    </div>
+                <mat-autocomplete #skillAutocomplete="matAutocomplete" [displayWith]="displaySkill">
+                    <mat-option *ngFor="let skill of _skillsFilter" [value]="skill">
+                        {{ skill.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>skype</mat-label>
+                <input required type="text" matInput autocomplete="off" placeholder="Skype" [(ngModel)]="item.skype"
+                       name="skype">
+            </mat-form-field>
+
 
         </div>
 
-    </mat-dialog-content>
+
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>
+        Cancel
+    </button>
+    <button
+        class="px-6 ml-3"
+        (click)="save()"
+        mat-flat-button
+        [color]="'primary'">
+        Create
+    </button>
+</mat-dialog-actions>

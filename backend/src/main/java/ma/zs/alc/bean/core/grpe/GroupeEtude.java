@@ -30,8 +30,6 @@ public class GroupeEtude   extends AuditBusinessObject     {
     private String description;
     private Long nombreEtudiant ;
 
-
-
     public GroupeEtude(){
         super();
     }

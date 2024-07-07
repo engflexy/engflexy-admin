@@ -1,0 +1,186 @@
+<mat-dialog-content
+    class="mat-typography overflow-x-hidden"
+    *transloco="let translate">
+    <div class="w-full items-center justify-center flex flex-col gap-4">
+        <div
+            class="w-full flex max-w-4xl md:w-[70vw] flex-col gap-4 items-center justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md"
+        >
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>group name</mat-label>
+                <input
+                    required
+                    type="text"
+                    matInput
+                    autocomplete="off"
+                    placeholder="group name"
+                    [(ngModel)]="item.libelle"
+                    name="libelle"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>group type</mat-label>
+                <input
+                    required
+                    type="text"
+                    matInput
+                    autocomplete="off"
+                    placeholder="Type"
+                    [(ngModel)]="item.type"
+                    name="type"
+                />
+            </mat-form-field>
+
+
+            <div class="w-full flex flex-col gap-2">
+                <mat-form-field class="w-full">
+                    <mat-label>add students to group</mat-label>
+                    <mat-select [(ngModel)]="selectedEtudiants" [compareWith]="compareObjects" [multiple]="true">
+                        <mat-select-trigger>
+                            {{ selectedEtudiants?.length }} students selected
+                        </mat-select-trigger>
+                        <div class="mat-option mx-4">
+                            <input
+                                #studentField
+                                type="text"
+                                (input)="filterStudents(studentField.value)"
+                                id="text"
+                                placeholder="Search for students..."
+                                class="peer h-10 w-full border-none bg-transparent p-0
+                                placeholder-transparent focus:border-transparent
+                                focus:outline-none focus:ring-0 sm:text-sm"
+                            />
+                        </div>
+
+                        <mat-option class="my-2" *ngFor="let etudiant of _etudiantsFilter" [value]="etudiant">
+                            <div class="w-full flex flex-row items-center justify-center flex-wrap gap-2">
+                                <div class="w-12 h-12 bg-gray-200 uppercase flex items-center justify-center
+                                 dark:bg-gray-600 text-xl rounded-full">
+                                    <p>{{ etudiant?.fullName?.at(0) }}</p>
+                                </div>
+                                <div class="flex-grow flex flex-col items-start justify-center">
+                                    <strong>{{ etudiant?.fullName }}</strong>
+                                    <p>{{ etudiant?.username }}</p>
+                                </div>
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+            </div>
+
+            <mat-form-field class="w-full">
+                <mat-label>Group option</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    (input)="filterGroupeEtude(groupeEtudeInput.value)"
+                    #groupeEtudeInput
+                    [matAutocomplete]="groupeEtudeAutocomplete"
+                    [(ngModel)]="item.groupeEtude"
+                    name="groupeEtude"
+                />
+                <mat-autocomplete
+                    #groupeEtudeAutocomplete="matAutocomplete"
+                    [displayWith]="displayGroupeEtude"
+                >
+                    <mat-option
+                        *ngFor="let groupeEtude of _groupeEtudesFilter"
+                        [value]="groupeEtude"
+                    >
+                        {{ groupeEtude.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="w-full">
+                <mat-label>Default material</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    (input)="filterParcours(parcoursInput.value)"
+                    #parcoursInput
+                    [matAutocomplete]="parcoursAutocomplete"
+                    [(ngModel)]="item.parcours"
+                    name="parcours"
+                />
+
+                <mat-autocomplete
+                    #parcoursAutocomplete="matAutocomplete"
+                    [displayWith]="displayParcours"
+                >
+                    <mat-option
+                        *ngFor="let parcours of _parcourssFilter"
+                        [value]="parcours"
+                    >
+                        {{ parcours.libelle }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>Default teacher</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    (input)="filterProf(profInput.value)"
+                    #profInput
+                    [matAutocomplete]="profAutocomplete"
+                    [(ngModel)]="item.prof"
+                    name="prof"
+                />
+
+                <mat-autocomplete
+                    #profAutocomplete="matAutocomplete"
+                    [displayWith]="displayProf"
+                >
+                    <mat-option
+                        *ngFor="let prof of _profsFilter"
+                        [value]="prof"
+                    >
+                        <div class="w-full flex flex-row items-center justify-center flex-wrap gap-2">
+                            <div class="w-12 h-12 bg-gray-200 uppercase flex items-center justify-center
+                                 dark:bg-gray-600 text-xl rounded-full">
+                                <p>{{ prof?.fullName?.at(0) }}</p>
+                            </div>
+                            <div class="flex-grow flex flex-col items-start justify-center">
+                                <strong>{{ prof?.fullName }}</strong>
+                                <p>{{ prof?.username }}</p>
+                            </div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Number of classes</mat-label>
+                <input
+                    type="number"
+                    matInput
+                    placeholder="NreCourses"
+                    [(ngModel)]="item.nreCourses"
+                    name="nreCourses"
+                />
+            </mat-form-field>
+
+
+        </div>
+    </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>
+        Cancel
+    </button>
+    <button
+        class="px-6 ml-3"
+        (click)="save()"
+        mat-flat-button
+        [color]="'primary'">
+        Create
+    </button>
+</mat-dialog-actions>

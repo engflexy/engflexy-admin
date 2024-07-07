@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 
 import {MatButtonModule} from "@angular/material/button";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
@@ -152,7 +152,8 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
     private _validSkillCode = true;
     private _validSkillLibelle = true;
 
-    constructor(private alert: FuseAlertService, private service: InscriptionCollaboratorService, private parcoursService: ParcoursCollaboratorService, private quizService: QuizCollaboratorService, private skillService: SkillCollaboratorService, private interetEtudiantService: InteretEtudiantCollaboratorService, private fonctionService: FonctionCollaboratorService, private etudiantService: EtudiantCollaboratorService, private etatInscriptionService: EtatInscriptionCollaboratorService, private groupeTypeService: GroupeTypeCollaboratorService, private statutSocialService: StatutSocialCollaboratorService, private packStudentService: PackStudentCollaboratorService, private groupeEtudeService: GroupeEtudeCollaboratorService, private niveauEtudeService: NiveauEtudeCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
+    constructor(public refDialog: MatDialogRef<InscriptionCreateCollaboratorComponent>,
+                private alert: FuseAlertService, private service: InscriptionCollaboratorService, private parcoursService: ParcoursCollaboratorService, private quizService: QuizCollaboratorService, private skillService: SkillCollaboratorService, private interetEtudiantService: InteretEtudiantCollaboratorService, private fonctionService: FonctionCollaboratorService, private etudiantService: EtudiantCollaboratorService, private etatInscriptionService: EtatInscriptionCollaboratorService, private groupeTypeService: GroupeTypeCollaboratorService, private statutSocialService: StatutSocialCollaboratorService, private packStudentService: PackStudentCollaboratorService, private groupeEtudeService: GroupeEtudeCollaboratorService, private niveauEtudeService: NiveauEtudeCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
 
     }
 

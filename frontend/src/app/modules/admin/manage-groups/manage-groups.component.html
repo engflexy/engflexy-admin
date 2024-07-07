@@ -33,8 +33,8 @@
             </select>
         </div>
         <div class="xl:w-full xl:mx-0 h-12 hidden sm:block bg-white dark:bg-gray-700 shadow rounded">
-            <ul class="flex px-5">
-                <li (click)="this.active_status = 1"
+            <ul  class="flex px-5">
+                <li (click)="changeType(1)"
                     [ngClass]="active_status == 1 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
                     <div class="flex items-center mb-3">
                         <span>
@@ -46,7 +46,7 @@
                     <div *ngIf="active_status == 1" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
                 </li>
 
-                <li (click)="this.active_status = 2"
+                <li (click)="changeType(2)"
                     [ngClass]="active_status == 2 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
                     <div class="flex items-center mb-3">
                         <span>
@@ -78,7 +78,7 @@
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
                         <button mat-mini-fab class="mb-5" color="primary">
-                            <mat-icon svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+                            <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
                         </button>
                     </div>
 
@@ -103,20 +103,13 @@
 
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Group type
+                                        Teacher
                                     </th>
+
 
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         N° students
-                                    </th>
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Empty places
-                                    </th>
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Occupied places
                                     </th>
 
                                     <th scope="col" class="relative py-3.5 px-4">
@@ -156,54 +149,33 @@
                                             {{ item?.parcours?.libelle }}
 
                                         </td>
-
                                         <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-
-                                            <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2
-                                            container-{{item?.type}} dark:bg-gray-800">
-                                                <span
-                                                    class="h-1.5 w-1.5 rounded-full type-{{item?.type}}"></span>
-
-                                                <h2 class="text-sm font-normal text-{{item?.type}}">{{ item?.type }}</h2>
+                                            <div class="flex-grow flex flex-col items-start justify-center">
+                                                <strong>{{ item?.prof?.fullName }}</strong>
+                                                <p>{{ item?.prof?.username }}</p>
                                             </div>
-
                                         </td>
+
 
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             {{ item?.nombrePlace }}
                                         </td>
 
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.nombrePlaceNonVide }}
-                                        </td>
-
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.nombrePlacevide }}
-                                        </td>
 
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div class="flex items-center gap-x-6">
-                                                <button
-                                                    class="text-gray-500 transition-colors duration-200
-                                                    dark:hover:text-red-500
-                                                     dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                    <mat-icon class="icon-size-4"
+                                                <button (click)="delete(item)" class="group">
+                                                    <mat-icon class="icon-size-4 group-hover:text-red-500"
                                                               svgIcon="heroicons_solid:trash"></mat-icon>
-
                                                 </button>
 
-                                                <button
-                                                    class="text-gray-500 transition-colors duration-200
-                                                    dark:hover:text-yellow-500 dark:text-gray-300
-                                                     hover:text-yellow-500 focus:outline-none">
-                                                    <mat-icon class="icon-size-4"
+                                                <button (click)="edit(item)" class="group">
+                                                    <mat-icon class="icon-size-4 group-hover:text-orange-500"
                                                               svgIcon="heroicons_solid:pencil"></mat-icon>
                                                 </button>
-                                                <button
-                                                    class="text-gray-500 group transition-colors duration-200
-                                                    dark:hover:text-yellow-500 dark:text-gray-300
-                                                     hover:text-yellow-500 focus:outline-none">
-                                                    <mat-icon class="icon-size-4 group:hover:text-blue-500"
+
+                                                <button class="group">
+                                                    <mat-icon class="icon-size-4 group-hover:text-blue-500"
                                                               svgIcon="heroicons_outline:bars-3"></mat-icon>
                                                 </button>
                                             </div>

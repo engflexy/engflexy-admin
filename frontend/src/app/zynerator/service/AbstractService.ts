@@ -97,7 +97,7 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
         return this.httpClient.post<PaginatedList<DTO>>(this.API + 'find-paginated-by-criteria', criteria);
     }
 
-    public findAll() {
+    public findAll(): Observable<Array<DTO>> {
         return this.httpClient.get<Array<DTO>>(this.API);
     }
 

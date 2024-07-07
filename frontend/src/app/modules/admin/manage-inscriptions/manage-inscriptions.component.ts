@@ -18,6 +18,7 @@ import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";
 import {FuseAlertService} from "../../../../@fuse/components/alert";
 import {EditInscriptionComponent} from "./edit-inscription/edit-inscription.component";
 import {InscriptionCreateCollaboratorComponent} from "./create/inscription-create-collaborator.component";
+import {FilterInscriptionComponent} from "./filter-inscription/filter-inscription.component";
 
 @Component({
     selector: 'app-manage-inscriptions',
@@ -121,6 +122,23 @@ export class ManageInscriptionsComponent implements OnInit {
 
     set inscription(value: InscriptionDto) {
         this.service.item = value;
+    }
+
+    openFilter() {
+        const dialog = this._matDialog.open(FilterInscriptionComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) {
+
+            }
+        })
     }
 }
 
