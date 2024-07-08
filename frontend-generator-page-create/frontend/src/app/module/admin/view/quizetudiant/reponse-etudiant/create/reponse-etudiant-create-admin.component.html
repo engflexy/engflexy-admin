@@ -1,0 +1,83 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>ref</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Ref"  [(ngModel)]="item.ref"  name="ref">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Reponse</mat-label>
+                                            <input type="text" matInput (input)="filterReponse(reponseInput.value)" #reponseInput [matAutocomplete]="reponseAutocomplete"  [(ngModel)]="item.reponse"  name="reponse">
+
+                                            <mat-autocomplete #reponseAutocomplete="matAutocomplete" [displayWith]="displayReponse" >
+                                              <mat-option *ngFor="let reponse of _reponsesFilter" [value]="reponse">
+                                                {{reponse.lib}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>answer</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Answer"  [(ngModel)]="item.answer"  name="answer">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>QuizEtudiant</mat-label>
+                                            <input type="text" matInput (input)="filterQuizEtudiant(quizEtudiantInput.value)" #quizEtudiantInput [matAutocomplete]="quizEtudiantAutocomplete"  [(ngModel)]="item.quizEtudiant"  name="quizEtudiant">
+
+                                            <mat-autocomplete #quizEtudiantAutocomplete="matAutocomplete" [displayWith]="displayQuizEtudiant" >
+                                              <mat-option *ngFor="let quizEtudiant of _quizEtudiantsFilter" [value]="quizEtudiant">
+                                                {{quizEtudiant.ref}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Note</mat-label>
+                                                    <input required type="number" matInput placeholder="Note"  [(ngModel)]="item.note"  name="note">
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Question</mat-label>
+                                            <input type="text" matInput (input)="filterQuestion(questionInput.value)" #questionInput [matAutocomplete]="questionAutocomplete"  [(ngModel)]="item.question"  name="question">
+
+                                            <mat-autocomplete #questionAutocomplete="matAutocomplete" [displayWith]="displayQuestion" >
+                                              <mat-option *ngFor="let question of _questionsFilter" [value]="question">
+                                                {{question.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

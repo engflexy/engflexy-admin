@@ -110,6 +110,12 @@ export const adminNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_solid:newspaper',
         link: '/admin/faqs-news'
+    },{
+        id: 'Chat',
+        title: 'Chat',
+        type: 'basic',
+        icon: 'heroicons_solid:chat-bubble-left-right',
+        link: '/admin/chat'
     },
 ];
 

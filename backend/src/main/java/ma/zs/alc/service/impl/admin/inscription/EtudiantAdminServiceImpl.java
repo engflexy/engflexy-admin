@@ -224,7 +224,7 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
         Inscription ins = new Inscription();
         ins.setEtudiant(mySaved);
         ins.setDatedebutinscription(DateUtil.getCurrentDateTime());
-        ins.setEtatInscription(new EtatInscription("E1"));
+        ins.setEtatInscription(new EtatInscription(1L));
         ins.setNumeroInscription(1);
         ins.setSubscriptionFinished(false);
         inscriptionService.create(ins);
@@ -265,7 +265,7 @@ public class EtudiantAdminServiceImpl extends AbstractServiceImpl<Etudiant, Etud
     }
 
     public String generatePassword() {
-        return RandomStringUtils.randomAlphanumeric(10);
+        return RandomStringUtils.randomAlphanumeric(5);
     }
 
     private @Autowired UserService userService;

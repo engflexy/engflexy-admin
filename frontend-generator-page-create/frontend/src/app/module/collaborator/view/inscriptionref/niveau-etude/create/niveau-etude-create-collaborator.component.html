@@ -1,0 +1,44 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>libelle</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.libelle"  name="libelle">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>code</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Code"  [(ngModel)]="item.code"  name="code">
+                                                </mat-form-field>
+
+
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

@@ -334,6 +334,20 @@
     --tw-text-opacity: 1 !important;
     color: rgb(249 115 22 / var(--tw-text-opacity)) !important;
 }
+//trial status
+.type-TRIAL {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(249 115 22 / var(--tw-bg-opacity)) !important;
+}
+
+.container-TRIAL {
+    background-color: rgb(255 237 213 / 0.6) !important;
+}
+
+.text-TRIAL {
+    --tw-text-opacity: 1 !important;
+    color: rgb(249 115 22 / var(--tw-text-opacity)) !important;
+}
 
 //VALIDATED STATUS
 .type-PAID {

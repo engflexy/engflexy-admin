@@ -227,7 +227,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         Inscription ins = new Inscription();
         ins.setEtudiant(mySaved);
         ins.setDatedebutinscription(DateUtil.getCurrentDateTime());
-        ins.setEtatInscription(new EtatInscription("E1"));
+        ins.setEtatInscription(new EtatInscription( 1L));
         ins.setNumeroInscription(1);
         ins.setSubscriptionFinished(false);
         inscriptionService.create(ins);

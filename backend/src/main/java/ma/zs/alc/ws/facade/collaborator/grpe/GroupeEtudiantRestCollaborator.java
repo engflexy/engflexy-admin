@@ -1,39 +1,24 @@
-package  ma.zs.alc.ws.facade.collaborator.grpe;
+package ma.zs.alc.ws.facade.collaborator.grpe;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudiantCriteria;
 import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantCollaboratorService;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
-import ma.zs.alc.ws.dto.grpe.GroupeEtudeDto;
 import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
+import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
-
-
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
-
-
-import org.springframework.web.multipart.MultipartFile;
-import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/collaborator/groupeEtudiant/")
-public class GroupeEtudiantRestCollaborator  extends AbstractController<GroupeEtudiant, GroupeEtudiantDto, GroupeEtudiantCriteria, GroupeEtudiantCollaboratorService, GroupeEtudiantConverter> {
-
+public class GroupeEtudiantRestCollaborator extends AbstractController<GroupeEtudiant, GroupeEtudiantDto, GroupeEtudiantCriteria, GroupeEtudiantCollaboratorService, GroupeEtudiantConverter> {
 
 
     @Operation(summary = "upload one groupeEtudiant")
@@ -41,6 +26,7 @@ public class GroupeEtudiantRestCollaborator  extends AbstractController<GroupeEt
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple groupeEtudiants")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -52,6 +38,7 @@ public class GroupeEtudiantRestCollaborator  extends AbstractController<GroupeEt
     public ResponseEntity<List<GroupeEtudiantDto>> findAll() throws Exception {
         return super.findAll();
     }
+
 
     @Operation(summary = "Saves the specified  groupeEtudiant")
     @PostMapping("")
@@ -70,10 +57,11 @@ public class GroupeEtudiantRestCollaborator  extends AbstractController<GroupeEt
     public ResponseEntity<List<GroupeEtudiantDto>> delete(@RequestBody List<GroupeEtudiantDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified groupeEtudiant")
     @DeleteMapping("")
     public ResponseEntity<GroupeEtudiantDto> delete(@RequestBody GroupeEtudiantDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified groupeEtudiant")
@@ -81,61 +69,71 @@ public class GroupeEtudiantRestCollaborator  extends AbstractController<GroupeEt
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple groupeEtudiants by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "find by groupeEtude id")
     @GetMapping("groupeEtude/id/{id}")
-    public List<GroupeEtudiantDto> findByGroupeEtudeId(@PathVariable Long id){
+    public List<GroupeEtudiantDto> findByGroupeEtudeId(@PathVariable Long id) {
         return findDtos(service.findByGroupeEtudeId(id));
     }
+
     @Operation(summary = "delete by groupeEtude id")
     @DeleteMapping("groupeEtude/id/{id}")
-    public int deleteByGroupeEtudeId(@PathVariable Long id){
+    public int deleteByGroupeEtudeId(@PathVariable Long id) {
         return service.deleteByGroupeEtudeId(id);
     }
+
     @Operation(summary = "find by groupeType id")
     @GetMapping("groupeType/id/{id}")
-    public List<GroupeEtudiantDto> findByGroupeTypeId(@PathVariable Long id){
+    public List<GroupeEtudiantDto> findByGroupeTypeId(@PathVariable Long id) {
         return findDtos(service.findByGroupeTypeId(id));
     }
+
     @Operation(summary = "delete by groupeType id")
     @DeleteMapping("groupeType/id/{id}")
-    public int deleteByGroupeTypeId(@PathVariable Long id){
+    public int deleteByGroupeTypeId(@PathVariable Long id) {
         return service.deleteByGroupeTypeId(id);
     }
+
     @Operation(summary = "find by groupeEtat id")
     @GetMapping("groupeEtat/id/{id}")
-    public List<GroupeEtudiantDto> findByGroupeEtatId(@PathVariable Long id){
+    public List<GroupeEtudiantDto> findByGroupeEtatId(@PathVariable Long id) {
         return findDtos(service.findByGroupeEtatId(id));
     }
+
     @Operation(summary = "delete by groupeEtat id")
     @DeleteMapping("groupeEtat/id/{id}")
-    public int deleteByGroupeEtatId(@PathVariable Long id){
+    public int deleteByGroupeEtatId(@PathVariable Long id) {
         return service.deleteByGroupeEtatId(id);
     }
+
     @Operation(summary = "find by parcours id")
     @GetMapping("parcours/id/{id}")
-    public List<GroupeEtudiantDto> findByParcoursId(@PathVariable Long id){
+    public List<GroupeEtudiantDto> findByParcoursId(@PathVariable Long id) {
         return findDtos(service.findByParcoursId(id));
     }
+
     @Operation(summary = "delete by parcours id")
     @DeleteMapping("parcours/id/{id}")
-    public int deleteByParcoursId(@PathVariable Long id){
+    public int deleteByParcoursId(@PathVariable Long id) {
         return service.deleteByParcoursId(id);
     }
+
     @Operation(summary = "find by prof id")
     @GetMapping("prof/id/{id}")
-    public List<GroupeEtudiantDto> findByProfId(@PathVariable Long id){
+    public List<GroupeEtudiantDto> findByProfId(@PathVariable Long id) {
         return findDtos(service.findByProfId(id));
     }
+
     @Operation(summary = "delete by prof id")
     @DeleteMapping("prof/id/{id}")
-    public int deleteByProfId(@PathVariable Long id){
+    public int deleteByProfId(@PathVariable Long id) {
         return service.deleteByProfId(id);
     }
 
@@ -170,12 +168,9 @@ public class GroupeEtudiantRestCollaborator  extends AbstractController<GroupeEt
     }
 
 
-
-    public GroupeEtudiantRestCollaborator (GroupeEtudiantCollaboratorService service, GroupeEtudiantConverter converter) {
+    public GroupeEtudiantRestCollaborator(GroupeEtudiantCollaboratorService service, GroupeEtudiantConverter converter) {
         super(service, converter);
     }
-
-
 
 
 }

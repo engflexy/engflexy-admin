@@ -1,0 +1,302 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>reference</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Reference"  [(ngModel)]="item.reference"  name="reference">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Prof</mat-label>
+                                            <input type="text" matInput (input)="filterProf(profInput.value)" #profInput [matAutocomplete]="profAutocomplete"  [(ngModel)]="item.prof"  name="prof">
+
+                                            <mat-autocomplete #profAutocomplete="matAutocomplete" [displayWith]="displayProf" >
+                                              <mat-option *ngFor="let prof of _profsFilter" [value]="prof">
+                                                {{prof.ref}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>NiveauEtude</mat-label>
+                                            <input type="text" matInput (input)="filterNiveauEtude(niveauEtudeInput.value)" #niveauEtudeInput [matAutocomplete]="niveauEtudeAutocomplete"  [(ngModel)]="item.niveauEtude"  name="niveauEtude">
+
+                                            <mat-autocomplete #niveauEtudeAutocomplete="matAutocomplete" [displayWith]="displayNiveauEtude" >
+                                              <mat-option *ngFor="let niveauEtude of _niveauEtudesFilter" [value]="niveauEtude">
+                                                {{niveauEtude.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateFreeTrial</mat-label>
+                                                    <input required type="date" matInput placeholder="DateFreeTrial" [(ngModel)]="item.dateFreeTrial" name="dateFreeTrial">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>link</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Link"  [(ngModel)]="item.link"  name="link">
+                                                </mat-form-field>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.emailTeacherSent"  name="emailTeacherSent"  >
+                                                    {{ item.emailTeacherSent? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>emailTeacherSendingDate</mat-label>
+                                                    <input required type="date" matInput placeholder="EmailTeacherSendingDate" [(ngModel)]="item.emailTeacherSendingDate" name="emailTeacherSendingDate">
+                                                </mat-form-field>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.whatsTeacherSent"  name="whatsTeacherSent"  >
+                                                    {{ item.whatsTeacherSent? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>whatsTeacherSendingDate</mat-label>
+                                                    <input required type="date" matInput placeholder="WhatsTeacherSendingDate" [(ngModel)]="item.whatsTeacherSendingDate" name="whatsTeacherSendingDate">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>FreeTrialStudentWhatsTemplate</mat-label>
+                                            <input type="text" matInput (input)="filterFreeTrialStudentWhatsTemplate(freeTrialStudentWhatsTemplateInput.value)" #freeTrialStudentWhatsTemplateInput [matAutocomplete]="freeTrialStudentWhatsTemplateAutocomplete"  [(ngModel)]="item.freeTrialStudentWhatsTemplate"  name="freeTrialStudentWhatsTemplate">
+
+                                            <mat-autocomplete #freeTrialStudentWhatsTemplateAutocomplete="matAutocomplete" [displayWith]="displayFreeTrialStudentWhatsTemplate" >
+                                              <mat-option *ngFor="let freeTrialStudentWhatsTemplate of _freeTrialStudentWhatsTemplatesFilter" [value]="freeTrialStudentWhatsTemplate">
+                                                {{freeTrialStudentWhatsTemplate.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>FreeTrialStudentEmailTemplate</mat-label>
+                                            <input type="text" matInput (input)="filterFreeTrialStudentEmailTemplate(freeTrialStudentEmailTemplateInput.value)" #freeTrialStudentEmailTemplateInput [matAutocomplete]="freeTrialStudentEmailTemplateAutocomplete"  [(ngModel)]="item.freeTrialStudentEmailTemplate"  name="freeTrialStudentEmailTemplate">
+
+                                            <mat-autocomplete #freeTrialStudentEmailTemplateAutocomplete="matAutocomplete" [displayWith]="displayFreeTrialStudentEmailTemplate" >
+                                              <mat-option *ngFor="let freeTrialStudentEmailTemplate of _freeTrialStudentEmailTemplatesFilter" [value]="freeTrialStudentEmailTemplate">
+                                                {{freeTrialStudentEmailTemplate.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>FreeTrialTeacherEmailTemplate</mat-label>
+                                            <input type="text" matInput (input)="filterFreeTrialTeacherEmailTemplate(freeTrialTeacherEmailTemplateInput.value)" #freeTrialTeacherEmailTemplateInput [matAutocomplete]="freeTrialTeacherEmailTemplateAutocomplete"  [(ngModel)]="item.freeTrialTeacherEmailTemplate"  name="freeTrialTeacherEmailTemplate">
+
+                                            <mat-autocomplete #freeTrialTeacherEmailTemplateAutocomplete="matAutocomplete" [displayWith]="displayFreeTrialTeacherEmailTemplate" >
+                                              <mat-option *ngFor="let freeTrialTeacherEmailTemplate of _freeTrialTeacherEmailTemplatesFilter" [value]="freeTrialTeacherEmailTemplate">
+                                                {{freeTrialTeacherEmailTemplate.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>FreeTrialTeacherWhatsTemplate</mat-label>
+                                            <input type="text" matInput (input)="filterFreeTrialTeacherWhatsTemplate(freeTrialTeacherWhatsTemplateInput.value)" #freeTrialTeacherWhatsTemplateInput [matAutocomplete]="freeTrialTeacherWhatsTemplateAutocomplete"  [(ngModel)]="item.freeTrialTeacherWhatsTemplate"  name="freeTrialTeacherWhatsTemplate">
+
+                                            <mat-autocomplete #freeTrialTeacherWhatsTemplateAutocomplete="matAutocomplete" [displayWith]="displayFreeTrialTeacherWhatsTemplate" >
+                                              <mat-option *ngFor="let freeTrialTeacherWhatsTemplate of _freeTrialTeacherWhatsTemplatesFilter" [value]="freeTrialTeacherWhatsTemplate">
+                                                {{freeTrialTeacherWhatsTemplate.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateFreeTrialPremierRappel</mat-label>
+                                                    <input required type="date" matInput placeholder="DateFreeTrialPremierRappel" [(ngModel)]="item.dateFreeTrialPremierRappel" name="dateFreeTrialPremierRappel">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateFreeTrialPremierDeuxiemeRappel</mat-label>
+                                                    <input required type="date" matInput placeholder="DateFreeTrialPremierDeuxiemeRappel" [(ngModel)]="item.dateFreeTrialPremierDeuxiemeRappel" name="dateFreeTrialPremierDeuxiemeRappel">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreStudentTotal</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreStudentTotal"  [(ngModel)]="item.nombreStudentTotal"  name="nombreStudentTotal">
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>FreeTrialConfiguration</mat-label>
+                                            <input type="text" matInput (input)="filterFreeTrialConfiguration(freeTrialConfigurationInput.value)" #freeTrialConfigurationInput [matAutocomplete]="freeTrialConfigurationAutocomplete"  [(ngModel)]="item.freeTrialConfiguration"  name="freeTrialConfiguration">
+
+                                            <mat-autocomplete #freeTrialConfigurationAutocomplete="matAutocomplete" [displayWith]="displayFreeTrialConfiguration" >
+                                              <mat-option *ngFor="let freeTrialConfiguration of _freeTrialConfigurationsFilter" [value]="freeTrialConfiguration">
+                                                {{freeTrialConfiguration.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreStudentAbonne</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreStudentAbonne"  [(ngModel)]="item.nombreStudentAbonne"  name="nombreStudentAbonne">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreStudentPresent</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreStudentPresent"  [(ngModel)]="item.nombreStudentPresent"  name="nombreStudentPresent">
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>StatutFreeTrial</mat-label>
+                                            <input type="text" matInput (input)="filterStatutFreeTrial(statutFreeTrialInput.value)" #statutFreeTrialInput [matAutocomplete]="statutFreeTrialAutocomplete"  [(ngModel)]="item.statutFreeTrial"  name="statutFreeTrial">
+
+                                            <mat-autocomplete #statutFreeTrialAutocomplete="matAutocomplete" [displayWith]="displayStatutFreeTrial" >
+                                              <mat-option *ngFor="let statutFreeTrial of _statutFreeTrialsFilter" [value]="statutFreeTrial">
+                                                {{statutFreeTrial.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+                                    <p-tabPanel header="{{'freeTrial.freeTrialDetails' | translate}}">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-11 md:col-6">
+                                                                        <label>Etudiant</label>
+                                                                        <p-dropdown  appendTo="body"  [options]="etudiants" [(ngModel)]="freeTrialDetailsElement.etudiant"
+                                                                                     id="2"  [filter]="true" filterMatchMode="contains" [showClear]="true" optionLabel="id"
+                                                                                     placeholder="Etudiant"  >
+                                                                        </p-dropdown>
+                                                                        
+                                                                    </div>
+
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="3">Presence</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="3"  [(ngModel)]="freeTrialDetailsElement.presence"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="4">Whats up message sent</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="4"  [(ngModel)]="freeTrialDetailsElement.whatsUpMessageSent"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="5">Date envoiwhats up message</label>
+                                                                        <p-calendar appendTo="body" id="5"  [showTime]="true" [showSeconds]="false" placeholder="Date envoiwhats up message" [(ngModel)]="freeTrialDetailsElement.dateEnvoiwhatsUpMessage"
+                                                                                dateFormat="{{dateFormat}}" [showIcon]="true"  ></p-calendar>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="6">Email message sent</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="6"  [(ngModel)]="freeTrialDetailsElement.emailMessageSent"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="7">Date envoi email message</label>
+                                                                        <p-calendar appendTo="body" id="7"  [showTime]="true" [showSeconds]="false" placeholder="Date envoi email message" [(ngModel)]="freeTrialDetailsElement.dateEnvoiEmailMessage"
+                                                                                dateFormat="{{dateFormat}}" [showIcon]="true"  ></p-calendar>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="8">Abonne</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="8"  [(ngModel)]="freeTrialDetailsElement.abonne"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addFreeTrialDetails()"></button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card">
+                                                        <p-table [value]="item.freeTrialDetails" [scrollable]="true" scrollHeight="200px">
+                                                                <tr>
+                                                                                <th>Etudiant</th>
+                                                                                <th>Presence</th>
+                                                                                <th>Whats up message sent</th>
+                                                                                <th>Date envoiwhats up message</th>
+                                                                                <th>Email message sent</th>
+                                                                                <th>Date envoi email message</th>
+                                                                                <th>Abonne</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                            <td>{{p.etudiant?.id}}</td>
+                                                                                <td><i *ngIf="p.presence" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.presence" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td><i *ngIf="p.whatsUpMessageSent" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.whatsUpMessageSent" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td>{{p.dateEnvoiwhatsUpMessage | date: dateFormatColumn}}</td>
+                                                                                <td><i *ngIf="p.emailMessageSent" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.emailMessageSent" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td>{{p.dateEnvoiEmailMessage | date: dateFormatColumn}}</td>
+                                                                                <td><i *ngIf="p.abonne" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.abonne" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                    <td>
+                                                                        <button (click)="deleteFreeTrialDetails(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editFreeTrialDetails(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                        </p-table>
+                                                    </div>
+
+
+
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

@@ -14,7 +14,7 @@ public interface FaqDao extends AbstractRepository<Faq,Long>  {
     int deleteByFaqTypeId(Long id);
     long countByFaqTypeId(Long id);
 
-    @Query("SELECT NEW Faq(item.id,item.libelle) FROM Faq item")
+    @Query("SELECT NEW Faq(item.id,item.answer) FROM Faq item")
     List<Faq> findAllOptimized();
 
 }

@@ -1,0 +1,77 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>content</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Content" [(ngModel)]="item.content"  name="content"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>description</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Description" [(ngModel)]="item.description"  name="description"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>libelle</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.libelle"  name="libelle">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NumeroOrder</mat-label>
+                                                    <input required type="number" matInput placeholder="NumeroOrder"  [(ngModel)]="item.numeroOrder"  name="numeroOrder">
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>ContentType</mat-label>
+                                            <input type="text" matInput (input)="filterContentType(contentTypeInput.value)" #contentTypeInput [matAutocomplete]="contentTypeAutocomplete"  [(ngModel)]="item.contentType"  name="contentType">
+
+                                            <mat-autocomplete #contentTypeAutocomplete="matAutocomplete" [displayWith]="displayContentType" >
+                                              <mat-option *ngFor="let contentType of _contentTypesFilter" [value]="contentType">
+                                                {{contentType.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Section</mat-label>
+                                            <input type="text" matInput (input)="filterSection(sectionInput.value)" #sectionInput [matAutocomplete]="sectionAutocomplete"  [(ngModel)]="item.section"  name="section">
+
+                                            <mat-autocomplete #sectionAutocomplete="matAutocomplete" [displayWith]="displaySection" >
+                                              <mat-option *ngFor="let section of _sectionsFilter" [value]="section">
+                                                {{section.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

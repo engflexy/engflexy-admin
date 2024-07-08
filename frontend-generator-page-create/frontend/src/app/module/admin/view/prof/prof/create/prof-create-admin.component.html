@@ -1,0 +1,288 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>ref</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Ref"  [(ngModel)]="item.ref"  name="ref">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>about</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="About"  [(ngModel)]="item.about"  name="about">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Parcours</mat-label>
+                                            <input type="text" matInput (input)="filterParcours(parcoursInput.value)" #parcoursInput [matAutocomplete]="parcoursAutocomplete"  [(ngModel)]="item.parcours"  name="parcours">
+
+                                            <mat-autocomplete #parcoursAutocomplete="matAutocomplete" [displayWith]="displayParcours" >
+                                              <mat-option *ngFor="let parcours of _parcourssFilter" [value]="parcours">
+                                                {{parcours.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>CategorieProf</mat-label>
+                                            <input type="text" matInput (input)="filterCategorieProf(categorieProfInput.value)" #categorieProfInput [matAutocomplete]="categorieProfAutocomplete"  [(ngModel)]="item.categorieProf"  name="categorieProf">
+
+                                            <mat-autocomplete #categorieProfAutocomplete="matAutocomplete" [displayWith]="displayCategorieProf" >
+                                              <mat-option *ngFor="let categorieProf of _categorieProfsFilter" [value]="categorieProf">
+                                                {{categorieProf.code}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>TypeTeacher</mat-label>
+                                            <input type="text" matInput (input)="filterTypeTeacher(typeTeacherInput.value)" #typeTeacherInput [matAutocomplete]="typeTeacherAutocomplete"  [(ngModel)]="item.typeTeacher"  name="typeTeacher">
+
+                                            <mat-autocomplete #typeTeacherAutocomplete="matAutocomplete" [displayWith]="displayTypeTeacher" >
+                                              <mat-option *ngFor="let typeTeacher of _typeTeachersFilter" [value]="typeTeacher">
+                                                {{typeTeacher.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Collaborator</mat-label>
+                                            <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="item.collaborator"  name="collaborator">
+
+                                            <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator" >
+                                              <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
+                                                {{collaborator.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.credentialsNonExpired"  name="credentialsNonExpired"  >
+                                                    {{ item.credentialsNonExpired? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.enabled"  name="enabled"  >
+                                                    {{ item.enabled? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.accountNonExpired"  name="accountNonExpired"  >
+                                                    {{ item.accountNonExpired? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.accountNonLocked"  name="accountNonLocked"  >
+                                                    {{ item.accountNonLocked? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.passwordChanged"  name="passwordChanged"  >
+                                                    {{ item.passwordChanged? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>username</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Username"  [(ngModel)]="item.username"  name="username">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>password</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Password"  [(ngModel)]="item.password"  name="password">
+                                                </mat-form-field>
+
+
+
+                                </div>
+                                    <p-tabPanel header="{{'prof.trancheHoraireProfs' | translate}}">
+                                                <div class="p-col">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="2">Start hour</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Start hour"
+                                                                               id="2" [(ngModel)]="trancheHoraireProfsElement.startHour" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="3">End hour</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="End hour"
+                                                                               id="3" [(ngModel)]="trancheHoraireProfsElement.endHour" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="4">Day</label>
+                                                                        <p-inputNumber class="mb-2 mr-2" id="day" placeholder="Day"  [(ngModel)]="trancheHoraireProfsElement.day"></p-inputNumber>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="5">Group index</label>
+                                                                        <p-inputNumber class="mb-2 mr-2" id="groupIndex" placeholder="Group index"  [(ngModel)]="trancheHoraireProfsElement.groupIndex"></p-inputNumber>
+                                                                        
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addTrancheHoraireProfs()"></button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="p-col">
+                                                    <div class="card">
+                                                        <p-table [value]="item.trancheHoraireProfs" [scrollable]="true" scrollHeight="200px">
+                                                                <tr>
+                                                                                <th>Start hour</th>
+                                                                                <th>End hour</th>
+                                                                                <th>Day</th>
+                                                                                <th>Group index</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.startHour}}</td>
+                                                                                <td>{{p.endHour}}</td>
+                                                                                <td>{{p.day}}</td>
+                                                                                <td>{{p.groupIndex}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteTrancheHoraireProfs(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editTrancheHoraireProfs(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                        </p-table>
+                                                    </div>
+
+                                                </div>
+
+                                    <p-tabPanel header="{{'prof.recommendTeachers' | translate}}">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="1">Ref<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Ref"
+                                                                               id="1" [(ngModel)]="recommendTeachersElement.ref" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validRecommendTeachersRef}"  >
+                                                                        <small class='p-error' *ngIf='!validRecommendTeachersRef'>Ref is obligatory.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="2">Nombrevote</label>
+                                                                        <p-inputNumber class="mb-2 mr-2" id="nombrevote" placeholder="Nombrevote"  [(ngModel)]="recommendTeachersElement.nombrevote"></p-inputNumber>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="3">Nom</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Nom"
+                                                                               id="3" [(ngModel)]="recommendTeachersElement.nom" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="4">Prenom</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Prenom"
+                                                                               id="4" [(ngModel)]="recommendTeachersElement.prenom" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="5">{{'recommendTeacher.commentaire' | translate}}</label>
+                                                                        <textarea id="5" pInputTextarea rows="5" cols="30" placeholder="{{'recommendTeacher.commentaire' | translate}}"  [(ngModel)]="item.commentaire"
+                                                                                 ></textarea>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="6">Telephone</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Telephone"
+                                                                               id="6" [(ngModel)]="recommendTeachersElement.telephone" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="7">Login</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Login"
+                                                                               id="7" [(ngModel)]="recommendTeachersElement.login" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="8">Date recommamdation</label>
+                                                                        <p-calendar appendTo="body" id="8"  [showTime]="true" [showSeconds]="false" placeholder="Date recommamdation" [(ngModel)]="recommendTeachersElement.dateRecommamdation"
+                                                                                dateFormat="{{dateFormat}}" [showIcon]="true"  ></p-calendar>
+                                                                        
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addRecommendTeachers()"></button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card">
+                                                        <p-table [value]="item.recommendTeachers" [scrollable]="true" scrollHeight="200px">
+                                                                <tr>
+                                                                                <th>Ref</th>
+                                                                                <th>Nombrevote</th>
+                                                                                <th>Nom</th>
+                                                                                <th>Prenom</th>
+                                                                                <th>Commentaire</th>
+                                                                                <th>Telephone</th>
+                                                                                <th>Login</th>
+                                                                                <th>Date recommamdation</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.ref}}</td>
+                                                                                <td>{{p.nombrevote}}</td>
+                                                                                <td>{{p.nom}}</td>
+                                                                                <td>{{p.prenom}}</td>
+                                                                                <td>{{p.commentaire}}</td>
+                                                                                <td>{{p.telephone}}</td>
+                                                                                <td>{{p.login}}</td>
+                                                                                <td>{{p.dateRecommamdation | date: dateFormatColumn}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteRecommendTeachers(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editRecommendTeachers(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                        </p-table>
+                                                    </div>
+
+
+
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

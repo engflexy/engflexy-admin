@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FaqDto  extends AuditBaseDto {
 
-    private String description  ;
-    private String libelle  ;
+    private String question;
+    private String answer;
 
     private FaqTypeDto faqType ;
 
@@ -25,19 +25,19 @@ public class FaqDto  extends AuditBaseDto {
 
 
     @Log
-    public String getDescription(){
-        return this.description;
+    public String getQuestion(){
+        return this.question;
     }
-    public void setDescription(String description){
-        this.description = description;
+    public void setQuestion(String question){
+        this.question = question;
     }
 
     @Log
-    public String getLibelle(){
-        return this.libelle;
+    public String getAnswer(){
+        return this.answer;
     }
-    public void setLibelle(String libelle){
-        this.libelle = libelle;
+    public void setAnswer(String answer){
+        this.answer = answer;
     }
 
 

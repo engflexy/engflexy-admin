@@ -1,0 +1,98 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>code</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Code"  [(ngModel)]="item.code"  name="code">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Inscription</mat-label>
+                                            <input type="text" matInput (input)="filterInscription(inscriptionInput.value)" #inscriptionInput [matAutocomplete]="inscriptionAutocomplete"  [(ngModel)]="item.inscription"  name="inscription">
+
+                                            <mat-autocomplete #inscriptionAutocomplete="matAutocomplete" [displayWith]="displayInscription" >
+                                              <mat-option *ngFor="let inscription of _inscriptionsFilter" [value]="inscription">
+                                                {{inscription.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dayspeerweek</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Dayspeerweek"  [(ngModel)]="item.dayspeerweek"  name="dayspeerweek">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>timeperday</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Timeperday"  [(ngModel)]="item.timeperday"  name="timeperday">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>teacherGenderoption</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="TeacherGenderoption"  [(ngModel)]="item.teacherGenderoption"  name="teacherGenderoption">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>teacherAgeRange</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="TeacherAgeRange"  [(ngModel)]="item.teacherAgeRange"  name="teacherAgeRange">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>teacherPersonnality</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="TeacherPersonnality"  [(ngModel)]="item.teacherPersonnality"  name="teacherPersonnality">
+                                                </mat-form-field>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.status"  name="status"  >
+                                                    {{ item.status? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateConfirmation</mat-label>
+                                                    <input required type="date" matInput placeholder="DateConfirmation" [(ngModel)]="item.dateConfirmation" name="dateConfirmation">
+                                                </mat-form-field>
+
+
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

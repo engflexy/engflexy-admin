@@ -1,0 +1,142 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>ref</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Ref"  [(ngModel)]="item.ref"  name="ref">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>libelle</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.libelle"  name="libelle">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Numero</mat-label>
+                                                    <input required type="number" matInput placeholder="Numero"  [(ngModel)]="item.numero"  name="numero">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>PointReponseJuste</mat-label>
+                                                    <input required type="number" matInput placeholder="PointReponseJuste"  [(ngModel)]="item.pointReponseJuste"  name="pointReponseJuste">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>PointReponsefausse</mat-label>
+                                                    <input required type="number" matInput placeholder="PointReponsefausse"  [(ngModel)]="item.pointReponsefausse"  name="pointReponsefausse">
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>TypeDeQuestion</mat-label>
+                                            <input type="text" matInput (input)="filterTypeDeQuestion(typeDeQuestionInput.value)" #typeDeQuestionInput [matAutocomplete]="typeDeQuestionAutocomplete"  [(ngModel)]="item.typeDeQuestion"  name="typeDeQuestion">
+
+                                            <mat-autocomplete #typeDeQuestionAutocomplete="matAutocomplete" [displayWith]="displayTypeDeQuestion" >
+                                              <mat-option *ngFor="let typeDeQuestion of _typeDeQuestionsFilter" [value]="typeDeQuestion">
+                                                {{typeDeQuestion.lib}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>HomeWork</mat-label>
+                                            <input type="text" matInput (input)="filterHomeWork(homeWorkInput.value)" #homeWorkInput [matAutocomplete]="homeWorkAutocomplete"  [(ngModel)]="item.homeWork"  name="homeWork">
+
+                                            <mat-autocomplete #homeWorkAutocomplete="matAutocomplete" [displayWith]="displayHomeWork" >
+                                              <mat-option *ngFor="let homeWork of _homeWorksFilter" [value]="homeWork">
+                                                {{homeWork.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+                                    <p-tabPanel header="{{'homeWorkQuestion.howeWorkQSTReponses' | translate}}">
+                                                <div class="p-col">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="1">Ref<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Ref"
+                                                                               id="1" [(ngModel)]="howeWorkQSTReponsesElement.ref" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validHoweWorkQSTReponsesRef}"  >
+                                                                        <small class='p-error' *ngIf='!validHoweWorkQSTReponsesRef'>Ref is obligatory.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="2">Lib<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Lib"
+                                                                               id="2" [(ngModel)]="howeWorkQSTReponsesElement.lib" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validHoweWorkQSTReponsesLib}"  >
+                                                                        <small class='p-error' *ngIf='!validHoweWorkQSTReponsesLib'>Lib is obligatory.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="3">Etat reponse</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Etat reponse"
+                                                                               id="3" [(ngModel)]="howeWorkQSTReponsesElement.etatReponse" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="4">Numero</label>
+                                                                        <p-inputNumber class="mb-2 mr-2" id="numero" placeholder="Numero"  [(ngModel)]="howeWorkQSTReponsesElement.numero"></p-inputNumber>
+                                                                        
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addHoweWorkQSTReponses()"></button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="p-col">
+                                                    <div class="card">
+                                                        <p-table [value]="item.howeWorkQSTReponses" [scrollable]="true" scrollHeight="200px">
+                                                                <tr>
+                                                                                <th>Ref</th>
+                                                                                <th>Lib</th>
+                                                                                <th>Etat reponse</th>
+                                                                                <th>Numero</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.ref}}</td>
+                                                                                <td>{{p.lib}}</td>
+                                                                                <td>{{p.etatReponse}}</td>
+                                                                                <td>{{p.numero}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteHoweWorkQSTReponses(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editHoweWorkQSTReponses(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                        </p-table>
+                                                    </div>
+
+                                                </div>
+
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

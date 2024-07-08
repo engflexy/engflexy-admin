@@ -1,0 +1,95 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>ref</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Ref"  [(ngModel)]="item.ref"  name="ref">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Nombrevote</mat-label>
+                                                    <input required type="number" matInput placeholder="Nombrevote"  [(ngModel)]="item.nombrevote"  name="nombrevote">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>nom</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Nom"  [(ngModel)]="item.nom"  name="nom">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>prenom</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Prenom"  [(ngModel)]="item.prenom"  name="prenom">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>commentaire</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Commentaire" [(ngModel)]="item.commentaire"  name="commentaire"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>telephone</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Telephone"  [(ngModel)]="item.telephone"  name="telephone">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>login</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Login"  [(ngModel)]="item.login"  name="login">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateRecommamdation</mat-label>
+                                                    <input required type="date" matInput placeholder="DateRecommamdation" [(ngModel)]="item.dateRecommamdation" name="dateRecommamdation">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Prof</mat-label>
+                                            <input type="text" matInput (input)="filterProf(profInput.value)" #profInput [matAutocomplete]="profAutocomplete"  [(ngModel)]="item.prof"  name="prof">
+
+                                            <mat-autocomplete #profAutocomplete="matAutocomplete" [displayWith]="displayProf" >
+                                              <mat-option *ngFor="let prof of _profsFilter" [value]="prof">
+                                                {{prof.ref}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>
