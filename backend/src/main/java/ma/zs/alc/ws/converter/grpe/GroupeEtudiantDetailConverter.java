@@ -75,7 +75,7 @@ public class GroupeEtudiantDetailConverter extends AbstractConverter<GroupeEtudi
         if (dto.getEtudiant() != null && t.getEtudiant() == null) {
             t.setEtudiant(new Etudiant());
         }
-        
+
         if (dto.getGroupeEtudiant() != null && t.getGroupeEtudiant() == null) {
             t.setGroupeEtudiant(new GroupeEtudiant());
         }

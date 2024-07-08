@@ -22,7 +22,8 @@ import {GroupeEtudiantDetailDto} from "../../../shared/model/grpe/GroupeEtudiant
 import {
     GroupeEtudiantDetailCollaboratorService
 } from "../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
-import {GroupDetailsComponent} from "./group-details/group-details.component";
+import {GroupFilterComponent} from "./group-filter/group-filter.component";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-manage-groups',
@@ -47,6 +48,8 @@ export class ManageGroupsComponent {
 
     constructor(private service: GroupeEtudiantCollaboratorService,
                 private _fuseConfirmation: FuseConfirmationService,
+                private router: Router,
+                private route: ActivatedRoute,
                 private groupDetailService: GroupeEtudiantDetailCollaboratorService,
                 private alert: FuseAlertService,
                 private _matDialog: MatDialog) {
@@ -61,8 +64,6 @@ export class ManageGroupsComponent {
     }
 
     ngOnInit() {
-        this.pageable.page = 0
-        this.pageable.maxResults = 5
         this.fetchData()
     }
 
@@ -101,6 +102,7 @@ export class ManageGroupsComponent {
 
     changeType(index: number) {
         this.active_status = index
+        this.pageable = new GroupeEtudiantCriteria()
         this.fetchData()
     }
 
@@ -149,14 +151,30 @@ export class ManageGroupsComponent {
     }
 
     openDetail(item: GroupeEtudiantDto) {
+        this.item = item
         this.groupDetails = item.groupeEtudiantDetails
-        this._matDialog.open(GroupDetailsComponent, {
+        this.router.navigate([`group-details/${item?.id}`], {relativeTo: this.route});
+    }
+
+    openFilter() {
+        const dialog = this._matDialog.open(GroupFilterComponent, {
             autoFocus: false,
             height: "auto",
             width: "calc(100% - 100px)",
             maxWidth: "100%",
-            disableClose: false,
+            disableClose: true,
             maxHeight: "100%"
         });
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) {
+                this.pageable = res
+                this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
+                    this.criteria = res
+                })
+            } else {
+                this.pageable = new GroupeEtudiantCriteria()
+                this.fetchData()
+            }
+        })
     }
 }

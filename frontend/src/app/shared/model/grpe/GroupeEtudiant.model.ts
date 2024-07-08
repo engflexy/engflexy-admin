@@ -37,9 +37,8 @@ export class GroupeEtudiantDto extends BaseDto {
     public groupeEtudiantDetails: Array<GroupeEtudiantDetailDto>;
 
 
-    constructor() {
-        super();
-
+    constructor(id?: number) {
+        super(id);
         this.libelle = '';
         this.type = '';
         this.dateDebut = null;

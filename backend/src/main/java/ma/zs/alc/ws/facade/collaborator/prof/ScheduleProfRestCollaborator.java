@@ -13,8 +13,6 @@ import ma.zs.alc.zynerator.dto.ScheduleDto;
 import ma.zs.alc.zynerator.util.DateUtil;
 import ma.zs.alc.zynerator.util.PaginatedList;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -163,12 +161,9 @@ public class ScheduleProfRestCollaborator extends AbstractController<SchedulePro
 
 
     @GetMapping("start/{start}/end/{end}")
-    public List<ScheduleDto> findSchedule(
-            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String start,
-            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String end) {
+    public List<ScheduleDto> findSchedule(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String start, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String end) {
         return service.findSchedule(LocalDateTime.parse(start), LocalDateTime.parse(end));
     }
-
 
 
     @GetMapping("all/finished/group/{group}")
@@ -191,15 +186,15 @@ public class ScheduleProfRestCollaborator extends AbstractController<SchedulePro
     @GetMapping("{id}/between/{start}/{end}")
     public List<ScheduleEvent> get_schedules_between(@PathVariable Long id,
                                                      @PathVariable String start,
-                                                     @PathVariable String end) {
-        return service.get_schedules_between(id, DateUtil.stringEnToDate(start), DateUtil.stringEnToDate(end));
+                                                     @PathVariable String end,
+                                                     @RequestParam(name = "profId", required = false) Long profId,
+                                                     @RequestParam(name = "groupId", required = false) Long groupId) {
+        return service.get_schedules_between(id, DateUtil.stringEnToDate(start), DateUtil.stringEnToDate(end), profId, groupId);
     }
 
 
     @GetMapping("group/{id}/between/{start}/{end}")
-    public List<ScheduleEvent> get_group_schedules_between(@PathVariable Long id,
-                                                           @PathVariable String start,
-                                                           @PathVariable String end) {
+    public List<ScheduleEvent> get_group_schedules_between(@PathVariable Long id, @PathVariable String start, @PathVariable String end) {
         return service.get_group_schedules_between(id, DateUtil.stringEnToDate(start), DateUtil.stringEnToDate(end));
     }
 

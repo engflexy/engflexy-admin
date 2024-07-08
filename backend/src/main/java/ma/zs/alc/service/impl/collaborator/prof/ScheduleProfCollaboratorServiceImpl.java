@@ -67,8 +67,12 @@ public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<Sch
     }
 
     @Override
-    public List<ScheduleEvent> get_schedules_between(Long id, LocalDateTime start, LocalDateTime end) {
-        return dao.get_schedules_between(id, start, end);
+    public List<ScheduleEvent> get_schedules_between(Long id, LocalDateTime start, LocalDateTime end, Long profId, Long groupId) {
+        if (profId != 0 && groupId != 0)
+            return dao.get_collaborator_schedules_between_by_prof_and_group(id, start, end, profId, groupId);
+        else if (groupId != 0) return dao.get_collaborator_schedules_between_by_group(id, start, end, groupId);
+        else if (profId != 0) return dao.get_collaborator_schedules_between_by_prof(id, start, end, profId);
+        else return dao.get_collaborator_schedules_between(id, start, end);
     }
 
     @Override

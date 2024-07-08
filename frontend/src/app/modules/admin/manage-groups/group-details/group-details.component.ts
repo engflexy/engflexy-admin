@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -9,6 +9,13 @@ import {
 import {GroupeEtudiantDetailDto} from "../../../../shared/model/grpe/GroupeEtudiantDetail.model";
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {FuseConfirmationService} from "../../../../../@fuse/services/confirmation";
+import {GroupeEtudiantDto} from "../../../../shared/model/grpe/GroupeEtudiant.model";
+import {
+    GroupeEtudiantCollaboratorService
+} from "../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
+import {ScheduleComponent} from "../../schedule/schedule.component";
+import {MatButtonModule} from "@angular/material/button";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-group-details',
@@ -18,16 +25,31 @@ import {FuseConfirmationService} from "../../../../../@fuse/services/confirmatio
         NgForOf,
         NgIf,
         MatDialogModule,
-        TranslocoModule
+        TranslocoModule,
+        ScheduleComponent,
+        MatButtonModule,
+        RouterLink
     ],
     standalone: true
 })
 export class GroupDetailsComponent implements OnInit {
+    showMembers: boolean = false
 
     constructor(private service: GroupeEtudiantDetailCollaboratorService,
+                private groupService: GroupeEtudiantCollaboratorService,
                 private confirmation: FuseConfirmationService,
+                private changeDetector: ChangeDetectorRef,
+                private route: ActivatedRoute,
                 private alert: FuseAlertService
     ) {
+    }
+
+    get item(): GroupeEtudiantDto {
+        return this.groupService.item;
+    }
+
+    set item(value: GroupeEtudiantDto) {
+        this.groupService.item = value;
     }
 
     get groups(): Array<GroupeEtudiantDetailDto> {
@@ -39,6 +61,15 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        const id = this.route.snapshot.params['id'];
+        if (id && !this.item?.id) {
+            this.groupService.findByIdWithAssociatedList(new GroupeEtudiantDto(id))
+                .subscribe(res => {
+                    this.item = res
+                    this.groups = this.item.groupeEtudiantDetails
+                    this.changeDetector.markForCheck()
+                })
+        }
     }
 
     deleteStudent(item: GroupeEtudiantDetailDto, i: number) {

@@ -61,23 +61,21 @@ public interface ScheduleProfDao extends AbstractRepository<ScheduleProf, Long> 
     ScheduleProf get_nearest_lesson_for_student(@Param("id") Long id, @Param("currentTime") LocalDateTime currentTime);
 
 
-    @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" +
-            " from ScheduleProf s " +
-            "where  s.startTime>=:start and s.endTime <=:end and s.prof.id=:id")
-    List<ScheduleEvent> get_schedules_between(@Param("id") Long id,
-                                              @Param("start") LocalDateTime start,
-                                              @Param("end") LocalDateTime end);
+    @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" + " from ScheduleProf s " + "where  s.startTime>=:start and s.endTime <=:end and s.prof.collaborator.id=:id")
+    List<ScheduleEvent> get_collaborator_schedules_between(@Param("id") Long id, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query("select s" +
-            " from ScheduleProf s " +
-            "where  s.startTime>=:start and s.startTime <=:end")
-    List<ScheduleProf> getAll_started_schedules_between(@Param("start") LocalDateTime start,
-                                                        @Param("end") LocalDateTime end);
+    @Query("select s" + " from ScheduleProf s " + "where  s.startTime>=:start and s.startTime <=:end")
+    List<ScheduleProf> getAll_started_schedules_between(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" +
-            " from ScheduleProf s " +
-            "where  s.startTime>=:start and s.endTime <=:end and s.groupeEtudiant.id=:id")
-    List<ScheduleEvent> get_group_schedules_between(@Param("id") Long id,
-                                                    @Param("start") LocalDateTime start,
-                                                    @Param("end") LocalDateTime end);
+    @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" + " from ScheduleProf s " + "where  s.startTime>=:start and s.endTime <=:end and s.groupeEtudiant.id=:id")
+    List<ScheduleEvent> get_group_schedules_between(@Param("id") Long id, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" + " from ScheduleProf s " + "where  s.startTime>=:start and s.endTime <=:end and s.prof.collaborator.id=:id and " + "s.prof.id=:profId and s.groupeEtudiant.id=:groupId ")
+    List<ScheduleEvent> get_collaborator_schedules_between_by_prof_and_group(Long id, LocalDateTime start, LocalDateTime end, Long profId, Long groupId);
+
+    @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" + " from ScheduleProf s " + "where  s.startTime>=:start and s.endTime <=:end and s.prof.collaborator.id=:id and " + " s.groupeEtudiant.id=:groupId ")
+    List<ScheduleEvent> get_collaborator_schedules_between_by_group(Long id, LocalDateTime start, LocalDateTime end, Long groupId);
+
+    @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" + " from ScheduleProf s " + "where  s.startTime>=:start and s.endTime <=:end and s.prof.collaborator.id=:id and " + "s.prof.id=:profId ")
+    List<ScheduleEvent> get_collaborator_schedules_between_by_prof(Long id, LocalDateTime start, LocalDateTime end, Long profId);
 }

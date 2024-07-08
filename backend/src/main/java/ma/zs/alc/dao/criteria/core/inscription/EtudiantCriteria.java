@@ -14,9 +14,11 @@ import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudeCriteria;
 import ma.zs.alc.dao.criteria.core.inscriptionref.NiveauEtudeCriteria;
 
 import ma.zs.alc.zynerator.criteria.BaseCriteria;
+import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
+
 import java.util.List;
 
-public class EtudiantCriteria extends  BaseCriteria  {
+public class EtudiantCriteria extends UserCriteria {
 
     private String groupOption;
     private String groupOptionLike;

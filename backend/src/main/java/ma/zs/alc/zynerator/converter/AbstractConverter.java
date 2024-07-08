@@ -29,9 +29,9 @@ public abstract class AbstractConverter<T extends BusinessObject, DTO extends Ba
     public void copy(DTO dto, T t) {
         if (dto != null && t != null) {
             copyNonNullProperties(dto, t);
-            System.out.println("dto = " + dto);
-            System.out.println("t = " + t);
         }
+        System.out.println("dto = " + dto);
+        System.out.println("t = " + t);
     }
 
     public List<T> copy(List<DTO> dtos) {

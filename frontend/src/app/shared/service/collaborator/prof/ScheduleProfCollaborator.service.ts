@@ -8,6 +8,8 @@ import {ScheduleProfCriteria} from '../../../criteria/prof/ScheduleProfCriteria.
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Observable} from "rxjs";
 import {Class} from "../../../../modules/admin/schedule/models/Class";
+import {GroupeEtudiantDto} from "../../../model/grpe/GroupeEtudiant.model";
+import {ProfDto} from "../../../model/prof/Prof.model";
 
 
 @Injectable({
@@ -39,8 +41,14 @@ export class ScheduleProfCollaboratorService extends AbstractService<SchedulePro
         return this.http.get<ScheduleProfDto>(this.API + `nearest-lesson/group/${id}`);
     }
 
-    get_schedules_between(start: string, end: string, id: number): Observable<Class[]> {
-        return this.http.get<Class[]>(this.API + `${id}/between/${start}/${end}`);
+    get_schedules_between(start: string, end: string, id: number,
+                          group: GroupeEtudiantDto, prof: ProfDto): Observable<Class[]> {
+        return this.http.get<Class[]>(this.API + `${id}/between/${start}/${end}`, {
+            params: {
+                profId: prof?.id ? prof.id : 0,
+                groupId: group?.id ? group.id : 0,
+            }
+        });
     }
 
     get_group_schedules_between(start, end, id): Observable<Class[]> {

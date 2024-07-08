@@ -7,7 +7,6 @@ import ma.zs.alc.zynerator.dto.ScheduleDto;
 import ma.zs.alc.zynerator.service.IService;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public interface ScheduleProfCollaboratorService extends IService<ScheduleProf, ScheduleProfCriteria> {
@@ -30,7 +29,7 @@ public interface ScheduleProfCollaboratorService extends IService<ScheduleProf, 
 
     long countByCoursCode(String code);
 
-    public List<ScheduleEvent> get_schedules_between(Long id, LocalDateTime start, LocalDateTime end);
+    public List<ScheduleEvent> get_schedules_between(Long id, LocalDateTime start, LocalDateTime end, Long profId, Long groupId);
 
     public List<ScheduleEvent> get_group_schedules_between(Long id, LocalDateTime start, LocalDateTime end);
 

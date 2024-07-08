@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, ViewChild} from '@angular/core';
 import {CalendarOptions} from "@fullcalendar/core";
 // @ts-ignore
 import {DateSelectArg, EventApi, EventClickArg, FullCalendarComponent, FullCalendarModule} from "@fullcalendar/angular";
@@ -17,9 +17,11 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
+import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
+import {ProfDto} from "../../../shared/model/prof/Prof.model";
 
 @Component({
-    selector: 'app-calendar-teacher',
+    selector: 'app-calendar',
     styleUrls: ['./schedule.component.scss'],
     templateUrl: './schedule.component.html',
     standalone: true,
@@ -28,6 +30,10 @@ import {MatInputModule} from "@angular/material/input";
 export class ScheduleComponent {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     schedules: Array<Class> = new Array<Class>();
+    @Input()
+    group: GroupeEtudiantDto = null;
+    @Input()
+    prof: ProfDto = null;
 
     calendarOptions: CalendarOptions = {
         plugins: [timeGridPlugin, dayGridPlugin, interactionPlugin],
@@ -59,10 +65,13 @@ export class ScheduleComponent {
     };
 
     private handle_dateSet(start: Date, end: Date) {
+        console.log(this.group)
+        console.log(this.prof)
         const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         const id = this.auth.authenticatedUser?.id
-        this.scheduleService.get_schedules_between(startDate, endDate, id)
+
+        this.scheduleService.get_schedules_between(startDate, endDate, id, this.group, this.prof)
             .subscribe(response => {
                 this.schedules = response
                 // @ts-ignore
