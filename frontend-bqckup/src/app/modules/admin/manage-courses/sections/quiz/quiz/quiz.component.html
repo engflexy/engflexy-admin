@@ -1,0 +1,53 @@
+<div class="flex flex-col">
+    <div class="w-full text-2xl mb-3 ubuntu-bold-italic">
+        {{exercise?.numero}} - {{selectedQuiz?.questions?.at(0)?.typeDeQuestion?.lib}}
+    </div>
+
+    <div class="flex flex-col border-2 border-solid border-gray-100
+    dark:border-gray-700
+     rounded-md h-full min-h-50 mt-5 py-4 px-1">
+
+        <ng-container *ngFor="let selectedQuestion of selectedQuiz?.questions">
+
+
+            <!--------- correct the mistake ------------->
+            <ng-container
+                *ngIf="selectedQuestion?.typeDeQuestion?.ref === (typeQuestion.CORRECT_THE_MISTAKE)">
+                <app-correct-the-mistake [question]="selectedQuestion"></app-correct-the-mistake>
+            </ng-container>
+
+            <!--------- Write the correct form ------------->
+            <ng-container
+                *ngIf="selectedQuestion?.typeDeQuestion?.ref === (typeQuestion.WRITE_THE_CORRECT_FORM)">
+                <app-write-correct-form [question]="selectedQuestion"></app-write-correct-form>
+            </ng-container>
+
+            <!--------- Choose the correct alternative ------------->
+            <ng-container
+                *ngIf="selectedQuestion?.typeDeQuestion?.ref === (typeQuestion.CHOOSE_THE_CORRECT_ALTERNATIVE)">
+                <app-choose-correct-alternative [question]="selectedQuestion"></app-choose-correct-alternative>
+            </ng-container>
+
+            <!--------- put in order ------------->
+            <ng-container
+                *ngIf="selectedQuestion?.typeDeQuestion?.ref === (typeQuestion.PUT_IN_ORDER)">
+                <app-put-in-order [question]="selectedQuestion"></app-put-in-order>
+            </ng-container>
+
+            <!--------- drag and drop ------------->
+            <ng-container *ngIf="selectedQuestion?.typeDeQuestion?.ref === (typeQuestion.DRAG_AND_DROP)">
+                <app-drag-and-drop [question]="selectedQuestion"></app-drag-and-drop>
+            </ng-container>
+
+            <!--------- TRUE OR FALSE  ------------->
+            <ng-container *ngIf="selectedQuestion?.typeDeQuestion?.ref === (typeQuestion.TRUE_OR_FALSE)">
+                <app-true-or-false [question]="selectedQuestion"></app-true-or-false>
+            </ng-container>
+
+        </ng-container>
+    </div>
+
+
+</div>
+
+
