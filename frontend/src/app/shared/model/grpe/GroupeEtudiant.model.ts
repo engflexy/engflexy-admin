@@ -7,15 +7,15 @@ import {GroupeTypeDto} from './GroupeType.model';
 import {GroupeEtudeDto} from './GroupeEtude.model';
 import {ProfDto} from '../prof/Prof.model';
 
-export class GroupeEtudiantDto extends BaseDto{
+export class GroupeEtudiantDto extends BaseDto {
 
     public libelle: string;
 
     public type: string;
 
-   public dateDebut: Date;
+    public dateDebut: Date;
 
-   public dateFin: Date;
+    public dateFin: Date;
 
     public nombrePlace: null | number;
 
@@ -29,12 +29,12 @@ export class GroupeEtudiantDto extends BaseDto{
 
     public nreCourses: null | number;
 
-    public groupeEtude: GroupeEtudeDto ;
-    public groupeType: GroupeTypeDto ;
-    public groupeEtat: GroupeEtatDto ;
-    public parcours: ParcoursDto ;
-    public prof: ProfDto ;
-     public groupeEtudiantDetails: Array<GroupeEtudiantDetailDto>;
+    public groupeEtude: GroupeEtudeDto;
+    public groupeType: GroupeTypeDto;
+    public groupeEtat: GroupeEtatDto;
+    public parcours: ParcoursDto;
+    public prof: ProfDto;
+    public groupeEtudiantDetails: Array<GroupeEtudiantDetailDto>;
 
 
     constructor() {
@@ -50,13 +50,11 @@ export class GroupeEtudiantDto extends BaseDto{
         this.nreCoursesComing = null;
         this.nreCoursesCompleted = null;
         this.nreCourses = null;
-        this.groupeEtude = new GroupeEtudeDto() ;
-        this.groupeType = new GroupeTypeDto() ;
-        this.groupeEtat = new GroupeEtatDto() ;
-        this.parcours = new ParcoursDto() ;
-        this.prof = new ProfDto() ;
+        this.groupeEtude = new GroupeEtudeDto();
+        this.parcours = new ParcoursDto();
+        this.prof = new ProfDto();
         this.groupeEtudiantDetails = new Array<GroupeEtudiantDetailDto>();
 
-        }
+    }
 
 }

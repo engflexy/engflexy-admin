@@ -31,25 +31,25 @@ export const faqs = [
     {
         id        : 'f65d517a-6f69-4c88-81f5-416f47405ce1',
         categoryId: '28924eab-97cc-465a-ba21-f232bb95843f',
-        question  : 'Is there a 14-days trial?',
+        question  : 'Is there a free trial lessons?',
         answer    : 'Magna consectetur culpa duis ad est tempor pariatur velit ullamco aute exercitation magna sunt commodo minim enim aliquip eiusmod ipsum adipisicing magna ipsum reprehenderit lorem magna voluptate magna aliqua culpa.\n\nSit nisi adipisicing pariatur enim enim sunt officia ad labore voluptate magna proident velit excepteur pariatur cillum sit excepteur elit veniam excepteur minim nisi cupidatat proident dolore irure veniam mollit.',
     },
     {
         id        : '0fcece82-1691-4b98-a9b9-b63218f9deef',
         categoryId: '28924eab-97cc-465a-ba21-f232bb95843f',
-        question  : 'What’s the benefits of the Premium Membership?',
+        question  : 'What’s the benefits of the Individual Membership?',
         answer    : 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.\n\nAute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in.',
     },
     {
         id        : '2e6971cd-49d5-49f1-8cbd-fba5c71e6062',
         categoryId: '28924eab-97cc-465a-ba21-f232bb95843f',
-        question  : 'How much time I will need to learn this app?',
+        question  : 'How much time I will need to learn English?',
         answer    : 'Id fugiat et cupidatat magna nulla nulla eu cillum officia nostrud dolore in veniam ullamco nulla ex duis est enim nisi aute ipsum velit et laboris est pariatur est culpa.\n\nCulpa sunt ipsum esse quis excepteur enim culpa est voluptate reprehenderit consequat duis officia irure voluptate veniam dolore fugiat dolor est amet nostrud non velit irure do voluptate id sit.',
     },
     {
         id        : '974f93b8-336f-4eec-b011-9ddb412ee828',
         categoryId: '28924eab-97cc-465a-ba21-f232bb95843f',
-        question  : 'Are there any free tutorials available?',
+        question  : 'Can i change my teacher in any time ?',
         answer    : 'Excepteur deserunt tempor do lorem elit id magna pariatur irure ullamco elit dolor consectetur ad officia fugiat incididunt do elit aute esse eu voluptate adipisicing incididunt ea dolor aliqua dolor.\n\nConsequat est quis deserunt voluptate ipsum incididunt laboris occaecat irure laborum voluptate non sit labore voluptate sunt id sint ut laboris aute cupidatat occaecat eiusmod non magna aliquip deserunt nisi.',
     },
     {

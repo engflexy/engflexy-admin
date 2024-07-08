@@ -1347,8 +1347,8 @@ public class AlcApplication {
         String libelle = "libelle";
         for (int i = 1; i < 100; i++) {
             Faq item = new Faq();
-            item.setDescription(fakeString(description, i));
-            item.setLibelle(fakeString(libelle, i));
+            item.setQuestion(fakeString(description, i));
+            item.setAnswer(fakeString(libelle, i));
             faqService.create(item);
         }
     }

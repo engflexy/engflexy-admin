@@ -67,12 +67,10 @@ public class GroupeEtudiantDetailConverter extends AbstractConverter<GroupeEtudi
             if(StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
             if(this.groupeEtudiant && item.getGroupeEtudiant()!=null) {
-                dto.setGroupeEtudiant(groupeEtudiantConverter.toDto(item.getGroupeEtudiant())) ;
-
+                dto.setGroupeEtudiant(null) ;
             }
             if(this.etudiant && item.getEtudiant()!=null) {
                 dto.setEtudiant(etudiantConverter.toDto(item.getEtudiant())) ;
-
             }
 
 

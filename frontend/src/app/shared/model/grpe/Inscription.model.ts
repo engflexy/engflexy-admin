@@ -56,15 +56,14 @@ export class InscriptionDto extends BaseDto {
         this.datedebutinscription = null;
         this.datefininscription = null;
         this.skype = '';
-        this.etudiant = new EtudiantDto();
-        this.etatInscription = new EtatInscriptionDto();
-        this.parcours = new ParcoursDto();
-        this.statutSocial = new StatutSocialDto();
-        this.interetEtudiant = new InteretEtudiantDto();
-        this.quiz = new QuizDto();
-        this.packStudent = new PackStudentDto();
-        this.skill = new SkillDto();
-
+        this.etudiant = null;
+        this.etatInscription = null;
+        this.parcours = null;
+        this.statutSocial = null;
+        this.interetEtudiant = null;
+        this.quiz = null;
+        this.packStudent = null;
+        this.skill = null;
     }
 
 }

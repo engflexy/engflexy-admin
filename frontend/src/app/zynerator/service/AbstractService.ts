@@ -1,5 +1,5 @@
 import * as moment from 'moment/moment';
-import {Observable} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {ScheduleDto} from '../dto/ScheduleDto.model';
 import {BaseDto} from "../dto/BaseDto.model";
@@ -97,12 +97,16 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
         return this.httpClient.post<PaginatedList<DTO>>(this.API + 'find-paginated-by-criteria', criteria);
     }
 
-    public findAll() {
+    public findAll(): Observable<Array<DTO>> {
         return this.httpClient.get<Array<DTO>>(this.API);
     }
 
     public findAllOptimized() {
-        return this.httpClient.get<Array<DTO>>(this.API + 'optimized');
+        return this.httpClient.get<Array<DTO>>(this.API + 'optimized').pipe(
+            tap((response) => {
+                this.items = response
+            }),
+        );
     }
 
     public save(): Observable<DTO> {

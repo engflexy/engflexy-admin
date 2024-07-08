@@ -26,14 +26,14 @@ export class ParcoursDto extends BaseDto {
     public courss: Array<CoursDto>;
 
 
-    constructor() {
+    constructor(libelle?: string) {
         super();
 
         this.datePublication = null;
         this.dateCreation = null;
         this.description = '';
         this.code = '';
-        this.libelle = '';
+        this.libelle = libelle ? libelle : '';
         this.numeroOrder = null;
         this.nombreCours = null;
         this.courss = new Array<CoursDto>();
