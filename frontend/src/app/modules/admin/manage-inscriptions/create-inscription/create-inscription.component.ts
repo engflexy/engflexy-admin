@@ -37,8 +37,11 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     standalone: true
 })
 export class CreateInscriptionComponent implements OnInit {
+
     inscription: InscriptionDto = new InscriptionDto()
+
     @ViewChild('ngForm') ngForm: NgForm;
+
     students: UserCriteria[]
 
 
@@ -51,21 +54,52 @@ export class CreateInscriptionComponent implements OnInit {
     ) {
     }
 
+    public get inscriptionItem(): InscriptionDto {
+        return this.service.item
+    }
+
+    public set inscriptionItem(item: InscriptionDto) {
+        this.service.item = item
+    }
+
     ngOnInit() {
         this.etudiantService.findAllByCollaboratorId(this.auth?.authenticatedUser?.id)
             .subscribe(res => this.students = res)
     }
 
     save() {
-        // Do nothing if the form is invalid
+        // Ne rien faire si le formulaire est invalide
         if (this.ngForm.invalid) {
             return;
         }
-        // Disable the form
+
+        // Désactiver le formulaire pendant l'envoi
         this.ngForm.form.disable();
+        this.inscription.etudiant.fullName = this.ngForm.form.get('fullName').value
+        this.inscription.etudiant.email = this.ngForm.form.get('email').value
+        this.inscription.etudiant.phone = this.ngForm.form.get('phone').value
+
+        console.log(this.inscription)
+
+        // Envoyer les données de l'inscription au service
+        this.service.create(this.inscription).subscribe({
+            next: () => {
+                this.alert.show('success', 'Inscription créée avec succès');
+                this.refDialog.close(true);
+            },
+            error: err => {
+                console.error('Erreur lors de la création de l\'inscription:', err);
+                this.alert.show('error', 'Échec de la création de l\'inscription');
+                this.ngForm.form.enable();
+            }
+        });
     }
 
-    filterStudent(value: string) {
 
+    filterStudent(value: string) {
+        const filterValue = value.toLowerCase();
+        this.students = this.students.filter(student =>
+            student.fullName.toLowerCase().includes(filterValue)
+        );
     }
 }

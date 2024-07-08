@@ -27,6 +27,16 @@ public class InscriptionAdminServiceImpl extends AbstractServiceImpl<Inscription
     @Override
     public Inscription create(Inscription inscription) {
         if (inscription != null) {
+            if (inscription.getInteretEtudiant() != null && inscription.getInteretEtudiant().getId() == null ) {
+                inscription.setInteretEtudiant(null);
+            }
+            if (inscription.getStatutSocial() != null && inscription.getStatutSocial().getId() == null ) {
+                inscription.setStatutSocial(null);
+            }
+            if (inscription.getSkill() != null && inscription.getSkill().getId() == null ) {
+                inscription.setSkill(null);
+            }
+
             EtatInscription etat = etatInscriptionService.findByReferenceEntity(inscription.getEtatInscription());
             inscription.setEtatInscription(etat);
             return dao.save(inscription);

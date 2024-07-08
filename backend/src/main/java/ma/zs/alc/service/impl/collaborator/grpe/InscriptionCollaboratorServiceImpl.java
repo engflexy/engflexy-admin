@@ -1,6 +1,8 @@
 package ma.zs.alc.service.impl.collaborator.grpe;
 
 
+import com.itextpdf.text.log.Logger;
+import com.itextpdf.text.log.LoggerFactory;
 import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.bean.core.inscriptionref.EtatInscription;
 import ma.zs.alc.dao.criteria.core.grpe.InscriptionCriteria;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.mysql.cj.conf.PropertyKey.logger;
+
 @Service
 public class InscriptionCollaboratorServiceImpl extends AbstractServiceImpl<Inscription, InscriptionCriteria, InscriptionDao> implements InscriptionCollaboratorService {
 
@@ -33,6 +37,8 @@ public class InscriptionCollaboratorServiceImpl extends AbstractServiceImpl<Insc
         }
         return null;
     }
+
+
 
     public void findOrSaveAssociatedObject(Inscription t) {
         if (t != null) {
