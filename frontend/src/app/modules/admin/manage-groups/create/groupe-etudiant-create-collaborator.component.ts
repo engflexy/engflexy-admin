@@ -488,4 +488,9 @@ export class GroupeEtudiantCreateCollaboratorComponent implements OnInit {
     }
 
     protected readonly compareObjects = compareObjects;
+
+    deleteStudent(item: EtudiantDto, index
+        : number) {
+
+    }
 }
