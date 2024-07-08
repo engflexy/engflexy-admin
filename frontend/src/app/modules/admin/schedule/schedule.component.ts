@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, ViewChild} from '@angular/core';
 import {CalendarOptions} from "@fullcalendar/core";
 // @ts-ignore
 import {DateSelectArg, EventApi, EventClickArg, FullCalendarComponent, FullCalendarModule} from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import {CommonModule, DatePipe} from "@angular/common";
+import {DatePipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {Class} from "./models/Class";
 import {
@@ -17,18 +17,25 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
-import { ScheduleProfCreateCollaboratorComponent } from './create/schedule-prof-create-collaborator.component';
+import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
+import {ProfDto} from "../../../shared/model/prof/Prof.model";
+import {ScheduleProfCreateCollaboratorComponent} from "./create/schedule-prof-create-collaborator.component";
+import {ScheduleProfDto} from "../../../shared/model/prof/ScheduleProf.model";
 
 @Component({
-    selector: 'app-calendar-teacher',
+    selector: 'app-calendar',
     styleUrls: ['./schedule.component.scss'],
     templateUrl: './schedule.component.html',
     standalone: true,
-    imports: [CommonModule,FullCalendarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule]
+    imports: [FullCalendarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule]
 })
 export class ScheduleComponent {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     schedules: Array<Class> = new Array<Class>();
+    @Input()
+    group: GroupeEtudiantDto = null;
+    @Input()
+    prof: ProfDto = null;
 
     calendarOptions: CalendarOptions = {
         plugins: [timeGridPlugin, dayGridPlugin, interactionPlugin],
@@ -60,10 +67,13 @@ export class ScheduleComponent {
     };
 
     private handle_dateSet(start: Date, end: Date) {
-        const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm")
-        const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm")
+        console.log(this.group)
+        console.log(this.prof)
+        const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         const id = this.auth.authenticatedUser?.id
-        this.scheduleService.get_schedules_between(startDate, endDate, id)
+
+        this.scheduleService.get_schedules_between(startDate, endDate, id, this.group, this.prof)
             .subscribe(response => {
                 this.schedules = response
                 // @ts-ignore
@@ -77,7 +87,7 @@ export class ScheduleComponent {
                 private ref: ChangeDetectorRef,
                 public dialog: MatDialog,
                 private auth: AuthService,
-                private datePipe: DatePipe,) {
+                private datePipe: DatePipe) {
     }
 
     handleEventClick(clickInfo: EventClickArg) {
@@ -98,14 +108,17 @@ export class ScheduleComponent {
             disableClose: true,
             maxHeight: "100%"
         });
-        dialog.afterClosed().subscribe(res=> {
-            if (res != null){
-                const classe:Class=new Class();
-                classe.end=res.endTime;
-                classe.start=res.startTime;
-                classe.title=res.cours.libelle;
+        dialog.afterClosed().subscribe((res: ScheduleProfDto) => {
+            if (res != null) {
+                const classe: Class = new Class();
+                classe.end = res.endTime;
+                classe.start = res.startTime;
+                classe.title = res.cours.libelle;
+                classe.group = res.groupeEtudiant.libelle;
+                classe.teacher = res.prof.fullName;
                 this.schedules.unshift({...classe})
             }
         })
     }
+
 }

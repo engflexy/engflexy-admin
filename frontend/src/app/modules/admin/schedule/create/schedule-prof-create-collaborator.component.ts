@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 
@@ -12,33 +12,28 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
-
-import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
-
-
-
-import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 
 
 import {environment} from '../../../../../environments/environment';
 
 import {RoleService} from '../../../../zynerator/security/shared/service/Role.service';
 import {StringUtilService} from '../../../../zynerator/util/StringUtil.service';
-import {ServiceLocator} from '../../../../zynerator/service/ServiceLocator';
 
 import {FormsModule} from "@angular/forms";
 
 import {TranslocoModule} from "@ngneat/transloco";
 
 
-
-import {ScheduleProfCollaboratorService} from '../../../../shared/service/collaborator/prof/ScheduleProfCollaborator.service';
+import {
+    ScheduleProfCollaboratorService
+} from '../../../../shared/service/collaborator/prof/ScheduleProfCollaborator.service';
 import {ScheduleProfDto} from '../../../../shared/model/prof/ScheduleProf.model';
 import {ScheduleProfCriteria} from '../../../../shared/criteria/prof/ScheduleProfCriteria.model';
 import {GroupeEtudiantDto} from '../../../../shared/model/grpe/GroupeEtudiant.model';
-import {GroupeEtudiantCollaboratorService} from '../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service';
+import {
+    GroupeEtudiantCollaboratorService
+} from '../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service';
 import {CoursDto} from '../../../../shared/model/course/Cours.model';
 import {CoursCollaboratorService} from '../../../../shared/service/collaborator/course/CoursCollaborator.service';
 import {ProfDto} from '../../../../shared/model/prof/Prof.model';
@@ -51,15 +46,13 @@ import {
     EtudiantCollaboratorService
 } from "../../../../shared/service/collaborator/inscription/EtudiantCollaborator.service";
 import {EtudiantDto} from "../../../../shared/model/inscription/Etudiant.model";
-import {GroupeEtudiantDetailDto} from "../../../../shared/model/grpe/GroupeEtudiantDetail.model";
 import {
     GroupeEtudiantDetailAdminService
 } from "../../../../shared/service/admin/grpe/GroupeEtudiantDetailAdmin.service";
-import {Observable} from "rxjs";
 
 @Component({
-  selector: 'app-schedule-prof-create-collaborator',
-  templateUrl: './schedule-prof-create-collaborator.component.html',
+    selector: 'app-schedule-prof-create-collaborator',
+    templateUrl: './schedule-prof-create-collaborator.component.html',
     imports: [
         MatButtonModule,
         MatDialogModule,
@@ -77,9 +70,9 @@ import {Observable} from "rxjs";
     ],
     standalone: true
 })
-export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
+export class ScheduleProfCreateCollaboratorComponent implements OnInit {
 
-	protected _submitted = false;
+    protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
     protected datePipe: DatePipe;
@@ -89,37 +82,51 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
     protected stringUtilService: StringUtilService;
     private _activeTab = 0;
 
-  _groupeEtudiantsFilter:  GroupeEtudiantDto[];
-  _profsFilter:  ProfDto[];
-  _courssFilter:  CoursDto[];
-  _parcourssFilter:  ParcoursDto[];
-  _etudiantFilter:EtudiantDto[];
-
+    _groupeEtudiantsFilter: GroupeEtudiantDto[];
+    _profsFilter: ProfDto[];
+    _courssFilter: CoursDto[];
+    _parcourssFilter: ParcoursDto[];
+    _etudiantFilter: EtudiantDto[];
 
 
     private _validProfRef = true;
     private _validCoursCode = true;
     private _validCoursLibelle = true;
 
-	constructor(private alert: FuseAlertService,
-                private service: ScheduleProfCollaboratorService ,
+    constructor(private alert: FuseAlertService,
+                private service: ScheduleProfCollaboratorService,
                 private groupeEtudiantDetailAdminService: GroupeEtudiantDetailAdminService,
                 private groupeEtudiantService: GroupeEtudiantCollaboratorService,
                 private coursService: CoursCollaboratorService,
-                private  etudiantService: EtudiantCollaboratorService,
-                public refDialog:MatDialogRef<ScheduleProfCreateCollaboratorComponent>,
-                private parcoursService:ParcoursCollaboratorService,
-                private profService: ProfCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
+                private etudiantService: EtudiantCollaboratorService,
+                public refDialog: MatDialogRef<ScheduleProfCreateCollaboratorComponent>,
+                private parcoursService: ParcoursCollaboratorService,
+                private profService: ProfCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
 
 
     }
 
     ngOnInit(): void {
-        this.groupeEtudiantService.findAll().subscribe((data) => {this.groupeEtudiants = data; this._groupeEtudiantsFilter = {...this.groupeEtudiants}});
-        this.profService.findAll().subscribe((data) => {this.profs = data; this._profsFilter = {...this.profs}});
-        this.parcoursService.findAll().subscribe((data) => {this.parcourss = data; this._parcourssFilter = {...this.parcourss}});
-        this.etudiantService.findAll().subscribe((data) => {this.etudiants = data; this._etudiantFilter = {...this.etudiants}});
-        this.coursService.findAll().subscribe((data) => {this.courss = data; this._courssFilter = {...this.courss}});
+        this.groupeEtudiantService.findAll().subscribe((data) => {
+            this.groupeEtudiants = data;
+            this._groupeEtudiantsFilter = {...this.groupeEtudiants}
+        });
+        this.profService.findAll().subscribe((data) => {
+            this.profs = data;
+            this._profsFilter = {...this.profs}
+        });
+        this.parcoursService.findAll().subscribe((data) => {
+            this.parcourss = data;
+            this._parcourssFilter = {...this.parcourss}
+        });
+        this.etudiantService.findAll().subscribe((data) => {
+            this.etudiants = data;
+            this._etudiantFilter = {...this.etudiants}
+        });
+        this.coursService.findAll().subscribe((data) => {
+            this.courss = data;
+            this._courssFilter = {...this.courss}
+        });
     }
 
 
@@ -131,9 +138,10 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
 
     public findByGroupeEtudiantId(): void {
         if (this.item.groupeEtudiant) {
-            this.groupeEtudiantDetailAdminService.findByGroupeEtudiantId(this.item.groupeEtudiant.id).subscribe(data =>this.item.groupeEtudiant.groupeEtudiantDetails = data);
+            this.groupeEtudiantDetailAdminService.findByGroupeEtudiantId(this.item.groupeEtudiant.id).subscribe(data => this.item.groupeEtudiant.groupeEtudiantDetails = data);
         }
     }
+
     // public findByParcoursCourss(): void {
     //     if (this.item.groupeEtudiant.parcours.courss) {
     //         this.coursService.findByParcoursId(this.item.groupeEtudiant.id).subscribe(data =>this.item.groupeEtudiant.groupeEtudiantDetails = data);
@@ -150,6 +158,7 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
         }
 
     }
+
     changeParcours() {
         if (this.item.groupeEtudiant && this.item.groupeEtudiant.parcours) {
             this.item.groupeEtudiant.parcours = this.item.groupeEtudiant.parcours;
@@ -160,52 +169,53 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
         }
     }
 
-  displayGroupeEtudiant(item: GroupeEtudiantDto): string {
-	return item && item.libelle ? item.libelle : "";
+    displayGroupeEtudiant(item: GroupeEtudiantDto): string {
+        return item && item.libelle ? item.libelle : "";
 
-  }
+    }
 
-  filterGroupeEtudiant(value: string){
-  	value = value.toLowerCase();
-	if (value && value.length > 0) {
-		this._groupeEtudiantsFilter = this.groupeEtudiants.filter(s =>
-			s.libelle?.toLowerCase()?.includes(value)
-		)
-	} else {
-		this._groupeEtudiantsFilter = this.groupeEtudiants
-	}
- }
-  displayProf(item: ProfDto): string {
-	return item && item.ref ? item.ref : "";
+    filterGroupeEtudiant(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this._groupeEtudiantsFilter = this.groupeEtudiants.filter(s =>
+                s.libelle?.toLowerCase()?.includes(value)
+            )
+        } else {
+            this._groupeEtudiantsFilter = this.groupeEtudiants
+        }
+    }
 
-  }
+    displayProf(item: ProfDto): string {
+        return item && item.ref ? item.ref : "";
 
-  filterProf(value: string){
-  	value = value.toLowerCase();
-	if (value && value.length > 0) {
-		this._profsFilter = this.profs.filter(s =>
-			s.ref?.toLowerCase()?.includes(value)
-		)
-	} else {
-		this._profsFilter = this.profs
-	}
- }
-  displayCours(item: CoursDto): string {
-	return item && item.libelle ? item.libelle : "";
+    }
 
-  }
+    filterProf(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this._profsFilter = this.profs.filter(s =>
+                s.ref?.toLowerCase()?.includes(value)
+            )
+        } else {
+            this._profsFilter = this.profs
+        }
+    }
 
-  filterCours(value: string){
-  	value = value.toLowerCase();
-	if (value && value.length > 0) {
-		this._courssFilter = this.courss.filter(s =>
-			s.libelle?.toLowerCase()?.includes(value)
-		)
-	} else {
-		this._courssFilter = this.courss
-	}
- }
+    displayCours(item: CoursDto): string {
+        return item && item.libelle ? item.libelle : "";
 
+    }
+
+    filterCours(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this._courssFilter = this.courss.filter(s =>
+                s.libelle?.toLowerCase()?.includes(value)
+            )
+        } else {
+            this._courssFilter = this.courss
+        }
+    }
 
 
     public save(): void {
@@ -243,41 +253,41 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
     }
 
 
-
-
-
-    public  setValidation(value: boolean){
+    public setValidation(value: boolean) {
     }
 
 
-
-    public  validateForm(): void{
+    public validateForm(): void {
         this.errorMessages = new Array<string>();
     }
+
     displayStudentsOfGroup(): void {
         console.log();
     }
 
 
     public async openCreateProf(prof: string) {
-    const isPermistted = await this.roleService.isPermitted('Prof', 'add');
-    if(isPermistted) {
-         this.prof = new ProfDto();
-         this.createProfDialog = true;
-    }else{
-        this.alert.show('info', 'something went wrong!, please try again.');
-     }
+        const isPermistted = await this.roleService.isPermitted('Prof', 'add');
+        if (isPermistted) {
+            this.prof = new ProfDto();
+            this.createProfDialog = true;
+        } else {
+            this.alert.show('info', 'something went wrong!, please try again.');
+        }
     }
 
     get prof(): ProfDto {
         return this.profService.item;
     }
+
     set prof(value: ProfDto) {
         this.profService.item = value;
     }
+
     get profs(): Array<ProfDto> {
         return this.profService.items;
     }
+
     set profs(value: Array<ProfDto>) {
         this.profService.items = value;
     }
@@ -286,12 +296,15 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
     get etudiant(): EtudiantDto {
         return this.etudiantService.item;
     }
+
     set etudiant(value: EtudiantDto) {
         this.etudiantService.item = value;
     }
+
     get etudiants(): Array<EtudiantDto> {
         return this.etudiantService.items;
     }
+
     set etudiants(value: Array<EtudiantDto>) {
         this.etudiantService.items = value;
     }
@@ -299,6 +312,7 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
     get parcourss(): Array<ParcoursDto> {
         return this.parcoursService.items;
     }
+
     set parcourss(value: Array<ParcoursDto>) {
         this.parcoursService.items = value;
     }
@@ -308,18 +322,23 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
     get createProfDialog(): boolean {
         return this.profService.createDialog;
     }
+
     set createProfDialog(value: boolean) {
-        this.profService.createDialog= value;
+        this.profService.createDialog = value;
     }
+
     get groupeEtudiant(): GroupeEtudiantDto {
         return this.groupeEtudiantService.item;
     }
+
     set groupeEtudiant(value: GroupeEtudiantDto) {
         this.groupeEtudiantService.item = value;
     }
+
     get groupeEtudiants(): Array<GroupeEtudiantDto> {
         return this.groupeEtudiantService.items;
     }
+
     set groupeEtudiants(value: Array<GroupeEtudiantDto>) {
         this.groupeEtudiantService.items = value;
     }
@@ -327,46 +346,56 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
     get createGroupeEtudiantDialog(): boolean {
         return this.groupeEtudiantService.createDialog;
     }
+
     set createGroupeEtudiantDialog(value: boolean) {
-        this.groupeEtudiantService.createDialog= value;
+        this.groupeEtudiantService.createDialog = value;
     }
+
     get cours(): CoursDto {
         return this.coursService.item;
     }
+
     set cours(value: CoursDto) {
         this.coursService.item = value;
     }
+
     get courss(): Array<CoursDto> {
         return this.coursService.items;
     }
+
     set courss(value: Array<CoursDto>) {
         this.coursService.items = value;
     }
+
     get createCoursDialog(): boolean {
         return this.coursService.createDialog;
     }
+
     set createCoursDialog(value: boolean) {
-        this.coursService.createDialog= value;
+        this.coursService.createDialog = value;
     }
-
-
 
 
     get validProfRef(): boolean {
         return this._validProfRef;
     }
+
     set validProfRef(value: boolean) {
         this._validProfRef = value;
     }
+
     get validCoursCode(): boolean {
         return this._validCoursCode;
     }
+
     set validCoursCode(value: boolean) {
         this._validCoursCode = value;
     }
+
     get validCoursLibelle(): boolean {
         return this._validCoursLibelle;
     }
+
     set validCoursLibelle(value: boolean) {
         this._validCoursLibelle = value;
     }
@@ -452,9 +481,12 @@ export class ScheduleProfCreateCollaboratorComponent  implements OnInit {
     protected readonly compareObjects = compareObjects;
 
 
-    courses:CoursDto[];
+    courses: CoursDto[];
+
     getCoursByParcours() {
-        this.coursService.findByParcoursId(this.item.groupeEtudiant.parcours.id).subscribe(data=>{this.courses=data;
-        console.log(data)})
+        this.coursService.findByParcoursId(this.item.groupeEtudiant.parcours.id).subscribe(data => {
+            this.courses = data;
+            console.log(data)
+        })
     }
 }
