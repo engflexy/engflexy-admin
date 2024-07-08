@@ -1,0 +1,68 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>ref</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Ref"  [(ngModel)]="item.ref"  name="ref">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>lib</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Lib"  [(ngModel)]="item.lib"  name="lib">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>etatReponse</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="EtatReponse"  [(ngModel)]="item.etatReponse"  name="etatReponse">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Numero</mat-label>
+                                                    <input required type="number" matInput placeholder="Numero"  [(ngModel)]="item.numero"  name="numero">
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Question</mat-label>
+                                            <input type="text" matInput (input)="filterQuestion(questionInput.value)" #questionInput [matAutocomplete]="questionAutocomplete"  [(ngModel)]="item.question"  name="question">
+
+                                            <mat-autocomplete #questionAutocomplete="matAutocomplete" [displayWith]="displayQuestion" >
+                                              <mat-option *ngFor="let question of _questionsFilter" [value]="question">
+                                                {{question.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

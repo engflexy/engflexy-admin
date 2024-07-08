@@ -1,0 +1,83 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>HoweWorkQSTReponse</mat-label>
+                                            <input type="text" matInput (input)="filterHoweWorkQSTReponse(howeWorkQSTReponseInput.value)" #howeWorkQSTReponseInput [matAutocomplete]="howeWorkQSTReponseAutocomplete"  [(ngModel)]="item.howeWorkQSTReponse"  name="howeWorkQSTReponse">
+
+                                            <mat-autocomplete #howeWorkQSTReponseAutocomplete="matAutocomplete" [displayWith]="displayHoweWorkQSTReponse" >
+                                              <mat-option *ngFor="let howeWorkQSTReponse of _howeWorkQSTReponsesFilter" [value]="howeWorkQSTReponse">
+                                                {{howeWorkQSTReponse.lib}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>answer</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Answer"  [(ngModel)]="item.answer"  name="answer">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>HomeWorkEtudiant</mat-label>
+                                            <input type="text" matInput (input)="filterHomeWorkEtudiant(homeWorkEtudiantInput.value)" #homeWorkEtudiantInput [matAutocomplete]="homeWorkEtudiantAutocomplete"  [(ngModel)]="item.homeWorkEtudiant"  name="homeWorkEtudiant">
+
+                                            <mat-autocomplete #homeWorkEtudiantAutocomplete="matAutocomplete" [displayWith]="displayHomeWorkEtudiant" >
+                                              <mat-option *ngFor="let homeWorkEtudiant of _homeWorkEtudiantsFilter" [value]="homeWorkEtudiant">
+                                                {{homeWorkEtudiant.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>HomeWorkQuestion</mat-label>
+                                            <input type="text" matInput (input)="filterHomeWorkQuestion(homeWorkQuestionInput.value)" #homeWorkQuestionInput [matAutocomplete]="homeWorkQuestionAutocomplete"  [(ngModel)]="item.homeWorkQuestion"  name="homeWorkQuestion">
+
+                                            <mat-autocomplete #homeWorkQuestionAutocomplete="matAutocomplete" [displayWith]="displayHomeWorkQuestion" >
+                                              <mat-option *ngFor="let homeWorkQuestion of _homeWorkQuestionsFilter" [value]="homeWorkQuestion">
+                                                {{homeWorkQuestion.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>profNote</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="ProfNote"  [(ngModel)]="item.profNote"  name="profNote">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Note</mat-label>
+                                                    <input required type="number" matInput placeholder="Note"  [(ngModel)]="item.note"  name="note">
+                                                </mat-form-field>
+
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

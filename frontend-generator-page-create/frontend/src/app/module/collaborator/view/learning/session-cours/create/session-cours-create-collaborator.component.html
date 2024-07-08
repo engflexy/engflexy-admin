@@ -1,0 +1,178 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>reference</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Reference"  [(ngModel)]="item.reference"  name="reference">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Prof</mat-label>
+                                            <input type="text" matInput (input)="filterProf(profInput.value)" #profInput [matAutocomplete]="profAutocomplete"  [(ngModel)]="item.prof"  name="prof">
+
+                                            <mat-autocomplete #profAutocomplete="matAutocomplete" [displayWith]="displayProf" >
+                                              <mat-option *ngFor="let prof of _profsFilter" [value]="prof">
+                                                {{prof.ref}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Cours</mat-label>
+                                            <input type="text" matInput (input)="filterCours(coursInput.value)" #coursInput [matAutocomplete]="coursAutocomplete"  [(ngModel)]="item.cours"  name="cours">
+
+                                            <mat-autocomplete #coursAutocomplete="matAutocomplete" [displayWith]="displayCours" >
+                                              <mat-option *ngFor="let cours of _courssFilter" [value]="cours">
+                                                {{cours.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>GroupeEtudiant</mat-label>
+                                            <input type="text" matInput (input)="filterGroupeEtudiant(groupeEtudiantInput.value)" #groupeEtudiantInput [matAutocomplete]="groupeEtudiantAutocomplete"  [(ngModel)]="item.groupeEtudiant"  name="groupeEtudiant">
+
+                                            <mat-autocomplete #groupeEtudiantAutocomplete="matAutocomplete" [displayWith]="displayGroupeEtudiant" >
+                                              <mat-option *ngFor="let groupeEtudiant of _groupeEtudiantsFilter" [value]="groupeEtudiant">
+                                                {{groupeEtudiant.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Duree</mat-label>
+                                                    <input required type="number" matInput placeholder="Duree"  [(ngModel)]="item.duree"  name="duree">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Totalheure</mat-label>
+                                                    <input required type="number" matInput placeholder="Totalheure"  [(ngModel)]="item.totalheure"  name="totalheure">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Mois</mat-label>
+                                                    <input required type="number" matInput placeholder="Mois"  [(ngModel)]="item.mois"  name="mois">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Annee</mat-label>
+                                                    <input required type="number" matInput placeholder="Annee"  [(ngModel)]="item.annee"  name="annee">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateFin</mat-label>
+                                                    <input required type="date" matInput placeholder="DateFin" [(ngModel)]="item.dateFin" name="dateFin">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateDebut</mat-label>
+                                                    <input required type="date" matInput placeholder="DateDebut" [(ngModel)]="item.dateDebut" name="dateDebut">
+                                                </mat-form-field>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.payer"  name="payer"  >
+                                                    {{ item.payer? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NreKeySectionFinished</mat-label>
+                                                    <input required type="number" matInput placeholder="NreKeySectionFinished"  [(ngModel)]="item.nreKeySectionFinished"  name="nreKeySectionFinished">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NreAddSectionFinished</mat-label>
+                                                    <input required type="number" matInput placeholder="NreAddSectionFinished"  [(ngModel)]="item.nreAddSectionFinished"  name="nreAddSectionFinished">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>TotalKeySection</mat-label>
+                                                    <input required type="number" matInput placeholder="TotalKeySection"  [(ngModel)]="item.totalKeySection"  name="totalKeySection">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>TotalAddSection</mat-label>
+                                                    <input required type="number" matInput placeholder="TotalAddSection"  [(ngModel)]="item.totalAddSection"  name="totalAddSection">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NreWords</mat-label>
+                                                    <input required type="number" matInput placeholder="NreWords"  [(ngModel)]="item.nreWords"  name="nreWords">
+                                                </mat-form-field>
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.homeworkFinished"  name="homeworkFinished"  >
+                                                    {{ item.homeworkFinished? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.courseFinished"  name="courseFinished"  >
+                                                    {{ item.courseFinished? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Salary</mat-label>
+                                            <input type="text" matInput (input)="filterSalary(salaryInput.value)" #salaryInput [matAutocomplete]="salaryAutocomplete"  [(ngModel)]="item.salary"  name="salary">
+
+                                            <mat-autocomplete #salaryAutocomplete="matAutocomplete" [displayWith]="displaySalary" >
+                                              <mat-option *ngFor="let salary of _salarysFilter" [value]="salary">
+                                                {{salary.code}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                            <div class="field col-12  md:col-6">
+                                                <label>Section</label>
+                                                <p-multiSelect [options]="sessionCoursSections" [(ngModel)]="item.sessionCoursSections" itemSize="30" [virtualScroll]="true"
+                                                                                                                          defaultLabel="Select un section" optionLabel="section.libelle"  display="chip"></p-multiSelect>
+                                            </div>
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

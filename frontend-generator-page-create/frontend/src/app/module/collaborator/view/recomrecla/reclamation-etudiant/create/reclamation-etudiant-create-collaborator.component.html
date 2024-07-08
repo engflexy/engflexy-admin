@@ -1,0 +1,125 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>reference</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Reference"  [(ngModel)]="item.reference"  name="reference">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateReclamation</mat-label>
+                                                    <input required type="date" matInput placeholder="DateReclamation" [(ngModel)]="item.dateReclamation" name="dateReclamation">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>message</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Message" [(ngModel)]="item.message"  name="message"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>setFrom</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="SetFrom"  [(ngModel)]="item.setFrom"  name="setFrom">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>img</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Img"  [(ngModel)]="item.img"  name="img">
+                                                </mat-form-field>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.traite"  name="traite"  >
+                                                    {{ item.traite? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateTraitement</mat-label>
+                                                    <input required type="date" matInput placeholder="DateTraitement" [(ngModel)]="item.dateTraitement" name="dateTraitement">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateReponse</mat-label>
+                                                    <input required type="date" matInput placeholder="DateReponse" [(ngModel)]="item.dateReponse" name="dateReponse">
+                                                </mat-form-field>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.postView"  name="postView"  >
+                                                    {{ item.postView? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>objetReclamationEtudiant</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="ObjetReclamationEtudiant"  [(ngModel)]="item.objetReclamationEtudiant"  name="objetReclamationEtudiant">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>commentaireTraiteur</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="CommentaireTraiteur" [(ngModel)]="item.commentaireTraiteur"  name="commentaireTraiteur"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>username</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Username"  [(ngModel)]="item.username"  name="username">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>TypeReclamationEtudiant</mat-label>
+                                            <input type="text" matInput (input)="filterTypeReclamationEtudiant(typeReclamationEtudiantInput.value)" #typeReclamationEtudiantInput [matAutocomplete]="typeReclamationEtudiantAutocomplete"  [(ngModel)]="item.typeReclamationEtudiant"  name="typeReclamationEtudiant">
+
+                                            <mat-autocomplete #typeReclamationEtudiantAutocomplete="matAutocomplete" [displayWith]="displayTypeReclamationEtudiant" >
+                                              <mat-option *ngFor="let typeReclamationEtudiant of _typeReclamationEtudiantsFilter" [value]="typeReclamationEtudiant">
+                                                {{typeReclamationEtudiant.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

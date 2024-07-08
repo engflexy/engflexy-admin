@@ -1,0 +1,86 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Price</mat-label>
+                                                    <input required type="number" matInput placeholder="Price"  [(ngModel)]="item.price"  name="price">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>OldPrice</mat-label>
+                                                    <input required type="number" matInput placeholder="OldPrice"  [(ngModel)]="item.oldPrice"  name="oldPrice">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>lib</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Lib"  [(ngModel)]="item.lib"  name="lib">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NreCourse</mat-label>
+                                                    <input required type="number" matInput placeholder="NreCourse"  [(ngModel)]="item.nreCourse"  name="nreCourse">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NreHours</mat-label>
+                                                    <input required type="number" matInput placeholder="NreHours"  [(ngModel)]="item.nreHours"  name="nreHours">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NreMonth</mat-label>
+                                                    <input required type="number" matInput placeholder="NreMonth"  [(ngModel)]="item.nreMonth"  name="nreMonth">
+                                                </mat-form-field>
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.forGroup"  name="forGroup"  >
+                                                    {{ item.forGroup? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Collaborator</mat-label>
+                                            <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="item.collaborator"  name="collaborator">
+
+                                            <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator" >
+                                              <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
+                                                {{collaborator.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

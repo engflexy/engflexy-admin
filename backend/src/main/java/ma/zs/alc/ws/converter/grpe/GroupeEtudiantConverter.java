@@ -1,44 +1,36 @@
-package  ma.zs.alc.ws.converter.grpe;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ma.zs.alc.zynerator.util.ListUtil;
-
-import ma.zs.alc.ws.converter.course.ParcoursConverter;
-import ma.zs.alc.ws.converter.grpe.GroupeEtatConverter;
-import ma.zs.alc.ws.converter.grpe.GroupeEtudiantDetailConverter;
-import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
-import ma.zs.alc.ws.converter.grpe.GroupeTypeConverter;
-import ma.zs.alc.ws.converter.grpe.GroupeEtudeConverter;
-import ma.zs.alc.ws.converter.prof.ProfConverter;
+package ma.zs.alc.ws.converter.grpe;
 
 import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.bean.core.prof.Prof;
-
-
-import ma.zs.alc.zynerator.util.StringUtil;
+import ma.zs.alc.ws.converter.course.ParcoursConverter;
+import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.DateUtil;
-import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
-import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDto;
+import ma.zs.alc.zynerator.util.ListUtil;
+import ma.zs.alc.zynerator.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class GroupeEtudiantConverter extends AbstractConverter<GroupeEtudiant, GroupeEtudiantDto> {
 
     @Autowired
-    private ParcoursConverter parcoursConverter ;
+    private ParcoursConverter parcoursConverter;
     @Autowired
-    private GroupeEtatConverter groupeEtatConverter ;
+    private GroupeEtatConverter groupeEtatConverter;
     @Autowired
-    private GroupeEtudiantDetailConverter groupeEtudiantDetailConverter ;
+    private GroupeEtudiantDetailConverter groupeEtudiantDetailConverter;
     @Autowired
-    private EtudiantConverter etudiantConverter ;
+    private EtudiantConverter etudiantConverter;
     @Autowired
-    private GroupeTypeConverter groupeTypeConverter ;
+    private GroupeTypeConverter groupeTypeConverter;
     @Autowired
-    private GroupeEtudeConverter groupeEtudeConverter ;
+    private GroupeEtudeConverter groupeEtudeConverter;
     @Autowired
-    private ProfConverter profConverter ;
+    private ProfConverter profConverter;
     private boolean groupeEtude;
     private boolean groupeType;
     private boolean groupeEtat;
@@ -46,7 +38,7 @@ public class GroupeEtudiantConverter extends AbstractConverter<GroupeEtudiant, G
     private boolean prof;
     private boolean groupeEtudiantDetails;
 
-    public  GroupeEtudiantConverter() {
+    public GroupeEtudiantConverter() {
         super(GroupeEtudiant.class, GroupeEtudiantDto.class);
         init(true);
     }
@@ -56,56 +48,56 @@ public class GroupeEtudiantConverter extends AbstractConverter<GroupeEtudiant, G
         if (dto == null) {
             return null;
         } else {
-        GroupeEtudiant item = new GroupeEtudiant();
-            if(StringUtil.isNotEmpty(dto.getId()))
+            GroupeEtudiant item = new GroupeEtudiant();
+            if (StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
-            if(StringUtil.isNotEmpty(dto.getLibelle()))
+            if (StringUtil.isNotEmpty(dto.getLibelle()))
                 item.setLibelle(dto.getLibelle());
-            if(StringUtil.isNotEmpty(dto.getType()))
+            if (StringUtil.isNotEmpty(dto.getType()))
                 item.setType(dto.getType());
-            if(StringUtil.isNotEmpty(dto.getDateDebut()))
+            if (StringUtil.isNotEmpty(dto.getDateDebut()))
                 item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut()));
-            if(StringUtil.isNotEmpty(dto.getDateFin()))
+            if (StringUtil.isNotEmpty(dto.getDateFin()))
                 item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin()));
-            if(StringUtil.isNotEmpty(dto.getNombrePlace()))
+            if (StringUtil.isNotEmpty(dto.getNombrePlace()))
                 item.setNombrePlace(dto.getNombrePlace());
-            if(StringUtil.isNotEmpty(dto.getNombrePlacevide()))
+            if (StringUtil.isNotEmpty(dto.getNombrePlacevide()))
                 item.setNombrePlacevide(dto.getNombrePlacevide());
-            if(StringUtil.isNotEmpty(dto.getNombrePlaceNonVide()))
+            if (StringUtil.isNotEmpty(dto.getNombrePlaceNonVide()))
                 item.setNombrePlaceNonVide(dto.getNombrePlaceNonVide());
-            if(StringUtil.isNotEmpty(dto.getNreCoursesComing()))
+            if (StringUtil.isNotEmpty(dto.getNreCoursesComing()))
                 item.setNreCoursesComing(dto.getNreCoursesComing());
-            if(StringUtil.isNotEmpty(dto.getNreCoursesCompleted()))
+            if (StringUtil.isNotEmpty(dto.getNreCoursesCompleted()))
                 item.setNreCoursesCompleted(dto.getNreCoursesCompleted());
-            if(StringUtil.isNotEmpty(dto.getNreCourses()))
+            if (StringUtil.isNotEmpty(dto.getNreCourses()))
                 item.setNreCourses(dto.getNreCourses());
-            if(this.groupeEtude && dto.getGroupeEtude()!=null)
-                item.setGroupeEtude(groupeEtudeConverter.toItem(dto.getGroupeEtude())) ;
+            if (this.groupeEtude && dto.getGroupeEtude() != null)
+                item.setGroupeEtude(groupeEtudeConverter.toItem(dto.getGroupeEtude()));
 
-            if(this.groupeType && dto.getGroupeType()!=null)
-                item.setGroupeType(groupeTypeConverter.toItem(dto.getGroupeType())) ;
+            if (this.groupeType && dto.getGroupeType() != null)
+                item.setGroupeType(groupeTypeConverter.toItem(dto.getGroupeType()));
 
-            if(this.groupeEtat && dto.getGroupeEtat()!=null)
-                item.setGroupeEtat(groupeEtatConverter.toItem(dto.getGroupeEtat())) ;
+            if (this.groupeEtat && dto.getGroupeEtat() != null)
+                item.setGroupeEtat(groupeEtatConverter.toItem(dto.getGroupeEtat()));
 
-            if(dto.getParcours() != null && dto.getParcours().getId() != null){
+            if (dto.getParcours() != null && dto.getParcours().getId() != null) {
                 item.setParcours(new Parcours());
                 item.getParcours().setId(dto.getParcours().getId());
                 item.getParcours().setLibelle(dto.getParcours().getLibelle());
             }
 
-            if(dto.getProf() != null && dto.getProf().getId() != null){
+            if (dto.getProf() != null && dto.getProf().getId() != null) {
                 item.setProf(new Prof());
                 item.getProf().setId(dto.getProf().getId());
                 item.getProf().setRef(dto.getProf().getRef());
             }
 
 
-            if(this.groupeEtudiantDetails && ListUtil.isNotEmpty(dto.getGroupeEtudiantDetails()))
+            if (this.groupeEtudiantDetails && ListUtil.isNotEmpty(dto.getGroupeEtudiantDetails()))
                 item.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.toItem(dto.getGroupeEtudiantDetails()));
 
 
-        return item;
+            return item;
         }
     }
 
@@ -115,75 +107,75 @@ public class GroupeEtudiantConverter extends AbstractConverter<GroupeEtudiant, G
             return null;
         } else {
             GroupeEtudiantDto dto = new GroupeEtudiantDto();
-            if(StringUtil.isNotEmpty(item.getId()))
+            if (StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
-            if(StringUtil.isNotEmpty(item.getLibelle()))
+            if (StringUtil.isNotEmpty(item.getLibelle()))
                 dto.setLibelle(item.getLibelle());
-            if(StringUtil.isNotEmpty(item.getType()))
+            if (StringUtil.isNotEmpty(item.getType()))
                 dto.setType(item.getType());
-            if(item.getDateDebut()!=null)
+            if (item.getDateDebut() != null)
                 dto.setDateDebut(DateUtil.dateTimeToString(item.getDateDebut()));
-            if(item.getDateFin()!=null)
+            if (item.getDateFin() != null)
                 dto.setDateFin(DateUtil.dateTimeToString(item.getDateFin()));
-            if(StringUtil.isNotEmpty(item.getNombrePlace()))
+            if (StringUtil.isNotEmpty(item.getNombrePlace()))
                 dto.setNombrePlace(item.getNombrePlace());
-            if(StringUtil.isNotEmpty(item.getNombrePlacevide()))
+            if (StringUtil.isNotEmpty(item.getNombrePlacevide()))
                 dto.setNombrePlacevide(item.getNombrePlacevide());
-            if(StringUtil.isNotEmpty(item.getNombrePlaceNonVide()))
+            if (StringUtil.isNotEmpty(item.getNombrePlaceNonVide()))
                 dto.setNombrePlaceNonVide(item.getNombrePlaceNonVide());
-            if(StringUtil.isNotEmpty(item.getNreCoursesComing()))
+            if (StringUtil.isNotEmpty(item.getNreCoursesComing()))
                 dto.setNreCoursesComing(item.getNreCoursesComing());
-            if(StringUtil.isNotEmpty(item.getNreCoursesCompleted()))
+            if (StringUtil.isNotEmpty(item.getNreCoursesCompleted()))
                 dto.setNreCoursesCompleted(item.getNreCoursesCompleted());
-            if(StringUtil.isNotEmpty(item.getNreCourses()))
+            if (StringUtil.isNotEmpty(item.getNreCourses()))
                 dto.setNreCourses(item.getNreCourses());
-            if(this.groupeEtude && item.getGroupeEtude()!=null) {
-                dto.setGroupeEtude(groupeEtudeConverter.toDto(item.getGroupeEtude())) ;
+            if (this.groupeEtude && item.getGroupeEtude() != null) {
+                dto.setGroupeEtude(groupeEtudeConverter.toDto(item.getGroupeEtude()));
 
             }
-            if(this.groupeType && item.getGroupeType()!=null) {
-                dto.setGroupeType(groupeTypeConverter.toDto(item.getGroupeType())) ;
+            if (this.groupeType && item.getGroupeType() != null) {
+                dto.setGroupeType(groupeTypeConverter.toDto(item.getGroupeType()));
 
             }
-            if(this.groupeEtat && item.getGroupeEtat()!=null) {
-                dto.setGroupeEtat(groupeEtatConverter.toDto(item.getGroupeEtat())) ;
+            if (this.groupeEtat && item.getGroupeEtat() != null) {
+                dto.setGroupeEtat(groupeEtatConverter.toDto(item.getGroupeEtat()));
 
             }
-            if(this.parcours && item.getParcours()!=null) {
-                dto.setParcours(parcoursConverter.toDto(item.getParcours())) ;
+            if (this.parcours && item.getParcours() != null) {
+                dto.setParcours(parcoursConverter.toDto(item.getParcours()));
 
             }
-            if(this.prof && item.getProf()!=null) {
-                dto.setProf(profConverter.toDto(item.getProf())) ;
+            if (this.prof && item.getProf() != null) {
+                dto.setProf(profConverter.toDto(item.getProf()));
 
             }
-        if(this.groupeEtudiantDetails && ListUtil.isNotEmpty(item.getGroupeEtudiantDetails())){
-            groupeEtudiantDetailConverter.init(true);
-            groupeEtudiantDetailConverter.setGroupeEtudiant(false);
-            dto.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.toDto(item.getGroupeEtudiantDetails()));
-            groupeEtudiantDetailConverter.setGroupeEtudiant(true);
+            if (this.groupeEtudiantDetails && ListUtil.isNotEmpty(item.getGroupeEtudiantDetails())) {
+                groupeEtudiantDetailConverter.init(true);
+                groupeEtudiantDetailConverter.setGroupeEtudiant(false);
+                dto.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.toDto(item.getGroupeEtudiantDetails()));
+                groupeEtudiantDetailConverter.setGroupeEtudiant(true);
 
-        }
+            }
 
 
-        return dto;
+            return dto;
         }
     }
 
     public void copy(GroupeEtudiantDto dto, GroupeEtudiant t) {
-    super.copy(dto, t);
-    if (dto.getGroupeEtudiantDetails() != null)
-        t.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.copy(dto.getGroupeEtudiantDetails()));
-    if (dto.getGroupeEtude() != null)
-        groupeEtudeConverter.copy(dto.getGroupeEtude(), t.getGroupeEtude());
-    if (dto.getGroupeType() != null)
-        groupeTypeConverter.copy(dto.getGroupeType(), t.getGroupeType());
-    if (dto.getGroupeEtat() != null)
-        groupeEtatConverter.copy(dto.getGroupeEtat(), t.getGroupeEtat());
-    if (dto.getParcours() != null)
-        parcoursConverter.copy(dto.getParcours(), t.getParcours());
-    if (dto.getProf() != null)
-        profConverter.copy(dto.getProf(), t.getProf());
+        super.copy(dto, t);
+        if (dto.getGroupeEtudiantDetails() != null)
+            t.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.copy(dto.getGroupeEtudiantDetails()));
+        if (dto.getGroupeEtude() != null)
+            groupeEtudeConverter.copy(dto.getGroupeEtude(), t.getGroupeEtude());
+        if (dto.getGroupeType() != null)
+            groupeTypeConverter.copy(dto.getGroupeType(), t.getGroupeType());
+        if (dto.getGroupeEtat() != null)
+            groupeEtatConverter.copy(dto.getGroupeEtat(), t.getGroupeEtat());
+        if (dto.getParcours() != null)
+            parcoursConverter.copy(dto.getParcours(), t.getParcours());
+        if (dto.getProf() != null)
+            profConverter.copy(dto.getProf(), t.getProf());
     }
 
 
@@ -200,82 +192,107 @@ public class GroupeEtudiantConverter extends AbstractConverter<GroupeEtudiant, G
     }
 
 
-    public ParcoursConverter getParcoursConverter(){
+    public ParcoursConverter getParcoursConverter() {
         return this.parcoursConverter;
     }
-    public void setParcoursConverter(ParcoursConverter parcoursConverter ){
+
+    public void setParcoursConverter(ParcoursConverter parcoursConverter) {
         this.parcoursConverter = parcoursConverter;
     }
-    public GroupeEtatConverter getGroupeEtatConverter(){
+
+    public GroupeEtatConverter getGroupeEtatConverter() {
         return this.groupeEtatConverter;
     }
-    public void setGroupeEtatConverter(GroupeEtatConverter groupeEtatConverter ){
+
+    public void setGroupeEtatConverter(GroupeEtatConverter groupeEtatConverter) {
         this.groupeEtatConverter = groupeEtatConverter;
     }
-    public GroupeEtudiantDetailConverter getGroupeEtudiantDetailConverter(){
+
+    public GroupeEtudiantDetailConverter getGroupeEtudiantDetailConverter() {
         return this.groupeEtudiantDetailConverter;
     }
-    public void setGroupeEtudiantDetailConverter(GroupeEtudiantDetailConverter groupeEtudiantDetailConverter ){
+
+    public void setGroupeEtudiantDetailConverter(GroupeEtudiantDetailConverter groupeEtudiantDetailConverter) {
         this.groupeEtudiantDetailConverter = groupeEtudiantDetailConverter;
     }
-    public EtudiantConverter getEtudiantConverter(){
+
+    public EtudiantConverter getEtudiantConverter() {
         return this.etudiantConverter;
     }
-    public void setEtudiantConverter(EtudiantConverter etudiantConverter ){
+
+    public void setEtudiantConverter(EtudiantConverter etudiantConverter) {
         this.etudiantConverter = etudiantConverter;
     }
-    public GroupeTypeConverter getGroupeTypeConverter(){
+
+    public GroupeTypeConverter getGroupeTypeConverter() {
         return this.groupeTypeConverter;
     }
-    public void setGroupeTypeConverter(GroupeTypeConverter groupeTypeConverter ){
+
+    public void setGroupeTypeConverter(GroupeTypeConverter groupeTypeConverter) {
         this.groupeTypeConverter = groupeTypeConverter;
     }
-    public GroupeEtudeConverter getGroupeEtudeConverter(){
+
+    public GroupeEtudeConverter getGroupeEtudeConverter() {
         return this.groupeEtudeConverter;
     }
-    public void setGroupeEtudeConverter(GroupeEtudeConverter groupeEtudeConverter ){
+
+    public void setGroupeEtudeConverter(GroupeEtudeConverter groupeEtudeConverter) {
         this.groupeEtudeConverter = groupeEtudeConverter;
     }
-    public ProfConverter getProfConverter(){
+
+    public ProfConverter getProfConverter() {
         return this.profConverter;
     }
-    public void setProfConverter(ProfConverter profConverter ){
+
+    public void setProfConverter(ProfConverter profConverter) {
         this.profConverter = profConverter;
     }
-    public boolean  isGroupeEtude(){
+
+    public boolean isGroupeEtude() {
         return this.groupeEtude;
     }
-    public void  setGroupeEtude(boolean groupeEtude){
+
+    public void setGroupeEtude(boolean groupeEtude) {
         this.groupeEtude = groupeEtude;
     }
-    public boolean  isGroupeType(){
+
+    public boolean isGroupeType() {
         return this.groupeType;
     }
-    public void  setGroupeType(boolean groupeType){
+
+    public void setGroupeType(boolean groupeType) {
         this.groupeType = groupeType;
     }
-    public boolean  isGroupeEtat(){
+
+    public boolean isGroupeEtat() {
         return this.groupeEtat;
     }
-    public void  setGroupeEtat(boolean groupeEtat){
+
+    public void setGroupeEtat(boolean groupeEtat) {
         this.groupeEtat = groupeEtat;
     }
-    public boolean  isParcours(){
+
+    public boolean isParcours() {
         return this.parcours;
     }
-    public void  setParcours(boolean parcours){
+
+    public void setParcours(boolean parcours) {
         this.parcours = parcours;
     }
-    public boolean  isProf(){
+
+    public boolean isProf() {
         return this.prof;
     }
-    public void  setProf(boolean prof){
+
+    public void setProf(boolean prof) {
         this.prof = prof;
     }
-    public boolean  isGroupeEtudiantDetails(){
-        return this.groupeEtudiantDetails ;
+
+    public boolean isGroupeEtudiantDetails() {
+        return this.groupeEtudiantDetails;
     }
-    public void  setGroupeEtudiantDetails(boolean groupeEtudiantDetails ){
-        this.groupeEtudiantDetails  = groupeEtudiantDetails ;
+
+    public void setGroupeEtudiantDetails(boolean groupeEtudiantDetails) {
+        this.groupeEtudiantDetails = groupeEtudiantDetails;
     }
 }

@@ -17,6 +17,7 @@ import {GroupeEtudeCriteria} from "../../../shared/criteria/grpe/GroupeEtudeCrit
 import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
 import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";
 import {FuseAlertService} from "../../../../@fuse/components/alert";
+import {GroupEditComponent} from "./group-edit/group-edit.component";
 
 @Component({
     selector: 'app-manage-groups',
@@ -115,7 +116,7 @@ export class ManageGroupsComponent {
 
     edit(item: GroupeEtudiantDto) {
         this.item = item
-        this._matDialog.open(GroupeEtudiantCreateCollaboratorComponent, {
+        this._matDialog.open(GroupEditComponent, {
             autoFocus: false,
             height: "auto",
             width: "calc(100% - 100px)",

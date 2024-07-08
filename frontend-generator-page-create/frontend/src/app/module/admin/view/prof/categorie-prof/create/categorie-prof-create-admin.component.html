@@ -1,0 +1,201 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>code</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Code"  [(ngModel)]="item.code"  name="code">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>level</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Level"  [(ngModel)]="item.level"  name="level">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>LessonRate</mat-label>
+                                                    <input required type="number" matInput placeholder="LessonRate"  [(ngModel)]="item.lessonRate"  name="lessonRate">
+                                                </mat-form-field>
+
+
+                                </div>
+                                    <p-tabPanel header="{{'categorieProf.profs' | translate}}">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="1">Ref<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Ref"
+                                                                               id="1" [(ngModel)]="profsElement.ref" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validProfsRef}"  >
+                                                                        <small class='p-error' *ngIf='!validProfsRef'>Ref is obligatory.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="2">About</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="About"
+                                                                               id="2" [(ngModel)]="profsElement.about" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-11 md:col-6">
+                                                                        <label>Parcours</label>
+                                                                        <p-dropdown  appendTo="body"  [options]="parcourss" [(ngModel)]="profsElement.parcours"
+                                                                                     id="3"  [filter]="true" filterMatchMode="contains" [showClear]="true" optionLabel="libelle"
+                                                                                     placeholder="Parcours"  >
+                                                                        </p-dropdown>
+                                                                        
+                                                                    </div>
+
+                                                                    <div class="field col-11 md:col-6">
+                                                                        <label>Type teacher</label>
+                                                                        <p-dropdown  appendTo="body"  [options]="typeTeachers" [(ngModel)]="profsElement.typeTeacher"
+                                                                                     id="7"  [filter]="true" filterMatchMode="contains" [showClear]="true" optionLabel="libelle"
+                                                                                     placeholder="Type teacher"  >
+                                                                        </p-dropdown>
+                                                                        
+                                                                    </div>
+
+                                                                    <div class="field col-11 md:col-6">
+                                                                        <label>Collaborator</label>
+                                                                        <p-dropdown  appendTo="body"  [options]="collaborators" [(ngModel)]="profsElement.collaborator"
+                                                                                     id="8"  [filter]="true" filterMatchMode="contains" [showClear]="true" optionLabel="id"
+                                                                                     placeholder="Collaborator"  >
+                                                                        </p-dropdown>
+                                                                        
+                                                                    </div>
+
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="9">Credentials non expired</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="9"  [(ngModel)]="profsElement.credentialsNonExpired"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="10">Enabled</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="10"  [(ngModel)]="profsElement.enabled"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="11">Account non expired</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="11"  [(ngModel)]="profsElement.accountNonExpired"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="12">Account non locked</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="12"  [(ngModel)]="profsElement.accountNonLocked"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field  align-inputswitch col-12 md:col-6">
+                                                                        <div  class="label-inputswitch">
+                                                                            <label for="13">Password changed</label>
+                                                                        </div>
+                                                                        <div class="input-switch">
+                                                                            <p-inputSwitch id="13"  [(ngModel)]="profsElement.passwordChanged"></p-inputSwitch>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="14">Username</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Username"
+                                                                               id="14" [(ngModel)]="profsElement.username" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="15">Password</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Password"
+                                                                               id="15" [(ngModel)]="profsElement.password" autofocus   >
+                                                                        
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addProfs()"></button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card">
+                                                        <p-table [value]="item.profs" [scrollable]="true" scrollHeight="200px">
+                                                                <tr>
+                                                                                <th>Ref</th>
+                                                                                <th>About</th>
+                                                                                <th>Parcours</th>
+                                                                                <th>Type teacher</th>
+                                                                                <th>Collaborator</th>
+                                                                                <th>Credentials non expired</th>
+                                                                                <th>Enabled</th>
+                                                                                <th>Account non expired</th>
+                                                                                <th>Account non locked</th>
+                                                                                <th>Password changed</th>
+                                                                                <th>Username</th>
+                                                                                <th>Password</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.ref}}</td>
+                                                                                <td>{{p.about}}</td>
+                                                                            <td>{{p.parcours?.libelle}}</td>
+                                                                            <td>{{p.typeTeacher?.libelle}}</td>
+                                                                            <td>{{p.collaborator?.id}}</td>
+                                                                                <td><i *ngIf="p.credentialsNonExpired" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.credentialsNonExpired" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td><i *ngIf="p.enabled" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.enabled" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td><i *ngIf="p.accountNonExpired" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.accountNonExpired" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td><i *ngIf="p.accountNonLocked" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.accountNonLocked" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td><i *ngIf="p.passwordChanged" class="pi pi-check checked-toogle"></i>
+                                                                                    <i *ngIf="!p.passwordChanged" class="pi pi-times unchecked-toogle"></i>
+                                                                                </td>
+                                                                                <td>{{p.username}}</td>
+                                                                                <td>{{p.password}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteProfs(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editProfs(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                        </p-table>
+                                                    </div>
+
+
+
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

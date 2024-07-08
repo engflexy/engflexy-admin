@@ -1,0 +1,134 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreCours</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreCours"  [(ngModel)]="item.nombreCours"  name="nombreCours">
+                                                </mat-form-field>
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.forGroupe"  name="forGroupe"  >
+                                                    {{ item.forGroupe? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>code</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Code"  [(ngModel)]="item.code"  name="code">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>libelle</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.libelle"  name="libelle">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>description</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Description" [(ngModel)]="item.description"  name="description"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>preRequisites</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="PreRequisites"  [(ngModel)]="item.preRequisites"  name="preRequisites">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>whyTakeThisCourse</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="WhyTakeThisCourse"  [(ngModel)]="item.whyTakeThisCourse"  name="whyTakeThisCourse">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>expectations</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Expectations"  [(ngModel)]="item.expectations"  name="expectations">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Parcours</mat-label>
+                                            <input type="text" matInput (input)="filterParcours(parcoursInput.value)" #parcoursInput [matAutocomplete]="parcoursAutocomplete"  [(ngModel)]="item.parcours"  name="parcours">
+
+                                            <mat-autocomplete #parcoursAutocomplete="matAutocomplete" [displayWith]="displayParcours" >
+                                              <mat-option *ngFor="let parcours of _parcourssFilter" [value]="parcours">
+                                                {{parcours.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>imgUrl</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="ImgUrl"  [(ngModel)]="item.imgUrl"  name="imgUrl">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Price</mat-label>
+                                            <input type="text" matInput (input)="filterPrice(priceInput.value)" #priceInput [matAutocomplete]="priceAutocomplete"  [(ngModel)]="item.price"  name="price">
+
+                                            <mat-autocomplete #priceAutocomplete="matAutocomplete" [displayWith]="displayPrice" >
+                                              <mat-option *ngFor="let price of _pricesFilter" [value]="price">
+                                                {{price.lib}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>TotalStudents</mat-label>
+                                                    <input required type="number" matInput placeholder="TotalStudents"  [(ngModel)]="item.totalStudents"  name="totalStudents">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>rating</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Rating"  [(ngModel)]="item.rating"  name="rating">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>oldPrice</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="OldPrice"  [(ngModel)]="item.oldPrice"  name="oldPrice">
+                                                </mat-form-field>
+
+
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

@@ -1,0 +1,90 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>name</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Name"  [(ngModel)]="item.name"  name="name">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>email</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Email"  [(ngModel)]="item.email"  name="email">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>phone</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Phone"  [(ngModel)]="item.phone"  name="phone">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>setFrom</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="SetFrom"  [(ngModel)]="item.setFrom"  name="setFrom">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateContact</mat-label>
+                                                    <input required type="date" matInput placeholder="DateContact" [(ngModel)]="item.dateContact" name="dateContact">
+                                                </mat-form-field>
+
+
+
+                                                <div>
+                                                  <mat-checkbox class="w-full"   [(ngModel)]="item.replied"  name="replied"  >
+                                                    {{ item.replied? 'Checked' : 'Unchecked' }}
+                                                  </mat-checkbox>
+                                                </div>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>message</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Message" [(ngModel)]="item.message"  name="message"></textarea>
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Collaborator</mat-label>
+                                            <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="item.collaborator"  name="collaborator">
+
+                                            <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator" >
+                                              <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
+                                                {{collaborator.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>
