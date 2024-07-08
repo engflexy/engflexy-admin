@@ -72,10 +72,22 @@ public class GroupeEtudiantDetailConverter extends AbstractConverter<GroupeEtudi
 
     public void copy(GroupeEtudiantDetailDto dto, GroupeEtudiantDetail t) {
         super.copy(dto, t);
+        if (dto.getEtudiant() != null && t.getEtudiant() == null) {
+            t.setEtudiant(new Etudiant());
+        }
+        
+        if (dto.getGroupeEtudiant() != null && t.getGroupeEtudiant() == null) {
+            t.setGroupeEtudiant(new GroupeEtudiant());
+        }
+
         if (dto.getGroupeEtudiant() != null)
             groupeEtudiantConverter.copy(dto.getGroupeEtudiant(), t.getGroupeEtudiant());
-        if (dto.getEtudiant() != null)
+        if (dto.getEtudiant() != null) {
+            //TODO to be add to generator.
+
             etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
+            System.out.println("t = " + t);
+        }
     }
 
 

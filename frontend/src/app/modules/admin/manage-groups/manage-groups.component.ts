@@ -18,6 +18,11 @@ import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model
 import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";
 import {FuseAlertService} from "../../../../@fuse/components/alert";
 import {GroupEditComponent} from "./group-edit/group-edit.component";
+import {GroupeEtudiantDetailDto} from "../../../shared/model/grpe/GroupeEtudiantDetail.model";
+import {
+    GroupeEtudiantDetailCollaboratorService
+} from "../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
+import {GroupDetailsComponent} from "./group-details/group-details.component";
 
 @Component({
     selector: 'app-manage-groups',
@@ -42,8 +47,17 @@ export class ManageGroupsComponent {
 
     constructor(private service: GroupeEtudiantCollaboratorService,
                 private _fuseConfirmation: FuseConfirmationService,
+                private groupDetailService: GroupeEtudiantDetailCollaboratorService,
                 private alert: FuseAlertService,
                 private _matDialog: MatDialog) {
+    }
+
+    get groupDetails(): Array<GroupeEtudiantDetailDto> {
+        return this.groupDetailService.items;
+    }
+
+    set groupDetails(value: Array<GroupeEtudiantDetailDto>) {
+        this.groupDetailService.items = value;
     }
 
     ngOnInit() {
@@ -132,5 +146,17 @@ export class ManageGroupsComponent {
 
     set item(value: GroupeEtudiantDto) {
         this.service.item = value;
+    }
+
+    openDetail(item: GroupeEtudiantDto) {
+        this.groupDetails = item.groupeEtudiantDetails
+        this._matDialog.open(GroupDetailsComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: false,
+            maxHeight: "100%"
+        });
     }
 }
