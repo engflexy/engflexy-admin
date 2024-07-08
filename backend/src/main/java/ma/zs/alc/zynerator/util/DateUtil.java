@@ -21,6 +21,7 @@ public class DateUtil {
     public static final String DATE_FORMAT_ALTERNATIVE = "MM/dd/yyyy HH:mm";
     public static final String HOUR_FORMAT = "HH:mm:ss";
     public static final String DATE_FORMAT_ENG = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final String DATE_FORMAT_ENG_WITHOUT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm";
     public static final String DATE_FORMAT_PF = "EEE MMM dd HH:mm:ss z yyyy";
     public static final long ONE_HOUR = 60 * 60 * 1000L;
 
@@ -45,7 +46,7 @@ public class DateUtil {
     }
 
     public static LocalDateTime stringEnToDate(final String strDate) {
-    List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG, DATE_FORMAT_ALTERNATIVE);
+    List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG_WITHOUT_TIME_ZONE, DATE_FORMAT_ALTERNATIVE);
 
         for (String format : dateFormats) {
             try {

@@ -103,7 +103,8 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     }
 
     public List<Prof> findAllOptimized() {
-        return dao.findAllOptimized();
+        List<Prof> allOptimized = dao.findAllOptimized();
+        return allOptimized;
     }
 
 

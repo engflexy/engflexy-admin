@@ -6,6 +6,7 @@ import {environment} from '../../../../../environments/environment';
 import {CoursDto} from '../../../model/course/Cours.model';
 import {CoursCriteria} from '../../../criteria/course/CoursCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
+import {Observable} from "rxjs";
 
 
 @Injectable({
@@ -27,5 +28,9 @@ export class CoursCollaboratorService extends AbstractService<CoursDto, CoursCri
 
     public constrcutCriteria(): CoursCriteria {
         return new CoursCriteria();
+    }
+
+    findByParcoursId(id: number):Observable<CoursDto[]> {
+        return this.http.get<CoursDto[]>(this.API+'parcours/id/'+id);
     }
 }

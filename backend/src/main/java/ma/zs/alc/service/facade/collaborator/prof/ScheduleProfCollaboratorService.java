@@ -5,12 +5,15 @@ import ma.zs.alc.dao.criteria.core.prof.ScheduleEvent;
 import ma.zs.alc.dao.criteria.core.prof.ScheduleProfCriteria;
 import ma.zs.alc.zynerator.dto.ScheduleDto;
 import ma.zs.alc.zynerator.service.IService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ScheduleProfCollaboratorService extends IService<ScheduleProf, ScheduleProfCriteria> {
 
+    Page<ScheduleProf> findByProfCollaboratorId(int id, Pageable pageable);
     List<ScheduleProf> findByGroupeEtudiantId(Long id);
 
     int deleteByGroupeEtudiantId(Long id);

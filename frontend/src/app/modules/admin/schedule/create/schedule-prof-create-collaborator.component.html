@@ -1,0 +1,81 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+    <div class="w-full items-center justify-center flex flex-col gap-4">
+        <div class="w-full flex max-w-4xl md:w-[70vw] flex-col gap-4 items-center justify-start content-center p-1 md:p-4 dark:bg-gray-600 rounded-md">
+            <div class="w-full">
+                <!-- choisir groupe -->
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Groupe Etudiant</mat-label>
+                    <mat-select [(ngModel)]="item.groupeEtudiant"  [compareWith]="compareObjects" name="groupeEtudiant" (ngModelChange)="handleGroupEtudiantChange()">
+                        <mat-option *ngFor="let group of groupeEtudiants" [value]="group">
+                            {{ group.libelle }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- button afficher etudiants du groupe -->
+<!--                <mat-form-field class="flex-auto w-full fuse-mat-dense">-->
+<!--                    <mat-label>Étudiants du Groupe</mat-label>-->
+<!--                    <mat-select [(ngModel)]="item.groupeEtudiantDetail" name="groupeEtudiantDetail">-->
+<!--                        <mat-option *ngFor="let groupeEtudiantDetail of item.groupeEtudiant.groupeEtudiantDetails" [value]="groupeEtudiantDetail">-->
+<!--                            {{ groupeEtudiantDetail.etudiant.fullName }}-->
+<!--                        </mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
+
+                <!-- select par defaut prof du groupe -->
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Teacher</mat-label>
+                    <mat-select [(ngModel)]="item.prof" name="prof"  [compareWith]="compareObjects" >
+                        <mat-option *ngFor="let prof of profs" [value]="prof">
+                            {{ prof.fullName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <!-- select par defaut parcours du groupe -->
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Parcours</mat-label>
+                    <mat-select (ngModelChange)="getCoursByParcours()" [(ngModel)]="item.groupeEtudiant.parcours" name="parcours"  [compareWith]="compareObjects">
+                        <mat-option *ngFor="let parcours of parcourss" [value]="parcours">
+                            {{ parcours.libelle }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Cours</mat-label>
+                    <mat-select [(ngModel)]="item.cours" name="courss">
+                        <mat-option *ngFor="let courss of courses" [value]="courss">
+                            {{ courss.libelle }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+
+
+                <!-- start time input -->
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Start Time</mat-label>
+                    <input required type="datetime-local" matInput placeholder="Start Time" [(ngModel)]="item.startTime" name="startTime">
+                </mat-form-field>
+
+                <!-- end time input -->
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>End Time</mat-label>
+                    <input required type="datetime-local" matInput placeholder="End Time" [(ngModel)]="item.endTime" name="endTime">
+                </mat-form-field>
+
+            </div>
+
+            <div class="w-full flex flex-row-reverse gap-2">
+                <button mat-button color="primary" (click)="save()">
+                    {{ translate('validate') }}
+                </button>
+
+                <button mat-button color="accent" class="p-button-outlined" (click)="refDialog.close(null)">
+                    {{ translate('cancel') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
