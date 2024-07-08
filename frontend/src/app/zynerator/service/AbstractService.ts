@@ -12,7 +12,7 @@ import {PaginatedList} from "../dto/PaginatedList.model";
 export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends BaseCriteria> {
     protected _API = '';
     protected _items: Array<DTO>;
-    private httpClient: HttpClient;
+    protected httpClient: HttpClient;
     protected _item: DTO;
     protected _selections: Array<DTO>;
     protected _createDialog: boolean;

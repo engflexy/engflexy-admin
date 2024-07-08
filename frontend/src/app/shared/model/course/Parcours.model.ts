@@ -23,7 +23,7 @@ export class ParcoursDto extends BaseDto {
     public nombreCours: null | number;
 
     public collaborator: CollaboratorDto;
-    public courss: Array<CoursDto>;
+    public courss=new Array<CoursDto>();
 
 
     constructor() {

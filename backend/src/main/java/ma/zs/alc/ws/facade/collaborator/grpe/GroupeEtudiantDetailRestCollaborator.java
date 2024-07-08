@@ -10,8 +10,10 @@ import ma.zs.alc.bean.core.grpe.GroupeEtudiantDetail;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudiantDetailCriteria;
 import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantDetailCollaboratorService;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantDetailConverter;
+import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
 import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDetailDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
+import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
 
@@ -34,6 +36,7 @@ import ma.zs.alc.zynerator.dto.FileTempDto;
 public class GroupeEtudiantDetailRestCollaborator  extends AbstractController<GroupeEtudiantDetail, GroupeEtudiantDetailDto, GroupeEtudiantDetailCriteria, GroupeEtudiantDetailCollaboratorService, GroupeEtudiantDetailConverter> {
 
 
+    private final EtudiantConverter etudiantConverter;
 
     @Operation(summary = "upload one groupeEtudiantDetail")
     @RequestMapping(value = "upload", method = RequestMethod.POST, consumes = "multipart/form-data")
@@ -92,6 +95,10 @@ public class GroupeEtudiantDetailRestCollaborator  extends AbstractController<Gr
     @Operation(summary = "find by groupeEtudiant id")
     @GetMapping("groupeEtudiant/id/{id}")
     public List<GroupeEtudiantDetailDto> findByGroupeEtudiantId(@PathVariable Long id){
+        GroupeEtudiantDetailConverter myConverter = (GroupeEtudiantDetailConverter) this.converter;
+        etudiantConverter.init(false);
+        myConverter.setEtudiant(true);
+        myConverter.setGroupeEtudiant(false);
         return findDtos(service.findByGroupeEtudiantId(id));
     }
     @Operation(summary = "delete by groupeEtudiant id")
@@ -142,8 +149,9 @@ public class GroupeEtudiantDetailRestCollaborator  extends AbstractController<Gr
 
 
 
-    public GroupeEtudiantDetailRestCollaborator (GroupeEtudiantDetailCollaboratorService service, GroupeEtudiantDetailConverter converter) {
+    public GroupeEtudiantDetailRestCollaborator (GroupeEtudiantDetailCollaboratorService service, GroupeEtudiantDetailConverter converter, EtudiantConverter etudiantConverter) {
         super(service, converter);
+        this.etudiantConverter = etudiantConverter;
     }
 
 

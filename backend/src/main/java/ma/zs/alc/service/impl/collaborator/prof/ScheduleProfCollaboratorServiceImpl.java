@@ -13,6 +13,8 @@ import ma.zs.alc.service.facade.collaborator.prof.ScheduleProfCollaboratorServic
 import ma.zs.alc.zynerator.dto.ScheduleDto;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,12 +24,19 @@ import java.util.List;
 public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<ScheduleProf, ScheduleProfCriteria, ScheduleProfDao> implements ScheduleProfCollaboratorService {
 
 
+
     public void findOrSaveAssociatedObject(ScheduleProf t) {
         if (t != null) {
             t.setGroupeEtudiant(groupeEtudiantService.findOrSave(t.getGroupeEtudiant()));
             t.setProf(profService.findOrSave(t.getProf()));
             t.setCours(coursService.findOrSave(t.getCours()));
         }
+    }
+
+
+    @Override
+    public Page<ScheduleProf> findByProfCollaboratorId(int id, Pageable pageable) {
+        return dao.findByProfCollaboratorId(id, pageable);
     }
 
     public List<ScheduleProf> findByGroupeEtudiantId(Long id) {

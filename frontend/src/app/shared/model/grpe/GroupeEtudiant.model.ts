@@ -32,9 +32,10 @@ export class GroupeEtudiantDto extends BaseDto{
     public groupeEtude: GroupeEtudeDto ;
     public groupeType: GroupeTypeDto ;
     public groupeEtat: GroupeEtatDto ;
-    public parcours: ParcoursDto ;
+    public parcours= new ParcoursDto() ;
     public prof: ProfDto ;
      public groupeEtudiantDetails: Array<GroupeEtudiantDetailDto>;
+
 
 
     constructor() {

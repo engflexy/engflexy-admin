@@ -38,9 +38,9 @@ public class Prof extends User {
         this.id = id;
     }
 
-    public Prof(Long id, String ref) {
+    public Prof(Long id, String fullName) {
         this.id = id;
-        this.ref = ref;
+        this.fullName = fullName;
     }
 
 

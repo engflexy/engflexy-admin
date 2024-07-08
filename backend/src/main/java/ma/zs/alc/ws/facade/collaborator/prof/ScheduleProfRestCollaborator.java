@@ -1,5 +1,6 @@
 package ma.zs.alc.ws.facade.collaborator.prof;
 
+import com.linecorp.armeria.server.annotation.Param;
 import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.prof.ScheduleProf;
 import ma.zs.alc.dao.criteria.core.prof.ScheduleEvent;
@@ -15,6 +16,7 @@ import ma.zs.alc.zynerator.util.PaginatedList;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/collaborator/scheduleProf/")
 public class ScheduleProfRestCollaborator extends AbstractController<ScheduleProf, ScheduleProfDto, ScheduleProfCriteria, ScheduleProfCollaboratorService, ScheduleProfConverter> {
@@ -62,6 +64,11 @@ public class ScheduleProfRestCollaborator extends AbstractController<SchedulePro
     @PostMapping("")
     public ResponseEntity<ScheduleProfDto> save(@RequestBody ScheduleProfDto dto) throws Exception {
         return super.save(dto);
+    }
+
+    @GetMapping("prof/Collaborator/id/{id}")
+    public Page<ScheduleProf> findByProfCollaboratorId(@PathVariable int id,@Param int page,@Param int size)throws Exception {
+        return service.findByProfCollaboratorId(id, PageRequest.of(page, size));
     }
 
     @Operation(summary = "Updates the specified  scheduleProf")

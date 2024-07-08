@@ -5,7 +5,7 @@ import {DateSelectArg, EventApi, EventClickArg, FullCalendarComponent, FullCalen
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import {DatePipe} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {Class} from "./models/Class";
 import {
@@ -17,13 +17,14 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
+import { ScheduleProfCreateCollaboratorComponent } from './create/schedule-prof-create-collaborator.component';
 
 @Component({
     selector: 'app-calendar-teacher',
     styleUrls: ['./schedule.component.scss'],
     templateUrl: './schedule.component.html',
     standalone: true,
-    imports: [FullCalendarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule]
+    imports: [CommonModule,FullCalendarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule]
 })
 export class ScheduleComponent {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
@@ -59,8 +60,8 @@ export class ScheduleComponent {
     };
 
     private handle_dateSet(start: Date, end: Date) {
-        const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm")
+        const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm")
         const id = this.auth.authenticatedUser?.id
         this.scheduleService.get_schedules_between(startDate, endDate, id)
             .subscribe(response => {
@@ -76,7 +77,7 @@ export class ScheduleComponent {
                 private ref: ChangeDetectorRef,
                 public dialog: MatDialog,
                 private auth: AuthService,
-                private datePipe: DatePipe) {
+                private datePipe: DatePipe,) {
     }
 
     handleEventClick(clickInfo: EventClickArg) {
@@ -89,6 +90,22 @@ export class ScheduleComponent {
 
 
     create() {
-
+        const dialog = this.dialog.open(ScheduleProfCreateCollaboratorComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+        dialog.afterClosed().subscribe(res=> {
+            if (res != null){
+                const classe:Class=new Class();
+                classe.end=res.endTime;
+                classe.start=res.startTime;
+                classe.title=res.cours.libelle;
+                this.schedules.unshift({...classe})
+            }
+        })
     }
 }

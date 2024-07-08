@@ -10,6 +10,7 @@ import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudiantCriteria;
 import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantCollaboratorService;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
+import ma.zs.alc.ws.dto.grpe.GroupeEtudeDto;
 import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
@@ -51,8 +52,6 @@ public class GroupeEtudiantRestCollaborator  extends AbstractController<GroupeEt
     public ResponseEntity<List<GroupeEtudiantDto>> findAll() throws Exception {
         return super.findAll();
     }
-
-
 
     @Operation(summary = "Saves the specified  groupeEtudiant")
     @PostMapping("")
