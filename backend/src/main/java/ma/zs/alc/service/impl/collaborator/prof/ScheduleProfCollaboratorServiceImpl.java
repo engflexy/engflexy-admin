@@ -24,7 +24,6 @@ import java.util.List;
 public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<ScheduleProf, ScheduleProfCriteria, ScheduleProfDao> implements ScheduleProfCollaboratorService {
 
 
-
     public void findOrSaveAssociatedObject(ScheduleProf t) {
         if (t != null) {
             t.setGroupeEtudiant(groupeEtudiantService.findOrSave(t.getGroupeEtudiant()));
@@ -35,7 +34,7 @@ public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<Sch
 
 
     @Override
-    public Page<ScheduleProf> findByProfCollaboratorId(int id, Pageable pageable) {
+    public Page<ScheduleProf> findByProfCollaboratorId(Long id, Pageable pageable) {
         return dao.findByProfCollaboratorId(id, pageable);
     }
 
@@ -118,6 +117,15 @@ public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<Sch
         //we minus 1h to show the lesson even after he passed be 1 hour
         LocalDateTime currentTime = LocalDateTime.now().minusHours(1);
         return dao.get_nearest_lesson_for_student(id, currentTime);
+    }
+
+    @Override
+    public boolean updateScheduleTime(ScheduleProf dto) {
+        ScheduleProf saved = findById(dto.getId());
+        saved.setStartTime(dto.getStartTime());
+        saved.setEndTime(dto.getEndTime());
+        dao.save(saved);
+        return true;
     }
 
     public void configure() {

@@ -78,4 +78,6 @@ public interface ScheduleProfDao extends AbstractRepository<ScheduleProf, Long> 
 
     @Query("select new ma.zs.alc.dao.criteria.core.prof.ScheduleEvent(s)" + " from ScheduleProf s " + "where  s.startTime>=:start and s.endTime <=:end and s.prof.collaborator.id=:id and " + "s.prof.id=:profId ")
     List<ScheduleEvent> get_collaborator_schedules_between_by_prof(Long id, LocalDateTime start, LocalDateTime end, Long profId);
+
+    Page<ScheduleProf> findByProfCollaboratorId(Long id, Pageable pageable);
 }

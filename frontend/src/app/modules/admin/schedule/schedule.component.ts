@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, ViewChild} from '@angular/core';
-import {CalendarOptions} from "@fullcalendar/core";
+import {CalendarOptions, EventDropArg} from "@fullcalendar/core";
 // @ts-ignore
 import {DateSelectArg, EventApi, EventClickArg, FullCalendarComponent, FullCalendarModule} from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -53,7 +53,8 @@ export class ScheduleComponent {
         initialView: 'timeGridWeek',
         height: '100%',
         weekends: true,
-        editable: false,
+        editable: true,
+        droppable: true,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
@@ -64,6 +65,8 @@ export class ScheduleComponent {
             // You can now use 'start' and 'end' as the start and end dates of the current view
         },
         eventClick: this.handleEventClick.bind(this),
+        eventReceive: this.handleEventReceive.bind(this), // bind to make `this` refer to the component
+        eventDrop: this.handleEventDrop.bind(this)
     };
 
     private handle_dateSet(start: Date, end: Date) {
@@ -76,6 +79,7 @@ export class ScheduleComponent {
         this.scheduleService.get_schedules_between(startDate, endDate, id, this.group, this.prof)
             .subscribe(response => {
                 this.schedules = response
+                console.log(response)
                 // @ts-ignore
                 this.calendarOptions.events = this.schedules
                 this.ref.markForCheck()
@@ -98,6 +102,29 @@ export class ScheduleComponent {
         });
     }
 
+    handleEventReceive(info) {
+        // info.draggedEl is the HTML element being dragged
+        // info.event is the Event Object that has been dropped
+        console.log('Element dragged:', info.draggedEl);
+        console.log('Event object:', info.event);
+
+        // Save the event to your database here
+    }
+
+    handleEventDrop(info: EventDropArg) {
+        // info.event is the Event Object that was moved
+        console.log('Updated event:', info.event);
+        console.log('start at ==> ' + info.event.start)
+        console.log('end at ==> ' + info.event.end)
+        console.log('event id ==> ' + info.event.id)
+        const schedule: ScheduleProfDto = new ScheduleProfDto()
+        schedule.id = Number(info.event.id)
+        schedule.startTime = info.event.start
+        schedule.endTime = info.event.end
+        this.scheduleService.updateScheduleTime(schedule).subscribe()
+
+        // Update the event in your database here
+    }
 
     create() {
         const dialog = this.dialog.open(ScheduleProfCreateCollaboratorComponent, {

@@ -13,7 +13,8 @@ import java.util.List;
 
 public interface ScheduleProfCollaboratorService extends IService<ScheduleProf, ScheduleProfCriteria> {
 
-    Page<ScheduleProf> findByProfCollaboratorId(int id, Pageable pageable);
+    Page<ScheduleProf> findByProfCollaboratorId(Long id, Pageable pageable);
+
     List<ScheduleProf> findByGroupeEtudiantId(Long id);
 
     int deleteByGroupeEtudiantId(Long id);
@@ -45,4 +46,6 @@ public interface ScheduleProfCollaboratorService extends IService<ScheduleProf, 
     public ScheduleProf get_nearest_lesson(Long id);
 
     public ScheduleProf get_nearest_lesson_for_student(Long id);
+
+    boolean updateScheduleTime(ScheduleProf dto);
 }

@@ -92,6 +92,7 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
     private _validProfRef = true;
     private _validCoursCode = true;
     private _validCoursLibelle = true;
+    courses: CoursDto[];
 
     constructor(private alert: FuseAlertService,
                 private service: ScheduleProfCollaboratorService,
@@ -131,9 +132,8 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
 
 
     public handleGroupEtudiantChange(): void {
-        this.changeProf();
-        this.changeParcours();
-        this.findByGroupeEtudiantId();
+        this.item.prof = this.item.groupeEtudiant.prof
+        this.getCoursByParcours()
     }
 
     public findByGroupeEtudiantId(): void {
@@ -230,6 +230,9 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
     }
 
     public saveWithShowOption(showList: boolean) {
+        this.item.subject = this.item.cours.libelle
+        this.item.grpName = this.item.groupeEtudiant.libelle
+        this.item.profName = this.item.prof.fullName
         this.service.save().subscribe(item => {
             if (item != null) {
                 this.items.push({...item});
@@ -480,8 +483,6 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
 
     protected readonly compareObjects = compareObjects;
 
-
-    courses: CoursDto[];
 
     getCoursByParcours() {
         this.coursService.findByParcoursId(this.item.groupeEtudiant.parcours.id).subscribe(data => {

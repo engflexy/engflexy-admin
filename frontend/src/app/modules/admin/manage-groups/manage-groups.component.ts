@@ -87,6 +87,7 @@ export class ManageGroupsComponent {
     }
 
     create() {
+        this.item = new GroupeEtudiantDto()
         const dialog = this._matDialog.open(GroupeEtudiantCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",

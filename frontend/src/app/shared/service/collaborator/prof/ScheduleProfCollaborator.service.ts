@@ -54,4 +54,8 @@ export class ScheduleProfCollaboratorService extends AbstractService<SchedulePro
     get_group_schedules_between(start, end, id): Observable<Class[]> {
         return this.http.get<Class[]>(this.API + `group/${id}/between/${start}/${end}`);
     }
+
+    updateScheduleTime(schedule: ScheduleProfDto) {
+        return this.http.post<boolean>(this.API + `update-schedule-time`, schedule);
+    }
 }

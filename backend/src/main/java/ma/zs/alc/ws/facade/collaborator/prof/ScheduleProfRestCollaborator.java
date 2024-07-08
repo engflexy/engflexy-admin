@@ -62,6 +62,11 @@ public class ScheduleProfRestCollaborator extends AbstractController<SchedulePro
         return super.save(dto);
     }
 
+    @PostMapping("update-schedule-time")
+    public boolean save(@RequestBody ScheduleProf dto) throws Exception {
+        return service.updateScheduleTime(dto);
+    }
+
     @Operation(summary = "Updates the specified  scheduleProf")
     @PutMapping("")
     public ResponseEntity<ScheduleProfDto> update(@RequestBody ScheduleProfDto dto) throws Exception {
@@ -184,11 +189,7 @@ public class ScheduleProfRestCollaborator extends AbstractController<SchedulePro
 
 
     @GetMapping("{id}/between/{start}/{end}")
-    public List<ScheduleEvent> get_schedules_between(@PathVariable Long id,
-                                                     @PathVariable String start,
-                                                     @PathVariable String end,
-                                                     @RequestParam(name = "profId", required = false) Long profId,
-                                                     @RequestParam(name = "groupId", required = false) Long groupId) {
+    public List<ScheduleEvent> get_schedules_between(@PathVariable Long id, @PathVariable String start, @PathVariable String end, @RequestParam(name = "profId", required = false) Long profId, @RequestParam(name = "groupId", required = false) Long groupId) {
         return service.get_schedules_between(id, DateUtil.stringEnToDate(start), DateUtil.stringEnToDate(end), profId, groupId);
     }
 
