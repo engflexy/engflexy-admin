@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
@@ -30,7 +30,7 @@ import {GroupeEtudiantCriteria} from "../../../shared/criteria/grpe/GroupeEtudia
     ],
     standalone: true
 })
-export class ManageGroupsComponent {
+export class ManageGroupsComponent implements OnInit{
     status = TYPE_INSCRIPTION
     criteria: PaginatedList<GroupeEtudiantDto> = new PaginatedList<GroupeEtudiantDto>()
     pageable: GroupeEtudiantCriteria = new GroupeEtudiantCriteria();
