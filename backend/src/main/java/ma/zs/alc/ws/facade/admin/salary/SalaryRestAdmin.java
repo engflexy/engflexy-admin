@@ -67,7 +67,8 @@ public class SalaryRestAdmin  extends AbstractController<Salary, SalaryDto, Sala
     @Operation(summary = "Saves the specified  salary")
     @PostMapping("")
     public ResponseEntity<SalaryDto> save(@RequestBody SalaryDto dto) throws Exception {
-        return super.save(dto);
+        ResponseEntity<SalaryDto> save = super.save(dto);
+        return save;
     }
 
     @Operation(summary = "Updates the specified  salary")

@@ -20,6 +20,8 @@ public class SalarySpecification extends  AbstractSpecification<SalaryCriteria, 
         addPredicateBigDecimal("totalBonusWorkload", criteria.getTotalBonusWorkload(), criteria.getTotalBonusWorkloadMin(), criteria.getTotalBonusWorkloadMax());
         addPredicateFk("prof","id", criteria.getProf()==null?null:criteria.getProf().getId());
         addPredicateFk("prof","id", criteria.getProfs());
+        addPredicateFk("prof","fullName", criteria.getProf()==null?null:criteria.getProf().getFullName());
+        addPredicateFk("prof","fullName", criteria.getProfs());
         addPredicateFk("prof","ref", criteria.getProf()==null?null:criteria.getProf().getRef());
     }
 

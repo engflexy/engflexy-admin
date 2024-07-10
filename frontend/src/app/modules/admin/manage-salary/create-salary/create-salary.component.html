@@ -1,0 +1,80 @@
+<div mat-dialog-title class=" p-4 border-gray-300">
+    <h1 class="text-2xl text-gray-800 font-bold m-0 text-center">Create Salary Form</h1>
+</div>
+<form>
+    <div mat-dialog-content class="content">
+
+        <div>
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>code</mat-label>
+                <input required type="text"  matInput  placeholder="Code" [(ngModel)]="item.code"
+                       name="code">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Prof</mat-label>
+                <input type="text" matInput (input)="filterProf(profInput.value)" #profInput
+                       [matAutocomplete]="profAutocomplete" [(ngModel)]="item.prof" name="prof">
+
+                <mat-autocomplete #profAutocomplete="matAutocomplete" [displayWith]="displayProf">
+                    <mat-option *ngFor="let prof of _profsFilter" [value]="prof">
+                        {{ prof.fullName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Month</mat-label>
+                <mat-select [(ngModel)]="item.mois" name="mois">
+                    <mat-option class="my-2" *ngFor="let element of months" [value]="element.month">
+                        {{ element.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Year</mat-label>
+                <mat-select [(ngModel)]="item.annee" name="annee">
+                    <mat-option class="my-2" *ngFor="let item of years" [value]="item">
+                        {{ item }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div>
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>NbrSessionMensuel</mat-label>
+                <input required type="number" matInput placeholder="NbrSessionMensuel"
+                       [(ngModel)]="item.nbrSessionMensuel" name="nbrSessionMensuel">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-checkbox  style="width: 100%" [(ngModel)]="item.payer" name="payer">
+                {{ item.payer ? 'Payer' : 'Non payer' }}
+            </mat-checkbox>
+        </div>
+
+
+        <div>
+            <mat-form-field style="width: 100%">
+                <mat-label>Total Payment</mat-label>
+                <input required type="number" matInput placeholder="TotalPayment" [(ngModel)]="item.totalPayment"
+                       name="totalPayment">
+            </mat-form-field>
+
+        </div>
+
+
+    </div>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" (click)="hideCreateDialog()">{{ translate('cancel') }}</button>
+        <button mat-raised-button color="primary" type="submit" (click)="save()">{{ translate('validate') }}</button>
+    </div>
+</form>
