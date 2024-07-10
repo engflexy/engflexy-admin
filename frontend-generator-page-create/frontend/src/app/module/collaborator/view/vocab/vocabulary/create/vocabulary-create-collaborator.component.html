@@ -1,0 +1,107 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>ref</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Ref"  [(ngModel)]="item.ref"  name="ref">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Numero</mat-label>
+                                                    <input required type="number" matInput placeholder="Numero"  [(ngModel)]="item.numero"  name="numero">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>word</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Word"  [(ngModel)]="item.word"  name="word">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>libelle</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.libelle"  name="libelle">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>result</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Result"  [(ngModel)]="item.result"  name="result">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>explication</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Explication"  [(ngModel)]="item.explication"  name="explication">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>exemple</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Exemple"  [(ngModel)]="item.exemple"  name="exemple">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>image</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Image"  [(ngModel)]="item.image"  name="image">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Section</mat-label>
+                                            <input type="text" matInput (input)="filterSection(sectionInput.value)" #sectionInput [matAutocomplete]="sectionAutocomplete"  [(ngModel)]="item.section"  name="section">
+
+                                            <mat-autocomplete #sectionAutocomplete="matAutocomplete" [displayWith]="displaySection" >
+                                              <mat-option *ngFor="let section of _sectionsFilter" [value]="section">
+                                                {{section.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>VocabularyQuiz</mat-label>
+                                            <input type="text" matInput (input)="filterVocabularyQuiz(vocabularyQuizInput.value)" #vocabularyQuizInput [matAutocomplete]="vocabularyQuizAutocomplete"  [(ngModel)]="item.vocabularyQuiz"  name="vocabularyQuiz">
+
+                                            <mat-autocomplete #vocabularyQuizAutocomplete="matAutocomplete" [displayWith]="displayVocabularyQuiz" >
+                                              <mat-option *ngFor="let vocabularyQuiz of _vocabularyQuizsFilter" [value]="vocabularyQuiz">
+                                                {{vocabularyQuiz.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

@@ -17,6 +17,13 @@ import {GroupeEtudeCriteria} from "../../../shared/criteria/grpe/GroupeEtudeCrit
 import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
 import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";
 import {FuseAlertService} from "../../../../@fuse/components/alert";
+import {GroupEditComponent} from "./group-edit/group-edit.component";
+import {GroupeEtudiantDetailDto} from "../../../shared/model/grpe/GroupeEtudiantDetail.model";
+import {
+    GroupeEtudiantDetailCollaboratorService
+} from "../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
+import {GroupFilterComponent} from "./group-filter/group-filter.component";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-manage-groups',
@@ -41,13 +48,22 @@ export class ManageGroupsComponent {
 
     constructor(private service: GroupeEtudiantCollaboratorService,
                 private _fuseConfirmation: FuseConfirmationService,
+                private router: Router,
+                private route: ActivatedRoute,
+                private groupDetailService: GroupeEtudiantDetailCollaboratorService,
                 private alert: FuseAlertService,
                 private _matDialog: MatDialog) {
     }
 
+    get groupDetails(): Array<GroupeEtudiantDetailDto> {
+        return this.groupDetailService.items;
+    }
+
+    set groupDetails(value: Array<GroupeEtudiantDetailDto>) {
+        this.groupDetailService.items = value;
+    }
+
     ngOnInit() {
-        this.pageable.page = 0
-        this.pageable.maxResults = 5
         this.fetchData()
     }
 
@@ -71,6 +87,7 @@ export class ManageGroupsComponent {
     }
 
     create() {
+        this.item = new GroupeEtudiantDto()
         const dialog = this._matDialog.open(GroupeEtudiantCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",
@@ -86,6 +103,7 @@ export class ManageGroupsComponent {
 
     changeType(index: number) {
         this.active_status = index
+        this.pageable = new GroupeEtudiantCriteria()
         this.fetchData()
     }
 
@@ -115,7 +133,7 @@ export class ManageGroupsComponent {
 
     edit(item: GroupeEtudiantDto) {
         this.item = item
-        this._matDialog.open(GroupeEtudiantCreateCollaboratorComponent, {
+        this._matDialog.open(GroupEditComponent, {
             autoFocus: false,
             height: "auto",
             width: "calc(100% - 100px)",
@@ -131,5 +149,33 @@ export class ManageGroupsComponent {
 
     set item(value: GroupeEtudiantDto) {
         this.service.item = value;
+    }
+
+    openDetail(item: GroupeEtudiantDto) {
+        this.item = item
+        this.groupDetails = item.groupeEtudiantDetails
+        this.router.navigate([`group-details/${item?.id}`], {relativeTo: this.route});
+    }
+
+    openFilter() {
+        const dialog = this._matDialog.open(GroupFilterComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) {
+                this.pageable = res
+                this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
+                    this.criteria = res
+                })
+            } else {
+                this.pageable = new GroupeEtudiantCriteria()
+                this.fetchData()
+            }
+        })
     }
 }

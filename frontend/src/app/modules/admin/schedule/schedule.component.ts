@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
-import {CalendarOptions} from "@fullcalendar/core";
+import {ChangeDetectorRef, Component, Input, ViewChild} from '@angular/core';
+import {CalendarOptions, EventDropArg} from "@fullcalendar/core";
 // @ts-ignore
 import {DateSelectArg, EventApi, EventClickArg, FullCalendarComponent, FullCalendarModule} from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -17,9 +17,13 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
+import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
+import {ProfDto} from "../../../shared/model/prof/Prof.model";
+import {ScheduleProfCreateCollaboratorComponent} from "./create/schedule-prof-create-collaborator.component";
+import {ScheduleProfDto} from "../../../shared/model/prof/ScheduleProf.model";
 
 @Component({
-    selector: 'app-calendar-teacher',
+    selector: 'app-calendar',
     styleUrls: ['./schedule.component.scss'],
     templateUrl: './schedule.component.html',
     standalone: true,
@@ -28,6 +32,10 @@ import {MatInputModule} from "@angular/material/input";
 export class ScheduleComponent {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     schedules: Array<Class> = new Array<Class>();
+    @Input()
+    group: GroupeEtudiantDto = null;
+    @Input()
+    prof: ProfDto = null;
 
     calendarOptions: CalendarOptions = {
         plugins: [timeGridPlugin, dayGridPlugin, interactionPlugin],
@@ -45,7 +53,8 @@ export class ScheduleComponent {
         initialView: 'timeGridWeek',
         height: '100%',
         weekends: true,
-        editable: false,
+        editable: true,
+        droppable: true,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
@@ -56,15 +65,21 @@ export class ScheduleComponent {
             // You can now use 'start' and 'end' as the start and end dates of the current view
         },
         eventClick: this.handleEventClick.bind(this),
+        eventReceive: this.handleEventReceive.bind(this), // bind to make `this` refer to the component
+        eventDrop: this.handleEventDrop.bind(this)
     };
 
     private handle_dateSet(start: Date, end: Date) {
+        console.log(this.group)
+        console.log(this.prof)
         const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         const id = this.auth.authenticatedUser?.id
-        this.scheduleService.get_schedules_between(startDate, endDate, id)
+
+        this.scheduleService.get_schedules_between(startDate, endDate, id, this.group, this.prof)
             .subscribe(response => {
                 this.schedules = response
+                console.log(response)
                 // @ts-ignore
                 this.calendarOptions.events = this.schedules
                 this.ref.markForCheck()
@@ -87,8 +102,50 @@ export class ScheduleComponent {
         });
     }
 
+    handleEventReceive(info) {
+        // info.draggedEl is the HTML element being dragged
+        // info.event is the Event Object that has been dropped
+        console.log('Element dragged:', info.draggedEl);
+        console.log('Event object:', info.event);
+
+        // Save the event to your database here
+    }
+
+    handleEventDrop(info: EventDropArg) {
+        // info.event is the Event Object that was moved
+        console.log('Updated event:', info.event);
+        console.log('start at ==> ' + info.event.start)
+        console.log('end at ==> ' + info.event.end)
+        console.log('event id ==> ' + info.event.id)
+        const schedule: ScheduleProfDto = new ScheduleProfDto()
+        schedule.id = Number(info.event.id)
+        schedule.startTime = info.event.start
+        schedule.endTime = info.event.end
+        this.scheduleService.updateScheduleTime(schedule).subscribe()
+
+        // Update the event in your database here
+    }
 
     create() {
-
+        const dialog = this.dialog.open(ScheduleProfCreateCollaboratorComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+        dialog.afterClosed().subscribe((res: ScheduleProfDto) => {
+            if (res != null) {
+                const classe: Class = new Class();
+                classe.end = res.endTime;
+                classe.start = res.startTime;
+                classe.title = res.cours.libelle;
+                classe.group = res.groupeEtudiant.libelle;
+                classe.teacher = res.prof.fullName;
+                this.schedules.unshift({...classe})
+            }
+        })
     }
+
 }

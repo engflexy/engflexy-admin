@@ -1,0 +1,221 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>code</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Code"  [(ngModel)]="item.code"  name="code">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>libelle</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.libelle"  name="libelle">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>description</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Description" [(ngModel)]="item.description"  name="description"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>image</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Image"  [(ngModel)]="item.image"  name="image">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>EtatCours</mat-label>
+                                            <input type="text" matInput (input)="filterEtatCours(etatCoursInput.value)" #etatCoursInput [matAutocomplete]="etatCoursAutocomplete"  [(ngModel)]="item.etatCours"  name="etatCours">
+
+                                            <mat-autocomplete #etatCoursAutocomplete="matAutocomplete" [displayWith]="displayEtatCours" >
+                                              <mat-option *ngFor="let etatCours of _etatCourssFilter" [value]="etatCours">
+                                                {{etatCours.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Parcours</mat-label>
+                                            <input type="text" matInput (input)="filterParcours(parcoursInput.value)" #parcoursInput [matAutocomplete]="parcoursAutocomplete"  [(ngModel)]="item.parcours"  name="parcours">
+
+                                            <mat-autocomplete #parcoursAutocomplete="matAutocomplete" [displayWith]="displayParcours" >
+                                              <mat-option *ngFor="let parcours of _parcourssFilter" [value]="parcours">
+                                                {{parcours.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreSectionFinalise</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreSectionFinalise"  [(ngModel)]="item.nombreSectionFinalise"  name="nombreSectionFinalise">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreSectionEnCours</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreSectionEnCours"  [(ngModel)]="item.nombreSectionEnCours"  name="nombreSectionEnCours">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreLinkEnCours</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreLinkEnCours"  [(ngModel)]="item.nombreLinkEnCours"  name="nombreLinkEnCours">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreLinkFinalise</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreLinkFinalise"  [(ngModel)]="item.nombreLinkFinalise"  name="nombreLinkFinalise">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NumeroOrder</mat-label>
+                                                    <input required type="number" matInput placeholder="NumeroOrder"  [(ngModel)]="item.numeroOrder"  name="numeroOrder">
+                                                </mat-form-field>
+
+
+                                </div>
+                                    <p-tabPanel header="{{'cours.sections' | translate}}">
+                                                <div class="p-col">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="1">Code<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Code"
+                                                                               id="1" [(ngModel)]="sectionsElement.code" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validSectionsCode}"  >
+                                                                        <small class='p-error' *ngIf='!validSectionsCode'>Code is obligatory.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="2">Libelle<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Libelle"
+                                                                               id="2" [(ngModel)]="sectionsElement.libelle" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validSectionsLibelle}"  >
+                                                                        <small class='p-error' *ngIf='!validSectionsLibelle'>Libelle is obligatory.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="3">{{'section.description' | translate}}</label>
+                                                                        <textarea id="3" pInputTextarea rows="5" cols="30" placeholder="{{'section.description' | translate}}"  [(ngModel)]="item.description"
+                                                                                 ></textarea>
+                                                                        
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addSections()"></button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="p-col">
+                                                    <div class="card">
+                                                        <p-table [value]="item.sections" [scrollable]="true" scrollHeight="200px">
+                                                                <tr>
+                                                                                <th>Code</th>
+                                                                                <th>Libelle</th>
+                                                                                <th>Description</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.code}}</td>
+                                                                                <td>{{p.libelle}}</td>
+                                                                                <td>{{p.description}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteSections(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editSections(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                        </p-table>
+                                                    </div>
+
+                                                </div>
+
+                                    <p-tabPanel header="{{'cours.homeWorks' | translate}}">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="1">Libelle<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Libelle"
+                                                                               id="1" [(ngModel)]="homeWorksElement.libelle" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validHomeWorksLibelle}"  >
+                                                                        <small class='p-error' *ngIf='!validHomeWorksLibelle'>Libelle is obligatory.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="2">Url image</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Url image"
+                                                                               id="2" [(ngModel)]="homeWorksElement.urlImage" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <label for="3">Url video</label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Url video"
+                                                                               id="3" [(ngModel)]="homeWorksElement.urlVideo" autofocus   >
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-11 md:col-6">
+                                                                        <label>Type home work</label>
+                                                                        <p-dropdown  appendTo="body"  [options]="typeHomeWorks" [(ngModel)]="homeWorksElement.typeHomeWork"
+                                                                                     id="7"  [filter]="true" filterMatchMode="contains" [showClear]="true" optionLabel="lib"
+                                                                                     placeholder="Type home work"  >
+                                                                        </p-dropdown>
+                                                                        
+                                                                    </div>
+
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addHomeWorks()"></button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card">
+                                                        <p-table [value]="item.homeWorks" [scrollable]="true" scrollHeight="200px">
+                                                                <tr>
+                                                                                <th>Libelle</th>
+                                                                                <th>Url image</th>
+                                                                                <th>Url video</th>
+                                                                                <th>Type home work</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.libelle}}</td>
+                                                                                <td>{{p.urlImage}}</td>
+                                                                                <td>{{p.urlVideo}}</td>
+                                                                            <td>{{p.typeHomeWork?.lib}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteHomeWorks(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editHomeWorks(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                        </p-table>
+                                                    </div>
+
+
+
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

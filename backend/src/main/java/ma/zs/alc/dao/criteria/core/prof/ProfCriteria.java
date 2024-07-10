@@ -5,11 +5,9 @@ import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
 import ma.zs.alc.dao.criteria.core.course.ParcoursCriteria;
 
 import ma.zs.alc.zynerator.criteria.BaseCriteria;
-import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
-
 import java.util.List;
 
-public class ProfCriteria extends UserCriteria {
+public class ProfCriteria extends  BaseCriteria  {
 
     private String ref;
     private String refLike;

@@ -5,7 +5,7 @@
                 <div class="sm:flex sm:items-center sm:justify-between">
                     <div class="text-center sm:text-left">
                         <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                            Manage your groups
+                            Manage your students
                         </h1>
                     </div>
                     <button mat-button (click)="create()"
@@ -77,7 +77,7 @@
                                 matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
-                        <button mat-mini-fab class="mb-5" color="primary">
+                        <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
                             <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
                         </button>
                     </div>
@@ -174,7 +174,7 @@
                                                               svgIcon="heroicons_solid:pencil"></mat-icon>
                                                 </button>
 
-                                                <button class="group">
+                                                <button (click)="openDetail(item)" class="group">
                                                     <mat-icon class="icon-size-4 group-hover:text-blue-500"
                                                               svgIcon="heroicons_outline:bars-3"></mat-icon>
                                                 </button>

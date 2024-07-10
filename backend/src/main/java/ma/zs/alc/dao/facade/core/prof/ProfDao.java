@@ -48,7 +48,7 @@ public interface ProfDao extends AbstractRepository<Prof, Long> {
 
     Prof findByUsername(String username);
 
-    @Query("SELECT NEW Prof(item.id,item.ref) FROM Prof item")
+    @Query("SELECT NEW Prof(item.id,item.fullName) FROM Prof item")
     List<Prof> findAllOptimized();
 
 }

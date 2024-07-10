@@ -4,13 +4,13 @@ import {GroupeEtudiantDto} from '../grpe/GroupeEtudiant.model';
 import {CoursDto} from '../course/Cours.model';
 import {ProfDto} from './Prof.model';
 
-export class ScheduleProfDto extends BaseDto{
+export class ScheduleProfDto extends BaseDto {
 
     public subject: string;
 
-   public startTime: Date;
+    public startTime: Date;
 
-   public endTime: Date;
+    public endTime: Date;
 
     public ref: string;
 
@@ -20,12 +20,11 @@ export class ScheduleProfDto extends BaseDto{
 
     public profsId: null | number;
 
-   public courseFinished: null | boolean;
+    public courseFinished: null | boolean;
 
-    public groupeEtudiant: GroupeEtudiantDto ;
-    public prof: ProfDto ;
-    public cours: CoursDto ;
-
+    public groupeEtudiant = new GroupeEtudiantDto();
+    public prof: ProfDto;
+    public cours: CoursDto;
 
     constructor() {
         super();
@@ -39,6 +38,6 @@ export class ScheduleProfDto extends BaseDto{
         this.profsId = null;
         this.courseFinished = null;
 
-        }
+    }
 
 }

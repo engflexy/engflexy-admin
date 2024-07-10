@@ -1,8 +1,8 @@
 package ma.zs.alc.ws.converter.inscription;
 
+import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.inscription.Etudiant;
-import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.ws.converter.course.ParcoursConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudeConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
@@ -176,7 +176,8 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
             if (StringUtil.isNotEmpty(item.getAbout())) dto.setAbout(item.getAbout());
             if (item.getSubscribe() != null) dto.setSubscribe(item.getSubscribe());
             if (StringUtil.isNotEmpty(item.getAvatar())) dto.setAvatar(item.getAvatar());
-            if (StringUtil.isNotEmpty(item.getCredentialsNonExpired())) dto.setCredentialsNonExpired(item.getCredentialsNonExpired());
+            if (StringUtil.isNotEmpty(item.getCredentialsNonExpired()))
+                dto.setCredentialsNonExpired(item.getCredentialsNonExpired());
             if (StringUtil.isNotEmpty(item.getEnabled())) dto.setEnabled(item.getEnabled());
             if (StringUtil.isNotEmpty(item.getAccountNonExpired()))
                 dto.setAccountNonExpired(item.getAccountNonExpired());
@@ -254,11 +255,11 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
 
     public void copy(EtudiantDto dto, Etudiant t) {
         super.copy(dto, t);
+
         if (dto.getTeacherLocality() != null)
             teacherLocalityConverter.copy(dto.getTeacherLocality(), t.getTeacherLocality());
 
-        if (dto.getParcours() != null)
-            parcoursConverter.copy(dto.getParcours(), t.getParcours());
+        if (dto.getParcours() != null) parcoursConverter.copy(dto.getParcours(), t.getParcours());
 
         if (dto.getQuizEtudiants() != null) t.setQuizEtudiants(quizEtudiantConverter.copy(dto.getQuizEtudiants()));
         if (dto.getGroupeEtude() != null) groupeEtudeConverter.copy(dto.getGroupeEtude(), t.getGroupeEtude());

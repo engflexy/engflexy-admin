@@ -10,6 +10,7 @@ import ma.zs.alc.bean.core.grpe.GroupeEtudiantDetail;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudiantDetailCriteria;
 import ma.zs.alc.service.facade.admin.grpe.GroupeEtudiantDetailAdminService;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantDetailConverter;
+import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
 import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDetailDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
@@ -92,6 +93,10 @@ public class GroupeEtudiantDetailRestAdmin  extends AbstractController<GroupeEtu
     @Operation(summary = "find by groupeEtudiant id")
     @GetMapping("groupeEtudiant/id/{id}")
     public List<GroupeEtudiantDetailDto> findByGroupeEtudiantId(@PathVariable Long id){
+        GroupeEtudiantDetailConverter myConverter = (GroupeEtudiantDetailConverter) this.converter;
+        etudiantConverter.init(false);
+        myConverter.setEtudiant(true);
+        myConverter.setGroupeEtudiant(false);
         return findDtos(service.findByGroupeEtudiantId(id));
     }
     @Operation(summary = "delete by groupeEtudiant id")
@@ -141,6 +146,8 @@ public class GroupeEtudiantDetailRestAdmin  extends AbstractController<GroupeEtu
     }
 
 
+    @Autowired
+   private EtudiantConverter etudiantConverter;
 
     public GroupeEtudiantDetailRestAdmin (GroupeEtudiantDetailAdminService service, GroupeEtudiantDetailConverter converter) {
         super(service, converter);

@@ -118,12 +118,11 @@ export class GroupeEtudiantCreateCollaboratorComponent implements OnInit {
             })
         }
         this.etudiantService
-            .findAll()
-            .subscribe((data) => {
-                this.etudiants = data
-                this._etudiantsFilter = [...this.etudiants]
-                console.log(data)
-            });
+            .findAll().subscribe((data) => {
+            this.etudiants = data
+            this._etudiantsFilter = [...this.etudiants]
+            console.log(data)
+        });
 
         this.groupeEtudeService.findAll().subscribe((data) => {
             this.groupeEtudes = data;
@@ -245,23 +244,24 @@ export class GroupeEtudiantCreateCollaboratorComponent implements OnInit {
         }
         this.item.nombrePlace = this.selectedEtudiants?.length | 0
         console.log(this.item)
-        this.service.save().subscribe(
-            (item) => {
-                if (item != null) {
-                    console.log(item)
-                    this.item = new GroupeEtudiantDto();
-                    this.refDialog.close(item)
-                } else {
-                    this.alert.show(
-                        'info',
-                        'something went wrong!, please try again.'
-                    );
+        this.service.save()
+            .subscribe(
+                (item) => {
+                    if (item != null) {
+                        console.log(item)
+                        this.item = new GroupeEtudiantDto();
+                        this.refDialog.close(item)
+                    } else {
+                        this.alert.show(
+                            'info',
+                            'something went wrong!, please try again.'
+                        );
+                    }
+                },
+                (error) => {
+                    console.log(error);
                 }
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+            );
     }
 
     public hideCreateDialog() {
@@ -489,8 +489,7 @@ export class GroupeEtudiantCreateCollaboratorComponent implements OnInit {
 
     protected readonly compareObjects = compareObjects;
 
-    deleteStudent(item: EtudiantDto, index
-        : number) {
-
+    deleteStudent(index: number) {
+        this.selectedEtudiants.splice(index, 1)
     }
 }

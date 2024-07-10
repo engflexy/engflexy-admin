@@ -13,6 +13,8 @@ import ma.zs.alc.service.facade.collaborator.prof.ScheduleProfCollaboratorServic
 import ma.zs.alc.zynerator.dto.ScheduleDto;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +30,12 @@ public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<Sch
             t.setProf(profService.findOrSave(t.getProf()));
             t.setCours(coursService.findOrSave(t.getCours()));
         }
+    }
+
+
+    @Override
+    public Page<ScheduleProf> findByProfCollaboratorId(Long id, Pageable pageable) {
+        return dao.findByProfCollaboratorId(id, pageable);
     }
 
     public List<ScheduleProf> findByGroupeEtudiantId(Long id) {
@@ -67,8 +75,12 @@ public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<Sch
     }
 
     @Override
-    public List<ScheduleEvent> get_schedules_between(Long id, LocalDateTime start, LocalDateTime end) {
-        return dao.get_schedules_between(id, start, end);
+    public List<ScheduleEvent> get_schedules_between(Long id, LocalDateTime start, LocalDateTime end, Long profId, Long groupId) {
+        if (profId != 0 && groupId != 0)
+            return dao.get_collaborator_schedules_between_by_prof_and_group(id, start, end, profId, groupId);
+        else if (groupId != 0) return dao.get_collaborator_schedules_between_by_group(id, start, end, groupId);
+        else if (profId != 0) return dao.get_collaborator_schedules_between_by_prof(id, start, end, profId);
+        else return dao.get_collaborator_schedules_between(id, start, end);
     }
 
     @Override
@@ -105,6 +117,15 @@ public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<Sch
         //we minus 1h to show the lesson even after he passed be 1 hour
         LocalDateTime currentTime = LocalDateTime.now().minusHours(1);
         return dao.get_nearest_lesson_for_student(id, currentTime);
+    }
+
+    @Override
+    public boolean updateScheduleTime(ScheduleProf dto) {
+        ScheduleProf saved = findById(dto.getId());
+        saved.setStartTime(dto.getStartTime());
+        saved.setEndTime(dto.getEndTime());
+        dao.save(saved);
+        return true;
     }
 
     public void configure() {

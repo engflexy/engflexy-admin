@@ -1,0 +1,83 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Etudiant</mat-label>
+                                            <input type="text" matInput (input)="filterEtudiant(etudiantInput.value)" #etudiantInput [matAutocomplete]="etudiantAutocomplete"  [(ngModel)]="item.etudiant"  name="etudiant">
+
+                                            <mat-autocomplete #etudiantAutocomplete="matAutocomplete" [displayWith]="displayEtudiant" >
+                                              <mat-option *ngFor="let etudiant of _etudiantsFilter" [value]="etudiant">
+                                                {{etudiant.id}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Prof</mat-label>
+                                            <input type="text" matInput (input)="filterProf(profInput.value)" #profInput [matAutocomplete]="profAutocomplete"  [(ngModel)]="item.prof"  name="prof">
+
+                                            <mat-autocomplete #profAutocomplete="matAutocomplete" [displayWith]="displayProf" >
+                                              <mat-option *ngFor="let prof of _profsFilter" [value]="prof">
+                                                {{prof.ref}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Cours</mat-label>
+                                            <input type="text" matInput (input)="filterCours(coursInput.value)" #coursInput [matAutocomplete]="coursAutocomplete"  [(ngModel)]="item.cours"  name="cours">
+
+                                            <mat-autocomplete #coursAutocomplete="matAutocomplete" [displayWith]="displayCours" >
+                                              <mat-option *ngFor="let cours of _courssFilter" [value]="cours">
+                                                {{cours.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Review</mat-label>
+                                                    <input required type="number" matInput placeholder="Review"  [(ngModel)]="item.review"  name="review">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>comment</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Comment"  [(ngModel)]="item.comment"  name="comment">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateReview</mat-label>
+                                                    <input required type="date" matInput placeholder="DateReview" [(ngModel)]="item.dateReview" name="dateReview">
+                                                </mat-form-field>
+
+
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

@@ -21,7 +21,6 @@
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>group type</mat-label>
                 <input
-                    required
                     type="text"
                     matInput
                     autocomplete="off"
@@ -90,7 +89,7 @@
                                 {{ item?.parcours?.libelle }}
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                                <button (click)="deleteStudent(item,i)" class="group">
+                                <button (click)="deleteStudent(i)" class="group">
                                     <mat-icon class="icon-size-4 group-hover:text-red-500"
                                               svgIcon="heroicons_solid:trash"></mat-icon>
                                 </button>

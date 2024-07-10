@@ -1,0 +1,75 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>WorkloadBonus</mat-label>
+                                            <input type="text" matInput (input)="filterWorkloadBonus(workloadBonusInput.value)" #workloadBonusInput [matAutocomplete]="workloadBonusAutocomplete"  [(ngModel)]="item.workloadBonus"  name="workloadBonus">
+
+                                            <mat-autocomplete #workloadBonusAutocomplete="matAutocomplete" [displayWith]="displayWorkloadBonus" >
+                                              <mat-option *ngFor="let workloadBonus of _workloadBonussFilter" [value]="workloadBonus">
+                                                {{workloadBonus.code}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Prof</mat-label>
+                                            <input type="text" matInput (input)="filterProf(profInput.value)" #profInput [matAutocomplete]="profAutocomplete"  [(ngModel)]="item.prof"  name="prof">
+
+                                            <mat-autocomplete #profAutocomplete="matAutocomplete" [displayWith]="displayProf" >
+                                              <mat-option *ngFor="let prof of _profsFilter" [value]="prof">
+                                                {{prof.ref}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Mois</mat-label>
+                                                    <input required type="number" matInput placeholder="Mois"  [(ngModel)]="item.mois"  name="mois">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>Annee</mat-label>
+                                                    <input required type="number" matInput placeholder="Annee"  [(ngModel)]="item.annee"  name="annee">
+                                                </mat-form-field>
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Salary</mat-label>
+                                            <input type="text" matInput (input)="filterSalary(salaryInput.value)" #salaryInput [matAutocomplete]="salaryAutocomplete"  [(ngModel)]="item.salary"  name="salary">
+
+                                            <mat-autocomplete #salaryAutocomplete="matAutocomplete" [displayWith]="displaySalary" >
+                                              <mat-option *ngFor="let salary of _salarysFilter" [value]="salary">
+                                                {{salary.code}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

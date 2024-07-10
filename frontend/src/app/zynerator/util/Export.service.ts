@@ -4,7 +4,8 @@ import autoTable from 'jspdf-autotable';
 import {saveAs} from 'file-saver';
 import {Workbook} from 'exceljs/dist/exceljs.min.js';
 // @ts-ignore
-import * as jsPDF from "jspdf";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Injectable({
     providedIn: 'root'

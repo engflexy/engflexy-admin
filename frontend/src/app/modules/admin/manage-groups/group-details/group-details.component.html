@@ -1,1 +1,152 @@
-<p>group-details works!</p>
+<div class="w-full overflow-y-auto flex  items-center content-center justify-center">
+    <div class="w-full bg-white dark:bg-gray-700 shadow-md max-w-5xl h-auto min-h-screen">
+        <!-- Header -->
+        <div
+            class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+            <div class="flex-1 min-w-0">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a routerLink="/admin/manage-groups" class="whitespace-nowrap">Manage groups</a>
+                    </div>
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_mini:chevron-right'"></mat-icon>
+                        <a class="ml-1 text-primary-500">{{ item?.libelle }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <section
+            *transloco="let translate"
+            class="container my-2 px-4 mx-auto">
+            <header class="bg-gray-50 dark:bg-gray-600 w-full">
+                <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+                    <div class="sm:flex sm:items-center sm:justify-between">
+                        <div class="text-center sm:text-left">
+                            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-50 sm:text-3xl">
+                                group members
+                            </h1>
+                        </div>
+                        <span
+                            class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+                            {{ groups?.length }} students
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+
+            <div class="flex flex-col mt-6">
+                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                        <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-800">
+                                <tr>
+                                    <th scope="col"
+                                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <div class="flex items-center gap-x-3">
+                                            <span>Name</span>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col"
+                                        class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <span>Status</span>
+                                    </th>
+
+
+                                    <th scope="col"
+                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Phone number
+                                    </th>
+
+                                    <th scope="col"
+                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Material
+                                    </th>
+
+                                    <th scope="col" class="relative py-3.5 px-4">
+                                        <span class="sr-only">Edit</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                <tr *ngFor="let item of groups; index as i">
+                                    <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                        <div class="inline-flex items-center gap-x-3">
+                                            <div class="flex items-center gap-x-2">
+
+                                                <ng-template #showContainer>
+                                                    <div
+                                                        class="object-cover flex items-center bg-gray-200 dark:bg-gray-600 justify-center w-10 h-10 rounded-full">
+                                                        <strong
+                                                            class="uppercase text-xl">{{ item?.etudiant?.fullName?.at(0) }}</strong>
+                                                    </div>
+                                                </ng-template>
+
+                                                <ng-container *ngIf="item?.etudiant?.avatar else showContainer">
+                                                    <img class="object-cover w-10 h-10 rounded-full"
+                                                         src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                                                         alt="">
+                                                </ng-container>
+
+
+                                                <div>
+                                                    <h2 class="font-medium text-gray-800 dark:text-white ">{{ item?.etudiant?.fullName }}</h2>
+                                                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                        @{{ item?.etudiant?.username }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                        <div
+                                            class="inline-flex items-center px-3 py-1 rounded-full gap-x-2
+                                         bg-{{item?.etudiant?.enabled ? 'emerald': 'orange'}}-100/60 dark:bg-gray-800">
+
+                                        <span
+                                            class="h-1.5 w-1.5 rounded-full bg-{{item?.etudiant?.enabled ? 'emerald': 'orange'}}-500"></span>
+
+                                            <h2 class="text-sm font-normal text-{{item?.etudiant?.enabled ? 'emerald': 'orange'}}-500">
+                                                {{ item?.etudiant?.enabled ? 'active' : 'locked' }}
+                                            </h2>
+                                        </div>
+
+                                    </td>
+
+                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        {{ item?.etudiant?.phone ? item?.etudiant?.phone : '➖' }}
+                                    </td>
+
+                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        {{ item?.etudiant?.parcours?.libelle ? item?.etudiant?.parcours?.libelle : '➖' }}
+                                    </td>
+
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                        <div class="flex items-center gap-x-6">
+                                            <button (click)="deleteStudent(item, i)" class="group">
+                                                <mat-icon class="icon-size-4 group-hover:text-red-500"
+                                                          svgIcon="heroicons_solid:trash"></mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="w-full my-6">
+                <app-calendar [group]="item"></app-calendar>
+            </div>
+        </section>
+    </div>
+</div>

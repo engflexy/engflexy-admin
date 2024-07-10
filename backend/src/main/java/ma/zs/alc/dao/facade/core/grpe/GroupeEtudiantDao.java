@@ -1,5 +1,6 @@
 package ma.zs.alc.dao.facade.core.grpe;
 
+import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.zynerator.repository.AbstractRepository;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import org.springframework.stereotype.Repository;
@@ -24,6 +25,5 @@ public interface GroupeEtudiantDao extends AbstractRepository<GroupeEtudiant,Lon
     List<GroupeEtudiant> findByProfId(Long id);
     int deleteByProfId(Long id);
     long countByProfRef(String ref);
-
 
 }

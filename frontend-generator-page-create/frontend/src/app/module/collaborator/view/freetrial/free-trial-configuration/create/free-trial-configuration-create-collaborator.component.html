@@ -1,0 +1,56 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="grid">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateApplicationDebut</mat-label>
+                                                    <input required type="date" matInput placeholder="DateApplicationDebut" [(ngModel)]="item.dateApplicationDebut" name="dateApplicationDebut">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>dateApplicationFin</mat-label>
+                                                    <input required type="date" matInput placeholder="DateApplicationFin" [(ngModel)]="item.dateApplicationFin" name="dateApplicationFin">
+                                                </mat-form-field>
+
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreStudentMax</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreStudentMax"  [(ngModel)]="item.nombreStudentMax"  name="nombreStudentMax">
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>NombreStudentMin</mat-label>
+                                                    <input required type="number" matInput placeholder="NombreStudentMin"  [(ngModel)]="item.nombreStudentMin"  name="nombreStudentMin">
+                                                </mat-form-field>
+
+
+                                </div>
+
+
+
+                <div class="w-full flex flex-row-reverse gap-2">
+
+                            <button mat-button color="primary"  (click)="save()">
+                                 {{translate('validate')}}
+                            </button>
+
+
+                            <button mat-button   color="accent" class="p-button-outlined" (click)="hideCreateDialog()">
+                                {{translate('cancel')}}
+                            </button>
+
+
+                </div>
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>

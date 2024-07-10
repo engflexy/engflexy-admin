@@ -76,7 +76,7 @@ export const adminNavigation: FuseNavigationItem[] = [
         link: '/admin/manage-users'
     }, {
         id: 'manage-groups',
-        title: 'Groups',
+        title: 'Manage your students',
         type: 'basic',
         icon: 'heroicons_solid:user-group',
         link: '/admin/manage-groups'
@@ -110,7 +110,7 @@ export const adminNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_solid:newspaper',
         link: '/admin/faqs-news'
-    },{
+    }, {
         id: 'Chat',
         title: 'Chat',
         type: 'basic',
