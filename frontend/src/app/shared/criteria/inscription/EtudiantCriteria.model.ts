@@ -12,8 +12,9 @@ import {GroupeEtudiantDetailCriteria} from '../grpe/GroupeEtudiantDetailCriteria
 import {PackStudentCriteria} from '../pack/PackStudentCriteria.model';
 import {TeacherLocalityCriteria} from '../inscriptionref/TeacherLocalityCriteria.model';
 import {NiveauEtudeCriteria} from '../inscriptionref/NiveauEtudeCriteria.model';
+import {UserCriteria} from "../../../core/criteria/user-criteria";
 
-export class EtudiantCriteria  extends BaseCriteria  {
+export class EtudiantCriteria  extends UserCriteria  {
 
     public groupOption: string;
     public groupOptionLike: string;

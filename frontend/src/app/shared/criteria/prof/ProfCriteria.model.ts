@@ -5,8 +5,9 @@ import {TypeTeacherCriteria} from './TypeTeacherCriteria.model';
 import {RecommendTeacherCriteria} from '../recomrecla/RecommendTeacherCriteria.model';
 import {CategorieProfCriteria} from './CategorieProfCriteria.model';
 import {TrancheHoraireProfCriteria} from './TrancheHoraireProfCriteria.model';
+import {UserCriteria} from "../../../core/criteria/user-criteria";
 
-export class ProfCriteria  extends BaseCriteria  {
+export class ProfCriteria extends UserCriteria {
 
     public ref: string;
     public refLike: string;
@@ -21,7 +22,7 @@ export class ProfCriteria  extends BaseCriteria  {
     public usernameLike: string;
     public password: string;
     public passwordLike: string;
-      public trancheHoraireProfs: Array<TrancheHoraireProfCriteria>;
-      public recommendTeachers: Array<RecommendTeacherCriteria>;
+    public trancheHoraireProfs: Array<TrancheHoraireProfCriteria>;
+    public recommendTeachers: Array<RecommendTeacherCriteria>;
 
 }

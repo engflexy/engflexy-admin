@@ -371,7 +371,7 @@ export class InscriptionCreateAdminComponent  implements OnInit {
         if (this.errorMessages.length === 0) {
             this.saveWithShowOption(false);
         } else {
-            console.log("koko")
+
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
@@ -385,7 +385,6 @@ export class InscriptionCreateAdminComponent  implements OnInit {
             if (item != null) {
                 this.items.push({...item});
                 this.createDialog = false;
-
                 this.submitted = false;
                 this.item = new InscriptionDto();
                 this.dialogRef.close();
@@ -400,10 +399,10 @@ export class InscriptionCreateAdminComponent  implements OnInit {
     }
 
 
-    public hideCreateDialog() {
-        this.createDialog = false;
-        this.setValidation(true);
-    }
+    // public hideCreateDialog() {
+    //     this.createDialog = false;
+    //     this.setValidation(true);
+    // }
 
 
     public  setValidation(value: boolean){

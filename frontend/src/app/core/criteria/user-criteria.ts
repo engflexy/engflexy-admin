@@ -1,4 +1,6 @@
-export class UserCriteria {
+import {BaseCriteria} from "../../zynerator/criteria/BaseCriteria.model";
+
+export class UserCriteria extends BaseCriteria{
     public id: number
     public email: string
     public avatar: string
