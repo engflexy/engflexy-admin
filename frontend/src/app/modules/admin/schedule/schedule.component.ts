@@ -13,10 +13,6 @@ import {
 } from "../../../shared/service/collaborator/prof/ScheduleProfCollaborator.service";
 import {AuthService} from "../../../zynerator/security/shared/service/Auth.service";
 import {PopUpInfoComponent} from "./pop-up-info/pop-up-info.component";
-import {MatButtonModule} from "@angular/material/button";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {MatInputModule} from "@angular/material/input";
 import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
 import {ProfDto} from "../../../shared/model/prof/Prof.model";
 import {ScheduleProfCreateCollaboratorComponent} from "./create/schedule-prof-create-collaborator.component";
@@ -25,9 +21,7 @@ import {ScheduleProfDto} from "../../../shared/model/prof/ScheduleProf.model";
 @Component({
     selector: 'app-calendar',
     styleUrls: ['./schedule.component.scss'],
-    templateUrl: './schedule.component.html',
-    standalone: true,
-    imports: [FullCalendarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule]
+    templateUrl: './schedule.component.html'
 })
 export class ScheduleComponent {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;

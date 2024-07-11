@@ -1,6 +1,6 @@
 <h1 mat-dialog-title
     class="bg-gray-100 font-bold text-lg rounded-sm text-center items-center">
-    {{data.title}}
+    {{ data.title }}
 </h1>
 
 <div mat-dialog-content class="p-2 border border-gray-100 rounded-sm">
@@ -11,7 +11,7 @@
                 <mat-icon class="mr-1" svgIcon="heroicons_solid:user-group"></mat-icon>
                 group :
             </strong>
-            <p class="ml-2">{{data?.group}}</p>
+            <p class="ml-2">{{ data?.group }}</p>
         </div>
 
 
@@ -20,7 +20,7 @@
                 <mat-icon class="mr-1" svgIcon="heroicons_solid:user"></mat-icon>
                 teacher :
             </strong>
-            <p class="ml-2">{{data?.teacher}}</p>
+            <p class="ml-2">{{ data?.teacher }}</p>
         </div>
 
         <div class="flex mb-3 pb-3 flex-row flex-wrap items-center">
@@ -28,7 +28,7 @@
                 <mat-icon class="mr-1" svgIcon="heroicons_solid:calendar-days"></mat-icon>
                 start at :
             </strong>
-            <p class="ml-2">{{data?.start | date: 'EEE, yyyy/MM/dd -- HH:mm'}}</p>
+            <p class="ml-2">{{ data?.start | date: 'EEE, yyyy/MM/dd -- HH:mm' }}</p>
         </div>
 
         <div class="flex mb-3 pb-3 flex-row flex-wrap items-center">
@@ -36,10 +36,19 @@
                 <mat-icon class="mr-1" svgIcon="heroicons_solid:calendar-days"></mat-icon>
                 end at :
             </strong>
-            <p class="ml-2">{{data?.end | date: 'EEE, yyyy/MM/dd -- HH:mm'}}</p>
+            <p class="ml-2">{{ data?.end | date: 'EEE, yyyy/MM/dd -- HH:mm' }}</p>
         </div>
 
     </div>
 
 </div>
+<mat-dialog-actions align="center">
+    <button
+        class="px-6 w-full ml-3"
+        (click)="edit()"
+        mat-flat-button
+        [color]="'primary'">
+        Edit
+    </button>
+</mat-dialog-actions>
 

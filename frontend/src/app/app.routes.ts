@@ -5,7 +5,6 @@ import {NoAuthGuard} from 'app/core/auth/guards/noAuth.guard';
 import {LayoutComponent} from 'app/layout/layout.component';
 import {AdminDashboardComponent} from "./modules/admin/admin-dashboard/admin-dashboard.component";
 import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/manage-inscriptions.component";
-import {ScheduleComponent} from "./modules/admin/schedule/schedule.component";
 import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
 import {ManagePackPricesComponent} from "./modules/admin/manage-pack-prices/manage-pack-prices.component";
 
@@ -108,7 +107,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'schedule',
-                component: ScheduleComponent
+                loadChildren: () => import('app/modules/admin/schedule/schedule.module').then(x =>x.ScheduleModule)
             },
             {
                 path: 'faqs-news',

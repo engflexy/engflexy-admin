@@ -11,14 +11,15 @@ import {provideIcons} from 'app/core/icons/icons.provider';
 import {provideTransloco} from 'app/core/transloco/transloco.provider';
 import {mockApiServices} from 'app/mock-api';
 import {DatePipe} from "@angular/common";
-import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
+import {NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideAnimations(),
-        NgxMatDatetimePickerModule,
         DatePipe,
         NgxMatNativeDateModule,
+        MatDatepickerModule,
         provideHttpClient(),
         provideRouter(appRoutes,
             withPreloading(PreloadAllModules),

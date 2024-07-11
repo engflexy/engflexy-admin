@@ -12,17 +12,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <!-- button afficher etudiants du groupe -->
-            <!--                <mat-form-field class="flex-auto w-full fuse-mat-dense">-->
-            <!--                    <mat-label>Étudiants du Groupe</mat-label>-->
-            <!--                    <mat-select [(ngModel)]="item.groupeEtudiantDetail" name="groupeEtudiantDetail">-->
-            <!--                        <mat-option *ngFor="let groupeEtudiantDetail of item.groupeEtudiant.groupeEtudiantDetails" [value]="groupeEtudiantDetail">-->
-            <!--                            {{ groupeEtudiantDetail.etudiant.fullName }}-->
-            <!--                        </mat-option>-->
-            <!--                    </mat-select>-->
-            <!--                </mat-form-field>-->
 
-            <!-- select par defaut prof du groupe -->
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>Teacher</mat-label>
                 <mat-select [(ngModel)]="item.prof" name="prof" [compareWith]="compareObjects">
@@ -62,8 +52,9 @@
                        placeholder="Start Time" [(ngModel)]="item.startTime"
                        name="startTime">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker [showSpinners]="false" [showSeconds]="false"
-                                         [touchUi]="touchUi" [color]="'primary'" [hideTime]="false">
+                <ngx-mat-datetime-picker #picker [showSpinners]="false"
+                                         [showSeconds]="false" [touchUi]="true"
+                                         [color]="'primary'" [hideTime]="false">
                 </ngx-mat-datetime-picker>
 
             </mat-form-field>

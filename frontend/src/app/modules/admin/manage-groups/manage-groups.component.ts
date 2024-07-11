@@ -24,6 +24,7 @@ import {
 } from "../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
 import {GroupFilterComponent} from "./group-filter/group-filter.component";
 import {ActivatedRoute, Router} from "@angular/router";
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
     selector: 'app-manage-groups',
@@ -50,6 +51,7 @@ export class ManageGroupsComponent {
                 private _fuseConfirmation: FuseConfirmationService,
                 private router: Router,
                 private route: ActivatedRoute,
+                private breakpointObserver: BreakpointObserver,
                 private groupDetailService: GroupeEtudiantDetailCollaboratorService,
                 private alert: FuseAlertService,
                 private _matDialog: MatDialog) {
@@ -91,7 +93,7 @@ export class ManageGroupsComponent {
         const dialog = this._matDialog.open(GroupeEtudiantCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",
-            width: "calc(100% - 100px)",
+            width: "65vw",
             maxWidth: "100%",
             disableClose: true,
             maxHeight: "100%"
@@ -99,6 +101,25 @@ export class ManageGroupsComponent {
         dialog.afterClosed().subscribe(res => {
             if (res != null) this.criteria.list.unshift({...res})
         })
+
+        /*
+           this.breakpointObserver.observe([
+      Breakpoints.Handset,
+      Breakpoints.Tablet,
+      Breakpoints.Web
+    ]).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+        if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
+          console.log('Screen size is small (sm)');
+        } else if (this.breakpointObserver.isMatched(Breakpoints.Tablet)) {
+          console.log('Screen size is medium (md)');
+        } else if (this.breakpointObserver.isMatched(Breakpoints.Web)) {
+          console.log('Screen size is large (lg)');
+        }
+      }
+    });
+  }
+         */
     }
 
     changeType(index: number) {
