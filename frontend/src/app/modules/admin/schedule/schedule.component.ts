@@ -3,7 +3,7 @@ import {CalendarOptions, EventDropArg} from "@fullcalendar/core";
 // @ts-ignore
 import {DateSelectArg, EventApi, EventClickArg, FullCalendarComponent, FullCalendarModule} from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, {DateClickArg} from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import {DatePipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
@@ -66,7 +66,8 @@ export class ScheduleComponent {
         },
         eventClick: this.handleEventClick.bind(this),
         eventReceive: this.handleEventReceive.bind(this), // bind to make `this` refer to the component
-        eventDrop: this.handleEventDrop.bind(this)
+        eventDrop: this.handleEventDrop.bind(this),
+        dateClick: this.handleDateClick.bind(this), // bind to make `this` refer to the component
     };
 
     private handle_dateSet(start: Date, end: Date) {
@@ -86,12 +87,26 @@ export class ScheduleComponent {
             })
     }
 
+    handleDateClick(arg: DateClickArg) {
+        console.log('Date clicked: ', arg.dateStr);
+        this.item.startTime = arg.date
+        this.item.endTime = new Date(arg.date.getTime() + 60 * 60 * 1000); // ajouter une heure
+        this.create()
+    }
 
     constructor(private scheduleService: ScheduleProfCollaboratorService,
                 private ref: ChangeDetectorRef,
                 public dialog: MatDialog,
                 private auth: AuthService,
                 private datePipe: DatePipe) {
+    }
+
+    get item(): ScheduleProfDto {
+        return this.scheduleService.item;
+    }
+
+    set item(value: ScheduleProfDto) {
+        this.scheduleService.item = value;
     }
 
     handleEventClick(clickInfo: EventClickArg) {
@@ -127,6 +142,10 @@ export class ScheduleComponent {
     }
 
     create() {
+        if (this.group && this.group?.id) {
+            this.item.groupeEtudiant = this.group
+            this.item.prof = this.group.prof
+        }
         const dialog = this.dialog.open(ScheduleProfCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",

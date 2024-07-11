@@ -108,6 +108,11 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        if (this.item?.groupeEtudiant?.parcours?.id) {
+            this.getCoursByParcours()
+        }
+
         this.groupeEtudiantService.findAll().subscribe((data) => {
             this.groupeEtudiants = data;
             this._groupeEtudiantsFilter = {...this.groupeEtudiants}
@@ -484,8 +489,9 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
     protected readonly compareObjects = compareObjects;
 
 
-    getCoursByParcours() {
-        this.coursService.findByParcoursId(this.item.groupeEtudiant.parcours.id).subscribe(data => {
+    getCoursByParcours(data?) {
+        let id: number = data?.id ? data.id : this.item.groupeEtudiant.parcours.id
+        this.coursService.findByParcoursId(id).subscribe(data => {
             this.courses = data;
             console.log(data)
         })
