@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, tap } from 'rxjs';
+import {Observable, ReplaySubject, takeUntil, tap} from 'rxjs';
 import {FaqCategory, Guide, GuideCategory} from "./help-center.type";
+import {FaqDto} from "../../../shared/model/faq/Faq.model";
 
 @Injectable({providedIn: 'root'})
 export class HelpCenterService
@@ -10,12 +11,17 @@ export class HelpCenterService
     private _guides: ReplaySubject<GuideCategory[]> = new ReplaySubject<GuideCategory[]>(1);
     private _guide: ReplaySubject<Guide> = new ReplaySubject<Guide>(1);
 
+
     /**
      * Constructor
      */
     constructor(private _httpClient: HttpClient)
     {
     }
+
+   findAllGroupedByFaqType(): Observable<FaqDto[]> {
+    return this._httpClient.get<FaqDto[]>(`http://localhost:8036/api/collaborator/faq/grouped`);
+}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -52,6 +58,10 @@ export class HelpCenterService
     /**
      * Get all FAQs
      */
+
+
+
+
     getAllFaqs(): Observable<FaqCategory[]>
     {
         return this._httpClient.get<FaqCategory[]>('api/apps/help-center/faqs').pipe(
@@ -132,5 +142,9 @@ export class HelpCenterService
                 this._guide.next(response);
             }),
         );
+    }
+
+    create(faq: FaqDto): Observable<FaqDto> {
+        return this._httpClient.post<FaqDto>('http://localhost:8036/api/collaborator/faq/save-Faq', faq);
     }
 }

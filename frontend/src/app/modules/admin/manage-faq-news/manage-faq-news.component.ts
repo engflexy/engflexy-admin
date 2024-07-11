@@ -29,13 +29,21 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     standalone: true
 })
 export class ManageFaqNewsComponent implements OnInit, OnDestroy {
+
+    groupedFaqs: any;
+
     faqCategories: any[];
+
+
     private _unsubscribeAll: Subject<any> = new Subject();
 
     /**
      * Constructor
      */
-    constructor(private _helpCenterService: HelpCenterService) {
+    constructor(
+        private _helpCenterService: HelpCenterService,
+
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -46,12 +54,14 @@ export class ManageFaqNewsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get the FAQs
-        this._helpCenterService.faqs$
+        this._helpCenterService.findAllGroupedByFaqType()
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((faqCategories) => {
-                this.faqCategories = faqCategories;
+            .subscribe((groupedFaqs) => {
+                this.groupedFaqs = groupedFaqs;
+                this.faqCategories = groupedFaqs;
             });
+
+
     }
 
     /**
@@ -77,7 +87,10 @@ export class ManageFaqNewsComponent implements OnInit, OnDestroy {
         return item.id || index;
     }
 
-    create() {
-
+    create(){
     }
+
+
+
+
 }

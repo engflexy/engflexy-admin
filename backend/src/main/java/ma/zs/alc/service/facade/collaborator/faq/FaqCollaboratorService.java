@@ -14,6 +14,8 @@ public interface FaqCollaboratorService extends  IService<Faq,FaqCriteria>  {
     long countByFaqTypeId(Long id);
 
 
+    List<Faq> findAll();
+
 
 
 }
