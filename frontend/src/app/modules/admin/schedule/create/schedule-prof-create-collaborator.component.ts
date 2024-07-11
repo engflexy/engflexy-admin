@@ -49,6 +49,8 @@ import {EtudiantDto} from "../../../../shared/model/inscription/Etudiant.model";
 import {
     GroupeEtudiantDetailAdminService
 } from "../../../../shared/service/admin/grpe/GroupeEtudiantDetailAdmin.service";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 
 @Component({
     selector: 'app-schedule-prof-create-collaborator',
@@ -66,7 +68,9 @@ import {
         TranslocoModule,
         FormsModule,
         MatCheckboxModule,
-        MatSelectModule
+        MatSelectModule,
+        MatDatepickerModule,
+        NgxMatDatetimePickerModule
     ],
     standalone: true
 })
