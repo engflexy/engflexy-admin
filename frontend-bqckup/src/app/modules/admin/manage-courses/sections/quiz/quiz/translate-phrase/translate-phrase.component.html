@@ -1,0 +1,29 @@
+<div *ngIf="!showError"
+     (mouseup)="dict()"
+     class="flex flex-col">
+
+    <ng-container *ngFor="let item of questions">
+
+        <div class="flex flex-row py-2.5 border-b border-gray-100 border-solid flex-wrap">
+            <button
+                (click)="sound(item.libelle)"
+                mat-icon-button>
+                <mat-icon
+                    class="icon-size-5 mr-2"
+                    [svgIcon]="'heroicons_solid:speaker-wave'"></mat-icon>
+            </button>
+            <div class=" pt-2 ">
+                <div class="font-ubuntu inline-block">
+                    {{item?.libelle}}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+</div>
+
+
+<div *ngIf="showError" class="w-full  text-center flex-col items-center p-4">
+    can't load homework!
+</div>

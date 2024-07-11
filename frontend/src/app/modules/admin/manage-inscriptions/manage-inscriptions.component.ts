@@ -19,6 +19,7 @@ import {FuseAlertService} from "../../../../@fuse/components/alert";
 import {EditInscriptionComponent} from "./edit-inscription/edit-inscription.component";
 import {InscriptionCreateCollaboratorComponent} from "./create/inscription-create-collaborator.component";
 import {FilterInscriptionComponent} from "./filter-inscription/filter-inscription.component";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-manage-inscriptions',
@@ -32,7 +33,8 @@ import {FilterInscriptionComponent} from "./filter-inscription/filter-inscriptio
         MatPaginatorModule,
         NgForOf,
         NgIf,
-        NgOptimizedImage
+        NgOptimizedImage,
+        FormsModule
     ],
     standalone: true
 })
@@ -40,6 +42,7 @@ export class ManageInscriptionsComponent implements OnInit {
     status = TYPE_INSCRIPTION
     criteria: PaginatedList<InscriptionDto> = new PaginatedList<InscriptionDto>()
     pageable: InscriptionCriteria = new InscriptionCriteria();
+
 
     constructor(private service: InscriptionCollaboratorService,
                 private _fuseConfirmation: FuseConfirmationService,

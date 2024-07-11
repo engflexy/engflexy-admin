@@ -11,6 +11,8 @@ import ma.zs.alc.zynerator.exception.GlobalException;
 import ma.zs.alc.zynerator.export.ExportModel;
 import ma.zs.alc.zynerator.service.IService;
 import ma.zs.alc.zynerator.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -161,6 +163,7 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
     }
 
 
+
     public ResponseEntity<DTO> save(DTO dto) throws Exception {
         if (dto != null) {
             converter.init(true);
@@ -176,6 +179,7 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
             return new ResponseEntity<>(dto, HttpStatus.NO_CONTENT);
         }
     }
+
 
 
     public ResponseEntity<DTO> update(DTO dto) throws Exception {

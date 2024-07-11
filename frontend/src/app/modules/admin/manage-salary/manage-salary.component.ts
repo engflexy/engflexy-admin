@@ -15,9 +15,15 @@ import {MatDialog} from "@angular/material/dialog";
 import {ParcoursDto} from "../../../shared/model/course/Parcours.model";
 import {ProfDto} from "../../../shared/model/prof/Prof.model";
 import {GroupeTypeDto} from "../../../shared/model/grpe/GroupeType.model";
-import {CreateInscriptionComponent} from "../manage-inscriptions/create-inscription/create-inscription.component";
+import {InscriptionCreateCollaboratorComponent} from "../manage-inscriptions/create/inscription-create-collaborator.component";
 import {SalaryDto} from "../../../shared/model/salary/Salary.model";
 import {MatSelectModule} from "@angular/material/select";
+import {CreateSalaryComponent} from "./create-salary/create-salary.component";
+import {SalaryCollaboratorService} from "../../../shared/service/collaborator/salary/SalaryCollaborator.service";
+import {InscriptionDto} from "../../../shared/model/grpe/Inscription.model";
+import {SalaryCriteria} from "../../../shared/criteria/salary/SalaryCriteria.model";
+import {FormsModule} from "@angular/forms";
+import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
 
 @Component({
     selector: 'app-manage-salary',
@@ -31,32 +37,43 @@ import {MatSelectModule} from "@angular/material/select";
         NgForOf,
         NgIf,
         NgClass,
-        MatSelectModule
+        MatSelectModule,
+        FormsModule
     ],
     standalone: true
 })
 export class ManageSalaryComponent {
     status = TYPE_INSCRIPTION
-    criteria: Array<any> = new Array<any>()
-    pageable: GroupeEtudiantCriteria = new GroupeEtudiantCriteria();
 
-    constructor(private service: GroupeEtudiantCollaboratorService,
+    criteria: PaginatedList<SalaryDto> = new PaginatedList<SalaryDto>()
+
+    pageable: SalaryCriteria = new SalaryCriteria();
+
+    constructor(private service: SalaryCollaboratorService,
                 private _matDialog: MatDialog) {
     }
 
     ngOnInit() {
         this.pageable.page = 0
         this.pageable.maxResults = 5
+        this.pageable.prof = new ProfCriteria();
         this.fetchData()
 
     }
 
     private fetchData() {
-        this.service.findAllSalary().subscribe(res => {
+        this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
             this.criteria = res
             console.log(res)
         })
     }
+
+    onSearch() {
+        console.log('Search criteria:', this.pageable);
+        this.fetchData();
+    }
+
+
 
     handle_pageable_change(event: PageEvent) {
         this.pageable.page = event?.pageIndex
@@ -65,6 +82,19 @@ export class ManageSalaryComponent {
     }
 
     create() {
+        const dialog = this._matDialog.open(CreateSalaryComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) this.criteria.list.unshift({...res})
+        })
 
     }
+
+
 }

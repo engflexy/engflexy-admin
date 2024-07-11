@@ -234,7 +234,6 @@ public class AlcApplication {
 
                 userService.create(userForAdmin);
 
-
                 // User Collaborator
                 User userForCollaborator = new User("collaborator");
                 userForCollaborator.setPassword("123");

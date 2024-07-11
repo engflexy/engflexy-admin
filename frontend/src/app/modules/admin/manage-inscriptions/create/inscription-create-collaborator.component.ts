@@ -74,6 +74,23 @@ import {
     NiveauEtudeCollaboratorService
 } from '../../../../shared/service/collaborator/inscriptionref/NiveauEtudeCollaborator.service';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {ParcoursAdminService} from "../../../../shared/service/admin/course/ParcoursAdmin.service";
+import {InscriptionAdminService} from "../../../../shared/service/admin/grpe/InscriptionAdmin.service";
+import {QuizAdminService} from "../../../../shared/service/admin/quiz/QuizAdmin.service";
+import {SkillAdminService} from "../../../../shared/service/admin/inscriptionref/SkillAdmin.service";
+import {
+    InteretEtudiantAdminService
+} from "../../../../shared/service/admin/inscriptionref/InteretEtudiantAdmin.service";
+import {FonctionAdminService} from "../../../../shared/service/admin/inscriptionref/FonctionAdmin.service";
+import {EtudiantAdminService} from "../../../../shared/service/admin/inscription/EtudiantAdmin.service";
+import {
+    EtatInscriptionAdminService
+} from "../../../../shared/service/admin/inscriptionref/EtatInscriptionAdmin.service";
+import {GroupeTypeAdminService} from "../../../../shared/service/admin/grpe/GroupeTypeAdmin.service";
+import {StatutSocialAdminService} from "../../../../shared/service/admin/inscriptionref/StatutSocialAdmin.service";
+import {PackStudentAdminService} from "../../../../shared/service/admin/pack/PackStudentAdmin.service";
+import {GroupeEtudeAdminService} from "../../../../shared/service/admin/grpe/GroupeEtudeAdmin.service";
+import {NiveauEtudeAdminService} from "../../../../shared/service/admin/inscriptionref/NiveauEtudeAdmin.service";
 
 @Component({
     selector: 'app-inscription-create-collaborator',
@@ -103,7 +120,6 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
 
     protected roleService: RoleService;
     protected router: Router;
-    protected stringUtilService: StringUtilService;
     private _activeTab = 0;
 
     _etudiantsFilter: EtudiantDto[];
@@ -152,8 +168,7 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
     private _validSkillCode = true;
     private _validSkillLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<InscriptionCreateCollaboratorComponent>,
-                private alert: FuseAlertService, private service: InscriptionCollaboratorService, private parcoursService: ParcoursCollaboratorService, private quizService: QuizCollaboratorService, private skillService: SkillCollaboratorService, private interetEtudiantService: InteretEtudiantCollaboratorService, private fonctionService: FonctionCollaboratorService, private etudiantService: EtudiantCollaboratorService, private etatInscriptionService: EtatInscriptionCollaboratorService, private groupeTypeService: GroupeTypeCollaboratorService, private statutSocialService: StatutSocialCollaboratorService, private packStudentService: PackStudentCollaboratorService, private groupeEtudeService: GroupeEtudeCollaboratorService, private niveauEtudeService: NiveauEtudeCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
+        constructor(public dialogRef:MatDialogRef<InscriptionCreateCollaboratorComponent>, private stringUtilService: StringUtilService, private alert: FuseAlertService, protected service: InscriptionAdminService , private parcoursService: ParcoursAdminService, private quizService: QuizAdminService, private skillService: SkillAdminService, private interetEtudiantService: InteretEtudiantAdminService, private fonctionService: FonctionAdminService, private etudiantService: EtudiantAdminService, private etatInscriptionService: EtatInscriptionAdminService, private groupeTypeService: GroupeTypeAdminService, private statutSocialService: StatutSocialAdminService, private packStudentService: PackStudentAdminService, private groupeEtudeService: GroupeEtudeAdminService, private niveauEtudeService: NiveauEtudeAdminService, @Inject(PLATFORM_ID) private platformId?) {
 
     }
 
@@ -416,6 +431,7 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
             if (item != null) {
                 this.items.push({...item});
                 this.createDialog = false;
+
                 this.submitted = false;
                 this.item = new InscriptionDto();
             } else {
@@ -451,17 +467,17 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
 
     public validateForm(): void {
         this.errorMessages = new Array<string>();
-        this.validateInscriptionNumeroInscription();
+        //this.validateInscriptionNumeroInscription();
         this.validateInscriptionEtudiant();
         this.validateInscriptionEtatInscription();
         this.validateInscriptionParcours();
-        this.validateInscriptionGroupeEtude();
-        this.validateInscriptionGroupeType();
-        this.validateInscriptionStatutSocial();
-        this.validateInscriptionInteretEtudiant();
-        this.validateInscriptionNiveauEtude();
-        this.validateInscriptionFonction();
-        this.validateInscriptionQuiz();
+        // this.validateInscriptionGroupeEtude();
+        // this.validateInscriptionGroupeType();
+        // this.validateInscriptionStatutSocial();
+        // this.validateInscriptionInteretEtudiant();
+        // this.validateInscriptionNiveauEtude();
+        // this.validateInscriptionFonction();
+        // this.validateInscriptionQuiz();
     }
 
     public validateInscriptionNumeroInscription() {

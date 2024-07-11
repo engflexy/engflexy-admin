@@ -6,6 +6,8 @@ import {environment} from '../../../../../environments/environment';
 import {InscriptionDto} from '../../../model/grpe/Inscription.model';
 import {InscriptionCriteria} from '../../../criteria/grpe/InscriptionCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
+import {Observable} from "rxjs";
+import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
 
 
 @Injectable({
@@ -28,4 +30,10 @@ export class InscriptionCollaboratorService extends AbstractService<InscriptionD
     public constrcutCriteria(): InscriptionCriteria {
         return new InscriptionCriteria();
     }
+
+    create(inscription: InscriptionDto): Observable<InscriptionDto> {
+        return this.http.post<any>(this.API , inscription);
+    }
+
+
 }

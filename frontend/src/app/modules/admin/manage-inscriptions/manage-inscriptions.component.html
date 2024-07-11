@@ -22,13 +22,16 @@
 
                     <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
                       flex flex-row justify-center items-center gap-4">
-                        <mat-form-field
-                            class="flex-auto fuse-mat-dense flex-grow">
-                            <input placeholder="search.." matInput>
-                            <mat-icon
-                                class="icon-size-5"
-                                matPrefix
-                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                        <mat-form-field class="flex-auto fuse-mat-dense flex-grow">
+                            <input placeholder="Search by full name..." matInput [(ngModel)]="pageable.etudiant.fullName">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto fuse-mat-dense flex-grow">
+                            <input placeholder="Search by email..." matInput [(ngModel)]="pageable.etudiant.email">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="flex-auto fuse-mat-dense flex-grow">
+                            <input placeholder="Search by phone..." matInput [(ngModel)]="pageable.etudiant.phone">
                         </mat-form-field>
                         <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
                             <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
