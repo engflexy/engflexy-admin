@@ -6,6 +6,7 @@ import {environment} from '../../../../../environments/environment';
 import {FaqDto} from '../../../model/faq/Faq.model';
 import {FaqCriteria} from '../../../criteria/faq/FaqCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
+import {Observable} from "rxjs";
 
 
 @Injectable({
@@ -27,5 +28,9 @@ export class FaqCollaboratorService extends AbstractService<FaqDto, FaqCriteria>
 
     public constrcutCriteria(): FaqCriteria {
         return new FaqCriteria();
+    }
+
+    findAllGroupedByFaqType(): Observable<FaqDto[]> {
+        return this.http.get<FaqDto[]>(`${this.API}grouped`);
     }
 }

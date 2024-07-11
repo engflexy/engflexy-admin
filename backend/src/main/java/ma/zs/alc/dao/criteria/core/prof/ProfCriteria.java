@@ -4,10 +4,12 @@ package  ma.zs.alc.dao.criteria.core.prof;
 import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
 import ma.zs.alc.dao.criteria.core.course.ParcoursCriteria;
 
-import ma.zs.alc.zynerator.criteria.BaseCriteria;
+
+import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
+
 import java.util.List;
 
-public class ProfCriteria extends  BaseCriteria  {
+public class ProfCriteria extends UserCriteria {
 
     private String ref;
     private String refLike;
@@ -22,6 +24,7 @@ public class ProfCriteria extends  BaseCriteria  {
     private String usernameLike;
     private String password;
     private String passwordLike;
+
 
     private ParcoursCriteria parcours ;
     private List<ParcoursCriteria> parcourss ;
@@ -174,4 +177,6 @@ public class ProfCriteria extends  BaseCriteria  {
     public void setCollaborators(List<CollaboratorCriteria> collaborators){
         this.collaborators = collaborators;
     }
+
+
 }

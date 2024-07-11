@@ -6,17 +6,17 @@ import ma.zs.alc.zynerator.criteria.BaseCriteria;
 
 public class UserCriteria extends  BaseCriteria  {
 
-    private Boolean credentialsNonExpired;
-    private Boolean enabled;
-    private String email;
-    private String emailLike;
-    private Boolean accountNonExpired;
-    private Boolean accountNonLocked;
-    private String username;
-    private String usernameLike;
-    private String password;
-    private String passwordLike;
-    private Boolean passwordChanged;
+    protected Boolean credentialsNonExpired;
+    protected Boolean enabled;
+    protected String email;
+    protected String emailLike;
+    protected Boolean accountNonExpired;
+    protected Boolean accountNonLocked;
+    protected String username;
+    protected String usernameLike;
+    protected String password;
+    protected String passwordLike;
+    protected Boolean passwordChanged;
 
 
     public String getFullName() {
@@ -27,15 +27,16 @@ public class UserCriteria extends  BaseCriteria  {
         this.fullName = fullName;
     }
 
-    private String fullName;
+    protected String fullName;
+    protected String fullNameLike;
 
 
-    private String firstName;
-    private String firstNameLike;
-    private String lastName;
-    private String lastNameLike;
-    private String phone;
-    private String phoneLike;
+    protected String firstName;
+    protected String firstNameLike;
+    protected String lastName;
+    protected String lastNameLike;
+    protected String phone;
+    protected String phoneLike;
 
 
 
@@ -150,4 +151,11 @@ public class UserCriteria extends  BaseCriteria  {
         this.passwordChanged = passwordChanged;
     }
 
+    public String getFullNameLike() {
+        return fullNameLike;
+    }
+
+    public void setFullNameLike(String fullNameLike) {
+        this.fullNameLike = fullNameLike;
+    }
 }

@@ -4,9 +4,9 @@ import {FaqTypeDto} from './FaqType.model';
 
 export class FaqDto extends BaseDto{
 
-    public description: string;
+    public answer: string;
 
-    public libelle: string;
+    public question: string;
 
     public faqType: FaqTypeDto ;
 
@@ -14,8 +14,8 @@ export class FaqDto extends BaseDto{
     constructor() {
         super();
 
-        this.description = '';
-        this.libelle = '';
+        this.answer = '';
+        this.question = '';
         this.faqType = new FaqTypeDto() ;
 
         }
