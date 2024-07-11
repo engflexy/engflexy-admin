@@ -185,11 +185,4 @@ public class UserCriteria extends BaseCriteria {
         this.passwordChanged = passwordChanged;
     }
 
-    public String getFullNameLike() {
-        return fullNameLike;
-    }
-
-    public void setFullNameLike(String fullNameLike) {
-        this.fullNameLike = fullNameLike;
-    }
 }

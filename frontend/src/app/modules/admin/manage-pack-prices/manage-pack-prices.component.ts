@@ -19,6 +19,8 @@ import {MatSelectModule} from "@angular/material/select";
 })
 export class ManagePackPricesComponent {
     yearlyBilling: boolean = true;
+    studentsForTeacher: [2, 7, 15, 20, 30, 50]
+    studentForSchool: number = 20
 
     /**
      * Constructor

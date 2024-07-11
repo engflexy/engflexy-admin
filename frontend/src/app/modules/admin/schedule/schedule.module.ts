@@ -77,6 +77,9 @@ const routes: Route[] = [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
     ],
+    exports: [
+        ScheduleComponent
+    ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
         NgxMatNativeDateAdapter,
         Location]

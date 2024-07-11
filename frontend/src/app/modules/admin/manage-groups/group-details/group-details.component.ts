@@ -15,6 +15,7 @@ import {
 } from "../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
 import {MatButtonModule} from "@angular/material/button";
 import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ScheduleModule} from "../../schedule/schedule.module";
 
 @Component({
     selector: 'app-group-details',
@@ -26,7 +27,8 @@ import {ActivatedRoute, RouterLink} from "@angular/router";
         MatDialogModule,
         TranslocoModule,
         MatButtonModule,
-        RouterLink
+        RouterLink,
+        ScheduleModule
     ],
     standalone: true
 })
