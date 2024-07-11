@@ -1,0 +1,57 @@
+<!-- Success -->
+<fuse-alert
+    [type]="'success'"
+    [name]="'success'"
+    dismissible="true"
+    [dismissed]="true"
+    [appearance]="'fill'">
+    <span fuseAlertTitle>Success</span>
+</fuse-alert>
+
+<!-- Warning -->
+<fuse-alert
+    [type]="'warning'"
+    [name]="'warning'"
+    dismissible="true"
+    [dismissed]="true"
+    [appearance]="'fill'">
+    <span fuseAlertTitle>Warning</span>
+</fuse-alert>
+
+<!-- Error -->
+<fuse-alert
+    [type]="'info'"
+    [name]="'info'"
+    dismissible="true"
+    [dismissed]="true"
+    [appearance]="'fill'">
+    <span fuseAlertTitle>Notification</span>
+</fuse-alert>
+
+<fuse-alert [type]="'accent'"
+            [name]="'accent'"
+            dismissible="true"
+            [dismissed]="true">
+    <span fuseAlertTitle>New Message</span>
+</fuse-alert>
+
+<fuse-alert
+    [appearance]="'soft'"
+    [dismissible]="true"
+    [dismissed]="true"
+    [name]="'connection-stable'"
+    [type]="'success'">
+    <span fuseAlertTitle>You're connected!</span>
+</fuse-alert>
+
+<fuse-alert
+    [appearance]="'soft'"
+    [dismissible]="true"
+    [dismissed]="true"
+    [name]="'connection-lose'"
+    [type]="'info'">
+    <span fuseAlertTitle>Warning</span>
+</fuse-alert>
+
+
+<router-outlet></router-outlet>

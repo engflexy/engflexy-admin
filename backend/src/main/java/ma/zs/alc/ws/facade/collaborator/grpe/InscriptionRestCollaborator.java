@@ -1,5 +1,7 @@
 package  ma.zs.alc.ws.facade.collaborator.grpe;
 
+import com.itextpdf.text.log.Logger;
+import com.itextpdf.text.log.LoggerFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -7,8 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import ma.zs.alc.bean.core.grpe.Inscription;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.dao.criteria.core.grpe.InscriptionCriteria;
 import ma.zs.alc.service.facade.collaborator.grpe.InscriptionCollaboratorService;
+import ma.zs.alc.service.impl.collaborator.grpe.InscriptionCollaboratorServiceImpl;
 import ma.zs.alc.ws.converter.grpe.InscriptionConverter;
 import ma.zs.alc.ws.dto.grpe.InscriptionDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
@@ -17,6 +21,7 @@ import ma.zs.alc.zynerator.util.PaginatedList;
 
 
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +33,8 @@ import ma.zs.alc.zynerator.process.Result;
 
 import org.springframework.web.multipart.MultipartFile;
 import ma.zs.alc.zynerator.dto.FileTempDto;
+
+import static com.linecorp.armeria.internal.shaded.reflections.Reflections.log;
 
 @RestController
 @RequestMapping("/api/collaborator/inscription/")
@@ -51,6 +58,7 @@ public class InscriptionRestCollaborator  extends AbstractController<Inscription
     public ResponseEntity<List<InscriptionDto>> findAll() throws Exception {
         return super.findAll();
     }
+
 
 
 

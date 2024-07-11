@@ -259,7 +259,6 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
             content = dao.findAll();
         }
         return content;
-
     }
 
     public List<T> findPaginatedByCriteria(CRITERIA criteria, int page, int pageSize, String order, String sortField) {

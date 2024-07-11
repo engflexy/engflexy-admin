@@ -1,0 +1,69 @@
+<div mat-dialog-title class=" p-4 border-gray-300">
+    <h1 class="text-2xl text-gray-800 font-bold m-0 text-center">Subscription Form</h1>
+</div>
+<form>
+    <div mat-dialog-content class="content" >
+
+        <div >
+
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Etudiant</mat-label>
+                <input type="text" matInput (input)="filterEtudiant(etudiantInput.value)" #etudiantInput [matAutocomplete]="etudiantAutocomplete"  [(ngModel)]="item.etudiant"  name="etudiant">
+
+                <mat-autocomplete #etudiantAutocomplete="matAutocomplete" [displayWith]="displayEtudiant" >
+                    <mat-option *ngFor="let etudiant of _etudiantsFilter" [value]="etudiant">
+                        {{etudiant.fullName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+        </div>
+
+        <div >
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>EtatInscription</mat-label>
+                <input type="text" matInput (input)="filterEtatInscription(etatInscriptionInput.value)" #etatInscriptionInput [matAutocomplete]="etatInscriptionAutocomplete"  [(ngModel)]="item.etatInscription"  name="etatInscription">
+                <mat-autocomplete #etatInscriptionAutocomplete="matAutocomplete" [displayWith]="displayEtatInscription" >
+                    <mat-option *ngFor="let etatInscription of _etatInscriptionsFilter" [value]="etatInscription">
+                        {{etatInscription.libelle}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div >
+
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Parcours</mat-label>
+                <input type="text" matInput (input)="filterParcours(parcoursInput.value)" #parcoursInput [matAutocomplete]="parcoursAutocomplete"  [(ngModel)]="item.parcours"  name="parcours">
+
+                <mat-autocomplete #parcoursAutocomplete="matAutocomplete" [displayWith]="displayParcours" >
+                    <mat-option *ngFor="let parcours of _parcourssFilter" [value]="parcours">
+                        {{parcours.libelle}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+        </div>
+
+        <div >
+            <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>PackStudent</mat-label>
+                <input type="text" matInput (input)="filterPackStudent(packStudentInput.value)" #packStudentInput [matAutocomplete]="packStudentAutocomplete"  [(ngModel)]="item.packStudent"  name="packStudent">
+
+                <mat-autocomplete #packStudentAutocomplete="matAutocomplete" [displayWith]="displayPackStudent" >
+                    <mat-option *ngFor="let packStudent of _packStudentsFilter" [value]="packStudent">
+                        {{packStudent.libelle}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+
+    </div>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" (click)="save()">Validate</button>
+    </div>
+</form>

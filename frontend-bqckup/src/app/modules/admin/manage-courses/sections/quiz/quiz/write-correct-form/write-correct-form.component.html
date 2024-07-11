@@ -1,0 +1,50 @@
+<div *ngIf="!showError" class="flex flex-col my-2 h-full justify-between">
+
+    <div class="flex flex-row items-center gap-1 flex-grow flex-wrap">
+        <div class="ubuntu-bold-italic mr-1 text-md">
+            {{question?.numero}}.
+        </div>
+
+        <button [disabled]="!checked"
+                (click)=" sound(left + ' ' + correctAnswer.lib + ' ' + right)"
+                mat-icon-button>
+            <mat-icon
+                class="icon-size-5 mr-2"
+                [svgIcon]="'heroicons_solid:speaker-wave'"></mat-icon>
+        </button>
+        <div class=" flex flex-row flex-grow flex-wrap ">
+            <div *ngIf="left && left?.length > 0" class="font-ubuntu inline-block">
+                {{left}}
+            </div>
+
+            <div
+                (mouseenter)="showMeAnswer(true)"
+                (mouseleave)="showMeAnswer(false)"
+                class="flex flex-col items-center">
+                <span class="correct-answer-tooltip"
+                      *ngIf="(!is_correct && checked) || showMe ">{{correctAnswer?.lib}}</span>
+                <input [disabled]="checked"
+                       (focusout)="check()"
+                       name="value" class="font-ubuntu inline-block text-center mb-2 focus:border-blue-500 focus:text-blue-800
+                 border rounded-full mx-2"
+                       [class.correct]="is_correct===true"
+                       [class.incorrect]="is_correct===false"
+                       [class.border-dotted]="is_correct===null"
+                       [(ngModel)]="value"
+                       type="text" matInput>
+            </div>
+
+
+            <div *ngIf="right && right?.length > 0" class="font-ubuntu inline-block">
+                {{right}}
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div *ngIf="showError" class="w-full  text-center flex-col items-center p-4">
+    can't load question!
+</div>

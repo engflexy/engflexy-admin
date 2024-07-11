@@ -33,7 +33,7 @@ export class InscriptionCriteria  extends BaseCriteria  {
     public datefininscriptionTo: Date;
     public skype: string;
     public skypeLike: string;
-  public etudiant: EtudiantCriteria ;
+    public etudiant =new EtudiantCriteria() ;
   public etudiants: Array<EtudiantCriteria> ;
   public etatInscription: EtatInscriptionCriteria ;
   public etatInscriptions: Array<EtatInscriptionCriteria> ;

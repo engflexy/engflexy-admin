@@ -37,7 +37,9 @@ public class Salary   extends AuditBusinessObject     {
     private BigDecimal totalBonusClassAverage = BigDecimal.ZERO;
     private BigDecimal totalBonusWorkload = BigDecimal.ZERO;
 
+
     private Prof prof ;
+
 
 
     public Salary(){
@@ -55,8 +57,6 @@ public class Salary   extends AuditBusinessObject     {
     public Salary(String code){
         this.code = code ;
     }
-
-
 
 
     @Id

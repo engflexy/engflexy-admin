@@ -1,0 +1,32 @@
+<div class="w-full">
+    <!-- Card #24 -->
+    <fuse-card class="flex flex-col w-full px-8 pt-6 pb-4 filter-list">
+        <div class="flex  items-center gap-2 justify-between">
+
+            <div class="text-xl cursor-pointer border-dotted border-2 flex items-center
+            p-5 bg-gray-100 dark:bg-gray-600
+            rounded-sm content-center flex-grow gap-3 font-semibold leading-tight">
+                <div class="w-full  group items-center justify-center flex text-hint">
+                    <span>create new administrator</span>
+                    <mat-icon class="mr-2 text-hint" svgIcon="heroicons_mini:plus"></mat-icon>
+                </div>
+            </div>
+
+            <div class="-mr-3">
+                <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="listCard02Menu">
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:ellipsis-vertical'"></mat-icon>
+                </button>
+                <mat-menu #listCard02Menu="matMenu">
+                    <button mat-menu-item>Search for groups</button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <app-divider class="my-6" color="white" text=" "></app-divider>
+    </fuse-card>
+
+</div>
