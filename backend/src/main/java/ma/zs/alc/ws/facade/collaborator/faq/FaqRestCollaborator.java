@@ -11,6 +11,7 @@ import ma.zs.alc.dao.criteria.core.faq.FaqCriteria;
 import ma.zs.alc.service.facade.collaborator.faq.FaqCollaboratorService;
 import ma.zs.alc.ws.converter.faq.FaqConverter;
 import ma.zs.alc.ws.dto.faq.FaqDto;
+import ma.zs.alc.ws.dto.faq.FaqTypeDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
@@ -21,7 +22,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import ma.zs.alc.zynerator.process.Result;
 
@@ -47,9 +52,27 @@ public class FaqRestCollaborator  extends AbstractController<Faq, FaqDto, FaqCri
     }
 
     @Operation(summary = "Finds a list of all faqs")
-    @GetMapping("")
-    public ResponseEntity<List<FaqDto>> findAll() throws Exception {
-        return super.findAll();
+    @GetMapping("/grouped")
+    public ResponseEntity<List<FaqTypeDto>> findAllGroupedByFaqType() throws Exception {
+        List<Faq> allFaqs = service.findAll();
+        List<FaqTypeDto> faqTypeDtos = new ArrayList<>();
+
+        // Group FAQs by FaqType
+        Map<String, List<FaqDto>> faqsGroupedByType = allFaqs.stream()
+                .collect(Collectors.groupingBy(faq -> faq.getFaqType().getLibelle(),
+                        Collectors.mapping(faq -> converter.toDto(faq), Collectors.toList())
+                ));
+
+        faqsGroupedByType.forEach((key, value) -> {
+            FaqTypeDto faqTypeDto = new FaqTypeDto();
+            faqTypeDto.setLibelle(key);
+            faqTypeDto.setFaqs(value);
+            faqTypeDtos.add(faqTypeDto);
+        });
+
+        return ResponseEntity.ok(faqTypeDtos);
+
+
     }
 
     @Operation(summary = "Finds an optimized list of all faqs")
@@ -65,7 +88,7 @@ public class FaqRestCollaborator  extends AbstractController<Faq, FaqDto, FaqCri
     }
 
     @Operation(summary = "Saves the specified  faq")
-    @PostMapping("")
+    @PostMapping("/save-Faq")
     public ResponseEntity<FaqDto> save(@RequestBody FaqDto dto) throws Exception {
         return super.save(dto);
     }

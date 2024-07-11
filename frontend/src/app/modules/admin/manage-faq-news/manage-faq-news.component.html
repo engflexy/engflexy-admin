@@ -8,6 +8,7 @@
                             Frequently Asked Questions
                         </h1>
                     </div>
+
                     <button mat-button (click)="create()"
                             mat-stroked-button color="primary">create new question
                     </button>
@@ -25,6 +26,8 @@
                             <div
                                 class="mt-6 sm:mt-8 text-3xl font-bold leading-tight tracking-tight">{{ faqCategory.title }}
                             </div>
+                            <div  class="mt-6 sm:mt-8 text-3xl font-bold leading-tight tracking-tight">{{ faqCategory.libelle }}</div>
+
                             <mat-accordion class="max-w-4xl mt-8">
                                 <ng-container *ngFor="let faq of faqCategory.faqs; trackBy: trackByFn">
                                     <mat-expansion-panel>
@@ -48,5 +51,3 @@
 
     </div>
 </div>
-
-

@@ -1,0 +1,19 @@
+<form [formGroup]="faqForm" (ngSubmit)="submitForm()">
+    <mat-form-field>
+        <mat-label>Question</mat-label>
+        <input matInput formControlName="question">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Answer</mat-label>
+        <input matInput formControlName="answer">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+            <mat-option *ngFor="let type of types" [value]="type">
+                {{ type }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

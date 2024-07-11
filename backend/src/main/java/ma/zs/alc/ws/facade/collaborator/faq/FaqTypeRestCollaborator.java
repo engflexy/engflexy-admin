@@ -1,4 +1,4 @@
-package  ma.zs.alc.ws.facade.collaborator.faq;
+package ma.zs.alc.ws.facade.collaborator.faq;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import ma.zs.alc.bean.core.faq.FaqType;
 import ma.zs.alc.dao.criteria.core.faq.FaqTypeCriteria;
 import ma.zs.alc.service.facade.collaborator.faq.FaqTypeCollaboratorService;
+import ma.zs.alc.service.impl.collaborator.faq.FaqCollaboratorServiceImpl;
 import ma.zs.alc.ws.converter.faq.FaqTypeConverter;
+import ma.zs.alc.ws.dto.faq.FaqDto;
 import ma.zs.alc.ws.dto.faq.FaqTypeDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
@@ -17,11 +19,14 @@ import ma.zs.alc.zynerator.util.PaginatedList;
 
 
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import ma.zs.alc.zynerator.process.Result;
 
@@ -31,8 +36,10 @@ import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/collaborator/faqType/")
-public class FaqTypeRestCollaborator  extends AbstractController<FaqType, FaqTypeDto, FaqTypeCriteria, FaqTypeCollaboratorService, FaqTypeConverter> {
+public class FaqTypeRestCollaborator extends AbstractController<FaqType, FaqTypeDto, FaqTypeCriteria, FaqTypeCollaboratorService, FaqTypeConverter> {
 
+    @Autowired
+    private FaqCollaboratorServiceImpl faqCollaboratorServiceImpl;
 
 
     @Operation(summary = "upload one faqType")
@@ -40,6 +47,8 @@ public class FaqTypeRestCollaborator  extends AbstractController<FaqType, FaqTyp
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
+
     @Operation(summary = "upload multiple faqTypes")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -51,6 +60,7 @@ public class FaqTypeRestCollaborator  extends AbstractController<FaqType, FaqTyp
     public ResponseEntity<List<FaqTypeDto>> findAll() throws Exception {
         return super.findAll();
     }
+
 
     @Operation(summary = "Finds an optimized list of all faqTypes")
     @GetMapping("optimized")
@@ -81,10 +91,11 @@ public class FaqTypeRestCollaborator  extends AbstractController<FaqType, FaqTyp
     public ResponseEntity<List<FaqTypeDto>> delete(@RequestBody List<FaqTypeDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified faqType")
     @DeleteMapping("")
     public ResponseEntity<FaqTypeDto> delete(@RequestBody FaqTypeDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified faqType")
@@ -92,12 +103,12 @@ public class FaqTypeRestCollaborator  extends AbstractController<FaqType, FaqTyp
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple faqTypes by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
-
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "Finds a faqType and associated list by id")
@@ -131,12 +142,9 @@ public class FaqTypeRestCollaborator  extends AbstractController<FaqType, FaqTyp
     }
 
 
-
-    public FaqTypeRestCollaborator (FaqTypeCollaboratorService service, FaqTypeConverter converter) {
+    public FaqTypeRestCollaborator(FaqTypeCollaboratorService service, FaqTypeConverter converter) {
         super(service, converter);
     }
-
-
 
 
 }
