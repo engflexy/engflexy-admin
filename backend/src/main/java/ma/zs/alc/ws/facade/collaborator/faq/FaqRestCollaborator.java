@@ -88,7 +88,7 @@ public class FaqRestCollaborator  extends AbstractController<Faq, FaqDto, FaqCri
     }
 
     @Operation(summary = "Saves the specified  faq")
-    @PostMapping("/save-Faq")
+    @PostMapping("/")
     public ResponseEntity<FaqDto> save(@RequestBody FaqDto dto) throws Exception {
         return super.save(dto);
     }
