@@ -35,7 +35,7 @@
                                             <mat-panel-title class="font-medium leading-tight">{{ faq.question }}
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div [matTooltip]="'click to edit'" class="cursor-pointer">
+                                        <div [matTooltip]="'click to edit'" (click)="openEdit(faq)" class="cursor-pointer">
                                             {{ faq.answer }}
                                         </div>
                                     </mat-expansion-panel>

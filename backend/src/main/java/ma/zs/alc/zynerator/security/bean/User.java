@@ -51,6 +51,7 @@ public class User extends AuditBusinessObject implements UserDetails {
     protected List<RoleUser> roleUsers;
 
 
+
     public User() {
         super();
     }

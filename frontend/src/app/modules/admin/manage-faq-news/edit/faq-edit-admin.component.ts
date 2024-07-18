@@ -1,28 +1,37 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 
+import {compareObjects} from "../../../../zynerator/util/Gloabl";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
+
+import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
+
+import {MatSelectModule} from "@angular/material/select";
+
+import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 
 
 import {environment} from '../../../../../environments/environment';
 
 import {RoleService} from '../../../../zynerator/security/shared/service/Role.service';
-import {StringUtilService} from '../../../../zynerator/util/StringUtil.service';
+import {ServiceLocator} from '../../../../zynerator/service/ServiceLocator';
 
 import {FormsModule} from "@angular/forms";
 
 import {TranslocoModule} from "@ngneat/transloco";
+
 
 
 import {FaqAdminService} from '../../../../shared/service/admin/faq/FaqAdmin.service';
@@ -31,10 +40,11 @@ import {FaqCriteria} from '../../../../shared/criteria/faq/FaqCriteria.model';
 import {FaqTypeDto} from '../../../../shared/model/faq/FaqType.model';
 import {FaqTypeAdminService} from '../../../../shared/service/admin/faq/FaqTypeAdmin.service';
 import {FaqCollaboratorService} from "../../../../shared/service/collaborator/faq/FaqCollaborator.service";
+import {StringUtilService} from "../../../../zynerator/util/StringUtil.service";
 
 @Component({
-  selector: 'app-faq-create-admin',
-  templateUrl: './faq-create-admin.component.html',
+  selector: 'app-faq-edit-admin',
+  templateUrl: './faq-edit-admin.component.html',
   imports: [
         MatButtonModule,
         MatDialogModule,
@@ -47,11 +57,13 @@ import {FaqCollaboratorService} from "../../../../shared/service/collaborator/fa
         MatTooltipModule,
         TranslocoModule,
         FormsModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatSelectModule,
+        MatDialogModule
     ],
     standalone: true
 })
-export class FaqCreateAdminComponent  implements OnInit {
+export class FaqEditAdminComponent  implements OnInit {
 
 	protected _submitted = false;
     protected _errorMessages = new Array<string>();
@@ -66,19 +78,17 @@ export class FaqCreateAdminComponent  implements OnInit {
 
 
 
+
    private _validFaqLibelle = true;
     private _validFaqTypeLibelle = true;
 
-	constructor(private alert: FuseAlertService,
-                private refDialog: MatDialogRef<FaqCreateAdminComponent>,
-                private stringUtilService: StringUtilService,
-                private service: FaqCollaboratorService , private faqTypeService: FaqTypeAdminService, @Inject(PLATFORM_ID) private platformId? ) {
+	constructor(public refDialog: MatDialogRef<FaqEditAdminComponent>, private alert: FuseAlertService, private service: FaqCollaboratorService , private faqTypeService: FaqTypeAdminService, @Inject(PLATFORM_ID) private platformId? ,
+) {
 
     }
 
     ngOnInit(): void {
-        this.faqTypeService.findAll().subscribe((data) => {this.faqTypes = data;
-            this._faqTypesFilter = [...this.faqTypes]});
+        this.faqTypeService.findAll().subscribe((data) => {this.faqTypes = data; this._faqTypesFilter = [...this.faqTypes]});
     }
 
   displayFaqType(item: FaqTypeDto): string {
@@ -99,20 +109,20 @@ export class FaqCreateAdminComponent  implements OnInit {
 
 
 
-    public save(): void {
+
+    public edit(): void {
         this.submitted = true;
         this.validateForm();
         if (this.errorMessages.length === 0) {
-            this.saveWithShowOption(false);
+            this.editWithShowOption(false);
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
 
-    public saveWithShowOption(showList: boolean) {
-        this.service.save().subscribe(item => {
+    public editWithShowOption(showList: boolean) {
+        this.service.edit().subscribe(item => {
             if (item != null) {
-                console.log(item)
                 this.items.push({...item});
                 this.item = new FaqDto();
                 this.refDialog.close(item)
@@ -123,11 +133,6 @@ export class FaqCreateAdminComponent  implements OnInit {
         }, error => {
             console.log(error);
         });
-    }
-
-
-    public hideCreateDialog() {
-        this.refDialog.close(null)
     }
 
 
@@ -146,12 +151,7 @@ export class FaqCreateAdminComponent  implements OnInit {
     }
 
     public validateFaqLibelle(){
-        if (this.stringUtilService.isEmpty(this.item.question)) {
-        this.errorMessages.push('Libelle non valide');
-        this.validFaqLibelle = false;
-        } else {
-            this.validFaqLibelle = true;
-        }
+        return true;
     }
 
 
@@ -277,5 +277,7 @@ export class FaqCreateAdminComponent  implements OnInit {
     set activeTab(value: number) {
         this._activeTab = value;
     }
+
+
 
 }
