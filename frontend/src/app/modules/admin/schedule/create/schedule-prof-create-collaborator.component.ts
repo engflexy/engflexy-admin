@@ -208,11 +208,7 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
         this.item.profName = this.item.prof.fullName
         this.service.save().subscribe(item => {
             if (item != null) {
-                this.items.push({...item});
-                this.createDialog = false;
-                this.submitted = false;
-                this.item = new ScheduleProfDto();
-                this.refDialog.close(item);
+                this.refDialog.close(this.item);
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }
