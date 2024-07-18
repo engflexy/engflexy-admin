@@ -48,8 +48,6 @@ export class FilterSalaryComponent implements OnInit {
     private _validProfRef = true;
 
     pageable = new SalaryCriteria();
-    criteria: PaginatedList<SalaryDto> = new PaginatedList<SalaryDto>()
-
 
     months:{month:number , name:string}[] = [
         { month: 1, name: 'January' },
@@ -109,6 +107,15 @@ export class FilterSalaryComponent implements OnInit {
     set submitted(value: boolean) {
         this._submitted = value;
     }
+
+    get criteria(): PaginatedList<SalaryDto> {
+        return this.service.criteriaList;
+    }
+
+    set criteria(value: PaginatedList<SalaryDto>) {
+        this.service.criteriaList = value;
+    }
+
 
     get errorMessages(): string[] {
         if (this._errorMessages == null) {
@@ -238,9 +245,9 @@ displayFnStatus(item: any): string {
     if (this.errorMessages.length === 0) {
         console.log('Sending request with pageable:', this.pageable);
         this.service.findPaginatedByCriteria(this.pageable).subscribe((res: PaginatedList<SalaryDto>) => {
-            this.salaries = res.list;
-            console.log(res.list);
-            this.refDialog.close();
+            this.criteria = res;
+            console.log(res);
+            this.refDialog.close(res);
         }, error => {
             console.error('Error occurred:', error);
         });

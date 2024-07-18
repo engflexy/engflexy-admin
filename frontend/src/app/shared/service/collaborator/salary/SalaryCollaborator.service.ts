@@ -15,9 +15,19 @@ import {PaginatedList} from "../../../../zynerator/dto/PaginatedList.model";
 })
 export class SalaryCollaboratorService extends AbstractService<SalaryDto, SalaryCriteria> {
     private baseUrl: string;
+    private _criteriaList: PaginatedList<SalaryDto> = new PaginatedList<SalaryDto>()
     constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
+    }
+
+
+    get criteriaList(): PaginatedList<SalaryDto> {
+        return this._criteriaList;
+    }
+
+    set criteriaList(value: PaginatedList<SalaryDto>) {
+        this._criteriaList = value;
     }
 
     get API() {

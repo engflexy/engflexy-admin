@@ -17,6 +17,7 @@ import {FormsModule} from "@angular/forms";
 import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
 import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscription/filter-inscription.component";
 import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.html";
+import {ProfDto} from "../../../shared/model/prof/Prof.model";
 
 @Component({
     selector: 'app-manage-salary',
@@ -37,21 +38,22 @@ import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.htm
 })
 export class ManageSalaryComponent {
     status = TYPE_INSCRIPTION
-
-    criteria: PaginatedList<SalaryDto> = new PaginatedList<SalaryDto>()
-
     pageable: SalaryCriteria = new SalaryCriteria();
 
     constructor(private service: SalaryCollaboratorService,
                 private _matDialog: MatDialog) {
     }
 
-    ngOnInit() {
-        this.pageable.page = 0
-        this.pageable.maxResults = 5
-        this.pageable.prof = new ProfCriteria();
-        this.fetchData()
+    get criteria(): PaginatedList<SalaryDto> {
+        return this.service.criteriaList;
+    }
 
+    set criteria(value: PaginatedList<SalaryDto>) {
+        this.service.criteriaList = value;
+    }
+
+    ngOnInit() {
+        this.fetchData()
     }
 
     private fetchData() {
@@ -99,8 +101,9 @@ export class ManageSalaryComponent {
         });
 
         dialog.afterClosed().subscribe(res => {
-            if (res != null) {
-
+            if (res == null) {
+                this.pageable = new SalaryCriteria();
+                this.fetchData()
             }
         })
     }
