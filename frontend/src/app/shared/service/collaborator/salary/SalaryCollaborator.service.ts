@@ -32,9 +32,9 @@ export class SalaryCollaboratorService extends AbstractService<SalaryDto, Salary
         return new SalaryCriteria();
     }
 
-    // findPaginatedByCriteria(criteria: SalaryCriteria): Observable<PaginatedList<SalaryDto>> {
-    //     return this.http.post<PaginatedList<SalaryDto>>(`${this.API}find-paginated-by-criteria`, criteria);
-    // }
+    findPaginatedByCriteria(criteria: SalaryCriteria): Observable<PaginatedList<SalaryDto>> {
+        return this.http.post<PaginatedList<SalaryDto>>(`${this.API}find-paginated-by-criteria`, criteria);
+     }
 
 
 }

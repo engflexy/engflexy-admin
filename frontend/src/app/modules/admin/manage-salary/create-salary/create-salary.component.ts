@@ -70,18 +70,18 @@ export class CreateSalaryComponent  implements OnInit {
     private _activeTab = 0;
 
     months:{month:number , name:string}[] = [
-        { month: 0, name: 'January' },
-        { month: 1, name: 'February' },
-        { month: 2, name: 'March' },
-        { month: 3, name: 'April' },
-        { month: 4, name: 'May' },
-        { month: 5, name: 'June' },
-        { month: 6, name: 'July' },
-        { month: 7, name: 'August' },
-        { month: 8, name: 'September' },
-        { month: 9, name: 'October' },
-        { month: 10, name: 'November' },
-        { month: 11, name: 'December' }
+        { month: 1, name: 'January' },
+        { month: 2, name: 'February' },
+        { month: 3, name: 'March' },
+        { month: 4, name: 'April' },
+        { month: 5, name: 'May' },
+        { month: 6, name: 'June' },
+        { month: 7, name: 'July' },
+        { month: 8, name: 'August' },
+        { month: 9, name: 'September' },
+        { month: 10, name: 'October' },
+        { month: 11, name: 'November' },
+        { month: 12, name: 'December' }
     ];
 
     years: number[] = [2021, 2022, 2023,2024,2025,2026];
@@ -92,7 +92,13 @@ export class CreateSalaryComponent  implements OnInit {
     private _validSalaryCode = true;
     private _validProfRef = true;
 
-    constructor(public dialogRef:MatDialogRef<CreateSalaryComponent> ,private alert: FuseAlertService, private service: SalaryAdminService , private profService: ProfAdminService, private stringUtilService: StringUtilService, @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(
+        public dialogRef:MatDialogRef<CreateSalaryComponent> ,
+        private alert: FuseAlertService,
+        private service: SalaryAdminService ,
+        private profService: ProfAdminService,
+        private stringUtilService: StringUtilService,
+        @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
@@ -326,4 +332,6 @@ export class CreateSalaryComponent  implements OnInit {
 
     protected readonly translate = translate;
     protected readonly compareObjects = compareObjects;
+
+
 }

@@ -24,6 +24,8 @@ import {InscriptionDto} from "../../../shared/model/grpe/Inscription.model";
 import {SalaryCriteria} from "../../../shared/criteria/salary/SalaryCriteria.model";
 import {FormsModule} from "@angular/forms";
 import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
+import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscription/filter-inscription.component";
+import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.html";
 
 @Component({
     selector: 'app-manage-salary',
@@ -95,6 +97,60 @@ export class ManageSalaryComponent {
         })
 
     }
+
+    openFilter() {
+        const dialog = this._matDialog.open(FilterSalaryComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) {
+
+            }
+        })
+    }
+
+edit(item: SalaryDto) {
+        const dialog = this._matDialog.open(CreateSalaryComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%",
+            data: item
+        });
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) {
+                const index = this.criteria.list.findIndex(s => s.id === res.id)
+                this.criteria.list[index] = {...res}
+            }
+        })
+    }
+
+
+
+    displayProf(item: ProfDto): string {
+        return item && item.fullName ? item.fullName : "";
+    }
+
+    filter(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this.pageable.prof.fullName = value
+        } else {
+            this.pageable.prof = new ProfCriteria()
+        }
+    }
+
+
+
+
 
 
 }
