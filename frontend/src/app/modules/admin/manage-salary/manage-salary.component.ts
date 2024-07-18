@@ -18,6 +18,7 @@ import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
 import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscription/filter-inscription.component";
 import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.html";
 import {ProfDto} from "../../../shared/model/prof/Prof.model";
+import {SessionSalaryComponent} from "./session-salary/session-salary.component";
 
 @Component({
     selector: 'app-manage-salary',
@@ -142,8 +143,15 @@ edit(item: SalaryDto) {
     }
 
 
+    openDetail(item: SalaryDto) {
+        const dialog = this._matDialog.open(SessionSalaryComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            maxHeight: "100%",
+            data: item
+        });
 
-
-
-
+    }
 }
