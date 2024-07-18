@@ -7,7 +7,7 @@
         <div>
             <mat-form-field appearance="outline" style="width: 100%">
                 <mat-label>code</mat-label>
-                <input required type="text"  matInput  placeholder="Code" [(ngModel)]="item.code"
+                <input required type="text" matInput placeholder="Code" [(ngModel)]="item.code"
                        name="code">
             </mat-form-field>
         </div>
@@ -56,7 +56,7 @@
         </div>
 
         <div>
-            <mat-checkbox  style="width: 100%" [(ngModel)]="item.payer" name="payer">
+            <mat-checkbox style="width: 100%" [(ngModel)]="item.payer" name="payer">
                 {{ item.payer ? 'Payer' : 'Non payer' }}
             </mat-checkbox>
         </div>
@@ -73,7 +73,7 @@
 
 
     </div>
-    <div mat-dialog-actions class="action">
+    <div mat-dialog-actions align="end" class="action">
         <button mat-raised-button type="button" (click)="hideCreateDialog()">{{ translate('cancel') }}</button>
         <button mat-raised-button color="primary" type="submit" (click)="save()">{{ translate('validate') }}</button>
     </div>

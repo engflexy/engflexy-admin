@@ -156,8 +156,19 @@ export class ScheduleComponent {
                 classe.title = res.cours.libelle;
                 classe.group = res.groupeEtudiant.libelle;
                 classe.teacher = res.prof.fullName;
-                this.schedules.unshift({...classe})
+                this.schedules.push({...classe});
+                // @ts-ignore
+                this.calendarOptions.events = [...this.schedules];
+
+                // Refresh the calendar to show the new event
+                const calendarApi = this.calendarComponent.getApi();
+                calendarApi.removeAllEvents(); // Clear all existing events
+                // @ts-ignore
+                calendarApi.addEventSource(this.schedules); // Add updated events
+
+                this.ref.markForCheck();
             }
+            this.item = new ScheduleProfDto()
         })
     }
 

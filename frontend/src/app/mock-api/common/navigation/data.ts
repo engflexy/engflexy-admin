@@ -102,7 +102,7 @@ export const adminNavigation: FuseNavigationItem[] = [
         id: 'manage-salary',
         title: 'Salary',
         type: 'basic',
-        icon: 'heroicons_solid:identification',
+        icon: 'heroicons_solid:academic-cap',
         link: '/admin/teacher-salary'
     }, {
         id: 'FAQS & News',

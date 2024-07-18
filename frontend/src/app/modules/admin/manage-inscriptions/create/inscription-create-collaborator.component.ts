@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
@@ -22,57 +22,20 @@ import {StringUtilService} from '../../../../zynerator/util/StringUtil.service';
 import {FormsModule} from "@angular/forms";
 
 import {TranslocoModule} from "@ngneat/transloco";
-
-
-import {
-    InscriptionCollaboratorService
-} from '../../../../shared/service/collaborator/grpe/InscriptionCollaborator.service';
 import {InscriptionDto} from '../../../../shared/model/grpe/Inscription.model';
 import {InscriptionCriteria} from '../../../../shared/criteria/grpe/InscriptionCriteria.model';
 import {ParcoursDto} from '../../../../shared/model/course/Parcours.model';
-import {ParcoursCollaboratorService} from '../../../../shared/service/collaborator/course/ParcoursCollaborator.service';
 import {QuizDto} from '../../../../shared/model/quiz/Quiz.model';
-import {QuizCollaboratorService} from '../../../../shared/service/collaborator/quiz/QuizCollaborator.service';
 import {SkillDto} from '../../../../shared/model/inscriptionref/Skill.model';
-import {
-    SkillCollaboratorService
-} from '../../../../shared/service/collaborator/inscriptionref/SkillCollaborator.service';
 import {InteretEtudiantDto} from '../../../../shared/model/inscriptionref/InteretEtudiant.model';
-import {
-    InteretEtudiantCollaboratorService
-} from '../../../../shared/service/collaborator/inscriptionref/InteretEtudiantCollaborator.service';
 import {FonctionDto} from '../../../../shared/model/inscriptionref/Fonction.model';
-import {
-    FonctionCollaboratorService
-} from '../../../../shared/service/collaborator/inscriptionref/FonctionCollaborator.service';
 import {EtudiantDto} from '../../../../shared/model/inscription/Etudiant.model';
-import {
-    EtudiantCollaboratorService
-} from '../../../../shared/service/collaborator/inscription/EtudiantCollaborator.service';
 import {EtatInscriptionDto} from '../../../../shared/model/inscriptionref/EtatInscription.model';
-import {
-    EtatInscriptionCollaboratorService
-} from '../../../../shared/service/collaborator/inscriptionref/EtatInscriptionCollaborator.service';
 import {GroupeTypeDto} from '../../../../shared/model/grpe/GroupeType.model';
-import {
-    GroupeTypeCollaboratorService
-} from '../../../../shared/service/collaborator/grpe/GroupeTypeCollaborator.service';
 import {StatutSocialDto} from '../../../../shared/model/inscriptionref/StatutSocial.model';
-import {
-    StatutSocialCollaboratorService
-} from '../../../../shared/service/collaborator/inscriptionref/StatutSocialCollaborator.service';
 import {PackStudentDto} from '../../../../shared/model/pack/PackStudent.model';
-import {
-    PackStudentCollaboratorService
-} from '../../../../shared/service/collaborator/pack/PackStudentCollaborator.service';
 import {GroupeEtudeDto} from '../../../../shared/model/grpe/GroupeEtude.model';
-import {
-    GroupeEtudeCollaboratorService
-} from '../../../../shared/service/collaborator/grpe/GroupeEtudeCollaborator.service';
 import {NiveauEtudeDto} from '../../../../shared/model/inscriptionref/NiveauEtude.model';
-import {
-    NiveauEtudeCollaboratorService
-} from '../../../../shared/service/collaborator/inscriptionref/NiveauEtudeCollaborator.service';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ParcoursAdminService} from "../../../../shared/service/admin/course/ParcoursAdmin.service";
 import {InscriptionAdminService} from "../../../../shared/service/admin/grpe/InscriptionAdmin.service";
@@ -168,58 +131,58 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
     private _validSkillCode = true;
     private _validSkillLibelle = true;
 
-        constructor(public dialogRef:MatDialogRef<InscriptionCreateCollaboratorComponent>, private stringUtilService: StringUtilService, private alert: FuseAlertService, protected service: InscriptionAdminService , private parcoursService: ParcoursAdminService, private quizService: QuizAdminService, private skillService: SkillAdminService, private interetEtudiantService: InteretEtudiantAdminService, private fonctionService: FonctionAdminService, private etudiantService: EtudiantAdminService, private etatInscriptionService: EtatInscriptionAdminService, private groupeTypeService: GroupeTypeAdminService, private statutSocialService: StatutSocialAdminService, private packStudentService: PackStudentAdminService, private groupeEtudeService: GroupeEtudeAdminService, private niveauEtudeService: NiveauEtudeAdminService, @Inject(PLATFORM_ID) private platformId?) {
+    constructor(public matDialog: MatDialogRef<InscriptionCreateCollaboratorComponent>, private stringUtilService: StringUtilService, private alert: FuseAlertService, protected service: InscriptionAdminService, private parcoursService: ParcoursAdminService, private quizService: QuizAdminService, private skillService: SkillAdminService, private interetEtudiantService: InteretEtudiantAdminService, private fonctionService: FonctionAdminService, private etudiantService: EtudiantAdminService, private etatInscriptionService: EtatInscriptionAdminService, private groupeTypeService: GroupeTypeAdminService, private statutSocialService: StatutSocialAdminService, private packStudentService: PackStudentAdminService, private groupeEtudeService: GroupeEtudeAdminService, private niveauEtudeService: NiveauEtudeAdminService, @Inject(PLATFORM_ID) private platformId?) {
 
     }
 
     ngOnInit(): void {
         this.etudiantService.findAll().subscribe((data) => {
             this.etudiants = data;
-            this._etudiantsFilter = {...this.etudiants}
+            this._etudiantsFilter = [...this.etudiants]
         });
         this.etatInscriptionService.findAll().subscribe((data) => {
             this.etatInscriptions = data;
-            this._etatInscriptionsFilter = {...this.etatInscriptions}
+            this._etatInscriptionsFilter = [...this.etatInscriptions]
         });
         this.parcoursService.findAll().subscribe((data) => {
             this.parcourss = data;
-            this._parcourssFilter = {...this.parcourss}
+            this._parcourssFilter = [...this.parcourss]
         });
         this.groupeEtudeService.findAll().subscribe((data) => {
             this.groupeEtudes = data;
-            this._groupeEtudesFilter = {...this.groupeEtudes}
+            this._groupeEtudesFilter = [...this.groupeEtudes]
         });
         this.groupeTypeService.findAll().subscribe((data) => {
             this.groupeTypes = data;
-            this._groupeTypesFilter = {...this.groupeTypes}
+            this._groupeTypesFilter = [...this.groupeTypes]
         });
         this.statutSocialService.findAll().subscribe((data) => {
             this.statutSocials = data;
-            this._statutSocialsFilter = {...this.statutSocials}
+            this._statutSocialsFilter = [...this.statutSocials]
         });
         this.interetEtudiantService.findAll().subscribe((data) => {
             this.interetEtudiants = data;
-            this._interetEtudiantsFilter = {...this.interetEtudiants}
+            this._interetEtudiantsFilter = [...this.interetEtudiants]
         });
         this.niveauEtudeService.findAll().subscribe((data) => {
             this.niveauEtudes = data;
-            this._niveauEtudesFilter = {...this.niveauEtudes}
+            this._niveauEtudesFilter = [...this.niveauEtudes]
         });
         this.fonctionService.findAll().subscribe((data) => {
             this.fonctions = data;
-            this._fonctionsFilter = {...this.fonctions}
+            this._fonctionsFilter = [...this.fonctions]
         });
         this.quizService.findAll().subscribe((data) => {
             this.quizs = data;
-            this._quizsFilter = {...this.quizs}
+            this._quizsFilter = [...this.quizs]
         });
         this.packStudentService.findAll().subscribe((data) => {
             this.packStudents = data;
-            this._packStudentsFilter = {...this.packStudents}
+            this._packStudentsFilter = [...this.packStudents]
         });
         this.skillService.findAll().subscribe((data) => {
             this.skills = data;
-            this._skillsFilter = {...this.skills}
+            this._skillsFilter = [...this.skills]
         });
     }
 
@@ -429,11 +392,8 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
     public saveWithShowOption(showList: boolean) {
         this.service.save().subscribe(item => {
             if (item != null) {
-                this.items.push({...item});
-                this.createDialog = false;
-
+                this.matDialog.close(this.item)
                 this.submitted = false;
-                this.item = new InscriptionDto();
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }

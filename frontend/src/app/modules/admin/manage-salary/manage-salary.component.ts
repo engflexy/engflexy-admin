@@ -7,20 +7,11 @@ import {MatPaginatorModule, PageEvent} from "@angular/material/paginator";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {TYPE_INSCRIPTION} from "../../../shared/utils/enums";
 import {PaginatedList} from "../../../zynerator/dto/PaginatedList.model";
-import {GroupeEtudiantCriteria} from "../../../shared/criteria/grpe/GroupeEtudiantCriteria.model";
-import {
-    GroupeEtudiantCollaboratorService
-} from "../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ParcoursDto} from "../../../shared/model/course/Parcours.model";
-import {ProfDto} from "../../../shared/model/prof/Prof.model";
-import {GroupeTypeDto} from "../../../shared/model/grpe/GroupeType.model";
-import {InscriptionCreateCollaboratorComponent} from "../manage-inscriptions/create/inscription-create-collaborator.component";
 import {SalaryDto} from "../../../shared/model/salary/Salary.model";
 import {MatSelectModule} from "@angular/material/select";
 import {CreateSalaryComponent} from "./create-salary/create-salary.component";
 import {SalaryCollaboratorService} from "../../../shared/service/collaborator/salary/SalaryCollaborator.service";
-import {InscriptionDto} from "../../../shared/model/grpe/Inscription.model";
 import {SalaryCriteria} from "../../../shared/criteria/salary/SalaryCriteria.model";
 import {FormsModule} from "@angular/forms";
 import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
@@ -76,7 +67,6 @@ export class ManageSalaryComponent {
     }
 
 
-
     handle_pageable_change(event: PageEvent) {
         this.pageable.page = event?.pageIndex
         this.pageable.maxResults = event?.pageSize
@@ -93,7 +83,7 @@ export class ManageSalaryComponent {
             maxHeight: "100%"
         });
         dialog.afterClosed().subscribe(res => {
-            if (res != null) this.criteria.list.unshift({...res})
+            if (res != null) this.criteria.list.push({...res})
         })
 
     }
