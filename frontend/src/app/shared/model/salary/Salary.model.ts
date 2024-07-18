@@ -34,7 +34,7 @@ export class SalaryDto extends BaseDto{
         this.totalPayment = null;
         this.totalBonusClassAverage = null;
         this.totalBonusWorkload = null;
-        this.prof = new ProfDto() ;
+       this.prof = new ProfDto() ;
 
         }
 

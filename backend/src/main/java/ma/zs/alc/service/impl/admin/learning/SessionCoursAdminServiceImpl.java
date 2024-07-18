@@ -3,11 +3,14 @@ package ma.zs.alc.service.impl.admin.learning;
 
 import ma.zs.alc.bean.core.learning.SessionCours;
 import ma.zs.alc.dao.criteria.core.learning.SessionCoursCriteria;
+import ma.zs.alc.dao.criteria.core.salary.SessionSalary;
 import ma.zs.alc.dao.facade.core.learning.SessionCoursDao;
 import ma.zs.alc.dao.specification.core.learning.SessionCoursSpecification;
 import ma.zs.alc.service.facade.admin.learning.SessionCoursAdminService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
@@ -135,6 +138,9 @@ public class SessionCoursAdminServiceImpl extends AbstractServiceImpl<SessionCou
         super.configure(SessionCours.class, SessionCoursSpecification.class);
     }
 
+    public Page<SessionSalary> findBySalaryId(Long id, Pageable pageable) {
+        return dao.findBySalaryId(id, pageable);
+    }
 
     @Autowired
     private SalaryAdminService salaryService ;

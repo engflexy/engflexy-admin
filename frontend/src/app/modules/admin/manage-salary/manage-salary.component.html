@@ -73,11 +73,16 @@
                                 matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
+                        <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
+                            <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
+                        </button>
+
+
                         <button mat-mini-fab class="mb-5" color="primary" (click)="onSearch()">
                             <mat-icon svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+
                         </button>
                     </div>
-
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -187,13 +192,14 @@
                                                     <mat-icon class="icon-size-4"
                                                               svgIcon="heroicons_solid:pencil"></mat-icon>
                                                 </button>
-                                                <button
+                                                <button (click)="openDetail(item)"
                                                     class="text-gray-500 group transition-colors duration-200
                                                     dark:hover:text-yellow-500 dark:text-gray-300
                                                      hover:text-yellow-500 focus:outline-none">
                                                     <mat-icon class="icon-size-4 group:hover:text-blue-500"
                                                               svgIcon="heroicons_outline:bars-3"></mat-icon>
                                                 </button>
+
                                             </div>
                                         </td>
                                     </tr>

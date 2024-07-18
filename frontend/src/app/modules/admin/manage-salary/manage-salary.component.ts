@@ -15,6 +15,10 @@ import {SalaryCollaboratorService} from "../../../shared/service/collaborator/sa
 import {SalaryCriteria} from "../../../shared/criteria/salary/SalaryCriteria.model";
 import {FormsModule} from "@angular/forms";
 import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
+import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscription/filter-inscription.component";
+import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.html";
+import {ProfDto} from "../../../shared/model/prof/Prof.model";
+import {SessionSalaryComponent} from "./session-salary/session-salary.component";
 
 @Component({
     selector: 'app-manage-salary',
@@ -35,21 +39,22 @@ import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
 })
 export class ManageSalaryComponent {
     status = TYPE_INSCRIPTION
-
-    criteria: PaginatedList<SalaryDto> = new PaginatedList<SalaryDto>()
-
     pageable: SalaryCriteria = new SalaryCriteria();
 
     constructor(private service: SalaryCollaboratorService,
                 private _matDialog: MatDialog) {
     }
 
-    ngOnInit() {
-        this.pageable.page = 0
-        this.pageable.maxResults = 5
-        this.pageable.prof = new ProfCriteria();
-        this.fetchData()
+    get criteria(): PaginatedList<SalaryDto> {
+        return this.service.criteriaList;
+    }
 
+    set criteria(value: PaginatedList<SalaryDto>) {
+        this.service.criteriaList = value;
+    }
+
+    ngOnInit() {
+        this.fetchData()
     }
 
     private fetchData() {
@@ -86,5 +91,67 @@ export class ManageSalaryComponent {
 
     }
 
+    openFilter() {
+        const dialog = this._matDialog.open(FilterSalaryComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
 
+        dialog.afterClosed().subscribe(res => {
+            if (res == null) {
+                this.pageable = new SalaryCriteria();
+                this.fetchData()
+            }
+        })
+    }
+
+edit(item: SalaryDto) {
+        const dialog = this._matDialog.open(CreateSalaryComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%",
+            data: item
+        });
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) {
+                const index = this.criteria.list.findIndex(s => s.id === res.id)
+                this.criteria.list[index] = {...res}
+            }
+        })
+    }
+
+
+
+    displayProf(item: ProfDto): string {
+        return item && item.fullName ? item.fullName : "";
+    }
+
+    filter(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this.pageable.prof.fullName = value
+        } else {
+            this.pageable.prof = new ProfCriteria()
+        }
+    }
+
+
+    openDetail(item: SalaryDto) {
+        const dialog = this._matDialog.open(SessionSalaryComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            maxHeight: "100%",
+            data: item
+        });
+
+    }
 }

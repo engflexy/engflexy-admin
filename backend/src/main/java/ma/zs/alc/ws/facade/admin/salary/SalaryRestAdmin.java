@@ -150,4 +150,5 @@ public class SalaryRestAdmin  extends AbstractController<Salary, SalaryDto, Sala
 
 
 
+
 }
