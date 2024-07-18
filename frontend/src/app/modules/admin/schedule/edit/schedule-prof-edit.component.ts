@@ -1,22 +1,17 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DatePipe} from "@angular/common";
 
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {Router} from '@angular/router';
 
-
-import {environment} from '../../../../../environments/environment';
-
 import {RoleService} from '../../../../zynerator/security/shared/service/Role.service';
-import {StringUtilService} from '../../../../zynerator/util/StringUtil.service';
 
 
 import {
     ScheduleProfCollaboratorService
 } from '../../../../shared/service/collaborator/prof/ScheduleProfCollaborator.service';
 import {ScheduleProfDto} from '../../../../shared/model/prof/ScheduleProf.model';
-import {ScheduleProfCriteria} from '../../../../shared/criteria/prof/ScheduleProfCriteria.model';
 import {GroupeEtudiantDto} from '../../../../shared/model/grpe/GroupeEtudiant.model';
 import {
     GroupeEtudiantCollaboratorService
@@ -35,34 +30,22 @@ import {EtudiantDto} from "../../../../shared/model/inscription/Etudiant.model";
 import {
     GroupeEtudiantDetailAdminService
 } from "../../../../shared/service/admin/grpe/GroupeEtudiantDetailAdmin.service";
+import {Class} from "../models/Class";
 
 @Component({
     selector: 'app-schedule-prof-create-collaborator',
     templateUrl: './schedule-prof-edit.component.html'
 })
 export class ScheduleProfEditComponent implements OnInit {
-
-    protected _submitted = false;
     protected _errorMessages = new Array<string>();
-
     protected datePipe: DatePipe;
-
     protected roleService: RoleService;
     protected router: Router;
-    protected stringUtilService: StringUtilService;
-    private _activeTab = 0;
-
     _groupeEtudiantsFilter: GroupeEtudiantDto[];
     _profsFilter: ProfDto[];
     _courssFilter: CoursDto[];
     _parcourssFilter: ParcoursDto[];
     _etudiantFilter: EtudiantDto[];
-
-
-    private _validProfRef = true;
-    private _validCoursCode = true;
-    private _validCoursLibelle = true;
-    courses: CoursDto[];
 
     constructor(private alert: FuseAlertService,
                 private service: ScheduleProfCollaboratorService,
@@ -72,36 +55,42 @@ export class ScheduleProfEditComponent implements OnInit {
                 private etudiantService: EtudiantCollaboratorService,
                 public refDialog: MatDialogRef<ScheduleProfEditComponent>,
                 private parcoursService: ParcoursCollaboratorService,
-                private profService: ProfCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
+                @Inject(MAT_DIALOG_DATA) public classe: Class,
+                private profService: ProfCollaboratorService) {
 
 
     }
 
     ngOnInit(): void {
 
-        if (this.item?.groupeEtudiant?.parcours?.id) {
-            this.getCoursByParcours()
+        if (this.classe?.id) {
+            this.service.findByIdWithAssociatedList(new ScheduleProfDto(this.classe.id))
+                .subscribe(res => {
+                    this.item = res
+                    this.item.startTime = new Date(res.startTime)
+                    this.item.endTime = new Date(res.endTime)
+                    console.log(this.item)
+                    if (this.item?.groupeEtudiant?.parcours?.id) {
+                        this.getCoursByParcours()
+                    }
+                })
         }
 
         this.groupeEtudiantService.findAll().subscribe((data) => {
             this.groupeEtudiants = data;
-            this._groupeEtudiantsFilter = {...this.groupeEtudiants}
+            this._groupeEtudiantsFilter = [...this.groupeEtudiants]
         });
         this.profService.findAll().subscribe((data) => {
             this.profs = data;
-            this._profsFilter = {...this.profs}
+            this._profsFilter = [...this.profs]
         });
         this.parcoursService.findAll().subscribe((data) => {
             this.parcourss = data;
-            this._parcourssFilter = {...this.parcourss}
+            this._parcourssFilter = [...this.parcourss]
         });
         this.etudiantService.findAll().subscribe((data) => {
             this.etudiants = data;
-            this._etudiantFilter = {...this.etudiants}
-        });
-        this.coursService.findAll().subscribe((data) => {
-            this.courss = data;
-            this._courssFilter = {...this.courss}
+            this._etudiantFilter = [...this.etudiants]
         });
     }
 
@@ -193,28 +182,24 @@ export class ScheduleProfEditComponent implements OnInit {
     }
 
 
-    public save(): void {
-        this.submitted = true;
+    public update(): void {
         this.validateForm();
         if (this.errorMessages.length === 0) {
-            this.saveWithShowOption(false);
+            this.editWithOption(false);
 
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
 
-    public saveWithShowOption(showList: boolean) {
+    public editWithOption(showList: boolean) {
         this.item.subject = this.item.cours.libelle
         this.item.grpName = this.item.groupeEtudiant.libelle
         this.item.profName = this.item.prof.fullName
-        this.service.save().subscribe(item => {
+        console.log(this.item)
+        this.service.edit().subscribe(item => {
             if (item != null) {
-                this.items.push({...item});
-                this.createDialog = false;
-                this.submitted = false;
-                this.item = new ScheduleProfDto();
-                this.refDialog.close(item);
+                this.refDialog.close(this.item);
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }
@@ -224,35 +209,10 @@ export class ScheduleProfEditComponent implements OnInit {
         });
     }
 
-
-    public hideCreateDialog() {
-        this.createDialog = false;
-        this.setValidation(true);
-    }
-
-
-    public setValidation(value: boolean) {
-    }
-
-
     public validateForm(): void {
         this.errorMessages = new Array<string>();
     }
 
-    displayStudentsOfGroup(): void {
-        console.log();
-    }
-
-
-    public async openCreateProf(prof: string) {
-        const isPermistted = await this.roleService.isPermitted('Prof', 'add');
-        if (isPermistted) {
-            this.prof = new ProfDto();
-            this.createProfDialog = true;
-        } else {
-            this.alert.show('info', 'something went wrong!, please try again.');
-        }
-    }
 
     get prof(): ProfDto {
         return this.profService.item;
@@ -296,15 +256,6 @@ export class ScheduleProfEditComponent implements OnInit {
     }
 
 
-    //hna
-    get createProfDialog(): boolean {
-        return this.profService.createDialog;
-    }
-
-    set createProfDialog(value: boolean) {
-        this.profService.createDialog = value;
-    }
-
     get groupeEtudiant(): GroupeEtudiantDto {
         return this.groupeEtudiantService.item;
     }
@@ -321,13 +272,6 @@ export class ScheduleProfEditComponent implements OnInit {
         this.groupeEtudiantService.items = value;
     }
 
-    get createGroupeEtudiantDialog(): boolean {
-        return this.groupeEtudiantService.createDialog;
-    }
-
-    set createGroupeEtudiantDialog(value: boolean) {
-        this.groupeEtudiantService.createDialog = value;
-    }
 
     get cours(): CoursDto {
         return this.coursService.item;
@@ -345,48 +289,6 @@ export class ScheduleProfEditComponent implements OnInit {
         this.coursService.items = value;
     }
 
-    get createCoursDialog(): boolean {
-        return this.coursService.createDialog;
-    }
-
-    set createCoursDialog(value: boolean) {
-        this.coursService.createDialog = value;
-    }
-
-
-    get validProfRef(): boolean {
-        return this._validProfRef;
-    }
-
-    set validProfRef(value: boolean) {
-        this._validProfRef = value;
-    }
-
-    get validCoursCode(): boolean {
-        return this._validCoursCode;
-    }
-
-    set validCoursCode(value: boolean) {
-        this._validCoursCode = value;
-    }
-
-    get validCoursLibelle(): boolean {
-        return this._validCoursLibelle;
-    }
-
-    set validCoursLibelle(value: boolean) {
-        this._validCoursLibelle = value;
-    }
-
-
-    get items(): Array<ScheduleProfDto> {
-        return this.service.items;
-    }
-
-    set items(value: Array<ScheduleProfDto>) {
-        this.service.items = value;
-    }
-
     get item(): ScheduleProfDto {
         return this.service.item;
     }
@@ -395,37 +297,6 @@ export class ScheduleProfEditComponent implements OnInit {
         this.service.item = value;
     }
 
-    get createDialog(): boolean {
-        return this.service.createDialog;
-    }
-
-    set createDialog(value: boolean) {
-        this.service.createDialog = value;
-    }
-
-    get criteria(): ScheduleProfCriteria {
-        return this.service.criteria;
-    }
-
-    set criteria(value: ScheduleProfCriteria) {
-        this.service.criteria = value;
-    }
-
-    get dateFormat() {
-        return environment.dateFormatCreate;
-    }
-
-    get dateFormatColumn() {
-        return environment.dateFormatCreate;
-    }
-
-    get submitted(): boolean {
-        return this._submitted;
-    }
-
-    set submitted(value: boolean) {
-        this._submitted = value;
-    }
 
     get errorMessages(): string[] {
         if (this._errorMessages == null) {
@@ -447,23 +318,14 @@ export class ScheduleProfEditComponent implements OnInit {
     }
 
 
-    get activeTab(): number {
-        return this._activeTab;
-    }
-
-    set activeTab(value: number) {
-        this._activeTab = value;
-    }
-
-
     protected readonly compareObjects = compareObjects;
 
 
     getCoursByParcours(data?) {
         let id: number = data?.id ? data.id : this.item.groupeEtudiant.parcours.id
         this.coursService.findByParcoursId(id).subscribe(data => {
-            this.courses = data;
-            console.log(data)
+            this._courssFilter = data;
+            this.courss = [...data];
         })
     }
 }

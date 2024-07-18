@@ -1,9 +1,9 @@
 <h1 mat-dialog-title
-    class="bg-gray-100 font-bold text-lg rounded-sm text-center items-center">
+    class="bg-gray-100 dark:bg-gray-600 font-bold text-lg rounded-sm text-center items-center">
     {{ data.title }}
 </h1>
 
-<div mat-dialog-content class="p-2 border border-gray-100 rounded-sm">
+<div mat-dialog-content class="p-2 border border-gray-100 dark:border-gray-600 rounded-sm">
     <div class="flex mt-4 text-lg flex-col">
 
         <div class="flex mb-3 pb-3 flex-row flex-wrap flex-grow items-center">
@@ -44,11 +44,20 @@
 </div>
 <mat-dialog-actions align="center">
     <button
-        class="px-6 w-full ml-3"
+        class="px-6 w-full mt-3"
         (click)="edit()"
         mat-flat-button
         [color]="'primary'">
         Edit
     </button>
+
+    <button
+        class="px-6 w-full mt-3"
+        (click)="delete()"
+        mat-flat-button
+        color="warn">
+        delete
+    </button>
+
 </mat-dialog-actions>
 

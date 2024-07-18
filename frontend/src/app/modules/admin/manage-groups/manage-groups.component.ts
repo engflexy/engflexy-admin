@@ -43,8 +43,8 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 })
 export class ManageGroupsComponent {
     status = TYPE_INSCRIPTION
-    criteria: PaginatedList<any> = new PaginatedList<any>()
-    pageable: GroupeEtudiantCriteria = new GroupeEtudiantCriteria();
+    paginatedList = new PaginatedList<GroupeEtudiantDto>()
+    criteria = new GroupeEtudiantCriteria();
     active_status = 1;
 
     constructor(private service: GroupeEtudiantCollaboratorService,
@@ -66,26 +66,25 @@ export class ManageGroupsComponent {
     }
 
     ngOnInit() {
-        this.fetchData()
+        this.findPaginatedByCriteria()
     }
 
 
-    private fetchData() {
+    private findPaginatedByCriteria() {
         if (this.active_status === 1) {
-            this.pageable.groupeEtude = new GroupeEtudeCriteria(2, 'group of students')
+            this.criteria.groupeEtude = new GroupeEtudeCriteria(2, 'group of students')
         } else {
-            this.pageable.groupeEtude = new GroupeEtudeCriteria(1, 'individual')
+            this.criteria.groupeEtude = new GroupeEtudeCriteria(1, 'individual')
         }
-        this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
-            this.criteria = res
-            console.log(res)
+        this.service.findPaginatedByCriteria(this.criteria).subscribe(res => {
+            this.paginatedList = res
         })
     }
 
     handle_pageable_change(event: PageEvent) {
-        this.pageable.page = event?.pageIndex
-        this.pageable.maxResults = event?.pageSize
-        this.fetchData();
+        this.criteria.page = event?.pageIndex
+        this.criteria.maxResults = event?.pageSize
+        this.findPaginatedByCriteria();
     }
 
     create() {
@@ -99,7 +98,7 @@ export class ManageGroupsComponent {
             maxHeight: "100%"
         });
         dialog.afterClosed().subscribe(res => {
-            if (res != null) this.criteria.list.unshift({...res})
+            if (res != null) this.paginatedList.list.unshift({...res})
         })
 
         /*
@@ -124,8 +123,8 @@ export class ManageGroupsComponent {
 
     changeType(index: number) {
         this.active_status = index
-        this.pageable = new GroupeEtudiantCriteria()
-        this.fetchData()
+        this.criteria = new GroupeEtudiantCriteria()
+        this.findPaginatedByCriteria()
     }
 
     delete(item: GroupeEtudiantDto) {
@@ -144,7 +143,7 @@ export class ManageGroupsComponent {
             // If the confirmation button pressed...
             if (result === 'confirmed') {
                 this.service.delete(item).subscribe(res => {
-                    this.criteria.list.splice(this.criteria.list.indexOf(item), 1)
+                    this.paginatedList.list.splice(this.paginatedList.list.indexOf(item), 1)
                 }, error => {
                     this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                 })
@@ -189,13 +188,13 @@ export class ManageGroupsComponent {
         });
         dialog.afterClosed().subscribe(res => {
             if (res != null) {
-                this.pageable = res
-                this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
-                    this.criteria = res
+                this.criteria = res
+                this.service.findPaginatedByCriteria(this.criteria).subscribe(res => {
+                    this.paginatedList = res
                 })
             } else {
-                this.pageable = new GroupeEtudiantCriteria()
-                this.fetchData()
+                this.criteria = new GroupeEtudiantCriteria()
+                this.findPaginatedByCriteria()
             }
         })
     }

@@ -52,7 +52,7 @@
                        [owlDateTime]="startTime" [owlDateTimeTrigger]="startTime"
                        name="startTime">
                 <mat-hint>MM/dd/yyyy, hh:mm</mat-hint>
-                <owl-date-time #startTime></owl-date-time>
+                <owl-date-time  [hour12Timer]="true" #startTime></owl-date-time>
             </mat-form-field>
 
             <!-- end time input -->
@@ -63,7 +63,7 @@
                        [owlDateTime]="endTime" [owlDateTimeTrigger]="endTime"
                        name="endTime">
                 <mat-hint>MM/dd/yyyy, hh:mm</mat-hint>
-                <owl-date-time #endTime></owl-date-time>
+                <owl-date-time [hour12Timer]="true" #endTime></owl-date-time>
             </mat-form-field>
 
         </div>

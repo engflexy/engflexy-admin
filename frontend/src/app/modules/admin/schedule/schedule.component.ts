@@ -65,8 +65,6 @@ export class ScheduleComponent {
     };
 
     private handle_dateSet(start: Date, end: Date) {
-        console.log(this.group)
-        console.log(this.prof)
         const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         const id = this.auth.authenticatedUser?.id
@@ -74,7 +72,6 @@ export class ScheduleComponent {
         this.scheduleService.get_schedules_between(startDate, endDate, id, this.group, this.prof)
             .subscribe(response => {
                 this.schedules = response
-                console.log(response)
                 // @ts-ignore
                 this.calendarOptions.events = this.schedules
                 this.ref.markForCheck()
@@ -106,9 +103,15 @@ export class ScheduleComponent {
     handleEventClick(clickInfo: EventClickArg) {
         const id = Number(clickInfo.event.id);
         const classe = this.schedules.filter(s => s.id === id)[0]
-        this.dialog.open(PopUpInfoComponent, {
+        const dialog = this.dialog.open(PopUpInfoComponent, {
             data: classe,
         });
+
+        dialog.afterClosed().subscribe((res: Class) => {
+            if (res != null) {
+                this.add_class_schedule(res);
+            }
+        })
     }
 
     handleEventReceive(info) {
@@ -156,20 +159,27 @@ export class ScheduleComponent {
                 classe.title = res.cours.libelle;
                 classe.group = res.groupeEtudiant.libelle;
                 classe.teacher = res.prof.fullName;
-                this.schedules.push({...classe});
-                // @ts-ignore
-                this.calendarOptions.events = [...this.schedules];
-
-                // Refresh the calendar to show the new event
-                const calendarApi = this.calendarComponent.getApi();
-                calendarApi.removeAllEvents(); // Clear all existing events
-                // @ts-ignore
-                calendarApi.addEventSource(this.schedules); // Add updated events
-
-                this.ref.markForCheck();
+                this.add_class_schedule(classe);
             }
             this.item = new ScheduleProfDto()
         })
     }
 
+    private add_class_schedule(classe: Class) {
+        if (classe?.id) {
+            const index = this.schedules.findIndex(s => s.id === classe.id)
+            this.schedules.splice(index, 1);
+        }
+        this.schedules.push({...classe});
+        // @ts-ignore
+        this.calendarOptions.events = [...this.schedules];
+
+        // Refresh the calendar to show the new event
+        const calendarApi = this.calendarComponent.getApi();
+        calendarApi.removeAllEvents(); // Clear all existing events
+        // @ts-ignore
+        calendarApi.addEventSource(this.schedules); // Add updated events
+
+        this.ref.markForCheck();
+    }
 }
