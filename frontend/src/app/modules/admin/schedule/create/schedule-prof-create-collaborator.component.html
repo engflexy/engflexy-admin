@@ -48,15 +48,8 @@
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>Start Time</mat-label>
                 <input required type="datetime-local" matInput
-                       [ngxMatDatetimePicker]="picker"
                        placeholder="Start Time" [(ngModel)]="item.startTime"
                        name="startTime">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker [showSpinners]="false"
-                                         [showSeconds]="false" [touchUi]="true"
-                                         [color]="'primary'" [hideTime]="false">
-                </ngx-mat-datetime-picker>
-
             </mat-form-field>
 
             <!-- end time input -->

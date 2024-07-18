@@ -8,7 +8,7 @@ export class SalaryDto extends BaseDto{
 
     public mois: null | number;
 
-    public annee: null | number;
+    public annee: null | number = 2024;
 
     public nbrSessionMensuel: null | number;
 
