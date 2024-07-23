@@ -7,4 +7,9 @@ export class Class {
     teacher: string
     backgroundColor: '#ff725e'
     borderColor: '#ff725e'
+
+    constructor() {
+        this.borderColor = '#ff725e'
+        this.backgroundColor = '#ff725e'
+    }
 }

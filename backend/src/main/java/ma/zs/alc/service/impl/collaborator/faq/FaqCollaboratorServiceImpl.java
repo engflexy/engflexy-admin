@@ -16,13 +16,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ma.zs.alc.service.facade.collaborator.faq.FaqTypeCollaboratorService ;
-import ma.zs.alc.bean.core.faq.FaqType ;
+import ma.zs.alc.service.facade.collaborator.faq.FaqTypeCollaboratorService;
+import ma.zs.alc.bean.core.faq.FaqType;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,25 +28,37 @@ import java.util.stream.Collectors;
 public class FaqCollaboratorServiceImpl extends AbstractServiceImpl<Faq, FaqCriteria, FaqDao> implements FaqCollaboratorService {
 
 
-@Autowired
-private FaqTypeConverter faqTypeConverter;
+    @Autowired
+    private FaqTypeConverter faqTypeConverter;
 
 
+    @Override
+    public Faq update(Faq faq) {
+        if (faq.getId() != null) {
+            Faq saved = findById(faq.getId());
+            saved.setAnswer(faq.getAnswer());
+            saved.setQuestion(faq.getQuestion());
+            saved.setFaqType(faqTypeService.findById(faq.getFaqType().getId()));
+            return dao.saveAndFlush(saved);
+        }
+        return null;
+    }
 
-
-    public void findOrSaveAssociatedObject(Faq t){
-        if( t != null) {
+    public void findOrSaveAssociatedObject(Faq t) {
+        if (t != null) {
             t.setFaqType(faqTypeService.findOrSave(t.getFaqType()));
         }
     }
 
-    public List<Faq> findByFaqTypeId(Long id){
+    public List<Faq> findByFaqTypeId(Long id) {
         return dao.findByFaqTypeId(id);
     }
-    public int deleteByFaqTypeId(Long id){
+
+    public int deleteByFaqTypeId(Long id) {
         return dao.deleteByFaqTypeId(id);
     }
-    public long countByFaqTypeId(Long id){
+
+    public long countByFaqTypeId(Long id) {
         return dao.countByFaqTypeId(id);
     }
 
@@ -58,23 +67,20 @@ private FaqTypeConverter faqTypeConverter;
     }
 
 
-
-
-
     public void configure() {
         super.configure(Faq.class, FaqSpecification.class);
     }
 
 
     @Autowired
-    private FaqTypeCollaboratorService faqTypeService ;
+    private FaqTypeCollaboratorService faqTypeService;
 
     public FaqCollaboratorServiceImpl(FaqDao dao) {
         super(dao);
     }
 
     //liste des faq
-    public List<Faq> findAll(){
+    public List<Faq> findAll() {
         return dao.findAll();
     }
 

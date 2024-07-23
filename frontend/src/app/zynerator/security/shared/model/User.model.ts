@@ -17,9 +17,7 @@ export class UserDto extends BaseDto {
     public accountNonLocked: null | boolean;
     public langue: LangueDto;
     public username: string;
-    public country: string;
-
-    public password: string;
+    public country: string;public password: string;
 
     public passwordChanged: null | boolean;
 

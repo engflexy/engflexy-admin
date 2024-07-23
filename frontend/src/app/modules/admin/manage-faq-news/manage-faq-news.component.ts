@@ -13,6 +13,7 @@ import {FaqDto} from "../../../shared/model/faq/Faq.model";
 import {FaqCollaboratorService} from "../../../shared/service/collaborator/faq/FaqCollaborator.service";
 import {MatDialog} from "@angular/material/dialog";
 import {FaqCreateAdminComponent} from "./create/faq-create-admin.component";
+import {FaqEditAdminComponent} from "./edit/faq-edit-admin.component";
 
 @Component({
     selector: 'app-manage-faq-news',
@@ -124,4 +125,16 @@ export class ManageFaqNewsComponent implements OnInit, OnDestroy {
     }
 
 
+    openEdit(faq: FaqDto) {
+        this.item = faq
+        const dialog = this._matDialog.open(FaqEditAdminComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+
+    }
 }

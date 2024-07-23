@@ -12,7 +12,8 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <!-- select par defaut prof du groupe -->
+
+
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>Teacher</mat-label>
                 <mat-select [(ngModel)]="item.prof" name="prof" [compareWith]="compareObjects">
@@ -35,10 +36,10 @@
             </mat-form-field>
 
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                <mat-label>Cours</mat-label>
-                <mat-select [(ngModel)]="item.cours" name="courss">
-                    <mat-option *ngFor="let courss of courses" [value]="courss">
-                        {{ courss.libelle }}
+                <mat-label>object</mat-label>
+                <mat-select [(ngModel)]="item.cours" [compareWith]="compareObjects" name="cours">
+                    <mat-option *ngFor="let item of _courssFilter" [value]="item">
+                        {{ item.libelle }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -47,23 +48,23 @@
             <!-- start time input -->
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>Start Time</mat-label>
-                <input required type="datetime-local" matInput
-                       [ngxMatDatetimePicker]="picker"
+                <input required matInput
                        placeholder="Start Time" [(ngModel)]="item.startTime"
+                       [owlDateTime]="startTime" [owlDateTimeTrigger]="startTime"
                        name="startTime">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker [showSpinners]="false" [showSeconds]="false"
-                                         [color]="'primary'" [hideTime]="false">
-                </ngx-mat-datetime-picker>
-
+                <mat-hint>MM/dd/yyyy, hh:mm</mat-hint>
+                <owl-date-time [hour12Timer]="true" #startTime></owl-date-time>
             </mat-form-field>
 
             <!-- end time input -->
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>End Time</mat-label>
-                <input required type="datetime-local" matInput
+                <input required matInput
                        placeholder="End Time" [(ngModel)]="item.endTime"
+                       [owlDateTime]="endTime" [owlDateTimeTrigger]="endTime"
                        name="endTime">
+                <mat-hint>MM/dd/yyyy, hh:mm</mat-hint>
+                <owl-date-time [hour12Timer]="true" #endTime></owl-date-time>
             </mat-form-field>
 
         </div>
@@ -77,7 +78,7 @@
     </button>
     <button
         class="px-6 ml-3"
-        (click)="save()"
+        (click)="update()"
         mat-flat-button
         [color]="'primary'">
         Create

@@ -30,4 +30,8 @@ export class SalaryCriteria extends BaseCriteria {
     public profs: Array<ProfCriteria>;
 
 
+    constructor() {
+        super();
+        this.prof = new ProfCriteria();
+    }
 }

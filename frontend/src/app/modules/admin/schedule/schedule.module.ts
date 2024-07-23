@@ -24,14 +24,9 @@ import {ScheduleComponent} from "./schedule.component";
 import {ScheduleProfEditComponent} from "./edit/schedule-prof-edit.component";
 import {ScheduleProfCreateCollaboratorComponent} from "./create/schedule-prof-create-collaborator.component";
 import {FullCalendarModule} from "@fullcalendar/angular";
-import {
-    NgxMatDatetimePickerModule,
-    NgxMatNativeDateAdapter,
-    NgxMatTimepickerModule
-} from "@angular-material-components/datetime-picker";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {TranslocoModule} from "@ngneat/transloco";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from "@danielmoncada/angular-datetime-picker";
 
 
 const routes: Route[] = [
@@ -67,11 +62,10 @@ const routes: Route[] = [
         NgOptimizedImage,
         ToFixed,
         PriceFormatPipe,
-        NgxMatDatetimePickerModule,
         MatDatepickerModule,
         TranslocoModule,
-        NgxMatDatetimePickerModule,
-        NgxMatTimepickerModule
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -81,7 +75,6 @@ const routes: Route[] = [
         ScheduleComponent
     ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
-        NgxMatNativeDateAdapter,
         Location]
 })
 export class ScheduleModule {

@@ -26,8 +26,8 @@ export class ScheduleProfDto extends BaseDto {
     public prof: ProfDto;
     public cours: CoursDto;
 
-    constructor() {
-        super();
+    constructor(id?:number) {
+        super(id);
 
         this.subject = '';
         this.startTime = null;

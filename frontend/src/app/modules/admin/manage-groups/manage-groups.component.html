@@ -118,7 +118,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                <ng-container *ngFor="let item of criteria?.list">
+                                <ng-container *ngFor="let item of paginatedList?.list">
                                     <tr>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
@@ -190,8 +190,8 @@
                             <div class="w-full  flex justify-center items-center my-5">
                                 <mat-paginator
                                     (page)="handle_pageable_change($event)"
-                                    [length]="criteria?.dataSize"
-                                    [pageSize]="pageable?.maxResults"
+                                    [length]="paginatedList?.dataSize"
+                                    [pageSize]="criteria?.maxResults"
                                     [pageSizeOptions]="[5,10,25]"
                                     aria-label="Select page">
                                 </mat-paginator>

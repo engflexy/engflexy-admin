@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import ma.zs.alc.bean.core.learning.SessionCours;
 import ma.zs.alc.dao.criteria.core.learning.SessionCoursCriteria;
+import ma.zs.alc.dao.criteria.core.salary.SessionSalary;
 import ma.zs.alc.service.facade.collaborator.learning.SessionCoursCollaboratorService;
 import ma.zs.alc.ws.converter.learning.SessionCoursConverter;
 import ma.zs.alc.ws.dto.learning.SessionCoursDto;
@@ -17,6 +18,8 @@ import ma.zs.alc.zynerator.util.PaginatedList;
 
 
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -177,6 +180,10 @@ public class SessionCoursRestCollaborator  extends AbstractController<SessionCou
     }
 
 
+    @GetMapping("pageabale/salary/{id}")
+    public Page<SessionSalary> findBySalaryId(@PathVariable Long id, @RequestParam("page") int page, @RequestParam("size")int size) {
+        return service.findBySalaryId(id, PageRequest.of(page, size));
+    }
 
 
 }

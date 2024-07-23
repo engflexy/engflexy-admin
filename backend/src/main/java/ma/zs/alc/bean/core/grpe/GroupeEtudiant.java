@@ -20,6 +20,7 @@ import ma.zs.alc.bean.core.prof.Prof;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ma.zs.alc.bean.core.prof.ScheduleProf;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
 import java.util.Objects;
@@ -55,6 +56,7 @@ public class GroupeEtudiant   extends AuditBusinessObject     {
     private Prof prof ;
 
     private List<GroupeEtudiantDetail> groupeEtudiantDetails ;
+//    private List<ScheduleProf> schedules ;
 
     public GroupeEtudiant(){
         super();
