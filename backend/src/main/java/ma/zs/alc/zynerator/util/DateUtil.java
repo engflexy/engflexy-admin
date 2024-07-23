@@ -53,19 +53,18 @@ public class DateUtil {
             LocalDateTime parse = LocalDateTime.parse(strDate, formatter);
             return parse;
         } catch (DateTimeParseException e) {
-            return null;
-        List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG_WITHOUT_TIME_ZONE, DATE_FORMAT_ENG_WITH_TIME_ZONE, DATE_FORMAT_ENG_WITHOUT_SECOND, DATE_FORMAT_ALTERNATIVE);
-
-        for (String format : dateFormats) {
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH);
-                return LocalDateTime.parse(strDate, formatter);
-            } catch (DateTimeParseException e) {
-                // Ignore and try the next format
+            List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG_WITHOUT_TIME_ZONE, DATE_FORMAT_ENG_WITH_TIME_ZONE, DATE_FORMAT_ENG_WITHOUT_SECOND, DATE_FORMAT_ALTERNATIVE);
+            for (String format : dateFormats) {
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH);
+                    return LocalDateTime.parse(strDate, formatter);
+                } catch (DateTimeParseException ee) {
+                    // Ignore and try the next format
+                }
             }
+            // Handle case where none of the formats match
+            throw new DateTimeParseException("Unable to parse date: " + strDate, strDate, 0);
         }
-        // Handle case where none of the formats match
-        throw new DateTimeParseException("Unable to parse date: " + strDate, strDate, 0);
     }
 
 
