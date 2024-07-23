@@ -9,23 +9,15 @@ import ma.zs.alc.service.facade.collaborator.collab.InscriptionCollaboratorColla
 import ma.zs.alc.service.facade.collaborator.vocab.CollaboratorCollaboratorService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 
-import static ma.zs.alc.zynerator.util.ListUtil.*;
-
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
-
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ma.zs.alc.service.facade.collaborator.collab.InscriptionCollaboratorStateCollaboratorService ;
-import ma.zs.alc.bean.core.collab.InscriptionCollaboratorState ;
 import ma.zs.alc.service.facade.collaborator.collab.PackageCollaboratorCollaboratorService ;
-import ma.zs.alc.bean.core.collab.PackageCollaborator ;
 
-
-import java.util.List;
 @Service
 public class InscriptionCollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<InscriptionCollaborator, InscriptionCollaboratorCriteria, InscriptionCollaboratorDao> implements InscriptionCollaboratorCollaboratorService {
 
@@ -72,7 +64,19 @@ public class InscriptionCollaboratorCollaboratorServiceImpl extends AbstractServ
     }
 
 
+    @Override
+    public List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher(){
+        return dao.findByCollaboratorTypeCollaboratorId(2L);
+    }
 
+    @Override
+    public List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool(){
+        return dao.findByCollaboratorTypeCollaboratorId(1L);
+    }
+
+    private List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorId(Long id){
+        return dao.findByCollaboratorTypeCollaboratorId(id);
+    }
 
 
 

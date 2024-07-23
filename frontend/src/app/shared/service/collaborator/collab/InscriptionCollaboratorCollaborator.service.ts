@@ -59,6 +59,7 @@ export class InscriptionCollaboratorCollaboratorService {
         return this.http.post<PaginatedList<InscriptionCollaboratorDto>>(this.API + 'find-paginated-by-criteria', criteria);
     }
 
+
     public save(): Observable<InscriptionCollaboratorDto> {
         return this.http.post<InscriptionCollaboratorDto>(this.API, this.item);
     }
@@ -70,6 +71,15 @@ export class InscriptionCollaboratorCollaboratorService {
 
     public edit(): Observable<InscriptionCollaboratorDto> {
         return this.http.put<InscriptionCollaboratorDto>(this.API, this.item);
+    }
+
+
+    public findByCollaboratorTypeCollaboratorIdSchool(): Observable<Array<InscriptionCollaboratorDto>> {
+        return this.http.get<Array<InscriptionCollaboratorDto>>(this.API + 'school');
+    }
+
+    public findByCollaboratorTypeCollaboratorIdTeacher(): Observable<Array<InscriptionCollaboratorDto>> {
+        return this.http.get<Array<InscriptionCollaboratorDto>>(this.API + 'teacher');
     }
 
 

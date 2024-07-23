@@ -1,0 +1,112 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+    <div class="w-full  items-center justify-center flex flex-col gap-4">
+        <div class="w-full">
+
+            <div class="flex gap-4">
+                <mat-form-field class="w-full">
+                    <mat-label>Collaborator</mat-label>
+                    <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="item.collaborator"  name="collaborator">
+
+                    <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator" [compareWith]="compareObjects" >
+                        <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator.username">
+                            {{collaborator.username}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+
+                <mat-form-field class="w-full">
+                    <mat-label>PackageCollaborator</mat-label>
+                    <input type="text" matInput (input)="filterPackageCollaborator(packageCollaboratorInput.value)" #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"  [(ngModel)]="item.packageCollaborator"  name="packageCollaborator">
+
+                    <mat-autocomplete #packageCollaboratorAutocomplete="matAutocomplete" [displayWith]="displayPackageCollaborator" [compareWith]="compareObjects" >
+                        <mat-option *ngFor="let packageCollaborator of _packageCollaboratorsFilter" [value]="packageCollaborator">
+                            {{packageCollaborator.libelle}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>NbrStudent</mat-label>
+                    <input required type="number" (ngModelChange)="calculatePrice()" matInput [step]="8" [min]="8"
+                           placeholder="NbrStudent" [(ngModel)]="item.nbrStudent"
+                           name="nbrStudent">
+                </mat-form-field>
+
+            </div>
+            <div class="flex gap-4">
+                <div>
+                    <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.logo" name="logo">
+                        {{ item.logo ? 'personal logo' : 'default logo' }}
+                    </mat-checkbox>
+                </div>
+
+
+                <div>
+                    <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.color"
+                                  name="color">
+                        {{ item.color ? 'personal logo' : 'default logo' }}
+                    </mat-checkbox>
+                </div>
+
+
+                <div>
+                    <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.bannerAd"
+                                  name="bannerAd">
+                        {{ item.bannerAd ? 'personal banner' : 'default banner' }}
+                    </mat-checkbox>
+                </div>
+
+            </div>
+
+            <div class="flex gap-4">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Price</mat-label>
+                    <input disabled required type="number" matInput placeholder="Price" [(ngModel)]="item.price"
+                           name="price">
+                </mat-form-field>
+            </div>
+            <div class="flex gap-4">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>startDate</mat-label>
+                    <input required type="date" matInput placeholder="StartDate" [(ngModel)]="item.startDate" name="startDate">
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>endDate</mat-label>
+                    <input required type="date" matInput placeholder="EndDate" [(ngModel)]="item.endDate"
+                           name="endDate">
+                </mat-form-field>
+
+
+                <mat-form-field class="w-full">
+                    <mat-label>InscriptionCollaboratorState</mat-label>
+                    <input type="text" matInput
+                           (input)="filterInscriptionCollaboratorState(inscriptionCollaboratorStateInput.value)"
+                           #inscriptionCollaboratorStateInput
+                           [matAutocomplete]="inscriptionCollaboratorStateAutocomplete"
+                           [(ngModel)]="item.inscriptionCollaboratorState" name="inscriptionCollaboratorState">
+
+                    <mat-autocomplete #inscriptionCollaboratorStateAutocomplete="matAutocomplete"
+                                      [displayWith]="displayInscriptionCollaboratorState"
+                                      [compareWith]="compareObjects">
+                        <mat-option *ngFor="let inscriptionCollaboratorState of _inscriptionCollaboratorStatesFilter"
+                                    [value]="inscriptionCollaboratorState">
+                            {{ inscriptionCollaboratorState.libelle }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>Clear</button>
+    <button class="px-6 ml-3" (click)="filter()" mat-flat-button [color]="'primary'"> Filter </button>
+</mat-dialog-actions>

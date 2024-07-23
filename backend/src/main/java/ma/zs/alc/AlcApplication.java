@@ -3,6 +3,7 @@ package ma.zs.alc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import ma.zs.alc.bean.core.collab.PackageCollaborator;
 import ma.zs.alc.bean.core.common.ClassAverageBonus;
 import ma.zs.alc.bean.core.common.Contact;
 import ma.zs.alc.bean.core.common.News;
@@ -35,6 +36,7 @@ import ma.zs.alc.bean.core.salary.Salary;
 import ma.zs.alc.bean.core.salary.WorkloadBonus;
 import ma.zs.alc.bean.core.salary.WorkloadBonusProf;
 import ma.zs.alc.bean.core.vocab.Vocabulary;
+import ma.zs.alc.dao.facade.core.collab.PackageCollaboratorDao;
 import ma.zs.alc.service.facade.admin.common.ClassAverageBonusAdminService;
 import ma.zs.alc.service.facade.admin.common.ContactAdminService;
 import ma.zs.alc.service.facade.admin.common.NewsAdminService;
@@ -87,6 +89,9 @@ import java.util.List;
 @SpringBootApplication
 //@EnableFeignClients
 public class AlcApplication {
+    @Autowired
+    private PackageCollaboratorDao packageDao;
+
     public static ConfigurableApplicationContext ctx;
     @Value("${engflexy.front.url}")
     private String FRONT_URL;
@@ -116,7 +121,17 @@ public class AlcApplication {
     @Bean
     public CommandLineRunner demo(UserService userService, RoleService roleService, ModelPermissionService modelPermissionService, ActionPermissionService actionPermissionService, ModelPermissionUserService modelPermissionUserService) {
         return (args) -> {
-            if (false) {
+            if (true) {
+                PackageCollaborator p = new PackageCollaborator();
+                p.setLibelle("default package");
+                p.setNbrStudentBase(BigDecimal.valueOf(8));
+                p.setPriceBase(BigDecimal.valueOf(800));
+                p.setPriceBannerAd(BigDecimal.valueOf(10));
+                p.setPriceColor(BigDecimal.valueOf(8));
+                p.setPriceColorOld(BigDecimal.valueOf(14));
+                p.setPriceLogo(BigDecimal.valueOf(20));
+                packageDao.save(p);
+                /*
                 ContentType type0 = new ContentType("IMAGE", "Image");
                 ContentType type1 = new ContentType("MULTI_IMAGE", "Multi-Image");
                 ContentType type2 = new ContentType("VIDEO", "Video");
@@ -126,7 +141,7 @@ public class AlcApplication {
                 contentTypeService.create(type1);
                 contentTypeService.create(type2);
                 contentTypeService.create(type3);
-                contentTypeService.create(type4);
+                contentTypeService.create(type4);*/
             }
             if (false) {
 /*

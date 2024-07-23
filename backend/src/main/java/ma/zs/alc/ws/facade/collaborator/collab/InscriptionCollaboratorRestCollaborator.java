@@ -52,6 +52,17 @@ public class InscriptionCollaboratorRestCollaborator  extends AbstractController
         return super.findAll();
     }
 
+    @Operation(summary = "Finds a list of all CollaboratorSchool")
+    @GetMapping("school")
+    public List<InscriptionCollaboratorDto> findByCollaboratorTypeCollaboratorIdSchool() throws Exception {
+        return super.findDtos(service.findByCollaboratorTypeCollaboratorIdSchool());
+    }
+
+    @Operation(summary = "Finds a list of all CollaboratorTeacher")
+    @GetMapping("teacher")
+    public List<InscriptionCollaboratorDto> findByCollaboratorTypeCollaboratorIdTeacher() throws Exception {
+        return super.findDtos(service.findByCollaboratorTypeCollaboratorIdTeacher());
+    }
 
 
     @Operation(summary = "Saves the specified  inscriptionCollaborator")

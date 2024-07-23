@@ -17,6 +17,8 @@ public class DateUtil {
     public static final String DATE_FORMAT_WITH_HOUR = "MM/dd/yyyy HH:mm";
     public static final String DATE_FORMAT_NAME = "ddMMyyyyHHmmss";
     public final static String DATE_FORMAT_FILE = "yyMMddHHmmss";
+    public static final String DATE_FORMAT_STANDARD = "yyyy-MM-dd";
+
     public static final String DATE_FORMAT_ALTERNATIVE = "MM/dd/yyyy HH:mm";
     public static final String HOUR_FORMAT = "HH:mm:ss";
     public static final String DATE_FORMAT_ENG = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
@@ -46,19 +48,15 @@ public class DateUtil {
     }
 
     public static LocalDateTime stringEnToDate(final String strDate) {
-        List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG_WITHOUT_TIME_ZONE, DATE_FORMAT_ENG_WITHOUT_SECOND, DATE_FORMAT_ALTERNATIVE);
-
-        for (String format : dateFormats) {
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH);
-                return LocalDateTime.parse(strDate, formatter);
-            } catch (DateTimeParseException e) {
-                // Ignore and try the next format
-            }
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_STANDARD);
+            LocalDateTime parse = LocalDateTime.parse(strDate, formatter);
+            return parse;
+        } catch (DateTimeParseException e) {
+            return null;
         }
-        // Handle case where none of the formats match
-        throw new DateTimeParseException("Unable to parse date: " + strDate, strDate, 0);
     }
+
 
     public static String getCurrentDate() {
         return dateToString(LocalDate.now());

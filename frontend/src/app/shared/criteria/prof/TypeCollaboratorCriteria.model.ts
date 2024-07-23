@@ -7,5 +7,12 @@ export class TypeCollaboratorCriteria  extends BaseCriteria  {
     public libelleLike: string;
     public code: string;
     public codeLike: string;
+    constructor(id?:number,lib?:string) {
+        super();
+        this.id = id;
+        this.libelle = lib;
+        this.code = '';
+
+    }
 
 }

@@ -35,6 +35,7 @@ export class InscriptionCollaboratorDto extends BaseDto {
         this.bannerAd = null;
         this.startDate = null;
         this.endDate = null;
+        this.inscriptionCollaboratorState=new InscriptionCollaboratorStateDto();
         this.packageCollaborator = new PackageCollaboratorDto();
 
     }
