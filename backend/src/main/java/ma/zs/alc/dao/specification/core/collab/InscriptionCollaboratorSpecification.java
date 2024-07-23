@@ -20,6 +20,8 @@ public class InscriptionCollaboratorSpecification extends AbstractSpecification<
         addPredicateFk("packageCollaborator", "id", criteria.getPackageCollaborator() == null ? null : criteria.getPackageCollaborator().getId());
         addPredicateFk("packageCollaborator", "id", criteria.getPackageCollaborators());
         addPredicateFk("collaborator", "id", criteria.getCollaborator() == null ? null : criteria.getCollaborator().getId());
+        addPredicateFk("collaborator.typeCollaborator", "id", (criteria.getCollaborator()==null || criteria.getCollaborator().getTypeCollaborator() == null) ? null : criteria.getCollaborator().getTypeCollaborator().getId());
+
         addPredicateFk("inscriptionCollaboratorState", "id", criteria.getInscriptionCollaboratorState() == null ? null : criteria.getInscriptionCollaboratorState().getId());
         addPredicateFk("inscriptionCollaboratorState", "id", criteria.getInscriptionCollaboratorStates());
         addPredicateFk("inscriptionCollaboratorState", "code", criteria.getInscriptionCollaboratorState() == null ? null : criteria.getInscriptionCollaboratorState().getCode());

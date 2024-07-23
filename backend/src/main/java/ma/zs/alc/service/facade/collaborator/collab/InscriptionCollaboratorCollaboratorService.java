@@ -28,4 +28,7 @@ public interface InscriptionCollaboratorCollaboratorService extends IService<Ins
     long countByInscriptionCollaboratorStateCode(String code);
 
 
+    List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher();
+
+    List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool();
 }
