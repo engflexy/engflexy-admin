@@ -190,13 +190,13 @@ public class ScheduleProfRestCollaborator extends AbstractController<SchedulePro
 
     @GetMapping("{id}/between/{start}/{end}")
     public List<ScheduleEvent> get_schedules_between(@PathVariable Long id, @PathVariable String start, @PathVariable String end, @RequestParam(name = "profId", required = false) Long profId, @RequestParam(name = "groupId", required = false) Long groupId) {
-        return service.get_schedules_between(id, DateUtil.stringEnToDate(start), DateUtil.stringEnToDate(end), profId, groupId);
+        return service.get_schedules_between(id, DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,start), DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,end), profId, groupId);
     }
 
 
     @GetMapping("group/{id}/between/{start}/{end}")
     public List<ScheduleEvent> get_group_schedules_between(@PathVariable Long id, @PathVariable String start, @PathVariable String end) {
-        return service.get_group_schedules_between(id, DateUtil.stringEnToDate(start), DateUtil.stringEnToDate(end));
+        return service.get_group_schedules_between(id, DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,start), DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,end));
     }
 
     @GetMapping("get-session-id/{course}/{group}")

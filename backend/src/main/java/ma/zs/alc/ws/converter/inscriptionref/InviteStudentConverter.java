@@ -43,11 +43,11 @@ public class InviteStudentConverter extends AbstractConverter<InviteStudent, Inv
             if(StringUtil.isNotEmpty(dto.getEmailInvited()))
                 item.setEmailInvited(dto.getEmailInvited());
             if(StringUtil.isNotEmpty(dto.getDateSentInvitation()))
-                item.setDateSentInvitation(DateUtil.stringEnToDate(dto.getDateSentInvitation()));
+                item.setDateSentInvitation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateSentInvitation()));
             if(StringUtil.isNotEmpty(dto.getDateAcceptInvitation()))
-                item.setDateAcceptInvitation(DateUtil.stringEnToDate(dto.getDateAcceptInvitation()));
+                item.setDateAcceptInvitation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateAcceptInvitation()));
             if(StringUtil.isNotEmpty(dto.getDatePayPack()))
-                item.setDatePayPack(DateUtil.stringEnToDate(dto.getDatePayPack()));
+                item.setDatePayPack(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDatePayPack()));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());

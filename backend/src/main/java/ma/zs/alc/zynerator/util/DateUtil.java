@@ -7,7 +7,10 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class DateUtil {
 
@@ -17,14 +20,14 @@ public class DateUtil {
     public static final String DATE_FORMAT_WITH_HOUR = "MM/dd/yyyy HH:mm";
     public static final String DATE_FORMAT_NAME = "ddMMyyyyHHmmss";
     public final static String DATE_FORMAT_FILE = "yyMMddHHmmss";
-    public static final String DATE_FORMAT_STANDARD = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_STANDARD = "yyyy-MM-dd";//2023-07-26
 
     public static final String DATE_FORMAT_ALTERNATIVE = "MM/dd/yyyy HH:mm";
     public static final String HOUR_FORMAT = "HH:mm:ss";
     public static final String DATE_FORMAT_ENG = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DATE_FORMAT_ENG_WITHOUT_SECOND = "yyyy-MM-dd'T'HH:mm";
+    //public static final String DATE_FORMAT_ENG_WITH_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DATE_FORMAT_ENG_WITH_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    public static final String DATE_FORMAT_ENG_WITHOUT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String DATE_FORMAT_PF = "EEE MMM dd HH:mm:ss z yyyy";
     public static final long ONE_HOUR = 60 * 60 * 1000L;
 
@@ -47,14 +50,31 @@ public class DateUtil {
         return ((d2.getTime() - d1.getTime() + ONE_HOUR) / (ONE_HOUR * 24));
     }
 
-    public static LocalDateTime stringEnToDate(final String strDate) {
+    public static LocalDateTime stringEnToDate(String format, final String strDate) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            LocalDateTime parse = LocalDateTime.parse(strDate, formatter);
+            return parse;
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
+
+/*
+public static LocalDateTime stringEnToDate(final String strDate) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_STANDARD);
             LocalDateTime parse = LocalDateTime.parse(strDate, formatter);
             return parse;
         } catch (DateTimeParseException e) {
-            List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG_WITHOUT_TIME_ZONE, DATE_FORMAT_ENG_WITH_TIME_ZONE, DATE_FORMAT_ENG_WITHOUT_SECOND, DATE_FORMAT_ALTERNATIVE);
+            List<String> dateFormats = Arrays.asList(
+                    DATE_FORMAT_STANDARD,
+                    DATE_FORMAT_ENG_WITHOUT_TIME_ZONE,
+                    DATE_FORMAT_ENG_WITH_TIME_ZONE,
+                    DATE_FORMAT_ENG_WITHOUT_SECOND,
+                    DATE_FORMAT_ALTERNATIVE);
             for (String format : dateFormats) {
+                System.out.println("format = " + format);
                 try {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH);
                     return LocalDateTime.parse(strDate, formatter);
@@ -67,6 +87,7 @@ public class DateUtil {
         }
     }
 
+*/
 
     public static String getCurrentDate() {
         return dateToString(LocalDate.now());

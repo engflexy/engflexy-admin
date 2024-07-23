@@ -40,7 +40,7 @@ public class PaiementConverter extends AbstractConverter<Paiement, PaiementDto> 
             if(StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
             if(StringUtil.isNotEmpty(dto.getDatePaiement()))
-                item.setDatePaiement(DateUtil.stringEnToDate(dto.getDatePaiement()));
+                item.setDatePaiement(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDatePaiement()));
             if(dto.getProf() != null && dto.getProf().getId() != null){
                 item.setProf(new Prof());
                 item.getProf().setId(dto.getProf().getId());

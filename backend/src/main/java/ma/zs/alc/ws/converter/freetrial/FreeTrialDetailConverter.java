@@ -1,32 +1,27 @@
-package  ma.zs.alc.ws.converter.freetrial;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
-import ma.zs.alc.ws.converter.freetrial.FreeTrialConverter;
+package ma.zs.alc.ws.converter.freetrial;
 
 import ma.zs.alc.bean.core.freetrial.FreeTrial;
+import ma.zs.alc.bean.core.freetrial.FreeTrialDetail;
 import ma.zs.alc.bean.core.inscription.Etudiant;
-
-
-import ma.zs.alc.zynerator.util.StringUtil;
+import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.ws.dto.freetrial.FreeTrialDetailDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.DateUtil;
-import ma.zs.alc.bean.core.freetrial.FreeTrialDetail;
-import ma.zs.alc.ws.dto.freetrial.FreeTrialDetailDto;
+import ma.zs.alc.zynerator.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class FreeTrialDetailConverter extends AbstractConverter<FreeTrialDetail, FreeTrialDetailDto> {
 
     @Autowired
-    private EtudiantConverter etudiantConverter ;
+    private EtudiantConverter etudiantConverter;
     @Autowired
-    private FreeTrialConverter freeTrialConverter ;
+    private FreeTrialConverter freeTrialConverter;
     private boolean freeTrial;
     private boolean etudiant;
 
-    public  FreeTrialDetailConverter() {
+    public FreeTrialDetailConverter() {
         super(FreeTrialDetail.class, FreeTrialDetailDto.class);
         init(true);
     }
@@ -36,37 +31,35 @@ public class FreeTrialDetailConverter extends AbstractConverter<FreeTrialDetail,
         if (dto == null) {
             return null;
         } else {
-        FreeTrialDetail item = new FreeTrialDetail();
-            if(StringUtil.isNotEmpty(dto.getId()))
+            FreeTrialDetail item = new FreeTrialDetail();
+            if (StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
-            if(dto.getPresence() != null)
+            if (dto.getPresence() != null)
                 item.setPresence(dto.getPresence());
-            if(dto.getWhatsUpMessageSent() != null)
+            if (dto.getWhatsUpMessageSent() != null)
                 item.setWhatsUpMessageSent(dto.getWhatsUpMessageSent());
-            if(StringUtil.isNotEmpty(dto.getDateEnvoiwhatsUpMessage()))
-                item.setDateEnvoiwhatsUpMessage(DateUtil.stringEnToDate(dto.getDateEnvoiwhatsUpMessage()));
-            if(dto.getEmailMessageSent() != null)
+            if (StringUtil.isNotEmpty(dto.getDateEnvoiwhatsUpMessage()))
+                item.setDateEnvoiwhatsUpMessage(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE, dto.getDateEnvoiwhatsUpMessage()));
+            if (dto.getEmailMessageSent() != null)
                 item.setEmailMessageSent(dto.getEmailMessageSent());
-            if(StringUtil.isNotEmpty(dto.getDateEnvoiEmailMessage()))
-                item.setDateEnvoiEmailMessage(DateUtil.stringEnToDate(dto.getDateEnvoiEmailMessage()));
-            if(dto.getAbonne() != null)
+            if (StringUtil.isNotEmpty(dto.getDateEnvoiEmailMessage()))
+                item.setDateEnvoiEmailMessage(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE, dto.getDateEnvoiEmailMessage()));
+            if (dto.getAbonne() != null)
                 item.setAbonne(dto.getAbonne());
-            if(dto.getFreeTrial() != null && dto.getFreeTrial().getId() != null){
+            if (dto.getFreeTrial() != null && dto.getFreeTrial().getId() != null) {
                 item.setFreeTrial(new FreeTrial());
                 item.getFreeTrial().setId(dto.getFreeTrial().getId());
                 item.getFreeTrial().setReference(dto.getFreeTrial().getReference());
             }
 
-            if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
+            if (dto.getEtudiant() != null && dto.getEtudiant().getId() != null) {
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
             }
 
 
-
-
-        return item;
+            return item;
         }
     }
 
@@ -76,38 +69,37 @@ public class FreeTrialDetailConverter extends AbstractConverter<FreeTrialDetail,
             return null;
         } else {
             FreeTrialDetailDto dto = new FreeTrialDetailDto();
-            if(StringUtil.isNotEmpty(item.getId()))
+            if (StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
-                dto.setPresence(item.getPresence());
-                dto.setWhatsUpMessageSent(item.getWhatsUpMessageSent());
-            if(item.getDateEnvoiwhatsUpMessage()!=null)
+            dto.setPresence(item.getPresence());
+            dto.setWhatsUpMessageSent(item.getWhatsUpMessageSent());
+            if (item.getDateEnvoiwhatsUpMessage() != null)
                 dto.setDateEnvoiwhatsUpMessage(DateUtil.dateTimeToString(item.getDateEnvoiwhatsUpMessage()));
-                dto.setEmailMessageSent(item.getEmailMessageSent());
-            if(item.getDateEnvoiEmailMessage()!=null)
+            dto.setEmailMessageSent(item.getEmailMessageSent());
+            if (item.getDateEnvoiEmailMessage() != null)
                 dto.setDateEnvoiEmailMessage(DateUtil.dateTimeToString(item.getDateEnvoiEmailMessage()));
-                dto.setAbonne(item.getAbonne());
-            if(this.freeTrial && item.getFreeTrial()!=null) {
-                dto.setFreeTrial(freeTrialConverter.toDto(item.getFreeTrial())) ;
+            dto.setAbonne(item.getAbonne());
+            if (this.freeTrial && item.getFreeTrial() != null) {
+                dto.setFreeTrial(freeTrialConverter.toDto(item.getFreeTrial()));
 
             }
-            if(this.etudiant && item.getEtudiant()!=null) {
-                dto.setEtudiant(etudiantConverter.toDto(item.getEtudiant())) ;
+            if (this.etudiant && item.getEtudiant() != null) {
+                dto.setEtudiant(etudiantConverter.toDto(item.getEtudiant()));
 
             }
 
 
-        return dto;
+            return dto;
         }
     }
 
     public void copy(FreeTrialDetailDto dto, FreeTrialDetail t) {
-    super.copy(dto, t);
-    if (dto.getFreeTrial() != null)
-        freeTrialConverter.copy(dto.getFreeTrial(), t.getFreeTrial());
-    if (dto.getEtudiant() != null)
-        etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
+        super.copy(dto, t);
+        if (dto.getFreeTrial() != null)
+            freeTrialConverter.copy(dto.getFreeTrial(), t.getFreeTrial());
+        if (dto.getEtudiant() != null)
+            etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
     }
-
 
 
     public void initObject(boolean value) {
@@ -116,28 +108,35 @@ public class FreeTrialDetailConverter extends AbstractConverter<FreeTrialDetail,
     }
 
 
-    public EtudiantConverter getEtudiantConverter(){
+    public EtudiantConverter getEtudiantConverter() {
         return this.etudiantConverter;
     }
-    public void setEtudiantConverter(EtudiantConverter etudiantConverter ){
+
+    public void setEtudiantConverter(EtudiantConverter etudiantConverter) {
         this.etudiantConverter = etudiantConverter;
     }
-    public FreeTrialConverter getFreeTrialConverter(){
+
+    public FreeTrialConverter getFreeTrialConverter() {
         return this.freeTrialConverter;
     }
-    public void setFreeTrialConverter(FreeTrialConverter freeTrialConverter ){
+
+    public void setFreeTrialConverter(FreeTrialConverter freeTrialConverter) {
         this.freeTrialConverter = freeTrialConverter;
     }
-    public boolean  isFreeTrial(){
+
+    public boolean isFreeTrial() {
         return this.freeTrial;
     }
-    public void  setFreeTrial(boolean freeTrial){
+
+    public void setFreeTrial(boolean freeTrial) {
         this.freeTrial = freeTrial;
     }
-    public boolean  isEtudiant(){
+
+    public boolean isEtudiant() {
         return this.etudiant;
     }
-    public void  setEtudiant(boolean etudiant){
+
+    public void setEtudiant(boolean etudiant) {
         this.etudiant = etudiant;
     }
 }

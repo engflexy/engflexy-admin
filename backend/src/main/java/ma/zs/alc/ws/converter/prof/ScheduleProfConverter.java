@@ -43,10 +43,10 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
                 item.setSubject(dto.getSubject());
 
             if (StringUtil.isNotEmpty(dto.getStartTime()))
-                item.setStartTime(DateUtil.stringEnToDate(dto.getStartTime()));
+                item.setStartTime(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getStartTime()));
 
             if (StringUtil.isNotEmpty(dto.getEndTime()))
-                item.setEndTime(DateUtil.stringEnToDate(dto.getEndTime()));
+                item.setEndTime(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getEndTime()));
 
             if (StringUtil.isNotEmpty(dto.getRef()))
                 item.setRef(dto.getRef());

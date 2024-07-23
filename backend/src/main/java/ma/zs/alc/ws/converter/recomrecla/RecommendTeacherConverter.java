@@ -49,7 +49,7 @@ public class RecommendTeacherConverter extends AbstractConverter<RecommendTeache
             if(StringUtil.isNotEmpty(dto.getLogin()))
                 item.setLogin(dto.getLogin());
             if(StringUtil.isNotEmpty(dto.getDateRecommamdation()))
-                item.setDateRecommamdation(DateUtil.stringEnToDate(dto.getDateRecommamdation()));
+                item.setDateRecommamdation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateRecommamdation()));
             if(dto.getProf() != null && dto.getProf().getId() != null){
                 item.setProf(new Prof());
                 item.getProf().setId(dto.getProf().getId());

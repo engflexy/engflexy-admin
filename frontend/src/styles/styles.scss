@@ -322,19 +322,20 @@
 }
 
 //pending status
-.type-Pending {
+.type-pending {
     --tw-bg-opacity: 1 !important;
     background-color: rgb(249 115 22 / var(--tw-bg-opacity)) !important;
 }
 
-.container-Pending {
+.container-pending {
     background-color: rgb(255 237 213 / 0.6) !important;
 }
 
-.text-Pending {
+.text-pending {
     --tw-text-opacity: 1 !important;
     color: rgb(249 115 22 / var(--tw-text-opacity)) !important;
 }
+
 //trial status
 .type-TRIAL {
     --tw-bg-opacity: 1 !important;
@@ -350,17 +351,18 @@
     color: rgb(249 115 22 / var(--tw-text-opacity)) !important;
 }
 
+
 //VALIDATED STATUS
-.type-PAID {
+.type-paid {
     --tw-bg-opacity: 1 !important;
     background-color: rgb(16 185 129 / var(--tw-bg-opacity)) !important;
 }
 
-.container-PAID {
+.container-paid {
     background-color: rgb(209 250 229 / 0.6) !important;
 }
 
-.text-PAID {
+.text-paid {
     --tw-text-opacity: 1 !important;
     color: rgb(16 185 129 / var(--tw-text-opacity)) !important;
 }
