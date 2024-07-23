@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 23, 2024 at 12:51 PM
+-- Generation Time: Jul 23, 2024 at 12:50 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -21,6 +21,22 @@ SET time_zone = "+00:00";
 -- Database: `zyn`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `action_permission`
+--
+
+CREATE TABLE `action_permission` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `action_permission`
 --
@@ -33,12 +49,49 @@ INSERT INTO `action_permission` (`createdon`, `id`, `updatedon`, `createdby`, `l
 ('2024-07-15 22:11:45.007178', 5, NULL, '', NULL, 'view', ''),
 ('2024-07-15 22:11:45.028075', 6, NULL, '', NULL, 'duplicate', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `action_permission_seq`
+--
+
+CREATE TABLE `action_permission_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `action_permission_seq`
 --
 
 INSERT INTO `action_permission_seq` (`next_val`) VALUES
 (7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categorie_prof`
+--
+
+CREATE TABLE `categorie_prof` (
+  `lesson_rate` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `level` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categorie_prof_seq`
+--
+
+CREATE TABLE `categorie_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `categorie_prof_seq`
@@ -47,12 +100,68 @@ INSERT INTO `action_permission_seq` (`next_val`) VALUES
 INSERT INTO `categorie_prof_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_average_bonus`
+--
+
+CREATE TABLE `class_average_bonus` (
+  `nombre_session` int(11) DEFAULT NULL,
+  `prix` decimal(38,2) DEFAULT NULL,
+  `collaborator` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_average_bonus_prof`
+--
+
+CREATE TABLE `class_average_bonus_prof` (
+  `annee` int(11) DEFAULT NULL,
+  `mois` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `salary` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_average_bonus_prof_seq`
+--
+
+CREATE TABLE `class_average_bonus_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `class_average_bonus_prof_seq`
 --
 
 INSERT INTO `class_average_bonus_prof_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_average_bonus_seq`
+--
+
+CREATE TABLE `class_average_bonus_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `class_average_bonus_seq`
@@ -61,6 +170,35 @@ INSERT INTO `class_average_bonus_prof_seq` (`next_val`) VALUES
 INSERT INTO `class_average_bonus_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `confirmation_token`
+--
+
+CREATE TABLE `confirmation_token` (
+  `confirmed_at` datetime(6) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `expires_at` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `confirmation_token_seq`
+--
+
+CREATE TABLE `confirmation_token_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `confirmation_token_seq`
 --
@@ -68,12 +206,60 @@ INSERT INTO `class_average_bonus_seq` (`next_val`) VALUES
 INSERT INTO `confirmation_token_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `replied` bit(1) DEFAULT NULL,
+  `collaborator` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_contact` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `set_from` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_seq`
+--
+
+CREATE TABLE `contact_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `contact_seq`
 --
 
 INSERT INTO `contact_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `content_type`
+--
+
+CREATE TABLE `content_type` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `content_type`
@@ -86,12 +272,46 @@ INSERT INTO `content_type` (`createdon`, `id`, `updatedon`, `code`, `createdby`,
 ('2024-07-15 22:11:43.276069', 4, NULL, 'CONTENT', '', 'Content', ''),
 ('2024-07-15 22:11:43.294072', 5, NULL, 'QUIZ', '', 'Quiz', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `content_type_seq`
+--
+
+CREATE TABLE `content_type_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `content_type_seq`
 --
 
 INSERT INTO `content_type_seq` (`next_val`) VALUES
 (101);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cours`
+--
+
+CREATE TABLE `cours` (
+  `nombre_link_en_cours` int(11) DEFAULT NULL,
+  `nombre_link_finalise` int(11) DEFAULT NULL,
+  `nombre_section_en_cours` int(11) DEFAULT NULL,
+  `nombre_section_finalise` int(11) DEFAULT NULL,
+  `numero_order` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `parcours` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cours`
@@ -112,12 +332,50 @@ INSERT INTO `cours` (`nombre_link_en_cours`, `nombre_link_finalise`, `nombre_sec
 (0, 0, 0, 2, 0, '2024-07-15 23:43:40.523274', 12, 7, '2024-07-15 23:45:35.602179', 'M', 'anonymousUser', 'Laboris cum quibusda', NULL, 'Mollitia id numquam ', 'anonymousUser'),
 (0, 0, 0, 3, 0, '2024-07-16 20:33:44.094868', 52, 7, '2024-07-16 20:35:08.727570', 'C', 'anonymousUser', 'description', NULL, 'course 2', 'anonymousUser');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cours_seq`
+--
+
+CREATE TABLE `cours_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `cours_seq`
 --
 
 INSERT INTO `cours_seq` (`next_val`) VALUES
 (151);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dictionary`
+--
+
+CREATE TABLE `dictionary` (
+  `learned` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `definition` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL,
+  `word` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dictionary_seq`
+--
+
+CREATE TABLE `dictionary_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `dictionary_seq`
@@ -126,12 +384,54 @@ INSERT INTO `cours_seq` (`next_val`) VALUES
 INSERT INTO `dictionary_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `etablissement`
+--
+
+CREATE TABLE `etablissement` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `etablissement_seq`
+--
+
+CREATE TABLE `etablissement_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `etablissement_seq`
 --
 
 INSERT INTO `etablissement_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `etat_inscription`
+--
+
+CREATE TABLE `etat_inscription` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `etat_inscription`
@@ -142,6 +442,16 @@ INSERT INTO `etat_inscription` (`createdon`, `id`, `updatedon`, `createdby`, `li
 (NULL, 3, '2024-07-15 22:44:21.469824', NULL, 'refused', 'E3', 'anonymousUser'),
 (NULL, 4, '2024-07-15 22:42:32.847142', NULL, 'PAID', 'E4', 'anonymousUser');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `etat_inscription_seq`
+--
+
+CREATE TABLE `etat_inscription_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `etat_inscription_seq`
 --
@@ -149,12 +459,63 @@ INSERT INTO `etat_inscription` (`createdon`, `id`, `updatedon`, `createdby`, `li
 INSERT INTO `etat_inscription_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `etudiant_review`
+--
+
+CREATE TABLE `etudiant_review` (
+  `review` int(11) DEFAULT NULL,
+  `cours` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_review` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `etudiant_review_seq`
+--
+
+CREATE TABLE `etudiant_review_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `etudiant_review_seq`
 --
 
 INSERT INTO `etudiant_review_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exercice`
+--
+
+CREATE TABLE `exercice` (
+  `content_type` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `numero` bigint(20) DEFAULT NULL,
+  `quiz` bigint(20) DEFAULT NULL,
+  `section` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `exercice`
@@ -172,12 +533,39 @@ INSERT INTO `exercice` (`content_type`, `createdon`, `id`, `numero`, `quiz`, `se
 (1, '2024-07-16 20:36:01.284334', 52, 1, NULL, 52, NULL, ';http://localhost:8036/app/images/IenHrtJMrl/IenHrtJMrl.jpg', 'anonymousUser', ';Legend d\'image', 'title exercise', ''),
 (5, '2024-07-16 20:36:27.348981', 53, 2, 52, 52, NULL, NULL, 'anonymousUser', NULL, NULL, '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exercice_seq`
+--
+
+CREATE TABLE `exercice_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `exercice_seq`
 --
 
 INSERT INTO `exercice_seq` (`next_val`) VALUES
 (151);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq`
+--
+
+CREATE TABLE `faq` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `faq_type` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `answer` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `question` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `faq`
@@ -191,12 +579,68 @@ INSERT INTO `faq` (`createdon`, `faq_type`, `id`, `updatedon`, `answer`, `create
 ('2024-07-15 23:53:56.797120', 3, 5, NULL, 'Lorem ipsum dolor sit amet, consectetur\n', 'anonymousUser', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', ''),
 ('2024-07-16 20:45:12.216219', 2, 52, NULL, 'Dolore nesciunt qui', 'anonymousUser', 'Iure praesentium tem', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_etudiant`
+--
+
+CREATE TABLE `faq_etudiant` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `faq_type` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_etudiant_seq`
+--
+
+CREATE TABLE `faq_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `faq_etudiant_seq`
 --
 
 INSERT INTO `faq_etudiant_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_prof`
+--
+
+CREATE TABLE `faq_prof` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `faq_type` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_prof_seq`
+--
+
+CREATE TABLE `faq_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `faq_prof_seq`
@@ -205,12 +649,38 @@ INSERT INTO `faq_etudiant_seq` (`next_val`) VALUES
 INSERT INTO `faq_prof_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_seq`
+--
+
+CREATE TABLE `faq_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `faq_seq`
 --
 
 INSERT INTO `faq_seq` (`next_val`) VALUES
 (151);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_type`
+--
+
+CREATE TABLE `faq_type` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `destinataire` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `faq_type`
@@ -222,12 +692,48 @@ INSERT INTO `faq_type` (`createdon`, `id`, `updatedon`, `createdby`, `destinatai
 (NULL, 3, '2024-07-18 10:42:44.995599', NULL, 'student', 'subscription', 'anonymousUser'),
 (NULL, 4, NULL, NULL, 'teacher', 'salary', NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_type_seq`
+--
+
+CREATE TABLE `faq_type_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `faq_type_seq`
 --
 
 INSERT INTO `faq_type_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fonction`
+--
+
+CREATE TABLE `fonction` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fonction_seq`
+--
+
+CREATE TABLE `fonction_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fonction_seq`
@@ -236,12 +742,107 @@ INSERT INTO `faq_type_seq` (`next_val`) VALUES
 INSERT INTO `fonction_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial`
+--
+
+CREATE TABLE `free_trial` (
+  `email_teacher_sent` bit(1) DEFAULT NULL,
+  `nombre_student_abonne` int(11) DEFAULT NULL,
+  `nombre_student_present` int(11) DEFAULT NULL,
+  `nombre_student_total` int(11) DEFAULT NULL,
+  `whats_teacher_sent` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_free_trial` datetime(6) DEFAULT NULL,
+  `date_free_trial_premier_deuxieme_rappel` datetime(6) DEFAULT NULL,
+  `date_free_trial_premier_rappel` datetime(6) DEFAULT NULL,
+  `email_teacher_sending_date` datetime(6) DEFAULT NULL,
+  `free_trial_configuration` bigint(20) DEFAULT NULL,
+  `free_trial_student_email_template` bigint(20) DEFAULT NULL,
+  `free_trial_student_whats_template` bigint(20) DEFAULT NULL,
+  `free_trial_teacher_email_template` bigint(20) DEFAULT NULL,
+  `free_trial_teacher_whats_template` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `niveau_etude` bigint(20) DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `statut_free_trial` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `whats_teacher_sending_date` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trialformule`
+--
+
+CREATE TABLE `free_trialformule` (
+  `status` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_confirmation` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `inscription` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `dayspeerweek` varchar(255) DEFAULT NULL,
+  `teacher_age_range` varchar(255) DEFAULT NULL,
+  `teacher_genderoption` varchar(255) DEFAULT NULL,
+  `teacher_personnality` varchar(255) DEFAULT NULL,
+  `timeperday` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trialformule_seq`
+--
+
+CREATE TABLE `free_trialformule_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `free_trialformule_seq`
 --
 
 INSERT INTO `free_trialformule_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_configuration`
+--
+
+CREATE TABLE `free_trial_configuration` (
+  `nombre_student_max` int(11) DEFAULT NULL,
+  `nombre_student_min` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_application_debut` datetime(6) DEFAULT NULL,
+  `date_application_fin` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_configuration_seq`
+--
+
+CREATE TABLE `free_trial_configuration_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `free_trial_configuration_seq`
@@ -250,12 +851,54 @@ INSERT INTO `free_trialformule_seq` (`next_val`) VALUES
 INSERT INTO `free_trial_configuration_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_detail`
+--
+
+CREATE TABLE `free_trial_detail` (
+  `abonne` bit(1) DEFAULT NULL,
+  `email_message_sent` bit(1) DEFAULT NULL,
+  `presence` bit(1) DEFAULT NULL,
+  `whats_up_message_sent` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_envoi_email_message` datetime(6) DEFAULT NULL,
+  `date_envoiwhats_up_message` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `free_trial` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_detail_seq`
+--
+
+CREATE TABLE `free_trial_detail_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `free_trial_detail_seq`
 --
 
 INSERT INTO `free_trial_detail_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_seq`
+--
+
+CREATE TABLE `free_trial_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `free_trial_seq`
@@ -264,12 +907,66 @@ INSERT INTO `free_trial_detail_seq` (`next_val`) VALUES
 INSERT INTO `free_trial_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_student_email_template`
+--
+
+CREATE TABLE `free_trial_student_email_template` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `corps` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `object` varchar(255) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_student_email_template_seq`
+--
+
+CREATE TABLE `free_trial_student_email_template_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `free_trial_student_email_template_seq`
 --
 
 INSERT INTO `free_trial_student_email_template_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_student_whats_template`
+--
+
+CREATE TABLE `free_trial_student_whats_template` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `corps` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `object` varchar(255) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_student_whats_template_seq`
+--
+
+CREATE TABLE `free_trial_student_whats_template_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `free_trial_student_whats_template_seq`
@@ -278,12 +975,66 @@ INSERT INTO `free_trial_student_email_template_seq` (`next_val`) VALUES
 INSERT INTO `free_trial_student_whats_template_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_teacher_email_template`
+--
+
+CREATE TABLE `free_trial_teacher_email_template` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `corps` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `object` varchar(255) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_teacher_email_template_seq`
+--
+
+CREATE TABLE `free_trial_teacher_email_template_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `free_trial_teacher_email_template_seq`
 --
 
 INSERT INTO `free_trial_teacher_email_template_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_teacher_whats_template`
+--
+
+CREATE TABLE `free_trial_teacher_whats_template` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `corps` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `object` varchar(255) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `free_trial_teacher_whats_template_seq`
+--
+
+CREATE TABLE `free_trial_teacher_whats_template_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `free_trial_teacher_whats_template_seq`
@@ -292,12 +1043,55 @@ INSERT INTO `free_trial_teacher_email_template_seq` (`next_val`) VALUES
 INSERT INTO `free_trial_teacher_whats_template_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etat`
+--
+
+CREATE TABLE `groupe_etat` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etat_seq`
+--
+
+CREATE TABLE `groupe_etat_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `groupe_etat_seq`
 --
 
 INSERT INTO `groupe_etat_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etude`
+--
+
+CREATE TABLE `groupe_etude` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `nombre_etudiant` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `groupe_etude`
@@ -307,12 +1101,51 @@ INSERT INTO `groupe_etude` (`createdon`, `id`, `nombre_etudiant`, `updatedon`, `
 (NULL, 1, NULL, NULL, NULL, 'group for one student', 'individual', NULL),
 (NULL, 2, NULL, '2024-07-18 14:26:50.753783', NULL, 'group of +2 students', 'group of students', 'anonymousUser');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etude_seq`
+--
+
+CREATE TABLE `groupe_etude_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `groupe_etude_seq`
 --
 
 INSERT INTO `groupe_etude_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etudiant`
+--
+
+CREATE TABLE `groupe_etudiant` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_debut` datetime(6) DEFAULT NULL,
+  `date_fin` datetime(6) DEFAULT NULL,
+  `groupe_etat` bigint(20) DEFAULT NULL,
+  `groupe_etude` bigint(20) DEFAULT NULL,
+  `groupe_type` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `nombre_place` bigint(20) DEFAULT NULL,
+  `nombre_place_non_vide` bigint(20) DEFAULT NULL,
+  `nombre_placevide` bigint(20) DEFAULT NULL,
+  `nre_courses` bigint(20) DEFAULT NULL,
+  `nre_courses_coming` bigint(20) DEFAULT NULL,
+  `nre_courses_completed` bigint(20) DEFAULT NULL,
+  `parcours` bigint(20) DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `groupe_etudiant`
@@ -325,6 +1158,22 @@ INSERT INTO `groupe_etudiant` (`createdon`, `date_debut`, `date_fin`, `groupe_et
 ('2024-07-15 23:50:21.391476', NULL, NULL, NULL, 2, NULL, 4, 2, NULL, NULL, 50, NULL, NULL, 4, 5, NULL, 'anonymousUser', 'group test', 'test', ''),
 ('2024-07-16 20:39:57.463870', NULL, NULL, NULL, 1, NULL, 52, 1, NULL, NULL, 44, NULL, NULL, 2, 5, NULL, 'anonymousUser', 'Perry Weiss', 'Non consequat Omnis', ''),
 ('2024-07-18 11:19:38.288953', NULL, NULL, NULL, 1, NULL, 102, 1, NULL, NULL, NULL, NULL, NULL, 1, 5, NULL, 'anonymousUser', 'group test', NULL, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etudiant_detail`
+--
+
+CREATE TABLE `groupe_etudiant_detail` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `groupe_etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `groupe_etudiant_detail`
@@ -345,12 +1194,32 @@ INSERT INTO `groupe_etudiant_detail` (`createdon`, `etudiant`, `groupe_etudiant`
 ('2024-07-16 20:39:57.482909', 3, 52, 52, NULL, 'anonymousUser', ''),
 ('2024-07-18 11:19:38.355871', 3, 102, 102, NULL, 'anonymousUser', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etudiant_detail_seq`
+--
+
+CREATE TABLE `groupe_etudiant_detail_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `groupe_etudiant_detail_seq`
 --
 
 INSERT INTO `groupe_etudiant_detail_seq` (`next_val`) VALUES
 (201);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_etudiant_seq`
+--
+
+CREATE TABLE `groupe_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `groupe_etudiant_seq`
@@ -359,12 +1228,86 @@ INSERT INTO `groupe_etudiant_detail_seq` (`next_val`) VALUES
 INSERT INTO `groupe_etudiant_seq` (`next_val`) VALUES
 (201);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_type`
+--
+
+CREATE TABLE `groupe_type` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupe_type_seq`
+--
+
+CREATE TABLE `groupe_type_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `groupe_type_seq`
 --
 
 INSERT INTO `groupe_type_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `home_work`
+--
+
+CREATE TABLE `home_work` (
+  `cours` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `type_home_work` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL,
+  `url_image` varchar(255) DEFAULT NULL,
+  `url_video` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `home_work_etudiant`
+--
+
+CREATE TABLE `home_work_etudiant` (
+  `note` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_home_work` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `home_work` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `resultat` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `home_work_etudiant_seq`
+--
+
+CREATE TABLE `home_work_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `home_work_etudiant_seq`
@@ -373,12 +1316,53 @@ INSERT INTO `groupe_type_seq` (`next_val`) VALUES
 INSERT INTO `home_work_etudiant_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `home_work_question`
+--
+
+CREATE TABLE `home_work_question` (
+  `numero` int(11) DEFAULT NULL,
+  `point_reponse_juste` decimal(38,2) DEFAULT NULL,
+  `point_reponsefausse` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `home_work` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `type_de_question` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `home_work_question_seq`
+--
+
+CREATE TABLE `home_work_question_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `home_work_question_seq`
 --
 
 INSERT INTO `home_work_question_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `home_work_seq`
+--
+
+CREATE TABLE `home_work_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `home_work_seq`
@@ -387,12 +1371,75 @@ INSERT INTO `home_work_question_seq` (`next_val`) VALUES
 INSERT INTO `home_work_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `howe_work_q_s_t_reponse`
+--
+
+CREATE TABLE `howe_work_q_s_t_reponse` (
+  `numero` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `home_work_question` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `etat_reponse` varchar(255) DEFAULT NULL,
+  `lib` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `howe_work_q_s_t_reponse_seq`
+--
+
+CREATE TABLE `howe_work_q_s_t_reponse_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `howe_work_q_s_t_reponse_seq`
 --
 
 INSERT INTO `howe_work_q_s_t_reponse_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inscription`
+--
+
+CREATE TABLE `inscription` (
+  `note_quiz_niveau` decimal(38,2) DEFAULT NULL,
+  `numero_inscription` int(11) DEFAULT NULL,
+  `quiz_finished` bit(1) DEFAULT NULL,
+  `subscription_finished` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `etat_inscription` bigint(20) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `fonction` bigint(20) DEFAULT NULL,
+  `groupe_etude` bigint(20) DEFAULT NULL,
+  `groupe_type` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `interet_etudiant` bigint(20) DEFAULT NULL,
+  `niveau_etude` bigint(20) DEFAULT NULL,
+  `pack_student` bigint(20) DEFAULT NULL,
+  `parcours` bigint(20) DEFAULT NULL,
+  `quiz` bigint(20) DEFAULT NULL,
+  `skill` bigint(20) DEFAULT NULL,
+  `statut_social` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `date_registration` varchar(255) DEFAULT NULL,
+  `datedebutinscription` varchar(255) DEFAULT NULL,
+  `datefininscription` varchar(255) DEFAULT NULL,
+  `skype` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `inscription`
@@ -411,12 +1458,72 @@ INSERT INTO `inscription` (`note_quiz_niveau`, `numero_inscription`, `quiz_finis
 ('0.00', 0, b'0', b'0', '2024-07-16 20:42:39.845474', 4, 3, NULL, NULL, NULL, 53, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 'anonymousUser', NULL, NULL, NULL, NULL, ''),
 ('0.00', 1, b'0', b'0', '2024-07-18 15:06:24.061401', NULL, 102, NULL, NULL, NULL, 102, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'anonymousUser', NULL, '07/18/2024 17:06', NULL, NULL, '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inscription_collaborator`
+--
+
+CREATE TABLE `inscription_collaborator` (
+  `banner_ad` bit(1) DEFAULT NULL,
+  `color` bit(1) DEFAULT NULL,
+  `logo` bit(1) DEFAULT NULL,
+  `nbr_student` decimal(38,2) DEFAULT NULL,
+  `price` decimal(38,2) DEFAULT NULL,
+  `collaborator` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `end_date` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `inscription_collaborator_state` bigint(20) DEFAULT NULL,
+  `package_collaborator` bigint(20) DEFAULT NULL,
+  `start_date` datetime(6) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inscription_collaborator_seq`
+--
+
+CREATE TABLE `inscription_collaborator_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `inscription_collaborator_seq`
 --
 
 INSERT INTO `inscription_collaborator_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inscription_collaborator_state`
+--
+
+CREATE TABLE `inscription_collaborator_state` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inscription_collaborator_state_seq`
+--
+
+CREATE TABLE `inscription_collaborator_state_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `inscription_collaborator_state_seq`
@@ -425,12 +1532,48 @@ INSERT INTO `inscription_collaborator_seq` (`next_val`) VALUES
 INSERT INTO `inscription_collaborator_state_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inscription_seq`
+--
+
+CREATE TABLE `inscription_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `inscription_seq`
 --
 
 INSERT INTO `inscription_seq` (`next_val`) VALUES
 (201);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `interet_etudiant`
+--
+
+CREATE TABLE `interet_etudiant` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `interet_etudiant_seq`
+--
+
+CREATE TABLE `interet_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `interet_etudiant_seq`
@@ -439,12 +1582,70 @@ INSERT INTO `inscription_seq` (`next_val`) VALUES
 INSERT INTO `interet_etudiant_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invite_student`
+--
+
+CREATE TABLE `invite_student` (
+  `is_accepted` bit(1) DEFAULT NULL,
+  `is_paid_pack` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_accept_invitation` datetime(6) DEFAULT NULL,
+  `date_pay_pack` datetime(6) DEFAULT NULL,
+  `date_sent_invitation` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `email_invited` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invite_student_seq`
+--
+
+CREATE TABLE `invite_student_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `invite_student_seq`
 --
 
 INSERT INTO `invite_student_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `langue`
+--
+
+CREATE TABLE `langue` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `langue_seq`
+--
+
+CREATE TABLE `langue_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `langue_seq`
@@ -453,12 +1654,55 @@ INSERT INTO `invite_student_seq` (`next_val`) VALUES
 INSERT INTO `langue_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `level_test_configuration`
+--
+
+CREATE TABLE `level_test_configuration` (
+  `note_max` decimal(38,2) DEFAULT NULL,
+  `note_min` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `parcours` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `level_test_configuration_seq`
+--
+
+CREATE TABLE `level_test_configuration_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `level_test_configuration_seq`
 --
 
 INSERT INTO `level_test_configuration_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_permission`
+--
+
+CREATE TABLE `model_permission` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `model_permission`
@@ -547,12 +1791,41 @@ INSERT INTO `model_permission` (`createdon`, `id`, `updatedon`, `createdby`, `li
 ('2024-07-15 22:11:44.896068', 80, NULL, '', NULL, 'ModelPermission', ''),
 ('2024-07-15 22:11:44.922067', 81, NULL, '', NULL, 'ActionPermission', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_permission_seq`
+--
+
+CREATE TABLE `model_permission_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `model_permission_seq`
 --
 
 INSERT INTO `model_permission_seq` (`next_val`) VALUES
 (82);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_permission_utilisateur`
+--
+
+CREATE TABLE `model_permission_utilisateur` (
+  `value` bit(1) DEFAULT NULL,
+  `action_permission` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `model_permission` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `user` bigint(20) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `sub_attribute` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `model_permission_utilisateur`
@@ -7591,12 +8864,56 @@ INSERT INTO `model_permission_utilisateur` (`value`, `action_permission`, `creat
 (b'1', 5, '2024-07-18 15:06:23.899418', 7019, 78, NULL, 102, 'anonymousUser', NULL, ''),
 (b'1', 6, '2024-07-18 15:06:23.905418', 7020, 78, NULL, 102, 'anonymousUser', NULL, '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_permission_utilisateur_seq`
+--
+
+CREATE TABLE `model_permission_utilisateur_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `model_permission_utilisateur_seq`
 --
 
 INSERT INTO `model_permission_utilisateur_seq` (`next_val`) VALUES
 (7021);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news`
+--
+
+CREATE TABLE `news` (
+  `numero_ordre` int(11) DEFAULT NULL,
+  `collaborator` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_debut` datetime(6) DEFAULT NULL,
+  `date_fin` datetime(6) DEFAULT NULL,
+  `date_news` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `destinataire` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news_seq`
+--
+
+CREATE TABLE `news_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `news_seq`
@@ -7605,12 +8922,72 @@ INSERT INTO `model_permission_utilisateur_seq` (`next_val`) VALUES
 INSERT INTO `news_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `niveau_etude`
+--
+
+CREATE TABLE `niveau_etude` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `niveau_etude_seq`
+--
+
+CREATE TABLE `niveau_etude_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `niveau_etude_seq`
 --
 
 INSERT INTO `niveau_etude_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `package_collaborator`
+--
+
+CREATE TABLE `package_collaborator` (
+  `nbr_student_base` decimal(38,2) DEFAULT NULL,
+  `price_banner_ad` decimal(38,2) DEFAULT NULL,
+  `price_banner_ad_old` decimal(38,2) DEFAULT NULL,
+  `price_base` decimal(38,2) DEFAULT NULL,
+  `price_base_old` decimal(38,2) DEFAULT NULL,
+  `price_color` decimal(38,2) DEFAULT NULL,
+  `price_color_old` decimal(38,2) DEFAULT NULL,
+  `price_logo` decimal(38,2) DEFAULT NULL,
+  `price_logo_old` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `package_collaborator_seq`
+--
+
+CREATE TABLE `package_collaborator_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `package_collaborator_seq`
@@ -7619,12 +8996,97 @@ INSERT INTO `niveau_etude_seq` (`next_val`) VALUES
 INSERT INTO `package_collaborator_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pack_student`
+--
+
+CREATE TABLE `pack_student` (
+  `for_groupe` bit(1) DEFAULT NULL,
+  `nombre_cours` int(11) DEFAULT NULL,
+  `total_students` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `level` bigint(20) DEFAULT NULL,
+  `price` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `expectations` varchar(255) DEFAULT NULL,
+  `img_url` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `old_price` varchar(255) DEFAULT NULL,
+  `pre_requisites` varchar(255) DEFAULT NULL,
+  `rating` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL,
+  `why_take_this_course` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pack_student_seq`
+--
+
+CREATE TABLE `pack_student_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `pack_student_seq`
 --
 
 INSERT INTO `pack_student_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paiement`
+--
+
+CREATE TABLE `paiement` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_paiement` datetime(6) DEFAULT NULL,
+  `groupe_etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paiement_inscription_collaborator`
+--
+
+CREATE TABLE `paiement_inscription_collaborator` (
+  `discount` decimal(38,2) DEFAULT NULL,
+  `remaining` decimal(38,2) DEFAULT NULL,
+  `total` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `inscription_collaborator` bigint(20) DEFAULT NULL,
+  `paiement_date` datetime(6) DEFAULT NULL,
+  `paiement_inscription_collaborator_state` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paiement_inscription_collaborator_seq`
+--
+
+CREATE TABLE `paiement_inscription_collaborator_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `paiement_inscription_collaborator_seq`
@@ -7633,6 +9095,32 @@ INSERT INTO `pack_student_seq` (`next_val`) VALUES
 INSERT INTO `paiement_inscription_collaborator_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paiement_inscription_collaborator_state`
+--
+
+CREATE TABLE `paiement_inscription_collaborator_state` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paiement_inscription_collaborator_state_seq`
+--
+
+CREATE TABLE `paiement_inscription_collaborator_state_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `paiement_inscription_collaborator_state_seq`
 --
@@ -7640,12 +9128,46 @@ INSERT INTO `paiement_inscription_collaborator_seq` (`next_val`) VALUES
 INSERT INTO `paiement_inscription_collaborator_state_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paiement_seq`
+--
+
+CREATE TABLE `paiement_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `paiement_seq`
 --
 
 INSERT INTO `paiement_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `parcours`
+--
+
+CREATE TABLE `parcours` (
+  `nombre_cours` int(11) DEFAULT NULL,
+  `numero_order` int(11) DEFAULT NULL,
+  `collaborator` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_creation` datetime(6) DEFAULT NULL,
+  `date_publication` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `parcours`
@@ -7662,12 +9184,44 @@ INSERT INTO `parcours` (`nombre_cours`, `numero_order`, `collaborator`, `created
 (0, 0, NULL, '2024-07-16 20:28:57.997532', NULL, NULL, 52, NULL, 'O', 'yellow', 'anonymousUser', 'Non eos et eu vel r', 'Obcaecati aliquip il', '', NULL),
 (0, 0, NULL, '2024-07-16 20:32:57.899844', NULL, NULL, 53, NULL, 'C', 'green', 'anonymousUser', 'Culpa excepturi dol', 'Consectetur aut cons', '', NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `parcours_seq`
+--
+
+CREATE TABLE `parcours_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `parcours_seq`
 --
 
 INSERT INTO `parcours_seq` (`next_val`) VALUES
 (151);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `price`
+--
+
+CREATE TABLE `price` (
+  `for_group` bit(1) DEFAULT NULL,
+  `nre_course` decimal(38,2) DEFAULT NULL,
+  `nre_hours` decimal(38,2) DEFAULT NULL,
+  `nre_month` decimal(38,2) DEFAULT NULL,
+  `old_price` decimal(38,2) DEFAULT NULL,
+  `price` decimal(38,2) DEFAULT NULL,
+  `collaborator` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `lib` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `price`
@@ -7680,6 +9234,16 @@ INSERT INTO `price` (`for_group`, `nre_course`, `nre_hours`, `nre_month`, `old_p
 (b'1', '8.00', '8.00', '1.00', '400.00', '249.00', NULL, NULL, 6, NULL, NULL, 'PREMIUM', NULL),
 (b'0', '1.00', '1.00', '0.00', '200.00', '79.00', NULL, NULL, 53971, NULL, NULL, 'ONE-CLASS', NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `price_seq`
+--
+
+CREATE TABLE `price_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `price_seq`
 --
@@ -7687,12 +9251,65 @@ INSERT INTO `price` (`for_group`, `nre_course`, `nre_hours`, `nre_month`, `old_p
 INSERT INTO `price_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prof_review`
+--
+
+CREATE TABLE `prof_review` (
+  `review` int(11) DEFAULT NULL,
+  `cours` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_review` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prof_review_seq`
+--
+
+CREATE TABLE `prof_review_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `prof_review_seq`
 --
 
 INSERT INTO `prof_review_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `question`
+--
+
+CREATE TABLE `question` (
+  `point_reponse_juste` decimal(38,2) DEFAULT NULL,
+  `point_reponsefausse` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `numero` bigint(20) DEFAULT NULL,
+  `quiz` bigint(20) DEFAULT NULL,
+  `type_de_question` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL,
+  `url_img` varchar(255) DEFAULT NULL,
+  `url_video` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`
@@ -7714,12 +9331,43 @@ INSERT INTO `question` (`point_reponse_juste`, `point_reponsefausse`, `createdon
 ('1.00', '0.00', '2024-07-16 20:36:27.297860', 52, 1, 52, 5, '2024-07-16 20:36:27.349984', 'anonymousUser', 'Aperiam ipsa adipis', NULL, 'anonymousUser', NULL, NULL),
 ('1.00', '0.00', '2024-07-16 20:36:27.346980', 53, 2, 52, 5, '2024-07-16 20:36:27.351988', 'anonymousUser', 'Occaecat consequatur', NULL, 'anonymousUser', NULL, NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `question_seq`
+--
+
+CREATE TABLE `question_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `question_seq`
 --
 
 INSERT INTO `question_seq` (`next_val`) VALUES
 (151);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz`
+--
+
+CREATE TABLE `quiz` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_debut` datetime(6) DEFAULT NULL,
+  `date_fin` datetime(6) DEFAULT NULL,
+  `exercice` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `numero` bigint(20) DEFAULT NULL,
+  `seuil_reussite` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `lib` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `quiz`
@@ -7732,12 +9380,52 @@ INSERT INTO `quiz` (`createdon`, `date_debut`, `date_fin`, `exercice`, `id`, `nu
 ('2024-07-15 23:46:53.525415', NULL, NULL, NULL, 4, NULL, NULL, '2024-07-15 23:46:53.536409', 'anonymousUser', NULL, NULL, 'anonymousUser'),
 ('2024-07-16 20:36:27.273858', NULL, NULL, NULL, 52, NULL, NULL, '2024-07-16 20:36:27.349984', 'anonymousUser', NULL, NULL, 'anonymousUser');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz_etudiant`
+--
+
+CREATE TABLE `quiz_etudiant` (
+  `note` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `question_current` bigint(20) DEFAULT NULL,
+  `quiz` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `resultat` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz_etudiant_seq`
+--
+
+CREATE TABLE `quiz_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `quiz_etudiant_seq`
 --
 
 INSERT INTO `quiz_etudiant_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz_seq`
+--
+
+CREATE TABLE `quiz_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `quiz_seq`
@@ -7746,12 +9434,84 @@ INSERT INTO `quiz_etudiant_seq` (`next_val`) VALUES
 INSERT INTO `quiz_seq` (`next_val`) VALUES
 (151);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reclamation_etudiant`
+--
+
+CREATE TABLE `reclamation_etudiant` (
+  `post_view` bit(1) DEFAULT NULL,
+  `traite` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_reclamation` datetime(6) DEFAULT NULL,
+  `date_reponse` datetime(6) DEFAULT NULL,
+  `date_traitement` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `type_reclamation_etudiant` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `commentaire_traiteur` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `objet_reclamation_etudiant` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
+  `set_from` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reclamation_etudiant_seq`
+--
+
+CREATE TABLE `reclamation_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `reclamation_etudiant_seq`
 --
 
 INSERT INTO `reclamation_etudiant_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reclamation_prof`
+--
+
+CREATE TABLE `reclamation_prof` (
+  `post_view` bit(1) DEFAULT NULL,
+  `traite` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_reclamation` datetime(6) DEFAULT NULL,
+  `date_reponse` datetime(6) DEFAULT NULL,
+  `date_traitement` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `type_reclamation_prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `commentaire_traiteur` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `objet_reclamation_prof` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reclamation_prof_seq`
+--
+
+CREATE TABLE `reclamation_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `reclamation_prof_seq`
@@ -7760,12 +9520,64 @@ INSERT INTO `reclamation_etudiant_seq` (`next_val`) VALUES
 INSERT INTO `reclamation_prof_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recommend_teacher`
+--
+
+CREATE TABLE `recommend_teacher` (
+  `nombrevote` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_recommamdation` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `commentaire` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `login` varchar(255) DEFAULT NULL,
+  `nom` varchar(255) DEFAULT NULL,
+  `prenom` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `telephone` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recommend_teacher_seq`
+--
+
+CREATE TABLE `recommend_teacher_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `recommend_teacher_seq`
 --
 
 INSERT INTO `recommend_teacher_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reponse`
+--
+
+CREATE TABLE `reponse` (
+  `etat_reponse` bit(1) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `numero` bigint(20) DEFAULT NULL,
+  `question` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `lib` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `reponse`
@@ -7794,12 +9606,72 @@ INSERT INTO `reponse` (`etat_reponse`, `createdon`, `id`, `numero`, `question`, 
 (b'1', '2024-07-16 20:36:27.314989', 52, 1, 52, NULL, 'anonymousUser', 'true', NULL, ''),
 (b'1', '2024-07-16 20:36:27.347980', 53, 1, 53, NULL, 'anonymousUser', 'false', NULL, '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reponse_etudiant`
+--
+
+CREATE TABLE `reponse_etudiant` (
+  `note` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `question` bigint(20) DEFAULT NULL,
+  `quiz_etudiant` bigint(20) DEFAULT NULL,
+  `reponse` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `answer` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reponse_etudiant_home_work`
+--
+
+CREATE TABLE `reponse_etudiant_home_work` (
+  `note` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `home_work_etudiant` bigint(20) DEFAULT NULL,
+  `home_work_question` bigint(20) DEFAULT NULL,
+  `howe_work_q_s_t_reponse` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `answer` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `prof_note` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reponse_etudiant_home_work_seq`
+--
+
+CREATE TABLE `reponse_etudiant_home_work_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `reponse_etudiant_home_work_seq`
 --
 
 INSERT INTO `reponse_etudiant_home_work_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reponse_etudiant_seq`
+--
+
+CREATE TABLE `reponse_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `reponse_etudiant_seq`
@@ -7808,12 +9680,39 @@ INSERT INTO `reponse_etudiant_home_work_seq` (`next_val`) VALUES
 INSERT INTO `reponse_etudiant_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reponse_seq`
+--
+
+CREATE TABLE `reponse_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `reponse_seq`
 --
 
 INSERT INTO `reponse_seq` (`next_val`) VALUES
 (151);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_app`
+--
+
+CREATE TABLE `role_app` (
+  `created_at` datetime(6) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `authority` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `role_app`
@@ -7838,12 +9737,38 @@ INSERT INTO `role_app` (`created_at`, `createdon`, `id`, `updated_at`, `updatedo
 ('2024-07-16 20:37:29.260165', '2024-07-16 20:37:29.261142', 18, NULL, NULL, 'ROLE_STUDENT', 'anonymousUser', ''),
 ('2024-07-18 15:06:19.333409', '2024-07-18 15:06:19.367399', 19, NULL, NULL, 'ROLE_STUDENT', 'anonymousUser', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_seq`
+--
+
+CREATE TABLE `role_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `role_seq`
 --
 
 INSERT INTO `role_seq` (`next_val`) VALUES
 (20);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_utilisateur`
+--
+
+CREATE TABLE `role_utilisateur` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `role` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `user` bigint(20) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `role_utilisateur`
@@ -7866,12 +9791,45 @@ INSERT INTO `role_utilisateur` (`createdon`, `id`, `role`, `updatedon`, `user`, 
 ('2024-07-16 20:37:30.964375', 14, 18, NULL, 52, 'anonymousUser', ''),
 ('2024-07-18 15:06:23.919400', 15, 19, NULL, 102, 'anonymousUser', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_utilisateur_seq`
+--
+
+CREATE TABLE `role_utilisateur_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `role_utilisateur_seq`
 --
 
 INSERT INTO `role_utilisateur_seq` (`next_val`) VALUES
 (16);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salary`
+--
+
+CREATE TABLE `salary` (
+  `annee` int(11) DEFAULT NULL,
+  `mois` int(11) DEFAULT NULL,
+  `nbr_session_mensuel` decimal(38,2) DEFAULT NULL,
+  `payer` bit(1) DEFAULT NULL,
+  `total_bonus_class_average` decimal(38,2) DEFAULT NULL,
+  `total_bonus_workload` decimal(38,2) DEFAULT NULL,
+  `total_payment` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `salary`
@@ -7886,12 +9844,48 @@ INSERT INTO `salary` (`annee`, `mois`, `nbr_session_mensuel`, `payer`, `total_bo
 (2024, 0, '30.00', b'0', '0.00', '0.00', '123.00', '2024-07-15 23:53:28.282473', 6, 12, NULL, 'f45', 'anonymousUser', ''),
 (2022, 1, '20.00', b'1', '0.00', '0.00', '100.00', '2024-07-16 20:44:27.806093', 52, 6, NULL, 'f35', 'anonymousUser', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salary_seq`
+--
+
+CREATE TABLE `salary_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `salary_seq`
 --
 
 INSERT INTO `salary_seq` (`next_val`) VALUES
 (151);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schedule_prof`
+--
+
+CREATE TABLE `schedule_prof` (
+  `course_finished` bit(1) DEFAULT NULL,
+  `cours` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `end_time` datetime(6) DEFAULT NULL,
+  `groupe_etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `profs_id` bigint(20) DEFAULT NULL,
+  `start_time` datetime(6) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `grp_name` varchar(255) DEFAULT NULL,
+  `prof_name` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `schedule_prof`
@@ -7911,12 +9905,41 @@ INSERT INTO `schedule_prof` (`course_finished`, `cours`, `createdon`, `end_time`
 (b'0', 8, '2024-07-18 11:37:46.796144', '2024-07-15 12:30:00.000000', 2, 104, 6, NULL, '2024-07-15 11:30:00.000000', NULL, '#e76f51', 'anonymousUser', 'Carla Ramos', 'Jonah Peters', NULL, 'Voluptate dolorem et', ''),
 (b'0', 9, '2024-07-18 11:41:39.207864', '2024-07-15 16:00:00.000000', 4, 105, 9, NULL, '2024-07-15 14:00:00.000000', '2024-07-18 14:42:23.061373', '#e76f51', 'anonymousUser', 'group test', 'Craig Cervantes', NULL, 'course number 1', 'anonymousUser');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schedule_prof_seq`
+--
+
+CREATE TABLE `schedule_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `schedule_prof_seq`
 --
 
 INSERT INTO `schedule_prof_seq` (`next_val`) VALUES
 (201);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `section`
+--
+
+CREATE TABLE `section` (
+  `cours` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `numero` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `section`
@@ -7934,12 +9957,54 @@ INSERT INTO `section` (`cours`, `createdon`, `id`, `numero`, `updatedon`, `code`
 (52, '2024-07-16 20:35:07.497512', 53, 2, NULL, NULL, 'anonymousUser', NULL, 'section 2', ''),
 (52, '2024-07-16 20:35:08.719514', 54, 3, NULL, NULL, 'anonymousUser', NULL, 'section 3', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `section_item`
+--
+
+CREATE TABLE `section_item` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `section` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `example` varchar(255) DEFAULT NULL,
+  `explanation` varchar(255) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `response` varchar(255) DEFAULT NULL,
+  `synonyms` varchar(255) DEFAULT NULL,
+  `transcription` varchar(255) DEFAULT NULL,
+  `translation` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `section_item_seq`
+--
+
+CREATE TABLE `section_item_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `section_item_seq`
 --
 
 INSERT INTO `section_item_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `section_seq`
+--
+
+CREATE TABLE `section_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `section_seq`
@@ -7948,12 +10013,98 @@ INSERT INTO `section_item_seq` (`next_val`) VALUES
 INSERT INTO `section_seq` (`next_val`) VALUES
 (151);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services_seq`
+--
+
+CREATE TABLE `services_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `services_seq`
 --
 
 INSERT INTO `services_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `session_cours`
+--
+
+CREATE TABLE `session_cours` (
+  `annee` decimal(38,2) DEFAULT NULL,
+  `course_finished` bit(1) DEFAULT NULL,
+  `duree` decimal(38,2) DEFAULT NULL,
+  `homework_finished` bit(1) DEFAULT NULL,
+  `mois` decimal(38,2) DEFAULT NULL,
+  `payer` bit(1) DEFAULT NULL,
+  `totalheure` decimal(38,2) DEFAULT NULL,
+  `cours` bigint(20) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `date_debut` datetime(6) DEFAULT NULL,
+  `date_fin` datetime(6) DEFAULT NULL,
+  `groupe_etudiant` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `nre_add_section_finished` bigint(20) DEFAULT NULL,
+  `nre_key_section_finished` bigint(20) DEFAULT NULL,
+  `nre_words` bigint(20) DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `salary` bigint(20) DEFAULT NULL,
+  `total_add_section` bigint(20) DEFAULT NULL,
+  `total_key_section` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `session_cours_section`
+--
+
+CREATE TABLE `session_cours_section` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `section` bigint(20) DEFAULT NULL,
+  `session_cours` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `session_cours_section_seq`
+--
+
+CREATE TABLE `session_cours_section_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `session_cours_section_seq`
@@ -7962,12 +10113,48 @@ INSERT INTO `services_seq` (`next_val`) VALUES
 INSERT INTO `session_cours_section_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `session_cours_seq`
+--
+
+CREATE TABLE `session_cours_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `session_cours_seq`
 --
 
 INSERT INTO `session_cours_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skill`
+--
+
+CREATE TABLE `skill` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skill_seq`
+--
+
+CREATE TABLE `skill_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `skill_seq`
@@ -7976,12 +10163,65 @@ INSERT INTO `session_cours_seq` (`next_val`) VALUES
 INSERT INTO `skill_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `statut_free_trial`
+--
+
+CREATE TABLE `statut_free_trial` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `style` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `statut_free_trial_seq`
+--
+
+CREATE TABLE `statut_free_trial_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `statut_free_trial_seq`
 --
 
 INSERT INTO `statut_free_trial_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `statut_social`
+--
+
+CREATE TABLE `statut_social` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `statut_social_seq`
+--
+
+CREATE TABLE `statut_social_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `statut_social_seq`
@@ -7990,6 +10230,32 @@ INSERT INTO `statut_free_trial_seq` (`next_val`) VALUES
 INSERT INTO `statut_social_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teacher_locality`
+--
+
+CREATE TABLE `teacher_locality` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teacher_locality_seq`
+--
+
+CREATE TABLE `teacher_locality_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `teacher_locality_seq`
 --
@@ -7997,12 +10263,57 @@ INSERT INTO `statut_social_seq` (`next_val`) VALUES
 INSERT INTO `teacher_locality_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tranche_horaire_prof`
+--
+
+CREATE TABLE `tranche_horaire_prof` (
+  `day` int(11) DEFAULT NULL,
+  `group_index` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `end_hour` varchar(255) DEFAULT NULL,
+  `start_hour` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tranche_horaire_prof_seq`
+--
+
+CREATE TABLE `tranche_horaire_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `tranche_horaire_prof_seq`
 --
 
 INSERT INTO `tranche_horaire_prof_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_collaborator`
+--
+
+CREATE TABLE `type_collaborator` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `type_collaborator`
@@ -8012,12 +10323,38 @@ INSERT INTO `type_collaborator` (`createdon`, `id`, `updatedon`, `code`, `create
 ('2024-07-15 22:22:46.845025', 1, NULL, '', 'anonymousUser', 'academy', ''),
 ('2024-07-15 23:22:19.697860', 2, NULL, '', 'anonymousUser', 'center', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_collaborator_seq`
+--
+
+CREATE TABLE `type_collaborator_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `type_collaborator_seq`
 --
 
 INSERT INTO `type_collaborator_seq` (`next_val`) VALUES
 (101);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_de_question`
+--
+
+CREATE TABLE `type_de_question` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `lib` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `type_de_question`
@@ -8039,12 +10376,48 @@ INSERT INTO `type_de_question` (`createdon`, `id`, `updatedon`, `createdby`, `li
 (NULL, 12578, NULL, NULL, 'Study the information', 't14', NULL),
 (NULL, 23386, NULL, NULL, 'Watch and add new words', 't9', NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_de_question_seq`
+--
+
+CREATE TABLE `type_de_question_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `type_de_question_seq`
 --
 
 INSERT INTO `type_de_question_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_home_work`
+--
+
+CREATE TABLE `type_home_work` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `lib` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_home_work_seq`
+--
+
+CREATE TABLE `type_home_work_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `type_home_work_seq`
@@ -8053,12 +10426,64 @@ INSERT INTO `type_de_question_seq` (`next_val`) VALUES
 INSERT INTO `type_home_work_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_reclamation_etudiant`
+--
+
+CREATE TABLE `type_reclamation_etudiant` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_reclamation_etudiant_seq`
+--
+
+CREATE TABLE `type_reclamation_etudiant_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `type_reclamation_etudiant_seq`
 --
 
 INSERT INTO `type_reclamation_etudiant_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_reclamation_prof`
+--
+
+CREATE TABLE `type_reclamation_prof` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_reclamation_prof_seq`
+--
+
+CREATE TABLE `type_reclamation_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `type_reclamation_prof_seq`
@@ -8067,12 +10492,87 @@ INSERT INTO `type_reclamation_etudiant_seq` (`next_val`) VALUES
 INSERT INTO `type_reclamation_prof_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_teacher`
+--
+
+CREATE TABLE `type_teacher` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_teacher_seq`
+--
+
+CREATE TABLE `type_teacher_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `type_teacher_seq`
 --
 
 INSERT INTO `type_teacher_seq` (`next_val`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `account_non_expired` bit(1) NOT NULL,
+  `account_non_locked` bit(1) NOT NULL,
+  `credentials_non_expired` bit(1) NOT NULL,
+  `enabled` bit(1) NOT NULL,
+  `password_changed` bit(1) NOT NULL,
+  `subscribe` bit(1) DEFAULT NULL,
+  `categorie_prof` bigint(20) DEFAULT NULL,
+  `collaborator` bigint(20) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `created_on` datetime(6) DEFAULT NULL,
+  `fonction` bigint(20) DEFAULT NULL,
+  `groupe_etude` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `interet_etudiant` bigint(20) DEFAULT NULL,
+  `langue` bigint(20) DEFAULT NULL,
+  `niveau_etude` bigint(20) DEFAULT NULL,
+  `pack_student` bigint(20) DEFAULT NULL,
+  `parcours` bigint(20) DEFAULT NULL,
+  `skill` bigint(20) DEFAULT NULL,
+  `statut_social` bigint(20) DEFAULT NULL,
+  `teacher_locality` bigint(20) DEFAULT NULL,
+  `type_collaborator` bigint(20) DEFAULT NULL,
+  `type_teacher` bigint(20) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `updated_on` datetime(6) DEFAULT NULL,
+  `dtype` varchar(31) NOT NULL,
+  `about` varchar(255) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `group_option` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `updated_by` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -8095,12 +10595,55 @@ INSERT INTO `user` (`account_non_expired`, `account_non_locked`, `credentials_no
 (b'1', b'1', b'1', b'1', b'0', b'1', NULL, 2, '2024-07-16 20:37:29.401144', '2024-07-16 20:37:29.406188', NULL, NULL, 52, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-07-16 20:37:31.027376', 'Etudiant', NULL, NULL, NULL, 'anonymousUser', NULL, 'dagyxaf@mailinator.com', 'Shad Shields', NULL, NULL, '$2a$10$ykfoOuzfXd87aCO8vksb3uexji1YmrmRx2s8g5zCbnlPvOREJL9eO', '+1 (702) 418-1667', NULL, 'anonymousUser', 'dagyxaf@mailinator.com'),
 (b'1', b'1', b'1', b'1', b'0', b'1', NULL, 2, '2024-07-18 15:06:20.482403', '2024-07-18 15:06:20.506406', NULL, NULL, 102, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-07-18 15:06:24.100402', 'Etudiant', NULL, NULL, NULL, 'anonymousUser', NULL, 'nyvyjezod@mailinator.com', 'Tatyana Serrano', NULL, NULL, '$2a$10$DWFAPQeh6chPvX4l9Ro9/.rVrxaEphIoiZmsPg.Z3Hno/bG1T8McW', '+1 (939) 109-6087', NULL, 'anonymousUser', 'nyvyjezod@mailinator.com');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_seq`
+--
+
+CREATE TABLE `user_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `user_seq`
 --
 
 INSERT INTO `user_seq` (`next_val`) VALUES
 (201);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vocabulary`
+--
+
+CREATE TABLE `vocabulary` (
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `numero` bigint(20) DEFAULT NULL,
+  `section` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `exemple` varchar(255) DEFAULT NULL,
+  `explication` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
+  `result` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL,
+  `word` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vocabulary_seq`
+--
+
+CREATE TABLE `vocabulary_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vocabulary_seq`
@@ -8109,6 +10652,52 @@ INSERT INTO `user_seq` (`next_val`) VALUES
 INSERT INTO `vocabulary_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workload_bonus`
+--
+
+CREATE TABLE `workload_bonus` (
+  `nombre_session` int(11) DEFAULT NULL,
+  `prix` decimal(38,2) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workload_bonus_prof`
+--
+
+CREATE TABLE `workload_bonus_prof` (
+  `annee` int(11) DEFAULT NULL,
+  `mois` int(11) DEFAULT NULL,
+  `createdon` datetime(6) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `salary` bigint(20) DEFAULT NULL,
+  `updatedon` datetime(6) DEFAULT NULL,
+  `workload_bonus` bigint(20) DEFAULT NULL,
+  `createdby` varchar(255) DEFAULT NULL,
+  `updatedby` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workload_bonus_prof_seq`
+--
+
+CREATE TABLE `workload_bonus_prof_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `workload_bonus_prof_seq`
 --
@@ -8116,12 +10705,1060 @@ INSERT INTO `vocabulary_seq` (`next_val`) VALUES
 INSERT INTO `workload_bonus_prof_seq` (`next_val`) VALUES
 (1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workload_bonus_seq`
+--
+
+CREATE TABLE `workload_bonus_seq` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `workload_bonus_seq`
 --
 
 INSERT INTO `workload_bonus_seq` (`next_val`) VALUES
 (1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `action_permission`
+--
+ALTER TABLE `action_permission`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categorie_prof`
+--
+ALTER TABLE `categorie_prof`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `class_average_bonus`
+--
+ALTER TABLE `class_average_bonus`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKruwwcccitj00alcwpqll77nf4` (`collaborator`);
+
+--
+-- Indexes for table `class_average_bonus_prof`
+--
+ALTER TABLE `class_average_bonus_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK9jxfo0e0xa7jkktxdsq4jwibq` (`prof`),
+  ADD KEY `FK1gw04x52n985btot1ucheddy5` (`salary`);
+
+--
+-- Indexes for table `confirmation_token`
+--
+ALTER TABLE `confirmation_token`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK7y3xv4g7g0ujl8a53x6ehjyrh` (`etudiant`);
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK3dkywysdyqv0l7vfrpbics74p` (`collaborator`);
+
+--
+-- Indexes for table `content_type`
+--
+ALTER TABLE `content_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cours`
+--
+ALTER TABLE `cours`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKahy5hm3ry3u7lcli8yji618jg` (`parcours`);
+
+--
+-- Indexes for table `dictionary`
+--
+ALTER TABLE `dictionary`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK3vedvuiggng4hljgw32despxv` (`etudiant`);
+
+--
+-- Indexes for table `etablissement`
+--
+ALTER TABLE `etablissement`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `etat_inscription`
+--
+ALTER TABLE `etat_inscription`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `etudiant_review`
+--
+ALTER TABLE `etudiant_review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKdr0kyfl32jlc1iaqyr23u0i04` (`cours`),
+  ADD KEY `FKbo0cjopoje56ldf9jaaxxjhxv` (`etudiant`),
+  ADD KEY `FKk3t91y6xlu7wgkgli6j1b57o6` (`prof`);
+
+--
+-- Indexes for table `exercice`
+--
+ALTER TABLE `exercice`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK_ho4hbgng1tyqxkvh1mrcfe6cg` (`quiz`),
+  ADD KEY `FKftk5tiouuild7jwp59y2mxxyj` (`content_type`),
+  ADD KEY `FKdvvia8o2w2rbh2et9um2x63fc` (`section`);
+
+--
+-- Indexes for table `faq`
+--
+ALTER TABLE `faq`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKg74sm2isnspfjl2gpl40i1gso` (`faq_type`);
+
+--
+-- Indexes for table `faq_etudiant`
+--
+ALTER TABLE `faq_etudiant`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKny4k439w8mtsgwl04gacxq2ky` (`etudiant`),
+  ADD KEY `FK8jxblth3byvxeklwfkrmrtx1o` (`faq_type`);
+
+--
+-- Indexes for table `faq_prof`
+--
+ALTER TABLE `faq_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKm826cdt7e3vuigwi2auwrgr2o` (`faq_type`),
+  ADD KEY `FKigm6pq9usvbki2ropxu4bj401` (`prof`);
+
+--
+-- Indexes for table `faq_type`
+--
+ALTER TABLE `faq_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `fonction`
+--
+ALTER TABLE `fonction`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `free_trial`
+--
+ALTER TABLE `free_trial`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKi2xcoes6hxhaprbldr112b52y` (`free_trial_configuration`),
+  ADD KEY `FKlubi1b1elkvwir6k3q6d7kyhp` (`free_trial_student_email_template`),
+  ADD KEY `FKdt2i36mdw4j4nhv7r8vtsfy9b` (`free_trial_student_whats_template`),
+  ADD KEY `FK62crw4si85tffn9o1tx2v5upl` (`free_trial_teacher_email_template`),
+  ADD KEY `FKnd3xndb7bgblcjffm9wro6du` (`free_trial_teacher_whats_template`),
+  ADD KEY `FKmfhu89ddvm50f1fdv6m6iha2g` (`niveau_etude`),
+  ADD KEY `FKs3ihlbs3wuby9gdxcs9r4otc2` (`prof`),
+  ADD KEY `FKjsw8mj62tss7mde81eh9cr7v4` (`statut_free_trial`);
+
+--
+-- Indexes for table `free_trialformule`
+--
+ALTER TABLE `free_trialformule`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKqp2bk31pgb42pf7aeneplagv9` (`inscription`);
+
+--
+-- Indexes for table `free_trial_configuration`
+--
+ALTER TABLE `free_trial_configuration`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `free_trial_detail`
+--
+ALTER TABLE `free_trial_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK55h1r7nloj506bo3sutxr1l8n` (`etudiant`),
+  ADD KEY `FK22so7d7qi1cuyghw3sf8tj7ux` (`free_trial`);
+
+--
+-- Indexes for table `free_trial_student_email_template`
+--
+ALTER TABLE `free_trial_student_email_template`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `free_trial_student_whats_template`
+--
+ALTER TABLE `free_trial_student_whats_template`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `free_trial_teacher_email_template`
+--
+ALTER TABLE `free_trial_teacher_email_template`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `free_trial_teacher_whats_template`
+--
+ALTER TABLE `free_trial_teacher_whats_template`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `groupe_etat`
+--
+ALTER TABLE `groupe_etat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `groupe_etude`
+--
+ALTER TABLE `groupe_etude`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `groupe_etudiant`
+--
+ALTER TABLE `groupe_etudiant`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK3du0ot05k3biykkighrqbq0bj` (`groupe_etat`),
+  ADD KEY `FKf19chs324x9ei6t5rm3epx4cq` (`groupe_etude`),
+  ADD KEY `FKb5fkobpnh19cpnddob5051i0v` (`groupe_type`),
+  ADD KEY `FKhqi2kse6ips4np4365vovd3r6` (`parcours`),
+  ADD KEY `FK53cvqneym1jlajraf8nh4w44i` (`prof`);
+
+--
+-- Indexes for table `groupe_etudiant_detail`
+--
+ALTER TABLE `groupe_etudiant_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKs3jgcu7ocfotdmdm0iamn6b0w` (`etudiant`),
+  ADD KEY `FKr8x72lnitvm5qj1x0l5jyugbt` (`groupe_etudiant`);
+
+--
+-- Indexes for table `groupe_type`
+--
+ALTER TABLE `groupe_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `home_work`
+--
+ALTER TABLE `home_work`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK44ci3gb97k9wp23sc3gedrqyk` (`cours`),
+  ADD KEY `FKmfqby0657lm6a6mcjqj2149o1` (`type_home_work`);
+
+--
+-- Indexes for table `home_work_etudiant`
+--
+ALTER TABLE `home_work_etudiant`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK6sup89lw7i97pski13iu7uf1n` (`etudiant`),
+  ADD KEY `FKr3i0bsg73lrefi35ywk6valqw` (`home_work`);
+
+--
+-- Indexes for table `home_work_question`
+--
+ALTER TABLE `home_work_question`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKq21dmbn2sge5l9nern356f6fi` (`home_work`),
+  ADD KEY `FKtk8sx20ndjo2oddts9s16wubj` (`type_de_question`);
+
+--
+-- Indexes for table `howe_work_q_s_t_reponse`
+--
+ALTER TABLE `howe_work_q_s_t_reponse`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK5r2x5dyq293mofnoiarl59os5` (`home_work_question`);
+
+--
+-- Indexes for table `inscription`
+--
+ALTER TABLE `inscription`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKnrowvydlyvqhipcre6ib7ayg0` (`etat_inscription`),
+  ADD KEY `FKalko793fl1gm06kwq53w1gynu` (`etudiant`),
+  ADD KEY `FKk6yh6drsgma7n1e7337udyl6v` (`fonction`),
+  ADD KEY `FK27d0kprttulm0sukspipm7ptk` (`groupe_etude`),
+  ADD KEY `FK5phhr2tygcp75wd129o7jlc49` (`groupe_type`),
+  ADD KEY `FK6igy4m6867ox3rq0rr6rym96x` (`interet_etudiant`),
+  ADD KEY `FKgsx4eotg1djjcj4erybxkbjt7` (`niveau_etude`),
+  ADD KEY `FKe9tdu7jc218gjtgffhtovi3te` (`pack_student`),
+  ADD KEY `FK1ha9gsbcjddy1otsy6djjg7iv` (`parcours`),
+  ADD KEY `FKa5pvpf8u1xd71imbm7eyg4f5t` (`quiz`),
+  ADD KEY `FKrcxuicdjp141smpvdtc10q5if` (`skill`),
+  ADD KEY `FKgdcsiettljowxye6tj6cd1cka` (`statut_social`);
+
+--
+-- Indexes for table `inscription_collaborator`
+--
+ALTER TABLE `inscription_collaborator`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK31cyx6xj8vwci09gy6f0k0oy6` (`collaborator`),
+  ADD KEY `FK6qadhneaxuubst26w0gbd26bp` (`inscription_collaborator_state`),
+  ADD KEY `FKywieat8g4sdopj4n5ios92h8` (`package_collaborator`);
+
+--
+-- Indexes for table `inscription_collaborator_state`
+--
+ALTER TABLE `inscription_collaborator_state`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `interet_etudiant`
+--
+ALTER TABLE `interet_etudiant`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invite_student`
+--
+ALTER TABLE `invite_student`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKbs4m9ldskgfg237mwub5ibttf` (`etudiant`);
+
+--
+-- Indexes for table `langue`
+--
+ALTER TABLE `langue`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `level_test_configuration`
+--
+ALTER TABLE `level_test_configuration`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKfumtlsoraadbwe0bdm2qnajnu` (`parcours`);
+
+--
+-- Indexes for table `model_permission`
+--
+ALTER TABLE `model_permission`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `model_permission_utilisateur`
+--
+ALTER TABLE `model_permission_utilisateur`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKanbrpecqteguq8exl5k9qrpom` (`action_permission`),
+  ADD KEY `FKr1a7bvuyitnsb1mgrh800qpl` (`model_permission`),
+  ADD KEY `FK7wq2ndtexep9usaj8oojvwlvx` (`user`);
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKgg14bw1a1prjo1b9jule8k8fq` (`collaborator`);
+
+--
+-- Indexes for table `niveau_etude`
+--
+ALTER TABLE `niveau_etude`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `package_collaborator`
+--
+ALTER TABLE `package_collaborator`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pack_student`
+--
+ALTER TABLE `pack_student`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK8o2q1qwe1qjqjx4s6cemt6s84` (`level`),
+  ADD KEY `FKqccki0b6i48a1masitotdw6sw` (`price`);
+
+--
+-- Indexes for table `paiement`
+--
+ALTER TABLE `paiement`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK6dbtl5qrg1kjxwh5xsj0nb0pv` (`groupe_etudiant`),
+  ADD KEY `FKnp1lw5uob8tvslkjnmcdnowc5` (`prof`);
+
+--
+-- Indexes for table `paiement_inscription_collaborator`
+--
+ALTER TABLE `paiement_inscription_collaborator`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKhpsmbrd66godltuperxnlnv27` (`inscription_collaborator`),
+  ADD KEY `FKqru50p3h83asc7ui6bggeajn6` (`paiement_inscription_collaborator_state`);
+
+--
+-- Indexes for table `paiement_inscription_collaborator_state`
+--
+ALTER TABLE `paiement_inscription_collaborator_state`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `parcours`
+--
+ALTER TABLE `parcours`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK4jtf5cmektmsmtuiorrpnd8i3` (`collaborator`);
+
+--
+-- Indexes for table `price`
+--
+ALTER TABLE `price`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKogcgru00bxc9bc173fvt4tog5` (`collaborator`);
+
+--
+-- Indexes for table `prof_review`
+--
+ALTER TABLE `prof_review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKfgik1c9q13hbh95xxqxt6kytu` (`cours`),
+  ADD KEY `FKtf5bipf3qksucegqg0lqjsjds` (`etudiant`),
+  ADD KEY `FK2f9sfmlmyngxsqvgbrc201g4k` (`prof`);
+
+--
+-- Indexes for table `question`
+--
+ALTER TABLE `question`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKn7rkdf65fl89m8jx2c174tdbk` (`quiz`),
+  ADD KEY `FKp3btkmc3gy8byspbfyqn08ubb` (`type_de_question`);
+
+--
+-- Indexes for table `quiz`
+--
+ALTER TABLE `quiz`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK_mi1n92hgr8q5fd2y73htyb2rw` (`exercice`);
+
+--
+-- Indexes for table `quiz_etudiant`
+--
+ALTER TABLE `quiz_etudiant`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKj66cc5f1ta9bvx99jg2lkdx37` (`etudiant`),
+  ADD KEY `FKi9bv4k6mvrn2a0gjv0aeo4oy8` (`quiz`);
+
+--
+-- Indexes for table `reclamation_etudiant`
+--
+ALTER TABLE `reclamation_etudiant`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKerecn8dtyxuasp872ty9ohhjq` (`type_reclamation_etudiant`);
+
+--
+-- Indexes for table `reclamation_prof`
+--
+ALTER TABLE `reclamation_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKjknx7s81cylq1p4y7lejd02bl` (`prof`),
+  ADD KEY `FK8fsbomsmjlri7i1du98tdhwvl` (`type_reclamation_prof`);
+
+--
+-- Indexes for table `recommend_teacher`
+--
+ALTER TABLE `recommend_teacher`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKtm1jpoh1i39jktqf51lyu81qs` (`prof`);
+
+--
+-- Indexes for table `reponse`
+--
+ALTER TABLE `reponse`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKqww17yrx5cgjbcu747lgre8ci` (`question`);
+
+--
+-- Indexes for table `reponse_etudiant`
+--
+ALTER TABLE `reponse_etudiant`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK611oipslqc88pa7j7yqqmf72u` (`question`),
+  ADD KEY `FKrcx0v612xf6xx6wsml9mco2h3` (`quiz_etudiant`),
+  ADD KEY `FK4hf80to4ievjjdq3bmfgdwxw9` (`reponse`);
+
+--
+-- Indexes for table `reponse_etudiant_home_work`
+--
+ALTER TABLE `reponse_etudiant_home_work`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKnnjmqei727y0u1rivh1daltwb` (`home_work_etudiant`),
+  ADD KEY `FK456160ae6nd12q2d5y7m567sr` (`home_work_question`),
+  ADD KEY `FKnebaw1q5vebbipkl68omyu39b` (`howe_work_q_s_t_reponse`);
+
+--
+-- Indexes for table `role_app`
+--
+ALTER TABLE `role_app`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `role_utilisateur`
+--
+ALTER TABLE `role_utilisateur`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK2fjdcobcg9c6a209t2qd2mgg1` (`role`),
+  ADD KEY `FKjor807snrj8ytkt26jvm3wu6c` (`user`);
+
+--
+-- Indexes for table `salary`
+--
+ALTER TABLE `salary`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKhtcvy2kfqxnf85cag7if9srhr` (`prof`);
+
+--
+-- Indexes for table `schedule_prof`
+--
+ALTER TABLE `schedule_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK33a7ip3jqbafu5joohmdklatc` (`cours`),
+  ADD KEY `FK63y8jx726vtsw7oi7li4psr06` (`groupe_etudiant`),
+  ADD KEY `FKnpixsixxies6sowxahl3ehaxu` (`prof`);
+
+--
+-- Indexes for table `section`
+--
+ALTER TABLE `section`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKfosokbccblq4mj9g6mo2ktknw` (`cours`);
+
+--
+-- Indexes for table `section_item`
+--
+ALTER TABLE `section_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKplpthekfwb2ydh5ljftao632l` (`section`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `session_cours`
+--
+ALTER TABLE `session_cours`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKp2v3kulrxoryk626tr1n07v6n` (`cours`),
+  ADD KEY `FKidwlfrj69hdx1m9vhbwf4ip8t` (`groupe_etudiant`),
+  ADD KEY `FK1kq233790h625dnbvspnimphp` (`prof`),
+  ADD KEY `FK5ahhbwiot1buddfs1b23iypuk` (`salary`);
+
+--
+-- Indexes for table `session_cours_section`
+--
+ALTER TABLE `session_cours_section`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKjvheycal0r3gloj4vcp1pri5n` (`section`),
+  ADD KEY `FK7hlnjs1x496awgkl9wfwrqec7` (`session_cours`);
+
+--
+-- Indexes for table `skill`
+--
+ALTER TABLE `skill`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `statut_free_trial`
+--
+ALTER TABLE `statut_free_trial`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `statut_social`
+--
+ALTER TABLE `statut_social`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `teacher_locality`
+--
+ALTER TABLE `teacher_locality`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tranche_horaire_prof`
+--
+ALTER TABLE `tranche_horaire_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKgfj4fgstpvqmyeycqgrax2t3p` (`prof`);
+
+--
+-- Indexes for table `type_collaborator`
+--
+ALTER TABLE `type_collaborator`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `type_de_question`
+--
+ALTER TABLE `type_de_question`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `type_home_work`
+--
+ALTER TABLE `type_home_work`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `type_reclamation_etudiant`
+--
+ALTER TABLE `type_reclamation_etudiant`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `type_reclamation_prof`
+--
+ALTER TABLE `type_reclamation_prof`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `type_teacher`
+--
+ALTER TABLE `type_teacher`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKddp1ld78v56h491wxcfvs8gpp` (`langue`),
+  ADD KEY `FK8jpsfe6itxx00coqlcewmbv0u` (`type_collaborator`),
+  ADD KEY `FK9q5cjy9t7ultpjlebbesgq1w9` (`collaborator`),
+  ADD KEY `FKfcrnrmd0x8ti3td1vcot417qw` (`fonction`),
+  ADD KEY `FKc8bby2o7jdjj7pacpfpo2bj6r` (`groupe_etude`),
+  ADD KEY `FKbcts6ejkmhmqh1dti19xvtef2` (`interet_etudiant`),
+  ADD KEY `FK1j914o9lyp6mjierf132mawjo` (`niveau_etude`),
+  ADD KEY `FK87lvn3d9xb337koefj58gam98` (`pack_student`),
+  ADD KEY `FKimfpxj5uy18qyitn193rnpj3v` (`parcours`),
+  ADD KEY `FKncpqcs02kue14y3teuc0bj12i` (`skill`),
+  ADD KEY `FKbug521p2lt3c1foh0j0r9tbxx` (`statut_social`),
+  ADD KEY `FKiopkx4yvy0mcu5lr6rdekmwjm` (`teacher_locality`),
+  ADD KEY `FKb1foe1690lcirh75bvap2lg3h` (`categorie_prof`),
+  ADD KEY `FKnnm30cr14vvt6raylyn226ncv` (`type_teacher`);
+
+--
+-- Indexes for table `vocabulary`
+--
+ALTER TABLE `vocabulary`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK6jwsmbypn2jrlpro721bt3yv7` (`section`);
+
+--
+-- Indexes for table `workload_bonus`
+--
+ALTER TABLE `workload_bonus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `workload_bonus_prof`
+--
+ALTER TABLE `workload_bonus_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKjp3saesbvciolabu4np0enqbm` (`prof`),
+  ADD KEY `FK42mcgkljlaa1j07qb095xqhpg` (`salary`),
+  ADD KEY `FKcycvnjjmeip07d0mxvnllhpq4` (`workload_bonus`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `class_average_bonus`
+--
+ALTER TABLE `class_average_bonus`
+  ADD CONSTRAINT `FKruwwcccitj00alcwpqll77nf4` FOREIGN KEY (`collaborator`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `class_average_bonus_prof`
+--
+ALTER TABLE `class_average_bonus_prof`
+  ADD CONSTRAINT `FK1gw04x52n985btot1ucheddy5` FOREIGN KEY (`salary`) REFERENCES `salary` (`id`),
+  ADD CONSTRAINT `FK9jxfo0e0xa7jkktxdsq4jwibq` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `confirmation_token`
+--
+ALTER TABLE `confirmation_token`
+  ADD CONSTRAINT `FK7y3xv4g7g0ujl8a53x6ehjyrh` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `contact`
+--
+ALTER TABLE `contact`
+  ADD CONSTRAINT `FK3dkywysdyqv0l7vfrpbics74p` FOREIGN KEY (`collaborator`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `cours`
+--
+ALTER TABLE `cours`
+  ADD CONSTRAINT `FKahy5hm3ry3u7lcli8yji618jg` FOREIGN KEY (`parcours`) REFERENCES `parcours` (`id`);
+
+--
+-- Constraints for table `dictionary`
+--
+ALTER TABLE `dictionary`
+  ADD CONSTRAINT `FK3vedvuiggng4hljgw32despxv` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `etudiant_review`
+--
+ALTER TABLE `etudiant_review`
+  ADD CONSTRAINT `FKbo0cjopoje56ldf9jaaxxjhxv` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKdr0kyfl32jlc1iaqyr23u0i04` FOREIGN KEY (`cours`) REFERENCES `cours` (`id`),
+  ADD CONSTRAINT `FKk3t91y6xlu7wgkgli6j1b57o6` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `exercice`
+--
+ALTER TABLE `exercice`
+  ADD CONSTRAINT `FK5wh0qmit2ollf3vdpwhq8qoan` FOREIGN KEY (`quiz`) REFERENCES `quiz` (`id`),
+  ADD CONSTRAINT `FKdvvia8o2w2rbh2et9um2x63fc` FOREIGN KEY (`section`) REFERENCES `section` (`id`),
+  ADD CONSTRAINT `FKftk5tiouuild7jwp59y2mxxyj` FOREIGN KEY (`content_type`) REFERENCES `content_type` (`id`);
+
+--
+-- Constraints for table `faq`
+--
+ALTER TABLE `faq`
+  ADD CONSTRAINT `FKg74sm2isnspfjl2gpl40i1gso` FOREIGN KEY (`faq_type`) REFERENCES `faq_type` (`id`);
+
+--
+-- Constraints for table `faq_etudiant`
+--
+ALTER TABLE `faq_etudiant`
+  ADD CONSTRAINT `FK8jxblth3byvxeklwfkrmrtx1o` FOREIGN KEY (`faq_type`) REFERENCES `faq_type` (`id`),
+  ADD CONSTRAINT `FKny4k439w8mtsgwl04gacxq2ky` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `faq_prof`
+--
+ALTER TABLE `faq_prof`
+  ADD CONSTRAINT `FKigm6pq9usvbki2ropxu4bj401` FOREIGN KEY (`prof`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKm826cdt7e3vuigwi2auwrgr2o` FOREIGN KEY (`faq_type`) REFERENCES `faq_type` (`id`);
+
+--
+-- Constraints for table `free_trial`
+--
+ALTER TABLE `free_trial`
+  ADD CONSTRAINT `FK62crw4si85tffn9o1tx2v5upl` FOREIGN KEY (`free_trial_teacher_email_template`) REFERENCES `free_trial_teacher_email_template` (`id`),
+  ADD CONSTRAINT `FKdt2i36mdw4j4nhv7r8vtsfy9b` FOREIGN KEY (`free_trial_student_whats_template`) REFERENCES `free_trial_student_whats_template` (`id`),
+  ADD CONSTRAINT `FKi2xcoes6hxhaprbldr112b52y` FOREIGN KEY (`free_trial_configuration`) REFERENCES `free_trial_configuration` (`id`),
+  ADD CONSTRAINT `FKjsw8mj62tss7mde81eh9cr7v4` FOREIGN KEY (`statut_free_trial`) REFERENCES `statut_free_trial` (`id`),
+  ADD CONSTRAINT `FKlubi1b1elkvwir6k3q6d7kyhp` FOREIGN KEY (`free_trial_student_email_template`) REFERENCES `free_trial_student_email_template` (`id`),
+  ADD CONSTRAINT `FKmfhu89ddvm50f1fdv6m6iha2g` FOREIGN KEY (`niveau_etude`) REFERENCES `niveau_etude` (`id`),
+  ADD CONSTRAINT `FKnd3xndb7bgblcjffm9wro6du` FOREIGN KEY (`free_trial_teacher_whats_template`) REFERENCES `free_trial_teacher_whats_template` (`id`),
+  ADD CONSTRAINT `FKs3ihlbs3wuby9gdxcs9r4otc2` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `free_trialformule`
+--
+ALTER TABLE `free_trialformule`
+  ADD CONSTRAINT `FKqp2bk31pgb42pf7aeneplagv9` FOREIGN KEY (`inscription`) REFERENCES `inscription` (`id`);
+
+--
+-- Constraints for table `free_trial_detail`
+--
+ALTER TABLE `free_trial_detail`
+  ADD CONSTRAINT `FK22so7d7qi1cuyghw3sf8tj7ux` FOREIGN KEY (`free_trial`) REFERENCES `free_trial` (`id`),
+  ADD CONSTRAINT `FK55h1r7nloj506bo3sutxr1l8n` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `groupe_etudiant`
+--
+ALTER TABLE `groupe_etudiant`
+  ADD CONSTRAINT `FK3du0ot05k3biykkighrqbq0bj` FOREIGN KEY (`groupe_etat`) REFERENCES `groupe_etat` (`id`),
+  ADD CONSTRAINT `FK53cvqneym1jlajraf8nh4w44i` FOREIGN KEY (`prof`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKb5fkobpnh19cpnddob5051i0v` FOREIGN KEY (`groupe_type`) REFERENCES `groupe_type` (`id`),
+  ADD CONSTRAINT `FKf19chs324x9ei6t5rm3epx4cq` FOREIGN KEY (`groupe_etude`) REFERENCES `groupe_etude` (`id`),
+  ADD CONSTRAINT `FKhqi2kse6ips4np4365vovd3r6` FOREIGN KEY (`parcours`) REFERENCES `parcours` (`id`);
+
+--
+-- Constraints for table `groupe_etudiant_detail`
+--
+ALTER TABLE `groupe_etudiant_detail`
+  ADD CONSTRAINT `FKr8x72lnitvm5qj1x0l5jyugbt` FOREIGN KEY (`groupe_etudiant`) REFERENCES `groupe_etudiant` (`id`),
+  ADD CONSTRAINT `FKs3jgcu7ocfotdmdm0iamn6b0w` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `home_work`
+--
+ALTER TABLE `home_work`
+  ADD CONSTRAINT `FK44ci3gb97k9wp23sc3gedrqyk` FOREIGN KEY (`cours`) REFERENCES `cours` (`id`),
+  ADD CONSTRAINT `FKmfqby0657lm6a6mcjqj2149o1` FOREIGN KEY (`type_home_work`) REFERENCES `type_home_work` (`id`);
+
+--
+-- Constraints for table `home_work_etudiant`
+--
+ALTER TABLE `home_work_etudiant`
+  ADD CONSTRAINT `FK6sup89lw7i97pski13iu7uf1n` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKr3i0bsg73lrefi35ywk6valqw` FOREIGN KEY (`home_work`) REFERENCES `home_work` (`id`);
+
+--
+-- Constraints for table `home_work_question`
+--
+ALTER TABLE `home_work_question`
+  ADD CONSTRAINT `FKq21dmbn2sge5l9nern356f6fi` FOREIGN KEY (`home_work`) REFERENCES `home_work` (`id`),
+  ADD CONSTRAINT `FKtk8sx20ndjo2oddts9s16wubj` FOREIGN KEY (`type_de_question`) REFERENCES `type_de_question` (`id`);
+
+--
+-- Constraints for table `howe_work_q_s_t_reponse`
+--
+ALTER TABLE `howe_work_q_s_t_reponse`
+  ADD CONSTRAINT `FK5r2x5dyq293mofnoiarl59os5` FOREIGN KEY (`home_work_question`) REFERENCES `home_work_question` (`id`);
+
+--
+-- Constraints for table `inscription`
+--
+ALTER TABLE `inscription`
+  ADD CONSTRAINT `FK1ha9gsbcjddy1otsy6djjg7iv` FOREIGN KEY (`parcours`) REFERENCES `parcours` (`id`),
+  ADD CONSTRAINT `FK27d0kprttulm0sukspipm7ptk` FOREIGN KEY (`groupe_etude`) REFERENCES `groupe_etude` (`id`),
+  ADD CONSTRAINT `FK5phhr2tygcp75wd129o7jlc49` FOREIGN KEY (`groupe_type`) REFERENCES `groupe_type` (`id`),
+  ADD CONSTRAINT `FK6igy4m6867ox3rq0rr6rym96x` FOREIGN KEY (`interet_etudiant`) REFERENCES `interet_etudiant` (`id`),
+  ADD CONSTRAINT `FKa5pvpf8u1xd71imbm7eyg4f5t` FOREIGN KEY (`quiz`) REFERENCES `quiz` (`id`),
+  ADD CONSTRAINT `FKalko793fl1gm06kwq53w1gynu` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKe9tdu7jc218gjtgffhtovi3te` FOREIGN KEY (`pack_student`) REFERENCES `pack_student` (`id`),
+  ADD CONSTRAINT `FKgdcsiettljowxye6tj6cd1cka` FOREIGN KEY (`statut_social`) REFERENCES `statut_social` (`id`),
+  ADD CONSTRAINT `FKgsx4eotg1djjcj4erybxkbjt7` FOREIGN KEY (`niveau_etude`) REFERENCES `niveau_etude` (`id`),
+  ADD CONSTRAINT `FKk6yh6drsgma7n1e7337udyl6v` FOREIGN KEY (`fonction`) REFERENCES `fonction` (`id`),
+  ADD CONSTRAINT `FKnrowvydlyvqhipcre6ib7ayg0` FOREIGN KEY (`etat_inscription`) REFERENCES `etat_inscription` (`id`),
+  ADD CONSTRAINT `FKrcxuicdjp141smpvdtc10q5if` FOREIGN KEY (`skill`) REFERENCES `skill` (`id`);
+
+--
+-- Constraints for table `inscription_collaborator`
+--
+ALTER TABLE `inscription_collaborator`
+  ADD CONSTRAINT `FK31cyx6xj8vwci09gy6f0k0oy6` FOREIGN KEY (`collaborator`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FK6qadhneaxuubst26w0gbd26bp` FOREIGN KEY (`inscription_collaborator_state`) REFERENCES `inscription_collaborator_state` (`id`),
+  ADD CONSTRAINT `FKywieat8g4sdopj4n5ios92h8` FOREIGN KEY (`package_collaborator`) REFERENCES `package_collaborator` (`id`);
+
+--
+-- Constraints for table `invite_student`
+--
+ALTER TABLE `invite_student`
+  ADD CONSTRAINT `FKbs4m9ldskgfg237mwub5ibttf` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `level_test_configuration`
+--
+ALTER TABLE `level_test_configuration`
+  ADD CONSTRAINT `FKfumtlsoraadbwe0bdm2qnajnu` FOREIGN KEY (`parcours`) REFERENCES `parcours` (`id`);
+
+--
+-- Constraints for table `model_permission_utilisateur`
+--
+ALTER TABLE `model_permission_utilisateur`
+  ADD CONSTRAINT `FK7wq2ndtexep9usaj8oojvwlvx` FOREIGN KEY (`user`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKanbrpecqteguq8exl5k9qrpom` FOREIGN KEY (`action_permission`) REFERENCES `action_permission` (`id`),
+  ADD CONSTRAINT `FKr1a7bvuyitnsb1mgrh800qpl` FOREIGN KEY (`model_permission`) REFERENCES `model_permission` (`id`);
+
+--
+-- Constraints for table `news`
+--
+ALTER TABLE `news`
+  ADD CONSTRAINT `FKgg14bw1a1prjo1b9jule8k8fq` FOREIGN KEY (`collaborator`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `pack_student`
+--
+ALTER TABLE `pack_student`
+  ADD CONSTRAINT `FK8o2q1qwe1qjqjx4s6cemt6s84` FOREIGN KEY (`level`) REFERENCES `parcours` (`id`),
+  ADD CONSTRAINT `FKqccki0b6i48a1masitotdw6sw` FOREIGN KEY (`price`) REFERENCES `price` (`id`);
+
+--
+-- Constraints for table `paiement`
+--
+ALTER TABLE `paiement`
+  ADD CONSTRAINT `FK6dbtl5qrg1kjxwh5xsj0nb0pv` FOREIGN KEY (`groupe_etudiant`) REFERENCES `groupe_etudiant` (`id`),
+  ADD CONSTRAINT `FKnp1lw5uob8tvslkjnmcdnowc5` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `paiement_inscription_collaborator`
+--
+ALTER TABLE `paiement_inscription_collaborator`
+  ADD CONSTRAINT `FKhpsmbrd66godltuperxnlnv27` FOREIGN KEY (`inscription_collaborator`) REFERENCES `inscription_collaborator` (`id`),
+  ADD CONSTRAINT `FKqru50p3h83asc7ui6bggeajn6` FOREIGN KEY (`paiement_inscription_collaborator_state`) REFERENCES `paiement_inscription_collaborator_state` (`id`);
+
+--
+-- Constraints for table `parcours`
+--
+ALTER TABLE `parcours`
+  ADD CONSTRAINT `FK4jtf5cmektmsmtuiorrpnd8i3` FOREIGN KEY (`collaborator`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `price`
+--
+ALTER TABLE `price`
+  ADD CONSTRAINT `FKogcgru00bxc9bc173fvt4tog5` FOREIGN KEY (`collaborator`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `prof_review`
+--
+ALTER TABLE `prof_review`
+  ADD CONSTRAINT `FK2f9sfmlmyngxsqvgbrc201g4k` FOREIGN KEY (`prof`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKfgik1c9q13hbh95xxqxt6kytu` FOREIGN KEY (`cours`) REFERENCES `cours` (`id`),
+  ADD CONSTRAINT `FKtf5bipf3qksucegqg0lqjsjds` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `question`
+--
+ALTER TABLE `question`
+  ADD CONSTRAINT `FKn7rkdf65fl89m8jx2c174tdbk` FOREIGN KEY (`quiz`) REFERENCES `quiz` (`id`),
+  ADD CONSTRAINT `FKp3btkmc3gy8byspbfyqn08ubb` FOREIGN KEY (`type_de_question`) REFERENCES `type_de_question` (`id`);
+
+--
+-- Constraints for table `quiz`
+--
+ALTER TABLE `quiz`
+  ADD CONSTRAINT `FKsgsqltca03pv3d1tw95t1tp7k` FOREIGN KEY (`exercice`) REFERENCES `exercice` (`id`);
+
+--
+-- Constraints for table `quiz_etudiant`
+--
+ALTER TABLE `quiz_etudiant`
+  ADD CONSTRAINT `FKi9bv4k6mvrn2a0gjv0aeo4oy8` FOREIGN KEY (`quiz`) REFERENCES `quiz` (`id`),
+  ADD CONSTRAINT `FKj66cc5f1ta9bvx99jg2lkdx37` FOREIGN KEY (`etudiant`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `reclamation_etudiant`
+--
+ALTER TABLE `reclamation_etudiant`
+  ADD CONSTRAINT `FKerecn8dtyxuasp872ty9ohhjq` FOREIGN KEY (`type_reclamation_etudiant`) REFERENCES `type_reclamation_etudiant` (`id`);
+
+--
+-- Constraints for table `reclamation_prof`
+--
+ALTER TABLE `reclamation_prof`
+  ADD CONSTRAINT `FK8fsbomsmjlri7i1du98tdhwvl` FOREIGN KEY (`type_reclamation_prof`) REFERENCES `type_reclamation_prof` (`id`),
+  ADD CONSTRAINT `FKjknx7s81cylq1p4y7lejd02bl` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `recommend_teacher`
+--
+ALTER TABLE `recommend_teacher`
+  ADD CONSTRAINT `FKtm1jpoh1i39jktqf51lyu81qs` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `reponse`
+--
+ALTER TABLE `reponse`
+  ADD CONSTRAINT `FKqww17yrx5cgjbcu747lgre8ci` FOREIGN KEY (`question`) REFERENCES `question` (`id`);
+
+--
+-- Constraints for table `reponse_etudiant`
+--
+ALTER TABLE `reponse_etudiant`
+  ADD CONSTRAINT `FK4hf80to4ievjjdq3bmfgdwxw9` FOREIGN KEY (`reponse`) REFERENCES `reponse` (`id`),
+  ADD CONSTRAINT `FK611oipslqc88pa7j7yqqmf72u` FOREIGN KEY (`question`) REFERENCES `question` (`id`),
+  ADD CONSTRAINT `FKrcx0v612xf6xx6wsml9mco2h3` FOREIGN KEY (`quiz_etudiant`) REFERENCES `quiz_etudiant` (`id`);
+
+--
+-- Constraints for table `reponse_etudiant_home_work`
+--
+ALTER TABLE `reponse_etudiant_home_work`
+  ADD CONSTRAINT `FK456160ae6nd12q2d5y7m567sr` FOREIGN KEY (`home_work_question`) REFERENCES `home_work_question` (`id`),
+  ADD CONSTRAINT `FKnebaw1q5vebbipkl68omyu39b` FOREIGN KEY (`howe_work_q_s_t_reponse`) REFERENCES `howe_work_q_s_t_reponse` (`id`),
+  ADD CONSTRAINT `FKnnjmqei727y0u1rivh1daltwb` FOREIGN KEY (`home_work_etudiant`) REFERENCES `home_work_etudiant` (`id`);
+
+--
+-- Constraints for table `role_utilisateur`
+--
+ALTER TABLE `role_utilisateur`
+  ADD CONSTRAINT `FK2fjdcobcg9c6a209t2qd2mgg1` FOREIGN KEY (`role`) REFERENCES `role_app` (`id`),
+  ADD CONSTRAINT `FKjor807snrj8ytkt26jvm3wu6c` FOREIGN KEY (`user`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `salary`
+--
+ALTER TABLE `salary`
+  ADD CONSTRAINT `FKhtcvy2kfqxnf85cag7if9srhr` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `schedule_prof`
+--
+ALTER TABLE `schedule_prof`
+  ADD CONSTRAINT `FK33a7ip3jqbafu5joohmdklatc` FOREIGN KEY (`cours`) REFERENCES `cours` (`id`),
+  ADD CONSTRAINT `FK63y8jx726vtsw7oi7li4psr06` FOREIGN KEY (`groupe_etudiant`) REFERENCES `groupe_etudiant` (`id`),
+  ADD CONSTRAINT `FKnpixsixxies6sowxahl3ehaxu` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `section`
+--
+ALTER TABLE `section`
+  ADD CONSTRAINT `FKfosokbccblq4mj9g6mo2ktknw` FOREIGN KEY (`cours`) REFERENCES `cours` (`id`);
+
+--
+-- Constraints for table `section_item`
+--
+ALTER TABLE `section_item`
+  ADD CONSTRAINT `FKplpthekfwb2ydh5ljftao632l` FOREIGN KEY (`section`) REFERENCES `section` (`id`);
+
+--
+-- Constraints for table `session_cours`
+--
+ALTER TABLE `session_cours`
+  ADD CONSTRAINT `FK1kq233790h625dnbvspnimphp` FOREIGN KEY (`prof`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FK5ahhbwiot1buddfs1b23iypuk` FOREIGN KEY (`salary`) REFERENCES `salary` (`id`),
+  ADD CONSTRAINT `FKidwlfrj69hdx1m9vhbwf4ip8t` FOREIGN KEY (`groupe_etudiant`) REFERENCES `groupe_etudiant` (`id`),
+  ADD CONSTRAINT `FKp2v3kulrxoryk626tr1n07v6n` FOREIGN KEY (`cours`) REFERENCES `cours` (`id`);
+
+--
+-- Constraints for table `session_cours_section`
+--
+ALTER TABLE `session_cours_section`
+  ADD CONSTRAINT `FK7hlnjs1x496awgkl9wfwrqec7` FOREIGN KEY (`session_cours`) REFERENCES `session_cours` (`id`),
+  ADD CONSTRAINT `FKjvheycal0r3gloj4vcp1pri5n` FOREIGN KEY (`section`) REFERENCES `section` (`id`);
+
+--
+-- Constraints for table `tranche_horaire_prof`
+--
+ALTER TABLE `tranche_horaire_prof`
+  ADD CONSTRAINT `FKgfj4fgstpvqmyeycqgrax2t3p` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `FK1j914o9lyp6mjierf132mawjo` FOREIGN KEY (`niveau_etude`) REFERENCES `niveau_etude` (`id`),
+  ADD CONSTRAINT `FK87lvn3d9xb337koefj58gam98` FOREIGN KEY (`pack_student`) REFERENCES `pack_student` (`id`),
+  ADD CONSTRAINT `FK8jpsfe6itxx00coqlcewmbv0u` FOREIGN KEY (`type_collaborator`) REFERENCES `type_collaborator` (`id`),
+  ADD CONSTRAINT `FK9q5cjy9t7ultpjlebbesgq1w9` FOREIGN KEY (`collaborator`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKb1foe1690lcirh75bvap2lg3h` FOREIGN KEY (`categorie_prof`) REFERENCES `categorie_prof` (`id`),
+  ADD CONSTRAINT `FKbcts6ejkmhmqh1dti19xvtef2` FOREIGN KEY (`interet_etudiant`) REFERENCES `interet_etudiant` (`id`),
+  ADD CONSTRAINT `FKbug521p2lt3c1foh0j0r9tbxx` FOREIGN KEY (`statut_social`) REFERENCES `statut_social` (`id`),
+  ADD CONSTRAINT `FKc8bby2o7jdjj7pacpfpo2bj6r` FOREIGN KEY (`groupe_etude`) REFERENCES `groupe_etude` (`id`),
+  ADD CONSTRAINT `FKddp1ld78v56h491wxcfvs8gpp` FOREIGN KEY (`langue`) REFERENCES `langue` (`id`),
+  ADD CONSTRAINT `FKfcrnrmd0x8ti3td1vcot417qw` FOREIGN KEY (`fonction`) REFERENCES `fonction` (`id`),
+  ADD CONSTRAINT `FKimfpxj5uy18qyitn193rnpj3v` FOREIGN KEY (`parcours`) REFERENCES `parcours` (`id`),
+  ADD CONSTRAINT `FKiopkx4yvy0mcu5lr6rdekmwjm` FOREIGN KEY (`teacher_locality`) REFERENCES `teacher_locality` (`id`),
+  ADD CONSTRAINT `FKncpqcs02kue14y3teuc0bj12i` FOREIGN KEY (`skill`) REFERENCES `skill` (`id`),
+  ADD CONSTRAINT `FKnnm30cr14vvt6raylyn226ncv` FOREIGN KEY (`type_teacher`) REFERENCES `type_teacher` (`id`);
+
+--
+-- Constraints for table `vocabulary`
+--
+ALTER TABLE `vocabulary`
+  ADD CONSTRAINT `FK6jwsmbypn2jrlpro721bt3yv7` FOREIGN KEY (`section`) REFERENCES `section` (`id`);
+
+--
+-- Constraints for table `workload_bonus_prof`
+--
+ALTER TABLE `workload_bonus_prof`
+  ADD CONSTRAINT `FK42mcgkljlaa1j07qb095xqhpg` FOREIGN KEY (`salary`) REFERENCES `salary` (`id`),
+  ADD CONSTRAINT `FKcycvnjjmeip07d0mxvnllhpq4` FOREIGN KEY (`workload_bonus`) REFERENCES `workload_bonus` (`id`),
+  ADD CONSTRAINT `FKjp3saesbvciolabu4np0enqbm` FOREIGN KEY (`prof`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
