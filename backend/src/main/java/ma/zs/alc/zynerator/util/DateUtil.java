@@ -21,7 +21,8 @@ public class DateUtil {
     public static final String HOUR_FORMAT = "HH:mm:ss";
     public static final String DATE_FORMAT_ENG = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DATE_FORMAT_ENG_WITHOUT_SECOND = "yyyy-MM-dd'T'HH:mm";
-    public static final String DATE_FORMAT_ENG_WITHOUT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final String DATE_FORMAT_ENG_WITH_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final String DATE_FORMAT_ENG_WITHOUT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String DATE_FORMAT_PF = "EEE MMM dd HH:mm:ss z yyyy";
     public static final long ONE_HOUR = 60 * 60 * 1000L;
 
@@ -36,8 +37,7 @@ public class DateUtil {
     }
 
     public static LocalDateTime addDaysToDate(LocalDateTime date, long days) {
-        if (date != null)
-            return date.plusDays(days);
+        if (date != null) return date.plusDays(days);
         return null;
     }
 
@@ -46,7 +46,7 @@ public class DateUtil {
     }
 
     public static LocalDateTime stringEnToDate(final String strDate) {
-        List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG_WITHOUT_TIME_ZONE, DATE_FORMAT_ENG_WITHOUT_SECOND, DATE_FORMAT_ALTERNATIVE);
+        List<String> dateFormats = Arrays.asList(DATE_FORMAT_ENG_WITHOUT_TIME_ZONE, DATE_FORMAT_ENG_WITH_TIME_ZONE, DATE_FORMAT_ENG_WITHOUT_SECOND, DATE_FORMAT_ALTERNATIVE);
 
         for (String format : dateFormats) {
             try {
@@ -107,8 +107,7 @@ public class DateUtil {
     public static Timestamp stringToTimestamp(final String strDate) {
         if (StringUtils.hasLength(strDate)) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT);
-            return new Timestamp(
-                    LocalDateTime.parse(strDate, formatter).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+            return new Timestamp(LocalDateTime.parse(strDate, formatter).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         }
         return null;
     }
@@ -251,8 +250,7 @@ public class DateUtil {
     public static Timestamp StringToTimesTimpWithHour(final String date) {
         if (date != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
-            return new Timestamp(
-                    LocalDateTime.parse(date, formatter).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+            return new Timestamp(LocalDateTime.parse(date, formatter).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
         }
         return null;

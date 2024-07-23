@@ -1,39 +1,27 @@
 package ma.zs.alc.bean.core.prof;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
+import ma.zs.alc.bean.core.course.Cours;
+import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
+import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 
 import java.time.LocalDateTime;
-
-
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-
-import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
-import ma.zs.alc.bean.core.course.Cours;
-import ma.zs.alc.bean.core.prof.Prof;
-
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import ma.zs.alc.zynerator.audit.AuditBusinessObject;
-import jakarta.persistence.*;
 import java.util.Objects;
-
-
 
 
 @Entity
 @Table(name = "schedule_prof")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class ScheduleProf   extends AuditBusinessObject     {
+public class ScheduleProf extends AuditBusinessObject {
 
     private Long id;
 
     @Column(length = 500)
     private String subject;
-    private LocalDateTime startTime ;
-    private LocalDateTime endTime ;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     @Column(length = 500)
     private String ref;
     @Column(length = 500)
@@ -41,113 +29,135 @@ public class ScheduleProf   extends AuditBusinessObject     {
     private String color = "#e76f51";
     @Column(length = 500)
     private String profName;
-    private Long profsId ;
+    private Long profsId;
     @Column(columnDefinition = "boolean default false")
     private Boolean courseFinished = false;
 
-    private GroupeEtudiant groupeEtudiant ;
-    private Prof prof ;
-    private Cours cours ;
+    private GroupeEtudiant groupeEtudiant;
+    private Prof prof;
+    private Cours cours;
 
 
-    public ScheduleProf(){
+    public ScheduleProf() {
         super();
     }
 
-    public ScheduleProf(Long id){
+    public ScheduleProf(Long id) {
         this.id = id;
     }
 
-    public ScheduleProf(Long id,String subject){
+    public ScheduleProf(Long id, String subject) {
         this.id = id;
-        this.subject = subject ;
-    }
-    public ScheduleProf(String subject){
-        this.subject = subject ;
+        this.subject = subject;
     }
 
-
+    public ScheduleProf(String subject) {
+        this.subject = subject;
+    }
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    public Long getId(){
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
         return this.id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getSubject(){
+
+    public String getSubject() {
         return this.subject;
     }
-    public void setSubject(String subject){
+
+    public void setSubject(String subject) {
         this.subject = subject;
     }
-    public LocalDateTime getStartTime(){
+
+    public LocalDateTime getStartTime() {
         return this.startTime;
     }
-    public void setStartTime(LocalDateTime startTime){
+
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    public LocalDateTime getEndTime(){
+
+    public LocalDateTime getEndTime() {
         return this.endTime;
     }
-    public void setEndTime(LocalDateTime endTime){
+
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-    public String getRef(){
+
+    public String getRef() {
         return this.ref;
     }
-    public void setRef(String ref){
+
+    public void setRef(String ref) {
         this.ref = ref;
     }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "groupe_etudiant")
-    public GroupeEtudiant getGroupeEtudiant(){
+    public GroupeEtudiant getGroupeEtudiant() {
         return this.groupeEtudiant;
     }
-    public void setGroupeEtudiant(GroupeEtudiant groupeEtudiant){
+
+    public void setGroupeEtudiant(GroupeEtudiant groupeEtudiant) {
         this.groupeEtudiant = groupeEtudiant;
     }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prof")
-    public Prof getProf(){
+    public Prof getProf() {
         return this.prof;
     }
-    public void setProf(Prof prof){
+
+    public void setProf(Prof prof) {
         this.prof = prof;
     }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cours")
-    public Cours getCours(){
+    public Cours getCours() {
         return this.cours;
     }
-    public void setCours(Cours cours){
+
+    public void setCours(Cours cours) {
         this.cours = cours;
     }
-    public String getGrpName(){
+
+    public String getGrpName() {
         return this.grpName;
     }
-    public void setGrpName(String grpName){
+
+    public void setGrpName(String grpName) {
         this.grpName = grpName;
     }
-    public String getProfName(){
+
+    public String getProfName() {
         return this.profName;
     }
-    public void setProfName(String profName){
+
+    public void setProfName(String profName) {
         this.profName = profName;
     }
-    public Long getProfsId(){
+
+    public Long getProfsId() {
         return this.profsId;
     }
-    public void setProfsId(Long profsId){
+
+    public void setProfsId(Long profsId) {
         this.profsId = profsId;
     }
-    public Boolean  getCourseFinished(){
+
+    public Boolean getCourseFinished() {
         return this.courseFinished;
     }
-    public void setCourseFinished(Boolean courseFinished){
+
+    public void setCourseFinished(Boolean courseFinished) {
         this.courseFinished = courseFinished;
     }
 

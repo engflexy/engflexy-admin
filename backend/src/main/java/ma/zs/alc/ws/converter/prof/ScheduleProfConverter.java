@@ -41,19 +41,27 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
                 item.setId(dto.getId());
             if (StringUtil.isNotEmpty(dto.getSubject()))
                 item.setSubject(dto.getSubject());
+
             if (StringUtil.isNotEmpty(dto.getStartTime()))
                 item.setStartTime(DateUtil.stringEnToDate(dto.getStartTime()));
+
             if (StringUtil.isNotEmpty(dto.getEndTime()))
                 item.setEndTime(DateUtil.stringEnToDate(dto.getEndTime()));
+
             if (StringUtil.isNotEmpty(dto.getRef()))
                 item.setRef(dto.getRef());
+
             if (StringUtil.isNotEmpty(dto.getGrpName()))
                 item.setGrpName(dto.getGrpName());
+
             if (StringUtil.isNotEmpty(dto.getProfName()))
                 item.setProfName(dto.getProfName());
+
             if (StringUtil.isNotEmpty(dto.getProfsId()))
                 item.setProfsId(dto.getProfsId());
+
             item.setCourseFinished(dto.getCourseFinished());
+
             if (dto.getGroupeEtudiant() != null && dto.getGroupeEtudiant().getId() != null) {
                 item.setGroupeEtudiant(new GroupeEtudiant());
                 item.getGroupeEtudiant().setId(dto.getGroupeEtudiant().getId());
@@ -72,7 +80,7 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
                 item.getCours().setLibelle(dto.getCours().getLibelle());
             }
 
-
+            System.out.println("item.getStartTime() = " + item.getStartTime());
             return item;
         }
     }

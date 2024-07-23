@@ -107,9 +107,12 @@ export class ScheduleComponent {
             data: classe,
         });
 
-        dialog.afterClosed().subscribe((res: Class) => {
+        dialog.afterClosed().subscribe((res: { data: Class, type: string }) => {
             if (res != null) {
-                this.add_class_schedule(res);
+                if (res.type === 'create')
+                    this.add_class_schedule(res.data);
+                else
+                    this.remove_class_schedule(res.data);
             }
         })
     }
@@ -171,6 +174,23 @@ export class ScheduleComponent {
             this.schedules.splice(index, 1);
         }
         this.schedules.push({...classe});
+        // @ts-ignore
+        this.calendarOptions.events = [...this.schedules];
+
+        // Refresh the calendar to show the new event
+        const calendarApi = this.calendarComponent.getApi();
+        calendarApi.removeAllEvents(); // Clear all existing events
+        // @ts-ignore
+        calendarApi.addEventSource(this.schedules); // Add updated events
+
+        this.ref.markForCheck();
+    }
+
+    private remove_class_schedule(classe: Class) {
+        if (classe?.id) {
+            const index = this.schedules.findIndex(s => s.id === classe.id)
+            this.schedules.splice(index, 1);
+        }
         // @ts-ignore
         this.calendarOptions.events = [...this.schedules];
 

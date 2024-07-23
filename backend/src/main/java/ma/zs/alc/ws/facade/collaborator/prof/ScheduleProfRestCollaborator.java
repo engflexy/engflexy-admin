@@ -69,8 +69,8 @@ public class ScheduleProfRestCollaborator extends AbstractController<SchedulePro
 
     @Operation(summary = "Updates the specified  scheduleProf")
     @PutMapping("")
-    public ResponseEntity<ScheduleProfDto> update(@RequestBody ScheduleProfDto dto) throws Exception {
-        return super.update(dto);
+    public ScheduleProf update(@RequestBody ScheduleProf dto) throws Exception {
+        return service.update(dto);
     }
 
     @Operation(summary = "Delete list of scheduleProf")
