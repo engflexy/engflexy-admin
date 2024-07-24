@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {PageEvent} from "@angular/material/paginator";
 import {UserCriteria} from "../../../../core/criteria/user-criteria";
 import {Pageable} from "../../../../shared/utils/Pageable";
@@ -14,7 +14,7 @@ import {CreateCollaboratorComponent} from "./create-collaborator/create-collabor
     templateUrl: './collaborators.component.html'
 })
 export class CollaboratorsComponent implements OnInit {
-    criteria: Criteria<UserCriteria>
+    criteria: PageRequest<UserCriteria>
     pageable: Pageable = new Pageable(0, 5)
 
     constructor(private profService: CollaboratorAdminService,

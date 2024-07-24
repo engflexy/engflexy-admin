@@ -8,7 +8,7 @@ export class BaseCriteria {
     }
 }
 
-export class Criteria<T> {
+export class PageRequest<T> {
     public content: Array<T>;
     public last: boolean
     public totalPages: number

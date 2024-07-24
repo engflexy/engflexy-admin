@@ -8,7 +8,7 @@ import {EtudiantCriteria} from '../../../criteria/inscription/EtudiantCriteria.m
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
 import {Observable, tap} from "rxjs";
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {UserCriteria} from "../../../../core/criteria/user-criteria";
 
 
@@ -54,8 +54,8 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
             );
     }
 
-    findByCollaboratorId(id: number, pageable: Pageable): Observable<Criteria<UserCriteria>> {
-        return this.http.get<Criteria<UserCriteria>>(this.API + `pageable/collaborator/id/${id}`,
+    findByCollaboratorId(id: number, pageable: Pageable): Observable<PageRequest<UserCriteria>> {
+        return this.http.get<PageRequest<UserCriteria>>(this.API + `pageable/collaborator/id/${id}`,
             {
                 params: {
                     'page': pageable.page,

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {EtudiantDto} from "../../../../shared/model/inscription/Etudiant.model";
 import {PageEvent} from "@angular/material/paginator";
 import {
@@ -18,7 +18,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class StudentsComponent implements OnInit {
 
-    criteria: Criteria<UserCriteria>
+    criteria: PageRequest<UserCriteria>
     pageable: Pageable = new Pageable(0, 5)
 
     constructor(private etudiantService: EtudiantCollaboratorService,

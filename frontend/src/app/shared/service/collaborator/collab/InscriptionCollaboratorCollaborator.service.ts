@@ -7,6 +7,8 @@ import {InscriptionCollaboratorDto} from "../../../model/collab/InscriptionColla
 import {InscriptionCollaboratorCriteria} from "../../../criteria/collab/InscriptionCollaboratorCriteria.model";
 import {environment} from "../../../../../environments/environment";
 import {PaginatedList} from "../../../../zynerator/dto/PaginatedList.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {Pageable} from "../../../utils/Pageable";
 
 @Injectable({
   providedIn: 'root'
@@ -74,12 +76,22 @@ export class InscriptionCollaboratorCollaboratorService {
     }
 
 
-    public findByCollaboratorTypeCollaboratorIdSchool(): Observable<Array<InscriptionCollaboratorDto>> {
-        return this.http.get<Array<InscriptionCollaboratorDto>>(this.API + 'school');
+    public findByCollaboratorTypeCollaboratorIdSchool(pageable:Pageable): Observable<PageRequest<InscriptionCollaboratorDto>> {
+        return this.http.get<PageRequest<InscriptionCollaboratorDto>>(this.API + 'school',{
+            params: {
+                'page': pageable.page,
+                'size': pageable.size
+            }
+        });
     }
 
-    public findByCollaboratorTypeCollaboratorIdTeacher(): Observable<Array<InscriptionCollaboratorDto>> {
-        return this.http.get<Array<InscriptionCollaboratorDto>>(this.API + 'teacher');
+    public findByCollaboratorTypeCollaboratorIdTeacher(pageable:Pageable): Observable<PageRequest<InscriptionCollaboratorDto>> {
+        return this.http.get<PageRequest<InscriptionCollaboratorDto>>(this.API + 'teacher',{
+            params: {
+                'page': pageable.page,
+                'size': pageable.size
+            }
+        });
     }
 
 

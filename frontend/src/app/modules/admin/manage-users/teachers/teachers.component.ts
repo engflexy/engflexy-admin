@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {PageEvent} from "@angular/material/paginator";
 import {ProfCollaboratorService} from "../../../../shared/service/collaborator/prof/ProfCollaborator.service";
 import {Pageable} from "../../../../shared/utils/Pageable";
@@ -14,7 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
     templateUrl: './teachers.component.html'
 })
 export class TeachersComponent implements OnInit {
-    criteria: Criteria<UserCriteria>
+    criteria: PageRequest<UserCriteria>
     pageable: Pageable = new Pageable(0, 5)
 
     constructor(private profService: ProfCollaboratorService,

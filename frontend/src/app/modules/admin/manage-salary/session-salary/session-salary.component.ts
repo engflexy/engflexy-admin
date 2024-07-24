@@ -6,7 +6,7 @@ import {
     SessionCoursCollaboratorService
 } from "../../../../shared/service/collaborator/learning/SessionCoursCollaborator.service";
 import {Pageable} from "../../../../shared/utils/Pageable";
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {SessionSalary} from "../../../../core/criteria/Session-Salary";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {MatPaginatorModule} from "@angular/material/paginator";
@@ -25,7 +25,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 })
 export class SessionSalaryComponent implements OnInit {
     pageable: Pageable = new Pageable(0, 5);
-    criteria: Criteria<SessionSalary> = new Criteria<SessionSalary>();
+    criteria: PageRequest<SessionSalary> = new PageRequest<SessionSalary>();
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: SalaryDto,
                 private ref: ChangeDetectorRef,
