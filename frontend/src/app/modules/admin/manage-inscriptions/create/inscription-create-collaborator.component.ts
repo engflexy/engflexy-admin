@@ -131,7 +131,23 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
     private _validSkillCode = true;
     private _validSkillLibelle = true;
 
-    constructor(public matDialog: MatDialogRef<InscriptionCreateCollaboratorComponent>, private stringUtilService: StringUtilService, private alert: FuseAlertService, protected service: InscriptionAdminService, private parcoursService: ParcoursAdminService, private quizService: QuizAdminService, private skillService: SkillAdminService, private interetEtudiantService: InteretEtudiantAdminService, private fonctionService: FonctionAdminService, private etudiantService: EtudiantAdminService, private etatInscriptionService: EtatInscriptionAdminService, private groupeTypeService: GroupeTypeAdminService, private statutSocialService: StatutSocialAdminService, private packStudentService: PackStudentAdminService, private groupeEtudeService: GroupeEtudeAdminService, private niveauEtudeService: NiveauEtudeAdminService, @Inject(PLATFORM_ID) private platformId?) {
+    constructor(public matDialog: MatDialogRef<InscriptionCreateCollaboratorComponent>,
+                private stringUtilService: StringUtilService,
+                private alert: FuseAlertService,
+                protected service: InscriptionAdminService,
+                private parcoursService: ParcoursAdminService,
+                private quizService: QuizAdminService,
+                private skillService: SkillAdminService,
+                private interetEtudiantService: InteretEtudiantAdminService,
+                private fonctionService: FonctionAdminService,
+                private etudiantService: EtudiantAdminService,
+                private etatInscriptionService: EtatInscriptionAdminService,
+                private groupeTypeService: GroupeTypeAdminService,
+                private statutSocialService: StatutSocialAdminService,
+                private packStudentService: PackStudentAdminService,
+                private groupeEtudeService: GroupeEtudeAdminService,
+                private niveauEtudeService: NiveauEtudeAdminService,
+                @Inject(PLATFORM_ID) private platformId?) {
 
     }
 
