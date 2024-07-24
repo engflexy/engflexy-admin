@@ -17,7 +17,7 @@
 
 
                 <mat-form-field class="w-full">
-                    <mat-label>PackageCollaborator</mat-label>
+                    <mat-label>Package</mat-label>
                     <input type="text" matInput (input)="filterPackageCollaborator(packageCollaboratorInput.value)" #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"  [(ngModel)]="item.packageCollaborator"  name="packageCollaborator">
 
                     <mat-autocomplete #packageCollaboratorAutocomplete="matAutocomplete" [displayWith]="displayPackageCollaborator" [compareWith]="compareObjects" >
@@ -29,7 +29,7 @@
 
 
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                    <mat-label>NbrStudent</mat-label>
+                    <mat-label>Number of students</mat-label>
                     <input required type="number" (ngModelChange)="calculatePrice()" matInput [step]="8" [min]="8"
                            placeholder="NbrStudent" [(ngModel)]="item.nbrStudent"
                            name="nbrStudent">
@@ -69,21 +69,25 @@
                 </mat-form-field>
             </div>
             <div class="flex gap-4">
-                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                    <mat-label>startDate</mat-label>
-                    <input required type="date" matInput placeholder="StartDate" [(ngModel)]="item.startDate" name="startDate">
+                <mat-form-field class="w-full">
+                    <mat-label>Start time</mat-label>
+                    <input matInput  [matDatepicker]="picker" [(ngModel)]="item.startDate" name="startDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
-
-                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                    <mat-label>endDate</mat-label>
-                    <input required type="date" matInput placeholder="EndDate" [(ngModel)]="item.endDate"
-                           name="endDate">
+                <mat-form-field class="w-full">
+                    <mat-label>Start time</mat-label>
+                    <input matInput  [matDatepicker]="picker" [(ngModel)]="item.endDate" name="endDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
 
                 <mat-form-field class="w-full">
-                    <mat-label>InscriptionCollaboratorState</mat-label>
+                    <mat-label>Inscription State</mat-label>
                     <input type="text" matInput
                            (input)="filterInscriptionCollaboratorState(inscriptionCollaboratorStateInput.value)"
                            #inscriptionCollaboratorStateInput

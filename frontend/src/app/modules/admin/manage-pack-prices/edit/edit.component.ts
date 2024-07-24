@@ -43,6 +43,7 @@ import {
     PackageCollaboratorCollaboratorService
 } from "../../../../shared/service/collaborator/collab/PackageCollaboratorCollaborator.service";
 import {TranslocoModule} from "@ngneat/transloco";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 
 @Component({
@@ -57,7 +58,8 @@ import {TranslocoModule} from "@ngneat/transloco";
         FormsModule,
         MatButtonModule,
         NgForOf,
-        TranslocoModule
+        TranslocoModule,
+        MatDatepickerModule
     ],
     styleUrls: ['./edit.component.scss']
 })

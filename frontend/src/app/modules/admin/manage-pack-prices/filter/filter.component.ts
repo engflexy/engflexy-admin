@@ -32,6 +32,7 @@ import {FormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
 import {TranslocoModule} from "@ngneat/transloco";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @Component({
     selector: 'app-filter',
@@ -45,7 +46,8 @@ import {TranslocoModule} from "@ngneat/transloco";
         MatCheckboxModule,
         MatButtonModule,
         NgForOf,
-        TranslocoModule
+        TranslocoModule,
+        MatDatepickerModule
     ],
     styleUrls: ['./filter.component.scss']
 })

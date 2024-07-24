@@ -26,7 +26,7 @@ import {ScheduleProfCreateCollaboratorComponent} from "./create/schedule-prof-cr
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {TranslocoModule} from "@ngneat/transloco";
-import {OwlDateTimeModule, OwlNativeDateTimeModule} from "@danielmoncada/angular-datetime-picker";
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 
 
 const routes: Route[] = [

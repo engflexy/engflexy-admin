@@ -3,6 +3,8 @@ package ma.zs.alc.service.facade.collaborator.collab;
 import ma.zs.alc.bean.core.collab.InscriptionCollaborator;
 import ma.zs.alc.dao.criteria.core.collab.InscriptionCollaboratorCriteria;
 import ma.zs.alc.zynerator.service.IService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public interface InscriptionCollaboratorCollaboratorService extends IService<Ins
     long countByInscriptionCollaboratorStateCode(String code);
 
 
-    List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher();
+    Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher(Pageable pageable);
 
-    List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool();
+    Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool(Pageable pageable);
 }

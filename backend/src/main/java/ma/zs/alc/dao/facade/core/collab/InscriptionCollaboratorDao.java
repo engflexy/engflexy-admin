@@ -2,6 +2,8 @@ package ma.zs.alc.dao.facade.core.collab;
 
 import ma.zs.alc.zynerator.repository.AbstractRepository;
 import ma.zs.alc.bean.core.collab.InscriptionCollaborator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,5 +30,5 @@ public interface InscriptionCollaboratorDao extends AbstractRepository<Inscripti
 
     long countByInscriptionCollaboratorStateCode(String code);
 
-    List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorId(Long id);
+    Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorId(Long id, Pageable pageable);
 }

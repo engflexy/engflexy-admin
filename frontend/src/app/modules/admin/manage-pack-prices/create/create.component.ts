@@ -53,6 +53,7 @@ import {
 import {
     InscriptionCollaboratorStateCollaboratorService
 } from "../../../../shared/service/collaborator/collab/InscriptionCollaboratorStateCollaborator.service";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @Component({
     selector: 'app-create',
@@ -70,7 +71,8 @@ import {
         MatSelectModule,
         NgForOf,
         TranslocoModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDatepickerModule
     ],
     styleUrls: ['./create.component.scss']
 })
