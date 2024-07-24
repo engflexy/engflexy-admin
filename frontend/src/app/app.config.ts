@@ -1,4 +1,4 @@
-import {provideHttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, provideHttpClient} from '@angular/common/http';
 import {ApplicationConfig} from '@angular/core';
 import {LuxonDateAdapter} from '@angular/material-luxon-adapter';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
@@ -12,6 +12,7 @@ import {provideTransloco} from 'app/core/transloco/transloco.provider';
 import {mockApiServices} from 'app/mock-api';
 import {DatePipe} from "@angular/common";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {DateFormatInterceptor} from "./core/interceptors/DateFormatInterceptor";
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -22,6 +23,11 @@ export const appConfig: ApplicationConfig = {
             withPreloading(PreloadAllModules),
             withInMemoryScrolling({scrollPositionRestoration: 'enabled'}),
         ),
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: DateFormatInterceptor,
+            multi: true
+        },
 
         // Material Date Adapter
         {

@@ -22,15 +22,65 @@
                 <div class=" overflow-x-auto">
                     <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
                       flex flex-row justify-center items-center gap-4">
-                        <mat-form-field
-                            class="flex-auto fuse-mat-dense flex-grow">
-                            <input placeholder="search.." matInput>
-                            <mat-icon
-                                class="icon-size-5"
-                                matPrefix
-                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
-                        </mat-form-field>
-                        <button mat-mini-fab class="mb-5" color="primary">
+
+                        <div class="flex-grow grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-2">
+
+                            <mat-form-field class="w-full">
+                                <mat-select placeholder="filter by teacher"
+                                            [(ngModel)]="criteria.profNameLike"
+                                            [compareWith]="compareObjects">
+                                    <div class="mat-option mx-4">
+                                        <input
+                                            #teacherField
+                                            type="text"
+                                            (input)="filterTeachers(teacherField.value)"
+                                            placeholder="Search for teachers..."
+                                            class="peer h-10 w-full border-none bg-transparent p-0
+                                placeholder-transparent focus:border-transparent
+                                focus:outline-none focus:ring-0 sm:text-sm"
+                                        />
+                                    </div>
+
+                                    <mat-option class="my-2" *ngFor="let item of profs"
+                                                [value]="item.fullName">
+                                        <div class="w-full flex flex-row items-center justify-center flex-wrap gap-2">
+                                            <div class="w-12 h-12 bg-gray-200 uppercase flex items-center justify-center
+                                 dark:bg-gray-600 text-xl rounded-full">
+                                                <p>{{ item?.fullName?.at(0) }}</p>
+                                            </div>
+                                            <div class="flex-grow flex flex-col items-start justify-center">
+                                                <strong>{{ item?.fullName }}</strong>
+                                                <p>{{ item?.username }}</p>
+                                            </div>
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <mat-select placeholder="filter by groups"
+                                            [(ngModel)]="criteria.grpNameLike">
+                                    <div class="mat-option mx-4">
+                                        <input
+                                            #groupField
+                                            type="text"
+                                            (input)="filterGroups(groupField.value)"
+                                            placeholder="Search for groups..."
+                                            class="peer h-10 w-full border-none bg-transparent p-0
+                                placeholder-transparent focus:border-transparent
+                                focus:outline-none focus:ring-0 sm:text-sm"
+                                        />
+                                    </div>
+
+                                    <mat-option class="my-2" *ngFor="let item of groups"
+                                                [value]="item.libelle">
+                                        {{ item?.libelle }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <button (click)="findByCriteria()" mat-icon-button class="mb-5" color="primary">
                             <mat-icon svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
                         </button>
                     </div>

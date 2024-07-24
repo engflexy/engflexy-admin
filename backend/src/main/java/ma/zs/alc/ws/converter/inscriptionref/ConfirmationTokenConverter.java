@@ -37,11 +37,11 @@ public class ConfirmationTokenConverter extends AbstractConverter<ConfirmationTo
             if(StringUtil.isNotEmpty(dto.getToken()))
                 item.setToken(dto.getToken());
             if(StringUtil.isNotEmpty(dto.getExpiresAt()))
-                item.setExpiresAt(DateUtil.stringEnToDate(dto.getExpiresAt()));
+                item.setExpiresAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getExpiresAt()));
             if(StringUtil.isNotEmpty(dto.getCreatedAt()))
-                item.setCreatedAt(DateUtil.stringEnToDate(dto.getCreatedAt()));
+                item.setCreatedAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getCreatedAt()));
             if(StringUtil.isNotEmpty(dto.getConfirmedAt()))
-                item.setConfirmedAt(DateUtil.stringEnToDate(dto.getConfirmedAt()));
+                item.setConfirmedAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getConfirmedAt()));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());

@@ -4,11 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ma.zs.alc.zynerator.util.ListUtil;
 
-import ma.zs.alc.ws.converter.homework.HoweWorkQSTReponseConverter;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
-import ma.zs.alc.ws.converter.homework.ReponseEtudiantHomeWorkConverter;
-import ma.zs.alc.ws.converter.homework.HomeWorkQuestionConverter;
-import ma.zs.alc.ws.converter.homework.HomeWorkConverter;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.homework.HomeWork;
@@ -55,7 +51,7 @@ public class HomeWorkEtudiantConverter extends AbstractConverter<HomeWorkEtudian
             if(StringUtil.isNotEmpty(dto.getResultat()))
                 item.setResultat(dto.getResultat());
             if(StringUtil.isNotEmpty(dto.getDateHomeWork()))
-                item.setDateHomeWork(DateUtil.stringEnToDate(dto.getDateHomeWork()));
+                item.setDateHomeWork(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateHomeWork()));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());

@@ -43,11 +43,11 @@ public class NewsConverter extends AbstractConverter<News, NewsDto> {
             if(StringUtil.isNotEmpty(dto.getDescription()))
                 item.setDescription(dto.getDescription());
             if(StringUtil.isNotEmpty(dto.getDateNews()))
-                item.setDateNews(DateUtil.stringEnToDate(dto.getDateNews()));
+                item.setDateNews(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateNews()));
             if(StringUtil.isNotEmpty(dto.getDateDebut()))
-                item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut()));
+                item.setDateDebut(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateDebut()));
             if(StringUtil.isNotEmpty(dto.getDateFin()))
-                item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin()));
+                item.setDateFin(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFin()));
             if(StringUtil.isNotEmpty(dto.getNumeroOrdre()))
                 item.setNumeroOrdre(dto.getNumeroOrdre());
             if(StringUtil.isNotEmpty(dto.getDestinataire()))

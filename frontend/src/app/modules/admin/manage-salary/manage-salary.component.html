@@ -73,15 +73,18 @@
                                 matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
+
+
+                        <button mat-icon-button class="mb-5" color="primary" (click)="onSearch()">
+                            <mat-icon svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+
+                        </button>
+
                         <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
                             <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
                         </button>
 
 
-                        <button mat-mini-fab class="mb-5" color="primary" (click)="onSearch()">
-                            <mat-icon svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
-
-                        </button>
                     </div>
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">

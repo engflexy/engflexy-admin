@@ -49,9 +49,9 @@ public class InscriptionCollaboratorConverter extends AbstractConverter<Inscript
             if (dto.getBannerAd() != null)
                 item.setBannerAd(dto.getBannerAd());
             if (StringUtil.isNotEmpty(dto.getStartDate()))
-                item.setStartDate(DateUtil.stringEnToDate(dto.getStartDate()));
+                item.setStartDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_STANDARD,dto.getStartDate()));
             if (StringUtil.isNotEmpty(dto.getEndDate()))
-                item.setEndDate(DateUtil.stringEnToDate(dto.getEndDate()));
+                item.setEndDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_STANDARD,dto.getEndDate()));
             if (this.packageCollaborator && dto.getPackageCollaborator() != null)
                 item.setPackageCollaborator(packageCollaboratorConverter.toItem(dto.getPackageCollaborator()));
 

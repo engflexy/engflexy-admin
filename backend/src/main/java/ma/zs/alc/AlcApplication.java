@@ -36,7 +36,7 @@ import ma.zs.alc.bean.core.salary.Salary;
 import ma.zs.alc.bean.core.salary.WorkloadBonus;
 import ma.zs.alc.bean.core.salary.WorkloadBonusProf;
 import ma.zs.alc.bean.core.vocab.Vocabulary;
-import ma.zs.alc.dao.facade.core.collab.PackageCollaboratorDao;
+import ma.zs.alc.service.facade.admin.collab.PackageCollaboratorAdminService;
 import ma.zs.alc.service.facade.admin.common.ClassAverageBonusAdminService;
 import ma.zs.alc.service.facade.admin.common.ContactAdminService;
 import ma.zs.alc.service.facade.admin.common.NewsAdminService;
@@ -90,7 +90,7 @@ import java.util.List;
 //@EnableFeignClients
 public class AlcApplication {
     @Autowired
-    private PackageCollaboratorDao packageDao;
+    private PackageCollaboratorAdminService packageCollaboratorAdminService;
 
     public static ConfigurableApplicationContext ctx;
     @Value("${engflexy.front.url}")
@@ -121,7 +121,7 @@ public class AlcApplication {
     @Bean
     public CommandLineRunner demo(UserService userService, RoleService roleService, ModelPermissionService modelPermissionService, ActionPermissionService actionPermissionService, ModelPermissionUserService modelPermissionUserService) {
         return (args) -> {
-            if (true) {
+            if (false) {
                 PackageCollaborator p = new PackageCollaborator();
                 p.setLibelle("default package");
                 p.setNbrStudentBase(BigDecimal.valueOf(8));
@@ -130,7 +130,7 @@ public class AlcApplication {
                 p.setPriceColor(BigDecimal.valueOf(8));
                 p.setPriceColorOld(BigDecimal.valueOf(14));
                 p.setPriceLogo(BigDecimal.valueOf(20));
-                packageDao.save(p);
+                packageCollaboratorAdminService.create(p);
                 /*
                 ContentType type0 = new ContentType("IMAGE", "Image");
                 ContentType type1 = new ContentType("MULTI_IMAGE", "Multi-Image");

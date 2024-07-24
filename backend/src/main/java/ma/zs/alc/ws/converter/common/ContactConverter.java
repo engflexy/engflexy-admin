@@ -43,7 +43,7 @@ public class ContactConverter extends AbstractConverter<Contact, ContactDto> {
             if(StringUtil.isNotEmpty(dto.getSetFrom()))
                 item.setSetFrom(dto.getSetFrom());
             if(StringUtil.isNotEmpty(dto.getDateContact()))
-                item.setDateContact(DateUtil.stringEnToDate(dto.getDateContact()));
+                item.setDateContact(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateContact()));
             if(dto.getReplied() != null)
                 item.setReplied(dto.getReplied());
             if(StringUtil.isNotEmpty(dto.getMessage()))

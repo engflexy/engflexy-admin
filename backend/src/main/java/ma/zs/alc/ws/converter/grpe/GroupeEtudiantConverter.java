@@ -56,9 +56,9 @@ public class GroupeEtudiantConverter extends AbstractConverter<GroupeEtudiant, G
             if (StringUtil.isNotEmpty(dto.getType()))
                 item.setType(dto.getType());
             if (StringUtil.isNotEmpty(dto.getDateDebut()))
-                item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut()));
+                item.setDateDebut(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateDebut()));
             if (StringUtil.isNotEmpty(dto.getDateFin()))
-                item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin()));
+                item.setDateFin(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFin()));
             if (StringUtil.isNotEmpty(dto.getNombrePlace()))
                 item.setNombrePlace(dto.getNombrePlace());
             if (StringUtil.isNotEmpty(dto.getNombrePlacevide()))

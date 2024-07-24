@@ -62,9 +62,9 @@ public class SessionCoursConverter extends AbstractConverter<SessionCours, Sessi
             if (StringUtil.isNotEmpty(dto.getAnnee()))
                 item.setAnnee(dto.getAnnee());
             if (StringUtil.isNotEmpty(dto.getDateFin()))
-                item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin()));
+                item.setDateFin(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFin()));
             if (StringUtil.isNotEmpty(dto.getDateDebut()))
-                item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut()));
+                item.setDateDebut(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateDebut()));
             if (dto.getPayer() != null)
                 item.setPayer(dto.getPayer());
             if (StringUtil.isNotEmpty(dto.getNreKeySectionFinished()))

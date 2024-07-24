@@ -44,9 +44,9 @@ public class QuizConverter extends AbstractConverter<Quiz, QuizDto> {
             if (StringUtil.isNotEmpty(dto.getLib()))
                 item.setLib(dto.getLib());
             if (StringUtil.isNotEmpty(dto.getDateDebut()))
-                item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut()));
+                item.setDateDebut(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateDebut()));
             if (StringUtil.isNotEmpty(dto.getDateFin()))
-                item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin()));
+                item.setDateFin(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFin()));
             if (StringUtil.isNotEmpty(dto.getNumero()))
                 item.setNumero(dto.getNumero());
             if (StringUtil.isNotEmpty(dto.getSeuilReussite()))

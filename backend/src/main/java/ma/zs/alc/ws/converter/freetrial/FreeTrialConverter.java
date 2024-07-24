@@ -4,16 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ma.zs.alc.zynerator.util.ListUtil;
 
-import ma.zs.alc.ws.converter.freetrial.FreeTrialTeacherEmailTemplateConverter;
-import ma.zs.alc.ws.converter.freetrial.FreeTrialTeacherWhatsTemplateConverter;
-import ma.zs.alc.ws.converter.freetrial.StatutFreeTrialConverter;
-import ma.zs.alc.ws.converter.freetrial.FreeTrialConfigurationConverter;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
-import ma.zs.alc.ws.converter.freetrial.FreeTrialStudentEmailTemplateConverter;
-import ma.zs.alc.ws.converter.freetrial.FreeTrialDetailConverter;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
 import ma.zs.alc.ws.converter.inscriptionref.NiveauEtudeConverter;
-import ma.zs.alc.ws.converter.freetrial.FreeTrialStudentWhatsTemplateConverter;
 
 import ma.zs.alc.bean.core.prof.Prof;
 
@@ -73,21 +66,21 @@ public class FreeTrialConverter extends AbstractConverter<FreeTrial, FreeTrialDt
             if(StringUtil.isNotEmpty(dto.getReference()))
                 item.setReference(dto.getReference());
             if(StringUtil.isNotEmpty(dto.getDateFreeTrial()))
-                item.setDateFreeTrial(DateUtil.stringEnToDate(dto.getDateFreeTrial()));
+                item.setDateFreeTrial(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFreeTrial()));
             if(StringUtil.isNotEmpty(dto.getLink()))
                 item.setLink(dto.getLink());
             if(dto.getEmailTeacherSent() != null)
                 item.setEmailTeacherSent(dto.getEmailTeacherSent());
             if(StringUtil.isNotEmpty(dto.getEmailTeacherSendingDate()))
-                item.setEmailTeacherSendingDate(DateUtil.stringEnToDate(dto.getEmailTeacherSendingDate()));
+                item.setEmailTeacherSendingDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getEmailTeacherSendingDate()));
             if(dto.getWhatsTeacherSent() != null)
                 item.setWhatsTeacherSent(dto.getWhatsTeacherSent());
             if(StringUtil.isNotEmpty(dto.getWhatsTeacherSendingDate()))
-                item.setWhatsTeacherSendingDate(DateUtil.stringEnToDate(dto.getWhatsTeacherSendingDate()));
+                item.setWhatsTeacherSendingDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getWhatsTeacherSendingDate()));
             if(StringUtil.isNotEmpty(dto.getDateFreeTrialPremierRappel()))
-                item.setDateFreeTrialPremierRappel(DateUtil.stringEnToDate(dto.getDateFreeTrialPremierRappel()));
+                item.setDateFreeTrialPremierRappel(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFreeTrialPremierRappel()));
             if(StringUtil.isNotEmpty(dto.getDateFreeTrialPremierDeuxiemeRappel()))
-                item.setDateFreeTrialPremierDeuxiemeRappel(DateUtil.stringEnToDate(dto.getDateFreeTrialPremierDeuxiemeRappel()));
+                item.setDateFreeTrialPremierDeuxiemeRappel(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFreeTrialPremierDeuxiemeRappel()));
             if(StringUtil.isNotEmpty(dto.getNombreStudentTotal()))
                 item.setNombreStudentTotal(dto.getNombreStudentTotal());
             if(StringUtil.isNotEmpty(dto.getNombreStudentAbonne()))

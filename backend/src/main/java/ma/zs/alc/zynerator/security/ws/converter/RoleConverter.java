@@ -28,9 +28,9 @@ public class RoleConverter extends AbstractConverter<Role, RoleDto> {
             if(StringUtil.isNotEmpty(dto.getAuthority()))
                 item.setAuthority(dto.getAuthority());
             if(StringUtil.isNotEmpty(dto.getCreatedAt()))
-                item.setCreatedAt(DateUtil.stringEnToDate(dto.getCreatedAt()));
+                item.setCreatedAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getCreatedAt()));
             if(StringUtil.isNotEmpty(dto.getUpdatedAt()))
-                item.setUpdatedAt(DateUtil.stringEnToDate(dto.getUpdatedAt()));
+                item.setUpdatedAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getUpdatedAt()));
 
 
 

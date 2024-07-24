@@ -49,7 +49,7 @@ public class EtudiantReviewConverter extends AbstractConverter<EtudiantReview, E
             if(StringUtil.isNotEmpty(dto.getComment()))
                 item.setComment(dto.getComment());
             if(StringUtil.isNotEmpty(dto.getDateReview()))
-                item.setDateReview(DateUtil.stringEnToDate(dto.getDateReview()));
+                item.setDateReview(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateReview()));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());

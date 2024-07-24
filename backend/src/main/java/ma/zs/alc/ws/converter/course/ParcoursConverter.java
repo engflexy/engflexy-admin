@@ -40,9 +40,9 @@ public class ParcoursConverter extends AbstractConverter<Parcours, ParcoursDto> 
             if (StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
             if (StringUtil.isNotEmpty(dto.getDatePublication()))
-                item.setDatePublication(DateUtil.stringEnToDate(dto.getDatePublication()));
+                item.setDatePublication(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDatePublication()));
             if (StringUtil.isNotEmpty(dto.getDateCreation()))
-                item.setDateCreation(DateUtil.stringEnToDate(dto.getDateCreation()));
+                item.setDateCreation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateCreation()));
             if (StringUtil.isNotEmpty(dto.getDescription()))
                 item.setDescription(dto.getDescription());
 
