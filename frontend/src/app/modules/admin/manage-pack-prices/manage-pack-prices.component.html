@@ -57,7 +57,17 @@
                     </div>
                     <div *ngIf="active_status == 2" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
                 </li>
-
+                <li (click)="changeType(3)"
+                    [ngClass]="active_status == 3 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
+                    <div class="flex items-center mb-3">
+                        <span>
+                            <mat-icon [color]="active_status === 3 ? 'primary':'accent'" class="icon-size-4"
+                                      svgIcon="heroicons_solid:cog-6-tooth"></mat-icon>
+                        </span>
+                        <span class="ml-1 text-lg ubuntu-medium">Config</span>
+                    </div>
+                    <div *ngIf="active_status == 3" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
+                </li>
             </ul>
         </div>
 
@@ -126,7 +136,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                <ng-container *ngFor="let item of criteria?.list">
+                                <ng-container *ngFor="let item of items?.content">
                                     <tr>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
@@ -164,10 +174,10 @@
                                             {{ item?.inscriptionCollaboratorState?.libelle}}
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.startDate}}
+                                            {{ item?.startDate|date:'dd-MM-yyyy'}}
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.endDate}}
+                                            {{ item?.endDate|date:'dd-MM-yyyy'}}
                                         </td>
 
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
@@ -198,8 +208,8 @@
                             <div class="w-full  flex justify-center items-center my-5">
                                 <mat-paginator
                                     (page)="handle_pageable_change($event)"
-                                    [length]="criteria?.dataSize"
-                                    [pageSize]="pageable?.maxResults"
+                                    [length]="items?.totalElements"
+                                    [pageSize]="items?.size"
                                     [pageSizeOptions]="[5,10,25]"
                                     aria-label="Select page">
                                 </mat-paginator>

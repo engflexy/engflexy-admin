@@ -10,6 +10,13 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {DatePipe, NgForOf} from "@angular/common";
 import {TranslocoModule} from "@ngneat/transloco";
+import {PackStudentDto} from "../../../../shared/model/pack/PackStudent.model";
+import {PackStudentCriteria} from "../../../../shared/criteria/pack/PackStudentCriteria.model";
+import {ParcoursDto} from "../../../../shared/model/course/Parcours.model";
+import {PriceDto} from "../../../../shared/model/price/Price.model";
+import {PackStudentAdminService} from "../../../../shared/service/admin/pack/PackStudentAdmin.service";
+import {ParcoursAdminService} from "../../../../shared/service/admin/course/ParcoursAdmin.service";
+import {PriceAdminService} from "../../../../shared/service/admin/price/PriceAdmin.service";
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {RoleService} from "../../../../zynerator/security/shared/service/Role.service";
 import {Router} from "@angular/router";
@@ -18,6 +25,16 @@ import {environment} from "../../../../../environments/environment";
 import {PackageCollaboratorDto} from "../../../../shared/model/collab/PackageCollaborator.model";
 import {CollaboratorDto} from "../../../../shared/model/vocab/Collaborator.model";
 import {InscriptionCollaboratorStateDto} from "../../../../shared/model/collab/InscriptionCollaboratorState.model";
+import {
+    InscriptionCollaboratorAdminService
+} from "../../../../shared/service/admin/collab/InscriptionCollaboratorAdmin.service";
+import {CollaboratorAdminService} from "../../../../shared/service/admin/vocab/CollaboratorAdmin.service";
+import {
+    InscriptionCollaboratorStateAdminService
+} from "../../../../shared/service/admin/collab/InscriptionCollaboratorStateAdmin.service";
+import {
+    PackageCollaboratorAdminService
+} from "../../../../shared/service/admin/collab/PackageCollaboratorAdmin.service";
 import {InscriptionCollaboratorDto} from "../../../../shared/model/collab/InscriptionCollaborator.model";
 import {
     InscriptionCollaboratorCriteria
@@ -36,6 +53,7 @@ import {
 import {
     InscriptionCollaboratorStateCollaboratorService
 } from "../../../../shared/service/collaborator/collab/InscriptionCollaboratorStateCollaborator.service";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @Component({
     selector: 'app-create',
@@ -53,10 +71,12 @@ import {
         MatSelectModule,
         NgForOf,
         TranslocoModule,
-        MatCheckboxModule
-    ]
+        MatCheckboxModule,
+        MatDatepickerModule
+    ],
+    styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit{
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
@@ -67,32 +87,25 @@ export class CreateComponent implements OnInit {
     protected stringUtilService: StringUtilService;
     private _activeTab = 0;
 
-    _packageCollaboratorsFilter: PackageCollaboratorDto[];
-    _collaboratorsFilter: CollaboratorDto[];
-    _inscriptionCollaboratorStatesFilter: InscriptionCollaboratorStateDto[];
+    _packageCollaboratorsFilter:  PackageCollaboratorDto[];
+    _collaboratorsFilter:  CollaboratorDto[];
+    _inscriptionCollaboratorStatesFilter:  InscriptionCollaboratorStateDto[];
+
+
 
 
     private _validPackageCollaboratorLibelle = true;
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<CreateComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService, private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
+    constructor(public refDialog: MatDialogRef<CreateComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
     ngOnInit(): void {
-        this.packageCollaboratorService.findAll().subscribe((data) => {
-            this.packageCollaborators = data;
-            this._packageCollaboratorsFilter = [...this.packageCollaborators]
-        });
-        this.collaboratorService.findAll().subscribe((data) => {
-            this.collaborators = data;
-            this._collaboratorsFilter = [...this.collaborators]
-        });
-        this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {
-            this.inscriptionCollaboratorStates = data;
-            this._inscriptionCollaboratorStatesFilter = [...this.inscriptionCollaboratorStates]
-        });
+        this.packageCollaboratorService.findAll().subscribe((data) => {this.packageCollaborators = data; this._packageCollaboratorsFilter = [...this.packageCollaborators]});
+        this.collaboratorService.findAll().subscribe((data) => {this.collaborators = data; this._collaboratorsFilter = [...this.collaborators]});
+        this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {this.inscriptionCollaboratorStates = data; this._inscriptionCollaboratorStatesFilter = [...this.inscriptionCollaboratorStates]});
     }
 
     displayPackageCollaborator(item: PackageCollaboratorDto): string {
@@ -100,7 +113,7 @@ export class CreateComponent implements OnInit {
 
     }
 
-    filterPackageCollaborator(value: string) {
+    filterPackageCollaborator(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._packageCollaboratorsFilter = this.packageCollaborators.filter(s =>
@@ -110,13 +123,12 @@ export class CreateComponent implements OnInit {
             this._packageCollaboratorsFilter = this.packageCollaborators
         }
     }
-
     displayCollaborator(item: CollaboratorDto): string {
         return item && item.username ? item.username : "";
 
     }
 
-    filterCollaborator(value: string) {
+    filterCollaborator(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._collaboratorsFilter = this.collaborators.filter(s =>
@@ -126,13 +138,12 @@ export class CreateComponent implements OnInit {
             this._collaboratorsFilter = this.collaborators
         }
     }
-
     displayInscriptionCollaboratorState(item: InscriptionCollaboratorStateDto): string {
         return item && item.libelle ? item.libelle : "";
 
     }
 
-    filterInscriptionCollaboratorState(value: string) {
+    filterInscriptionCollaboratorState(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._inscriptionCollaboratorStatesFilter = this.inscriptionCollaboratorStates.filter(s =>
@@ -144,12 +155,14 @@ export class CreateComponent implements OnInit {
     }
 
 
+
+
     public save(): void {
-        console.log(this.item)
         this.submitted = true;
         this.validateForm();
         if (this.errorMessages.length === 0) {
             this.saveWithShowOption(false);
+            this.refDialog.close();
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
@@ -166,47 +179,49 @@ export class CreateComponent implements OnInit {
 
         }, error => {
             console.log(error);
-            this.alert.show('info', 'something went wrong!, please try again.');
-
         });
     }
 
 
-    public setValidation(value: boolean) {
+
+
+
+
+    public  setValidation(value: boolean){
     }
 
 
-    public validateForm(): void {
+
+    public  validateForm(): void{
         this.errorMessages = new Array<string>();
     }
 
 
+
     public async openCreateCollaborator(collaborator: string) {
         const isPermistted = await this.roleService.isPermitted('Collaborator', 'add');
-        if (isPermistted) {
+        if(isPermistted) {
             this.collaborator = new CollaboratorDto();
             this.createCollaboratorDialog = true;
-        } else {
+        }else{
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
-
     public async openCreatePackageCollaborator(packageCollaborator: string) {
         const isPermistted = await this.roleService.isPermitted('PackageCollaborator', 'add');
-        if (isPermistted) {
+        if(isPermistted) {
             this.packageCollaborator = new PackageCollaboratorDto();
             this.createPackageCollaboratorDialog = true;
-        } else {
+        }else{
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
-
     public async openCreateInscriptionCollaboratorState(inscriptionCollaboratorState: string) {
         const isPermistted = await this.roleService.isPermitted('InscriptionCollaboratorState', 'add');
-        if (isPermistted) {
+        if(isPermistted) {
             this.inscriptionCollaboratorState = new InscriptionCollaboratorStateDto();
             this.createInscriptionCollaboratorStateDialog = true;
-        } else {
+        }else{
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
@@ -214,96 +229,76 @@ export class CreateComponent implements OnInit {
     get collaborator(): CollaboratorDto {
         return this.collaboratorService.item;
     }
-
     set collaborator(value: CollaboratorDto) {
         this.collaboratorService.item = value;
     }
-
     get collaborators(): Array<CollaboratorDto> {
         return this.collaboratorService.items;
     }
-
     set collaborators(value: Array<CollaboratorDto>) {
         this.collaboratorService.items = value;
     }
-
     get createCollaboratorDialog(): boolean {
         return this.collaboratorService.createDialog;
     }
-
     set createCollaboratorDialog(value: boolean) {
-        this.collaboratorService.createDialog = value;
+        this.collaboratorService.createDialog= value;
     }
-
     get packageCollaborator(): PackageCollaboratorDto {
         return this.packageCollaboratorService.item;
     }
-
     set packageCollaborator(value: PackageCollaboratorDto) {
         this.packageCollaboratorService.item = value;
     }
-
     get packageCollaborators(): Array<PackageCollaboratorDto> {
         return this.packageCollaboratorService.items;
     }
-
     set packageCollaborators(value: Array<PackageCollaboratorDto>) {
         this.packageCollaboratorService.items = value;
     }
-
     get createPackageCollaboratorDialog(): boolean {
         return this.packageCollaboratorService.createDialog;
     }
-
     set createPackageCollaboratorDialog(value: boolean) {
-        this.packageCollaboratorService.createDialog = value;
+        this.packageCollaboratorService.createDialog= value;
     }
-
     get inscriptionCollaboratorState(): InscriptionCollaboratorStateDto {
         return this.inscriptionCollaboratorStateService.item;
     }
-
     set inscriptionCollaboratorState(value: InscriptionCollaboratorStateDto) {
         this.inscriptionCollaboratorStateService.item = value;
     }
-
     get inscriptionCollaboratorStates(): Array<InscriptionCollaboratorStateDto> {
         return this.inscriptionCollaboratorStateService.items;
     }
-
     set inscriptionCollaboratorStates(value: Array<InscriptionCollaboratorStateDto>) {
         this.inscriptionCollaboratorStateService.items = value;
     }
-
     get createInscriptionCollaboratorStateDialog(): boolean {
         return this.inscriptionCollaboratorStateService.createDialog;
     }
-
     set createInscriptionCollaboratorStateDialog(value: boolean) {
-        this.inscriptionCollaboratorStateService.createDialog = value;
+        this.inscriptionCollaboratorStateService.createDialog= value;
     }
+
+
 
 
     get validPackageCollaboratorLibelle(): boolean {
         return this._validPackageCollaboratorLibelle;
     }
-
     set validPackageCollaboratorLibelle(value: boolean) {
         this._validPackageCollaboratorLibelle = value;
     }
-
     get validInscriptionCollaboratorStateCode(): boolean {
         return this._validInscriptionCollaboratorStateCode;
     }
-
     set validInscriptionCollaboratorStateCode(value: boolean) {
         this._validInscriptionCollaboratorStateCode = value;
     }
-
     get validInscriptionCollaboratorStateLibelle(): boolean {
         return this._validInscriptionCollaboratorStateLibelle;
     }
-
     set validInscriptionCollaboratorStateLibelle(value: boolean) {
         this._validInscriptionCollaboratorStateLibelle = value;
     }
@@ -388,39 +383,40 @@ export class CreateComponent implements OnInit {
     protected readonly compareObjects = compareObjects;
 
 
+
+
     calculatePrice() {
-        const timer = setInterval(s => {
-            if (this.item.packageCollaborator != null && this.item.nbrStudent != null) {
-                let totalPrice = 0;
+        const timer  = setInterval(s => {
+        if(this.item.packageCollaborator!=null && this.item.nbrStudent!=null){
+        let totalPrice = 0;
 
 
-                // Calculate base price based on number of students
-                console.log(this.item.packageCollaborator.priceBase)
+            // Calculate base price based on number of students
+            console.log(this.item.packageCollaborator.priceBase)
 
-                clearInterval(timer)
+            clearInterval(timer)
 
 
-                totalPrice += this.item.nbrStudent * this.item.packageCollaborator.priceBase;
+        totalPrice += this.item.nbrStudent * this.item.packageCollaborator.priceBase;
 
-                // Add price for logo if selected
-                if (this.item.logo == true) {
-                    totalPrice += this.item.packageCollaborator.priceLogo;
-                }
+        // Add price for logo if selected
+        if (this.item.logo==true) {
+            totalPrice += this.item.packageCollaborator.priceLogo;
+        }
 
-                // Add price for color if selected
-                if (this.item.color == true) {
-                    totalPrice += this.item.packageCollaborator.priceColor;
-                }
+        // Add price for color if selected
+        if (this.item.color==true) {
+            totalPrice += this.item.packageCollaborator.priceColor;
+        }
 
-                // Add price for banner ad if selected
-                if (this.item.bannerAd == true) {
-                    totalPrice += this.item.packageCollaborator.priceBannerAd;
-                }
+        // Add price for banner ad if selected
+        if (this.item.bannerAd==true) {
+            totalPrice += this.item.packageCollaborator.priceBannerAd;
+        }
 
-                // Update the item price
-                this.item.price = totalPrice;
-                console.log(this.item.price)
-            }
-        }, 100)
+        // Update the item price
+        this.item.price = totalPrice;
+        console.log(this.item.price)}
+        },100)
     }
 }

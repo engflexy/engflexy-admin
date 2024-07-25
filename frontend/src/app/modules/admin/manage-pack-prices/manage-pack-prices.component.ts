@@ -1,4 +1,4 @@
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -42,6 +42,8 @@ import {CollaboratorCriteria} from "../../../shared/criteria/vocab/CollaboratorC
 import {CreateComponent} from "./create/create.component";
 import {EditComponent} from "./edit/edit.component";
 import {FilterComponent} from "./filter/filter.component";
+import {PageRequest} from "../../../zynerator/criteria/BaseCriteria.model";
+import {Pageable} from "../../../shared/utils/Pageable";
 
 @Component({
     selector: 'app-manage-pack-prices',
@@ -49,7 +51,7 @@ import {FilterComponent} from "./filter/filter.component";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [MatButtonModule, NgClass, FuseCardComponent, NgIf, MatIconModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatPaginatorModule, MatSelectModule, NgForOf],
+    imports: [MatButtonModule, NgClass, FuseCardComponent, NgIf, MatIconModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatPaginatorModule, MatSelectModule, NgForOf, DatePipe],
 })
 export class ManagePackPricesComponent implements OnInit{
     yearlyBilling: boolean = true;
@@ -60,10 +62,11 @@ export class ManagePackPricesComponent implements OnInit{
      * Constructor
      */
     status = TYPE_INSCRIPTION
-    criteria: PaginatedList<any> = new PaginatedList<any>()
-    pageable:InscriptionCollaboratorCriteria = new InscriptionCollaboratorCriteria();
+    items: PageRequest<InscriptionCollaboratorDto> = new PageRequest<InscriptionCollaboratorDto>()
+    criteria:InscriptionCollaboratorCriteria = new InscriptionCollaboratorCriteria();
     active_status = 1;
 
+    pageable=new Pageable(0,5);
     constructor(private service: InscriptionCollaboratorCollaboratorService,
                 private _fuseConfirmation: FuseConfirmationService,
                 private router: Router,
@@ -84,19 +87,19 @@ export class ManagePackPricesComponent implements OnInit{
 
     private fetchData() {
         if (this.active_status === 1) {
-            this.service.findByCollaboratorTypeCollaboratorIdSchool().subscribe(res => {
-                this.criteria.list = res;
+            this.service.findByCollaboratorTypeCollaboratorIdSchool(this.pageable).subscribe(res => {
+                this.items = res;
             });
         } else {
-            this.service.findByCollaboratorTypeCollaboratorIdTeacher().subscribe(res => {
-                this.criteria.list = res;
+            this.service.findByCollaboratorTypeCollaboratorIdTeacher(this.pageable).subscribe(res => {
+                this.items = res;
             });
         }
     }
 
     handle_pageable_change(event: PageEvent) {
         this.pageable.page = event?.pageIndex
-        this.pageable.maxResults = event?.pageSize
+        this.pageable.size = event?.pageSize
         this.fetchData();
     }
 
@@ -111,13 +114,13 @@ export class ManagePackPricesComponent implements OnInit{
             maxHeight: "100%"
         });
         dialog.afterClosed().subscribe(res => {
-            if (res != null) this.criteria.list.unshift({...res})
+            if (res != null) this.items.content.unshift({...res})
         })
     }
 
     changeType(index: number) {
         this.active_status = index
-        this.pageable = new InscriptionCollaboratorCriteria()
+        this.criteria = new InscriptionCollaboratorCriteria()
         this.fetchData()
     }
 
@@ -137,7 +140,7 @@ export class ManagePackPricesComponent implements OnInit{
             // If the confirmation button pressed...
             if (result === 'confirmed') {
                 this.service.delete(item).subscribe(res => {
-                    this.criteria.list.splice(this.criteria.list.indexOf(item), 1)
+                    this.items.content.splice(this.items.content.indexOf(item), 1)
                 }, error => {
                     this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                 })
@@ -180,12 +183,13 @@ export class ManagePackPricesComponent implements OnInit{
         });
         dialog.afterClosed().subscribe(res => {
             if (res != null) {
-                this.pageable = res
-                this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
-                    this.criteria = res
+                this.criteria = res
+                this.service.findPaginatedByCriteria(this.criteria).subscribe(res => {
+                    this.items.content = res.list
+                    this.items.totalElements = res.dataSize
                 })
             } else {
-                this.pageable = new InscriptionCollaboratorCriteria()
+                this.criteria = new InscriptionCollaboratorCriteria()
                 this.fetchData()
             }
         })

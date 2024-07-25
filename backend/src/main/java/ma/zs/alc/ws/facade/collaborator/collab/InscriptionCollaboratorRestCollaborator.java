@@ -17,6 +17,8 @@ import ma.zs.alc.zynerator.util.PaginatedList;
 
 
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,14 +56,14 @@ public class InscriptionCollaboratorRestCollaborator  extends AbstractController
 
     @Operation(summary = "Finds a list of all CollaboratorSchool")
     @GetMapping("school")
-    public List<InscriptionCollaboratorDto> findByCollaboratorTypeCollaboratorIdSchool() throws Exception {
-        return super.findDtos(service.findByCollaboratorTypeCollaboratorIdSchool());
+    public Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool(@RequestParam("size") int size, @RequestParam("page") int page) throws Exception {
+        return service.findByCollaboratorTypeCollaboratorIdSchool(PageRequest.of(page,size));
     }
 
     @Operation(summary = "Finds a list of all CollaboratorTeacher")
     @GetMapping("teacher")
-    public List<InscriptionCollaboratorDto> findByCollaboratorTypeCollaboratorIdTeacher() throws Exception {
-        return super.findDtos(service.findByCollaboratorTypeCollaboratorIdTeacher());
+    public Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher(@RequestParam("size") int size, @RequestParam("page") int page) throws Exception {
+        return service.findByCollaboratorTypeCollaboratorIdTeacher(PageRequest.of(page,size));
     }
 
 

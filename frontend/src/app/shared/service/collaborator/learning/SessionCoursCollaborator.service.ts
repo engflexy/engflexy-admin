@@ -10,7 +10,7 @@ import {PaginatedList} from "../../../../zynerator/dto/PaginatedList.model";
 import {Observable} from "rxjs";
 import {SessionSalary} from "../../../../core/criteria/Session-Salary";
 import {Pageable} from "../../../utils/Pageable";
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 
 
 @Injectable({
@@ -34,8 +34,8 @@ export class SessionCoursCollaboratorService extends AbstractService<SessionCour
         return new SessionCoursCriteria();
     }
 
-    get_sessions_by_salary(id: number, pageable:Pageable): Observable<Criteria<SessionSalary>> {
-        return this.http.get<Criteria<SessionSalary>>(this.API + 'pageabale/salary/' + id, {
+    get_sessions_by_salary(id: number, pageable:Pageable): Observable<PageRequest<SessionSalary>> {
+        return this.http.get<PageRequest<SessionSalary>>(this.API + 'pageabale/salary/' + id, {
             params: {
                 'page': pageable.page,
                 'size': pageable.size

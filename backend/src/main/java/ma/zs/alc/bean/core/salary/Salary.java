@@ -1,11 +1,11 @@
 package ma.zs.alc.bean.core.salary;
 
+import java.util.List;
 import java.util.Objects;
 
 
-
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ma.zs.alc.bean.core.learning.SessionCours;
 import ma.zs.alc.bean.core.prof.Prof;
 
 
@@ -39,6 +39,7 @@ public class Salary   extends AuditBusinessObject     {
 
 
     private Prof prof ;
+    private List<SessionCours> sessionCours ;
 
 
 
@@ -144,5 +145,15 @@ public class Salary   extends AuditBusinessObject     {
         return Objects.hash(id);
     }
 
+
+   @OneToMany(mappedBy = "salary",cascade = CascadeType.REMOVE)
+   @JsonIgnore
+    public List<SessionCours> getSessionCours() {
+        return sessionCours;
+    }
+
+    public void setSessionCours(List<SessionCours> sessionCours) {
+        this.sessionCours = sessionCours;
+    }
 }
 

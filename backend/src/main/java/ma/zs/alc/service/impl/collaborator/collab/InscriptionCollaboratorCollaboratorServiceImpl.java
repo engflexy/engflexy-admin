@@ -9,6 +9,8 @@ import ma.zs.alc.service.facade.collaborator.collab.InscriptionCollaboratorColla
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -64,18 +66,21 @@ public class InscriptionCollaboratorCollaboratorServiceImpl extends AbstractServ
     }
 
 
+
+
     @Override
-    public List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher(){
-        return dao.findByCollaboratorTypeCollaboratorId(2L);
+    public Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher(Pageable pageable){
+        return dao.findByCollaboratorTypeCollaboratorId(2L, pageable);
     }
 
     @Override
-    public List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool(){
-        return dao.findByCollaboratorTypeCollaboratorId(1L);
+    public Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool(Pageable pageable){
+        return dao.findByCollaboratorTypeCollaboratorId(1L,pageable);
     }
 
-    private List<InscriptionCollaborator> findByCollaboratorTypeCollaboratorId(Long id){
-        return dao.findByCollaboratorTypeCollaboratorId(id);
+    private Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorId(Long id,Pageable pageable){
+
+        return dao.findByCollaboratorTypeCollaboratorId(id,pageable);
     }
 
 
