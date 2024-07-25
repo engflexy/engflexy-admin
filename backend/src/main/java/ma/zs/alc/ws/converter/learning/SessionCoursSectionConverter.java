@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.learning.SessionCoursConverter;
+import ma.zs.alc.bean.core.learning.SessionCours;
 import ma.zs.alc.ws.converter.course.SectionConverter;
+import ma.zs.alc.bean.core.course.Section;
 
 import ma.zs.alc.bean.core.learning.SessionCours;
 import ma.zs.alc.bean.core.course.Section;
@@ -82,6 +84,12 @@ public class SessionCoursSectionConverter extends AbstractConverter<SessionCours
 
     public void copy(SessionCoursSectionDto dto, SessionCoursSection t) {
     super.copy(dto, t);
+    if(t.getSessionCours() == null && dto.getSessionCours() != null) {
+        t.setSessionCours(new SessionCours());
+    }
+    if(t.getSection() == null && dto.getSection() != null) {
+        t.setSection(new Section());
+    }
     if (dto.getSessionCours() != null)
         sessionCoursConverter.copy(dto.getSessionCours(), t.getSessionCours());
     if (dto.getSection() != null)

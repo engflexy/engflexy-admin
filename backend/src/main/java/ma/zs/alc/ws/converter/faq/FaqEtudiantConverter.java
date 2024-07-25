@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.faq.FaqTypeConverter;
+import ma.zs.alc.bean.core.faq.FaqType;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 
@@ -86,6 +88,12 @@ public class FaqEtudiantConverter extends AbstractConverter<FaqEtudiant, FaqEtud
 
     public void copy(FaqEtudiantDto dto, FaqEtudiant t) {
     super.copy(dto, t);
+    if(t.getEtudiant() == null && dto.getEtudiant() != null) {
+        t.setEtudiant(new Etudiant());
+    }
+    if(t.getFaqType() == null && dto.getFaqType() != null) {
+        t.setFaqType(new FaqType());
+    }
     if (dto.getEtudiant() != null)
         etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
     if (dto.getFaqType() != null)

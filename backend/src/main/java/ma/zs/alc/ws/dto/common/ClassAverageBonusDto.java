@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 
 
-import ma.zs.alc.ws.dto.vocab.CollaboratorDto;
+import ma.zs.alc.ws.dto.collab.CollaboratorDto;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

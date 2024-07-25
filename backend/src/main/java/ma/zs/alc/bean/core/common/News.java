@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
 

@@ -5,8 +5,11 @@ import org.springframework.stereotype.Component;
 import ma.zs.alc.zynerator.util.ListUtil;
 
 import ma.zs.alc.ws.converter.quiz.QuizConverter;
+import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.ws.converter.quizref.TypeDeQuestionConverter;
+import ma.zs.alc.bean.core.quizref.TypeDeQuestion;
 import ma.zs.alc.ws.converter.quiz.ReponseConverter;
+import ma.zs.alc.bean.core.quiz.Reponse;
 
 import ma.zs.alc.bean.core.quiz.Quiz;
 
@@ -120,6 +123,12 @@ public class QuestionConverter extends AbstractConverter<Question, QuestionDto> 
 
     public void copy(QuestionDto dto, Question t) {
     super.copy(dto, t);
+    if(t.getTypeDeQuestion() == null && dto.getTypeDeQuestion() != null) {
+        t.setTypeDeQuestion(new TypeDeQuestion());
+    }
+    if(t.getQuiz() == null && dto.getQuiz() != null) {
+        t.setQuiz(new Quiz());
+    }
     if (dto.getTypeDeQuestion() != null)
         typeDeQuestionConverter.copy(dto.getTypeDeQuestion(), t.getTypeDeQuestion());
     if (dto.getReponses() != null)

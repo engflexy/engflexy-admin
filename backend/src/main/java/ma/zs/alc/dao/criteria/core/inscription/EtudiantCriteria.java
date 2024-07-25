@@ -1,7 +1,7 @@
 package  ma.zs.alc.dao.criteria.core.inscription;
 
 
-import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
+import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.criteria.core.course.ParcoursCriteria;
 import ma.zs.alc.dao.criteria.core.inscriptionref.SkillCriteria;
 import ma.zs.alc.dao.criteria.core.inscriptionref.InteretEtudiantCriteria;
@@ -13,7 +13,6 @@ import ma.zs.alc.dao.criteria.core.inscriptionref.TeacherLocalityCriteria;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudeCriteria;
 import ma.zs.alc.dao.criteria.core.inscriptionref.NiveauEtudeCriteria;
 
-import ma.zs.alc.zynerator.criteria.BaseCriteria;
 import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
 
 import java.util.List;

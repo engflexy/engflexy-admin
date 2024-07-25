@@ -6,7 +6,7 @@ import ma.zs.alc.dao.criteria.core.collab.InscriptionCollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.InscriptionCollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.InscriptionCollaboratorSpecification;
 import ma.zs.alc.service.facade.collaborator.collab.InscriptionCollaboratorCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.vocab.CollaboratorCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 
 import org.springframework.stereotype.Service;

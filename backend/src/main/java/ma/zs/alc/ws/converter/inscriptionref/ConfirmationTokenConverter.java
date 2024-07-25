@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 
@@ -37,11 +38,11 @@ public class ConfirmationTokenConverter extends AbstractConverter<ConfirmationTo
             if(StringUtil.isNotEmpty(dto.getToken()))
                 item.setToken(dto.getToken());
             if(StringUtil.isNotEmpty(dto.getExpiresAt()))
-                item.setExpiresAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getExpiresAt()));
+                item.setExpiresAt(DateUtil.stringEnToDate(dto.getExpiresAt(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getCreatedAt()))
-                item.setCreatedAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getCreatedAt()));
+                item.setCreatedAt(DateUtil.stringEnToDate(dto.getCreatedAt(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getConfirmedAt()))
-                item.setConfirmedAt(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getConfirmedAt()));
+                item.setConfirmedAt(DateUtil.stringEnToDate(dto.getConfirmedAt(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
@@ -83,6 +84,9 @@ public class ConfirmationTokenConverter extends AbstractConverter<ConfirmationTo
 
     public void copy(ConfirmationTokenDto dto, ConfirmationToken t) {
     super.copy(dto, t);
+    if(t.getEtudiant() == null && dto.getEtudiant() != null) {
+        t.setEtudiant(new Etudiant());
+    }
     if (dto.getEtudiant() != null)
         etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
     }

@@ -1,9 +1,9 @@
 package ma.zs.alc.ws.converter.course;
 
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.course.Parcours;
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
 import ma.zs.alc.ws.converter.homework.HomeWorkConverter;
-import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.course.ParcoursDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.DateUtil;
@@ -40,25 +40,13 @@ public class ParcoursConverter extends AbstractConverter<Parcours, ParcoursDto> 
             if (StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
             if (StringUtil.isNotEmpty(dto.getDatePublication()))
-                item.setDatePublication(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDatePublication()));
+                item.setDatePublication(DateUtil.stringEnToDate(dto.getDatePublication(), DateUtil.DATE_FORMAT_ENG));
             if (StringUtil.isNotEmpty(dto.getDateCreation()))
-                item.setDateCreation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateCreation()));
+                item.setDateCreation(DateUtil.stringEnToDate(dto.getDateCreation(), DateUtil.DATE_FORMAT_ENG));
             if (StringUtil.isNotEmpty(dto.getDescription()))
                 item.setDescription(dto.getDescription());
-
-
             if (StringUtil.isNotEmpty(dto.getCode()))
                 item.setCode(dto.getCode());
-
-
-            if (StringUtil.isNotEmpty(dto.getColor()))
-                item.setColor(dto.getColor());
-
-
-            if (StringUtil.isNotEmpty(dto.getUrl()))
-                item.setUrl(dto.getUrl());
-
-
             if (StringUtil.isNotEmpty(dto.getLibelle()))
                 item.setLibelle(dto.getLibelle());
             if (StringUtil.isNotEmpty(dto.getNumeroOrder()))
@@ -94,22 +82,10 @@ public class ParcoursConverter extends AbstractConverter<Parcours, ParcoursDto> 
                 dto.setDateCreation(DateUtil.dateTimeToString(item.getDateCreation()));
             if (StringUtil.isNotEmpty(item.getDescription()))
                 dto.setDescription(item.getDescription());
-
             if (StringUtil.isNotEmpty(item.getCode()))
                 dto.setCode(item.getCode());
-
-
-            if (StringUtil.isNotEmpty(item.getColor()))
-                dto.setColor(item.getColor());
-
-
-            if (StringUtil.isNotEmpty(item.getUrl()))
-                dto.setUrl(item.getUrl());
-
-
             if (StringUtil.isNotEmpty(item.getLibelle()))
                 dto.setLibelle(item.getLibelle());
-
             if (StringUtil.isNotEmpty(item.getNumeroOrder()))
                 dto.setNumeroOrder(item.getNumeroOrder());
             if (StringUtil.isNotEmpty(item.getNombreCours()))
@@ -133,6 +109,9 @@ public class ParcoursConverter extends AbstractConverter<Parcours, ParcoursDto> 
 
     public void copy(ParcoursDto dto, Parcours t) {
         super.copy(dto, t);
+        if (t.getCollaborator() == null && dto.getCollaborator() != null) {
+            t.setCollaborator(new Collaborator());
+        }
         if (dto.getCourss() != null)
             t.setCourss(coursConverter.copy(dto.getCourss()));
         if (dto.getCollaborator() != null)

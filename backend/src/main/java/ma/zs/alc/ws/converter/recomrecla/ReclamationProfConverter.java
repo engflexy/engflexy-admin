@@ -3,7 +3,10 @@ package  ma.zs.alc.ws.converter.recomrecla;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ma.zs.alc.ws.converter.recomrecla.TypeReclamationProfConverter;
+import ma.zs.alc.bean.core.recomrecla.TypeReclamationProf;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.bean.core.prof.Prof;
 
 import ma.zs.alc.bean.core.prof.Prof;
 
@@ -40,15 +43,15 @@ public class ReclamationProfConverter extends AbstractConverter<ReclamationProf,
             if(StringUtil.isNotEmpty(dto.getReference()))
                 item.setReference(dto.getReference());
             if(StringUtil.isNotEmpty(dto.getDateReclamation()))
-                item.setDateReclamation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateReclamation()));
+                item.setDateReclamation(DateUtil.stringEnToDate(dto.getDateReclamation(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getMessage()))
                 item.setMessage(dto.getMessage());
             if(dto.getTraite() != null)
                 item.setTraite(dto.getTraite());
             if(StringUtil.isNotEmpty(dto.getDateTraitement()))
-                item.setDateTraitement(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateTraitement()));
+                item.setDateTraitement(DateUtil.stringEnToDate(dto.getDateTraitement(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateReponse()))
-                item.setDateReponse(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateReponse()));
+                item.setDateReponse(DateUtil.stringEnToDate(dto.getDateReponse(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getPostView() != null)
                 item.setPostView(dto.getPostView());
             if(StringUtil.isNotEmpty(dto.getCommentaireTraiteur()))
@@ -111,6 +114,12 @@ public class ReclamationProfConverter extends AbstractConverter<ReclamationProf,
 
     public void copy(ReclamationProfDto dto, ReclamationProf t) {
     super.copy(dto, t);
+    if(t.getProf() == null && dto.getProf() != null) {
+        t.setProf(new Prof());
+    }
+    if(t.getTypeReclamationProf() == null && dto.getTypeReclamationProf() != null) {
+        t.setTypeReclamationProf(new TypeReclamationProf());
+    }
     if (dto.getProf() != null)
         profConverter.copy(dto.getProf(), t.getProf());
     if (dto.getTypeReclamationProf() != null)

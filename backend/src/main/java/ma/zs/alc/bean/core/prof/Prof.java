@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.recomrecla.RecommendTeacher;
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.zynerator.security.bean.User;
 
 import java.util.List;

@@ -1,12 +1,11 @@
 package  ma.zs.alc.dao.criteria.core.course;
 
 
-import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
+import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 
 import ma.zs.alc.zynerator.criteria.BaseCriteria;
 import java.util.List;
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 
 public class ParcoursCriteria extends  BaseCriteria  {
 

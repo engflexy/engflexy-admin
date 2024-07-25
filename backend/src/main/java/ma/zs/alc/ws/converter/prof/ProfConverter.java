@@ -1,37 +1,48 @@
-package ma.zs.alc.ws.converter.prof;
+package  ma.zs.alc.ws.converter.prof;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ma.zs.alc.zynerator.util.ListUtil;
+
+import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
+import ma.zs.alc.bean.core.collab.Collaborator;
+import ma.zs.alc.ws.converter.course.ParcoursConverter;
+import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.ws.converter.prof.TypeTeacherConverter;
+import ma.zs.alc.bean.core.prof.TypeTeacher;
+import ma.zs.alc.ws.converter.recomrecla.RecommendTeacherConverter;
+import ma.zs.alc.bean.core.recomrecla.RecommendTeacher;
+import ma.zs.alc.ws.converter.prof.CategorieProfConverter;
+import ma.zs.alc.bean.core.prof.CategorieProf;
+import ma.zs.alc.ws.converter.prof.TrancheHoraireProfConverter;
+import ma.zs.alc.bean.core.prof.TrancheHoraireProf;
 
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.prof.CategorieProf;
-import ma.zs.alc.bean.core.prof.Prof;
-import ma.zs.alc.bean.core.common.Collaborator;
-import ma.zs.alc.ws.converter.course.ParcoursConverter;
-import ma.zs.alc.ws.converter.inscriptionref.LangueConverter;
-import ma.zs.alc.ws.converter.recomrecla.RecommendTeacherConverter;
-import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
-import ma.zs.alc.ws.dto.prof.ProfDto;
-import ma.zs.alc.zynerator.converter.AbstractConverter;
-import ma.zs.alc.zynerator.util.ListUtil;
+import ma.zs.alc.bean.core.collab.Collaborator;
+
+
 import ma.zs.alc.zynerator.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import ma.zs.alc.zynerator.converter.AbstractConverter;
+import ma.zs.alc.zynerator.util.DateUtil;
+import ma.zs.alc.bean.core.prof.Prof;
+import ma.zs.alc.ws.dto.prof.ProfDto;
 
 @Component
 public class ProfConverter extends AbstractConverter<Prof, ProfDto> {
 
     @Autowired
-    private CollaboratorConverter collaboratorConverter;
+    private CollaboratorConverter collaboratorConverter ;
     @Autowired
-    private ParcoursConverter parcoursConverter;
+    private ParcoursConverter parcoursConverter ;
     @Autowired
-    private LangueConverter langueConverter;
+    private TypeTeacherConverter typeTeacherConverter ;
     @Autowired
-    private TypeTeacherConverter typeTeacherConverter;
+    private RecommendTeacherConverter recommendTeacherConverter ;
     @Autowired
-    private RecommendTeacherConverter recommendTeacherConverter;
+    private CategorieProfConverter categorieProfConverter ;
     @Autowired
-    private CategorieProfConverter categorieProfConverter;
-    @Autowired
-    private TrancheHoraireProfConverter trancheHoraireProfConverter;
+    private TrancheHoraireProfConverter trancheHoraireProfConverter ;
     private boolean parcours;
     private boolean categorieProf;
     private boolean typeTeacher;
@@ -39,7 +50,7 @@ public class ProfConverter extends AbstractConverter<Prof, ProfDto> {
     private boolean trancheHoraireProfs;
     private boolean recommendTeachers;
 
-    public ProfConverter() {
+    public  ProfConverter() {
         super(Prof.class, ProfDto.class);
         init(true);
     }
@@ -49,60 +60,58 @@ public class ProfConverter extends AbstractConverter<Prof, ProfDto> {
         if (dto == null) {
             return null;
         } else {
-            Prof item = new Prof();
-            if (StringUtil.isNotEmpty(dto.getId()))
+        Prof item = new Prof();
+            if(StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
-            if (StringUtil.isNotEmpty(dto.getRef()))
+            if(StringUtil.isNotEmpty(dto.getRef()))
                 item.setRef(dto.getRef());
-            if (StringUtil.isNotEmpty(dto.getAbout()))
+            if(StringUtil.isNotEmpty(dto.getAbout()))
                 item.setAbout(dto.getAbout());
-
-            if (StringUtil.isNotEmpty(dto.getFullName())) item.setFullName(dto.getFullName());
-            if (StringUtil.isNotEmpty(dto.getEmail())) item.setEmail(dto.getEmail());
-            if (StringUtil.isNotEmpty(dto.getUsername())) item.setUsername(dto.getUsername());
-            if (StringUtil.isNotEmpty(dto.getPasswordChanged())) item.setPasswordChanged(dto.getPasswordChanged());
-            if (StringUtil.isNotEmpty(dto.getPhone())) item.setPhone(dto.getPhone());
-            if (StringUtil.isNotEmpty(dto.getCountry())) item.setCountry(dto.getCountry());
-            if (StringUtil.isNotEmpty(dto.getAbout())) item.setAbout(dto.getAbout());
-            if (StringUtil.isNotEmpty(dto.getAvatar())) item.setAvatar(dto.getAvatar());
             item.setCredentialsNonExpired(dto.getCredentialsNonExpired());
             item.setEnabled(dto.getEnabled());
             item.setAccountNonExpired(dto.getAccountNonExpired());
             item.setAccountNonLocked(dto.getAccountNonLocked());
             item.setPasswordChanged(dto.getPasswordChanged());
-            if (StringUtil.isNotEmpty(dto.getUsername())) item.setUsername(dto.getUsername());
-            if (StringUtil.isNotEmpty(dto.getPassword())) item.setPassword(dto.getPassword());
-            if (dto.getParcours() != null && dto.getParcours().getId() != null) {
+            if(StringUtil.isNotEmpty(dto.getUsername()))
+                item.setUsername(dto.getUsername());
+            if(StringUtil.isNotEmpty(dto.getPassword()))
+                item.setPassword(dto.getPassword());
+            if(StringUtil.isNotEmpty(dto.getAvatar()))
+                item.setAvatar(dto.getAvatar());
+            if(StringUtil.isNotEmpty(dto.getFullName()))
+                item.setFullName(dto.getFullName());
+            if(StringUtil.isNotEmpty(dto.getAbout()))
+                item.setAbout(dto.getAbout());
+            if(dto.getParcours() != null && dto.getParcours().getId() != null){
                 item.setParcours(new Parcours());
                 item.getParcours().setId(dto.getParcours().getId());
                 item.getParcours().setLibelle(dto.getParcours().getLibelle());
             }
 
-            if (dto.getCategorieProf() != null && dto.getCategorieProf().getId() != null) {
+            if(dto.getCategorieProf() != null && dto.getCategorieProf().getId() != null){
                 item.setCategorieProf(new CategorieProf());
                 item.getCategorieProf().setId(dto.getCategorieProf().getId());
                 item.getCategorieProf().setCode(dto.getCategorieProf().getCode());
             }
 
-            if (this.typeTeacher && dto.getTypeTeacher() != null)
-                item.setTypeTeacher(typeTeacherConverter.toItem(dto.getTypeTeacher()));
+            if(this.typeTeacher && dto.getTypeTeacher()!=null)
+                item.setTypeTeacher(typeTeacherConverter.toItem(dto.getTypeTeacher())) ;
 
-            if (dto.getCollaborator() != null && dto.getCollaborator().getId() != null) {
+            if(dto.getCollaborator() != null && dto.getCollaborator().getId() != null){
                 item.setCollaborator(new Collaborator());
                 item.getCollaborator().setId(dto.getCollaborator().getId());
                 item.getCollaborator().setId(dto.getCollaborator().getId());
             }
-            if (dto.getLangue() != null) item.setLangue(langueConverter.toItem(dto.getLangue()));
 
 
-            if (this.trancheHoraireProfs && ListUtil.isNotEmpty(dto.getTrancheHoraireProfs()))
+            if(this.trancheHoraireProfs && ListUtil.isNotEmpty(dto.getTrancheHoraireProfs()))
                 item.setTrancheHoraireProfs(trancheHoraireProfConverter.toItem(dto.getTrancheHoraireProfs()));
-            if (this.recommendTeachers && ListUtil.isNotEmpty(dto.getRecommendTeachers()))
+            if(this.recommendTeachers && ListUtil.isNotEmpty(dto.getRecommendTeachers()))
                 item.setRecommendTeachers(recommendTeacherConverter.toItem(dto.getRecommendTeachers()));
 
             //item.setRoles(dto.getRoles());
 
-            return item;
+        return item;
         }
     }
 
@@ -112,80 +121,92 @@ public class ProfConverter extends AbstractConverter<Prof, ProfDto> {
             return null;
         } else {
             ProfDto dto = new ProfDto();
-            if (StringUtil.isNotEmpty(item.getId()))
+            if(StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
-            if (StringUtil.isNotEmpty(item.getRef()))
+            if(StringUtil.isNotEmpty(item.getRef()))
                 dto.setRef(item.getRef());
-            if (StringUtil.isNotEmpty(item.getFullName())) dto.setFullName(item.getFullName());
-            if (StringUtil.isNotEmpty(item.getEmail())) dto.setEmail(item.getEmail());
-            if (StringUtil.isNotEmpty(item.getUsername())) dto.setUsername(item.getUsername());
-            if (StringUtil.isNotEmpty(item.getPasswordChanged())) dto.setPasswordChanged(item.getPasswordChanged());
-            if (StringUtil.isNotEmpty(item.getPhone())) dto.setPhone(item.getPhone());
-            if (StringUtil.isNotEmpty(item.getCountry())) dto.setCountry(item.getCountry());
-            if (StringUtil.isNotEmpty(item.getAbout())) dto.setAbout(item.getAbout());
-            if (StringUtil.isNotEmpty(item.getAvatar())) dto.setAvatar(item.getAvatar());
-            if (StringUtil.isNotEmpty(item.getCredentialsNonExpired()))
+            if(StringUtil.isNotEmpty(item.getAbout()))
+                dto.setAbout(item.getAbout());
+            if(StringUtil.isNotEmpty(item.getCredentialsNonExpired()))
                 dto.setCredentialsNonExpired(item.getCredentialsNonExpired());
-            if (StringUtil.isNotEmpty(item.getEnabled())) dto.setEnabled(item.getEnabled());
-            if (StringUtil.isNotEmpty(item.getAccountNonExpired()))
+            if(StringUtil.isNotEmpty(item.getEnabled()))
+                dto.setEnabled(item.getEnabled());
+            if(StringUtil.isNotEmpty(item.getAccountNonExpired()))
                 dto.setAccountNonExpired(item.getAccountNonExpired());
-            if (StringUtil.isNotEmpty(item.getAccountNonLocked())) dto.setAccountNonLocked(item.getAccountNonLocked());
-            if (StringUtil.isNotEmpty(item.getUsername())) dto.setUsername(item.getUsername());
-
-
-            if (this.parcours && item.getParcours() != null) {
-                dto.setParcours(parcoursConverter.toDto(item.getParcours()));
-
-            }
-            if (item.getLangue() != null) {
-                dto.setLangue(langueConverter.toDto(item.getLangue()));
-            }
-            if (this.categorieProf && item.getCategorieProf() != null) {
-                dto.setCategorieProf(categorieProfConverter.toDto(item.getCategorieProf()));
-
-            }
-            if (this.typeTeacher && item.getTypeTeacher() != null) {
-                dto.setTypeTeacher(typeTeacherConverter.toDto(item.getTypeTeacher()));
+            if(StringUtil.isNotEmpty(item.getAccountNonLocked()))
+                dto.setAccountNonLocked(item.getAccountNonLocked());
+            if(StringUtil.isNotEmpty(item.getPasswordChanged()))
+                dto.setPasswordChanged(item.getPasswordChanged());
+            if(StringUtil.isNotEmpty(item.getUsername()))
+                dto.setUsername(item.getUsername());
+            if(StringUtil.isNotEmpty(item.getAvatar()))
+                dto.setAvatar(item.getAvatar());
+            if(StringUtil.isNotEmpty(item.getFullName()))
+                dto.setFullName(item.getFullName());
+            if(StringUtil.isNotEmpty(item.getAbout()))
+                dto.setAbout(item.getAbout());
+            if(this.parcours && item.getParcours()!=null) {
+                dto.setParcours(parcoursConverter.toDto(item.getParcours())) ;
 
             }
-            if (this.collaborator && item.getCollaborator() != null) {
-                dto.setCollaborator(collaboratorConverter.toDto(item.getCollaborator()));
+            if(this.categorieProf && item.getCategorieProf()!=null) {
+                dto.setCategorieProf(categorieProfConverter.toDto(item.getCategorieProf())) ;
 
             }
-            if (this.trancheHoraireProfs && ListUtil.isNotEmpty(item.getTrancheHoraireProfs())) {
-                trancheHoraireProfConverter.init(true);
-                trancheHoraireProfConverter.setProf(false);
-                dto.setTrancheHoraireProfs(trancheHoraireProfConverter.toDto(item.getTrancheHoraireProfs()));
-                trancheHoraireProfConverter.setProf(true);
+            if(this.typeTeacher && item.getTypeTeacher()!=null) {
+                dto.setTypeTeacher(typeTeacherConverter.toDto(item.getTypeTeacher())) ;
 
             }
-            if (this.recommendTeachers && ListUtil.isNotEmpty(item.getRecommendTeachers())) {
-                recommendTeacherConverter.init(true);
-                recommendTeacherConverter.setProf(false);
-                dto.setRecommendTeachers(recommendTeacherConverter.toDto(item.getRecommendTeachers()));
-                recommendTeacherConverter.setProf(true);
+            if(this.collaborator && item.getCollaborator()!=null) {
+                dto.setCollaborator(collaboratorConverter.toDto(item.getCollaborator())) ;
 
             }
+        if(this.trancheHoraireProfs && ListUtil.isNotEmpty(item.getTrancheHoraireProfs())){
+            trancheHoraireProfConverter.init(true);
+            trancheHoraireProfConverter.setProf(false);
+            dto.setTrancheHoraireProfs(trancheHoraireProfConverter.toDto(item.getTrancheHoraireProfs()));
+            trancheHoraireProfConverter.setProf(true);
+
+        }
+        if(this.recommendTeachers && ListUtil.isNotEmpty(item.getRecommendTeachers())){
+            recommendTeacherConverter.init(true);
+            recommendTeacherConverter.setProf(false);
+            dto.setRecommendTeachers(recommendTeacherConverter.toDto(item.getRecommendTeachers()));
+            recommendTeacherConverter.setProf(true);
+
+        }
 
 
-            return dto;
+        return dto;
         }
     }
 
     public void copy(ProfDto dto, Prof t) {
-        super.copy(dto, t);
-        if (dto.getParcours() != null)
-            parcoursConverter.copy(dto.getParcours(), t.getParcours());
-        if (dto.getTrancheHoraireProfs() != null)
-            t.setTrancheHoraireProfs(trancheHoraireProfConverter.copy(dto.getTrancheHoraireProfs()));
-        if (dto.getCategorieProf() != null)
-            categorieProfConverter.copy(dto.getCategorieProf(), t.getCategorieProf());
-        if (dto.getRecommendTeachers() != null)
-            t.setRecommendTeachers(recommendTeacherConverter.copy(dto.getRecommendTeachers()));
-        if (dto.getTypeTeacher() != null)
-            typeTeacherConverter.copy(dto.getTypeTeacher(), t.getTypeTeacher());
-        if (dto.getCollaborator() != null)
-            collaboratorConverter.copy(dto.getCollaborator(), t.getCollaborator());
+    super.copy(dto, t);
+    if(t.getParcours() == null && dto.getParcours() != null) {
+        t.setParcours(new Parcours());
+    }
+    if(t.getCategorieProf() == null && dto.getCategorieProf() != null) {
+        t.setCategorieProf(new CategorieProf());
+    }
+    if(t.getTypeTeacher() == null && dto.getTypeTeacher() != null) {
+        t.setTypeTeacher(new TypeTeacher());
+    }
+    if(t.getCollaborator() == null && dto.getCollaborator() != null) {
+        t.setCollaborator(new Collaborator());
+    }
+    if (dto.getParcours() != null)
+        parcoursConverter.copy(dto.getParcours(), t.getParcours());
+    if (dto.getTrancheHoraireProfs() != null)
+        t.setTrancheHoraireProfs(trancheHoraireProfConverter.copy(dto.getTrancheHoraireProfs()));
+    if (dto.getCategorieProf() != null)
+        categorieProfConverter.copy(dto.getCategorieProf(), t.getCategorieProf());
+    if (dto.getRecommendTeachers() != null)
+        t.setRecommendTeachers(recommendTeacherConverter.copy(dto.getRecommendTeachers()));
+    if (dto.getTypeTeacher() != null)
+        typeTeacherConverter.copy(dto.getTypeTeacher(), t.getTypeTeacher());
+    if (dto.getCollaborator() != null)
+        collaboratorConverter.copy(dto.getCollaborator(), t.getCollaborator());
     }
 
 
@@ -202,99 +223,76 @@ public class ProfConverter extends AbstractConverter<Prof, ProfDto> {
     }
 
 
-    public CollaboratorConverter getCollaboratorConverter() {
+    public CollaboratorConverter getCollaboratorConverter(){
         return this.collaboratorConverter;
     }
-
-    public void setCollaboratorConverter(CollaboratorConverter collaboratorConverter) {
+    public void setCollaboratorConverter(CollaboratorConverter collaboratorConverter ){
         this.collaboratorConverter = collaboratorConverter;
     }
-
-    public ParcoursConverter getParcoursConverter() {
+    public ParcoursConverter getParcoursConverter(){
         return this.parcoursConverter;
     }
-
-    public void setParcoursConverter(ParcoursConverter parcoursConverter) {
+    public void setParcoursConverter(ParcoursConverter parcoursConverter ){
         this.parcoursConverter = parcoursConverter;
     }
-
-    public TypeTeacherConverter getTypeTeacherConverter() {
+    public TypeTeacherConverter getTypeTeacherConverter(){
         return this.typeTeacherConverter;
     }
-
-    public void setTypeTeacherConverter(TypeTeacherConverter typeTeacherConverter) {
+    public void setTypeTeacherConverter(TypeTeacherConverter typeTeacherConverter ){
         this.typeTeacherConverter = typeTeacherConverter;
     }
-
-    public RecommendTeacherConverter getRecommendTeacherConverter() {
+    public RecommendTeacherConverter getRecommendTeacherConverter(){
         return this.recommendTeacherConverter;
     }
-
-    public void setRecommendTeacherConverter(RecommendTeacherConverter recommendTeacherConverter) {
+    public void setRecommendTeacherConverter(RecommendTeacherConverter recommendTeacherConverter ){
         this.recommendTeacherConverter = recommendTeacherConverter;
     }
-
-    public CategorieProfConverter getCategorieProfConverter() {
+    public CategorieProfConverter getCategorieProfConverter(){
         return this.categorieProfConverter;
     }
-
-    public void setCategorieProfConverter(CategorieProfConverter categorieProfConverter) {
+    public void setCategorieProfConverter(CategorieProfConverter categorieProfConverter ){
         this.categorieProfConverter = categorieProfConverter;
     }
-
-    public TrancheHoraireProfConverter getTrancheHoraireProfConverter() {
+    public TrancheHoraireProfConverter getTrancheHoraireProfConverter(){
         return this.trancheHoraireProfConverter;
     }
-
-    public void setTrancheHoraireProfConverter(TrancheHoraireProfConverter trancheHoraireProfConverter) {
+    public void setTrancheHoraireProfConverter(TrancheHoraireProfConverter trancheHoraireProfConverter ){
         this.trancheHoraireProfConverter = trancheHoraireProfConverter;
     }
-
-    public boolean isParcours() {
+    public boolean  isParcours(){
         return this.parcours;
     }
-
-    public void setParcours(boolean parcours) {
+    public void  setParcours(boolean parcours){
         this.parcours = parcours;
     }
-
-    public boolean isCategorieProf() {
+    public boolean  isCategorieProf(){
         return this.categorieProf;
     }
-
-    public void setCategorieProf(boolean categorieProf) {
+    public void  setCategorieProf(boolean categorieProf){
         this.categorieProf = categorieProf;
     }
-
-    public boolean isTypeTeacher() {
+    public boolean  isTypeTeacher(){
         return this.typeTeacher;
     }
-
-    public void setTypeTeacher(boolean typeTeacher) {
+    public void  setTypeTeacher(boolean typeTeacher){
         this.typeTeacher = typeTeacher;
     }
-
-    public boolean isCollaborator() {
+    public boolean  isCollaborator(){
         return this.collaborator;
     }
-
-    public void setCollaborator(boolean collaborator) {
+    public void  setCollaborator(boolean collaborator){
         this.collaborator = collaborator;
     }
-
-    public boolean isTrancheHoraireProfs() {
-        return this.trancheHoraireProfs;
+    public boolean  isTrancheHoraireProfs(){
+        return this.trancheHoraireProfs ;
     }
-
-    public void setTrancheHoraireProfs(boolean trancheHoraireProfs) {
-        this.trancheHoraireProfs = trancheHoraireProfs;
+    public void  setTrancheHoraireProfs(boolean trancheHoraireProfs ){
+        this.trancheHoraireProfs  = trancheHoraireProfs ;
     }
-
-    public boolean isRecommendTeachers() {
-        return this.recommendTeachers;
+    public boolean  isRecommendTeachers(){
+        return this.recommendTeachers ;
     }
-
-    public void setRecommendTeachers(boolean recommendTeachers) {
-        this.recommendTeachers = recommendTeachers;
+    public void  setRecommendTeachers(boolean recommendTeachers ){
+        this.recommendTeachers  = recommendTeachers ;
     }
 }

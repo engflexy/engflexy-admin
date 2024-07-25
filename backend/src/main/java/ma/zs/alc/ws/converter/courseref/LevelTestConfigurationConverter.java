@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.course.ParcoursConverter;
+import ma.zs.alc.bean.core.course.Parcours;
 
 import ma.zs.alc.bean.core.course.Parcours;
 
@@ -75,6 +76,9 @@ public class LevelTestConfigurationConverter extends AbstractConverter<LevelTest
 
     public void copy(LevelTestConfigurationDto dto, LevelTestConfiguration t) {
     super.copy(dto, t);
+    if(t.getParcours() == null && dto.getParcours() != null) {
+        t.setParcours(new Parcours());
+    }
     if (dto.getParcours() != null)
         parcoursConverter.copy(dto.getParcours(), t.getParcours());
     }
