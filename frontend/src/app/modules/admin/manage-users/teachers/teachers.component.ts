@@ -8,14 +8,16 @@ import {UserCriteria} from "../../../../core/criteria/user-criteria";
 import {CreateTeacherComponent} from "./create-teacher/create-teacher.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ProfCriteria} from "../../../../shared/criteria/prof/ProfCriteria.model";
 
 @Component({
     selector: 'app-teachers',
     templateUrl: './teachers.component.html'
 })
 export class TeachersComponent implements OnInit {
-    criteria: Criteria<UserCriteria>
+    items: Criteria<UserCriteria>
     pageable: Pageable = new Pageable(0, 5)
+    criteria: ProfCriteria = new ProfCriteria()
 
     constructor(private profService: ProfCollaboratorService,
                 private _matDialog: MatDialog,
@@ -31,8 +33,8 @@ export class TeachersComponent implements OnInit {
     private findByCollaboratorId() {
         this.profService.findByCollaboratorId(this.auth.authenticatedUser?.id, this.pageable)
             .subscribe(res => {
-                this.criteria = res
-                console.log(this.criteria)
+                this.items = res
+                console.log(this.items)
             })
     }
 
@@ -51,11 +53,18 @@ export class TeachersComponent implements OnInit {
             maxHeight: "100%"
         });
         dialog.afterClosed().subscribe(res => {
-            if (res != null) this.criteria.content.unshift({...res})
+            if (res != null) this.items.content.unshift({...res})
         })
     }
 
     navigateToDetail(item: UserCriteria) {
         this.router.navigate([`teacher/${item.id}`], {relativeTo: this.route})
+    }
+
+    findPaginatedByCriteria() {
+        this.profService.findPaginatedByCriteria(this.criteria)
+            .subscribe(res => {
+                console.log(res)
+            })
     }
 }
