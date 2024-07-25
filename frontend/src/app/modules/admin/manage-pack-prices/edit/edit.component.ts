@@ -148,7 +148,20 @@ export class EditComponent implements OnInit{
         return item && item.username ? item.username : "";
 
     }
+    onStartDateChange(): void {
+        const timer = setInterval(s => {
+            if (this.item.startDate) {
 
+                const startDate = new Date(this.item.startDate);
+                console.log(startDate)
+                const endDate = new Date(startDate.setDate(startDate.getDate() + 30));
+                this.item.endDate = endDate;
+                console.log(endDate)
+
+            }
+            clearInterval(timer)
+        }, 100)
+    }
     filterCollaborator(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {

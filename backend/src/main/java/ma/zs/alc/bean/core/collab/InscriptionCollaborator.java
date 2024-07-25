@@ -7,6 +7,7 @@ import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

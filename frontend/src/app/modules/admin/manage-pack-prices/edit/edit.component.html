@@ -47,7 +47,7 @@
                 <div>
                     <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.color"
                                   name="color">
-                        {{ item.color ? 'personal logo' : 'default logo' }}
+                        {{ item.color ? 'personal color' : 'default color' }}
                     </mat-checkbox>
                 </div>
 
@@ -71,18 +71,18 @@
             <div class="flex gap-4">
                 <mat-form-field class="w-full">
                     <mat-label>Start time</mat-label>
-                    <input matInput  [matDatepicker]="picker" [(ngModel)]="item.startDate" name="startDate">
+                    <input matInput (ngModelChange)="onStartDateChange()"  [matDatepicker]="startDatePicker" [(ngModel)]="item.startDate" name="startDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field class="w-full">
-                    <mat-label>Start time</mat-label>
-                    <input matInput  [matDatepicker]="picker" [(ngModel)]="item.endDate" name="endDate">
+                    <mat-label>End time</mat-label>
+                    <input disabled matInput  [matDatepicker]="endTimePicker" [(ngModel)]="item.endDate" name="endDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="endTimePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endTimePicker></mat-datepicker>
                 </mat-form-field>
 
 
