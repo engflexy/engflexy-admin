@@ -9,7 +9,7 @@ import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.bean.core.inscriptionref.*;
 import ma.zs.alc.bean.core.pack.PackStudent;
 import ma.zs.alc.bean.core.quizetudiant.QuizEtudiant;
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.zynerator.security.bean.User;
 
 import java.util.List;

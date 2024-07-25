@@ -19,6 +19,10 @@ import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscript
 import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.html";
 import {ProfDto} from "../../../shared/model/prof/Prof.model";
 import {SessionSalaryComponent} from "./session-salary/session-salary.component";
+import {InscriptionDto} from "../../../shared/model/grpe/Inscription.model";
+import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";
+import {FuseAlertService} from "../../../../@fuse/components/alert";
+import {EditSalaryComponent} from "./edit-salary/edit-salary.component";
 
 @Component({
     selector: 'app-manage-salary',
@@ -42,7 +46,10 @@ export class ManageSalaryComponent {
     pageable: SalaryCriteria = new SalaryCriteria();
 
     constructor(private service: SalaryCollaboratorService,
-                private _matDialog: MatDialog) {
+                private _matDialog: MatDialog,
+                private _fuseConfirmation: FuseConfirmationService,
+                private alert: FuseAlertService,
+    ) {
     }
 
     get criteria(): PaginatedList<SalaryDto> {
@@ -51,6 +58,13 @@ export class ManageSalaryComponent {
 
     set criteria(value: PaginatedList<SalaryDto>) {
         this.service.criteriaList = value;
+    }
+    get item(): SalaryDto{
+        return this.service.item;
+    }
+
+    set item(value: SalaryDto) {
+        this.service.item = value;
     }
 
     ngOnInit() {
@@ -110,14 +124,14 @@ export class ManageSalaryComponent {
     }
 
 edit(item: SalaryDto) {
-        const dialog = this._matDialog.open(CreateSalaryComponent, {
+        this.item = item
+        const dialog = this._matDialog.open(EditSalaryComponent, {
             autoFocus: false,
             height: "auto",
             width: "calc(100% - 100px)",
             maxWidth: "100%",
             disableClose: true,
             maxHeight: "100%",
-            data: item
         });
         dialog.afterClosed().subscribe(res => {
             if (res != null) {
@@ -153,5 +167,29 @@ edit(item: SalaryDto) {
             data: item
         });
 
+    }
+
+    delete(item: SalaryDto) {
+        const confirmation = this._fuseConfirmation.open({
+            title: 'delete salary',
+            message: 'Are you sure you want to remove this salary?',
+            actions: {
+                confirm: {
+                    label: 'REMOVE',
+                },
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirmation button pressed...
+            if (result === 'confirmed') {
+                this.service.delete(item).subscribe(res => {
+                    this.criteria.list.splice(this.criteria.list.indexOf(item), 1)
+                }, error => {
+                    this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
+                })
+            }
+        });
     }
 }

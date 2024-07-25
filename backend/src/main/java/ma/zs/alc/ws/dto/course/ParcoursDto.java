@@ -2,7 +2,7 @@ package ma.zs.alc.ws.dto.course;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import ma.zs.alc.ws.dto.vocab.CollaboratorDto;
+import ma.zs.alc.ws.dto.collab.CollaboratorDto;
 import ma.zs.alc.zynerator.audit.Log;
 import ma.zs.alc.zynerator.dto.AuditBaseDto;
 

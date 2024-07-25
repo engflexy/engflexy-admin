@@ -3,9 +3,10 @@ package  ma.zs.alc.ws.converter.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
+import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
+import ma.zs.alc.bean.core.collab.Collaborator;
 
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.bean.core.collab.Collaborator;
 
 
 import ma.zs.alc.zynerator.util.StringUtil;
@@ -43,7 +44,7 @@ public class ContactConverter extends AbstractConverter<Contact, ContactDto> {
             if(StringUtil.isNotEmpty(dto.getSetFrom()))
                 item.setSetFrom(dto.getSetFrom());
             if(StringUtil.isNotEmpty(dto.getDateContact()))
-                item.setDateContact(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateContact()));
+                item.setDateContact(DateUtil.stringEnToDate(dto.getDateContact(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getReplied() != null)
                 item.setReplied(dto.getReplied());
             if(StringUtil.isNotEmpty(dto.getMessage()))
@@ -94,6 +95,9 @@ public class ContactConverter extends AbstractConverter<Contact, ContactDto> {
 
     public void copy(ContactDto dto, Contact t) {
     super.copy(dto, t);
+    if(t.getCollaborator() == null && dto.getCollaborator() != null) {
+        t.setCollaborator(new Collaborator());
+    }
     if (dto.getCollaborator() != null)
         collaboratorConverter.copy(dto.getCollaborator(), t.getCollaborator());
     }

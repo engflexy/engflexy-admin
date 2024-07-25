@@ -22,7 +22,6 @@ import {
     GroupeEtudiantCollaboratorService
 } from "../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
 import {compareObjects} from "../../../shared/constant/global-funsctions";
-import {ScheduleProfCriteria} from "../../../shared/criteria/prof/ScheduleProfCriteria.model";
 
 @Component({
     selector: 'app-calendar',
@@ -36,7 +35,6 @@ export class ScheduleComponent implements OnInit {
     group: GroupeEtudiantDto = null;
     @Input()
     prof: ProfDto = null;
-    criteria: ScheduleProfCriteria = new ScheduleProfCriteria()
 
     calendarOptions: CalendarOptions = {
         plugins: [timeGridPlugin, dayGridPlugin, interactionPlugin],
@@ -74,6 +72,8 @@ export class ScheduleComponent implements OnInit {
     _profs: Array<ProfDto>;
     groups: Array<GroupeEtudiantDto>;
     _groups: Array<GroupeEtudiantDto>;
+    private startDate: string;
+    private endDate: string;
 
 
     constructor(private scheduleService: ScheduleProfCollaboratorService,
@@ -105,11 +105,14 @@ export class ScheduleComponent implements OnInit {
     }
 
     private handle_dateSet(start: Date, end: Date) {
-        const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        const id = this.auth.authenticatedUser?.id
+        this.startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        this.endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        this.getScheduleBetween();
+    }
 
-        this.scheduleService.get_schedules_between(startDate, endDate, id, this.group, this.prof)
+    private getScheduleBetween() {
+        const id = this.auth.authenticatedUser?.id
+        this.scheduleService.get_schedules_between(this.startDate, this.endDate, id, this.group, this.prof)
             .subscribe(response => {
                 this.schedules = response
                 // @ts-ignore
@@ -254,6 +257,7 @@ export class ScheduleComponent implements OnInit {
     protected readonly compareObjects = compareObjects;
 
     findByCriteria() {
-        console.log(this.criteria)
+        this.getScheduleBetween();
+
     }
 }

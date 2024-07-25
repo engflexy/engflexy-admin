@@ -1,7 +1,6 @@
 package ma.zs.alc.dao.criteria.core.collab;
 
 
-import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
 import ma.zs.alc.zynerator.criteria.BaseCriteria;
 
 import java.time.LocalDateTime;

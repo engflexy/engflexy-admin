@@ -3,7 +3,6 @@ package ma.zs.alc.bean.core.collab;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import ma.zs.alc.bean.core.common.Collaborator;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 
 import java.math.BigDecimal;

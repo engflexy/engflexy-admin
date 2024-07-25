@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ma.zs.alc.service.facade.collaborator.vocab.CollaboratorCollaboratorService ;
+import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 
 @Service
 public class NewsCollaboratorServiceImpl extends AbstractServiceImpl<News, NewsCriteria, NewsDao> implements NewsCollaboratorService {

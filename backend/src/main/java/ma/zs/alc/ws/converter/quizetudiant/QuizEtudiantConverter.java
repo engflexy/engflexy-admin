@@ -5,10 +5,15 @@ import org.springframework.stereotype.Component;
 import ma.zs.alc.zynerator.util.ListUtil;
 
 import ma.zs.alc.ws.converter.quiz.QuizConverter;
+import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.ws.converter.quizetudiant.ReponseEtudiantConverter;
+import ma.zs.alc.bean.core.quizetudiant.ReponseEtudiant;
 import ma.zs.alc.ws.converter.quiz.QuestionConverter;
+import ma.zs.alc.bean.core.quiz.Question;
 import ma.zs.alc.ws.converter.quiz.ReponseConverter;
+import ma.zs.alc.bean.core.quiz.Reponse;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.quiz.Quiz;
@@ -118,6 +123,12 @@ public class QuizEtudiantConverter extends AbstractConverter<QuizEtudiant, QuizE
 
     public void copy(QuizEtudiantDto dto, QuizEtudiant t) {
     super.copy(dto, t);
+    if(t.getEtudiant() == null && dto.getEtudiant() != null) {
+        t.setEtudiant(new Etudiant());
+    }
+    if(t.getQuiz() == null && dto.getQuiz() != null) {
+        t.setQuiz(new Quiz());
+    }
     if (dto.getEtudiant() != null)
         etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
     if (dto.getQuiz() != null)

@@ -6,26 +6,18 @@ import ma.zs.alc.dao.criteria.core.collab.InscriptionCollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.InscriptionCollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.InscriptionCollaboratorSpecification;
 import ma.zs.alc.service.facade.admin.collab.InscriptionCollaboratorAdminService;
-import ma.zs.alc.service.facade.admin.vocab.CollaboratorAdminService;
+import ma.zs.alc.service.facade.admin.collab.CollaboratorAdminService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
-
-import static ma.zs.alc.zynerator.util.ListUtil.*;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
-
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ma.zs.alc.service.facade.admin.collab.InscriptionCollaboratorStateAdminService ;
-import ma.zs.alc.bean.core.collab.InscriptionCollaboratorState ;
 import ma.zs.alc.service.facade.admin.collab.PackageCollaboratorAdminService ;
-import ma.zs.alc.bean.core.collab.PackageCollaborator ;
 
-
-import java.util.List;
 @Service
 public class InscriptionCollaboratorAdminServiceImpl extends AbstractServiceImpl<InscriptionCollaborator, InscriptionCollaboratorCriteria, InscriptionCollaboratorDao> implements InscriptionCollaboratorAdminService {
 

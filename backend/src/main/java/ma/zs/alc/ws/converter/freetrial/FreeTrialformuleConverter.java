@@ -1,22 +1,27 @@
-package ma.zs.alc.ws.converter.freetrial;
+package  ma.zs.alc.ws.converter.freetrial;
 
-import ma.zs.alc.bean.core.freetrial.FreeTrialformule;
-import ma.zs.alc.ws.converter.grpe.InscriptionConverter;
-import ma.zs.alc.ws.dto.freetrial.FreeTrialformuleDto;
-import ma.zs.alc.zynerator.converter.AbstractConverter;
-import ma.zs.alc.zynerator.util.DateUtil;
-import ma.zs.alc.zynerator.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import ma.zs.alc.ws.converter.grpe.InscriptionConverter;
+import ma.zs.alc.bean.core.grpe.Inscription;
+
+
+
+import ma.zs.alc.zynerator.util.StringUtil;
+import ma.zs.alc.zynerator.converter.AbstractConverter;
+import ma.zs.alc.zynerator.util.DateUtil;
+import ma.zs.alc.bean.core.freetrial.FreeTrialformule;
+import ma.zs.alc.ws.dto.freetrial.FreeTrialformuleDto;
 
 @Component
 public class FreeTrialformuleConverter extends AbstractConverter<FreeTrialformule, FreeTrialformuleDto> {
 
     @Autowired
-    private InscriptionConverter inscriptionConverter;
+    private InscriptionConverter inscriptionConverter ;
     private boolean inscription;
 
-    public FreeTrialformuleConverter() {
+    public  FreeTrialformuleConverter() {
         super(FreeTrialformule.class, FreeTrialformuleDto.class);
         init(true);
     }
@@ -26,30 +31,32 @@ public class FreeTrialformuleConverter extends AbstractConverter<FreeTrialformul
         if (dto == null) {
             return null;
         } else {
-            FreeTrialformule item = new FreeTrialformule();
-            if (StringUtil.isNotEmpty(dto.getId()))
+        FreeTrialformule item = new FreeTrialformule();
+            if(StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
-            if (StringUtil.isNotEmpty(dto.getCode()))
+            if(StringUtil.isNotEmpty(dto.getCode()))
                 item.setCode(dto.getCode());
-            if (StringUtil.isNotEmpty(dto.getDayspeerweek()))
+            if(StringUtil.isNotEmpty(dto.getDayspeerweek()))
                 item.setDayspeerweek(dto.getDayspeerweek());
-            if (StringUtil.isNotEmpty(dto.getTimeperday()))
+            if(StringUtil.isNotEmpty(dto.getTimeperday()))
                 item.setTimeperday(dto.getTimeperday());
-            if (StringUtil.isNotEmpty(dto.getTeacherGenderoption()))
+            if(StringUtil.isNotEmpty(dto.getTeacherGenderoption()))
                 item.setTeacherGenderoption(dto.getTeacherGenderoption());
-            if (StringUtil.isNotEmpty(dto.getTeacherAgeRange()))
+            if(StringUtil.isNotEmpty(dto.getTeacherAgeRange()))
                 item.setTeacherAgeRange(dto.getTeacherAgeRange());
-            if (StringUtil.isNotEmpty(dto.getTeacherPersonnality()))
+            if(StringUtil.isNotEmpty(dto.getTeacherPersonnality()))
                 item.setTeacherPersonnality(dto.getTeacherPersonnality());
-            if (dto.getStatus() != null)
+            if(dto.getStatus() != null)
                 item.setStatus(dto.getStatus());
-            if (StringUtil.isNotEmpty(dto.getDateConfirmation()))
-                item.setDateConfirmation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE, dto.getDateConfirmation()));
-            if (this.inscription && dto.getInscription() != null)
-                item.setInscription(inscriptionConverter.toItem(dto.getInscription()));
+            if(StringUtil.isNotEmpty(dto.getDateConfirmation()))
+                item.setDateConfirmation(DateUtil.stringEnToDate(dto.getDateConfirmation(),DateUtil.DATE_FORMAT_ENG));
+            if(this.inscription && dto.getInscription()!=null)
+                item.setInscription(inscriptionConverter.toItem(dto.getInscription())) ;
 
 
-            return item;
+
+
+        return item;
         }
     }
 
@@ -59,38 +66,42 @@ public class FreeTrialformuleConverter extends AbstractConverter<FreeTrialformul
             return null;
         } else {
             FreeTrialformuleDto dto = new FreeTrialformuleDto();
-            if (StringUtil.isNotEmpty(item.getId()))
+            if(StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
-            if (StringUtil.isNotEmpty(item.getCode()))
+            if(StringUtil.isNotEmpty(item.getCode()))
                 dto.setCode(item.getCode());
-            if (StringUtil.isNotEmpty(item.getDayspeerweek()))
+            if(StringUtil.isNotEmpty(item.getDayspeerweek()))
                 dto.setDayspeerweek(item.getDayspeerweek());
-            if (StringUtil.isNotEmpty(item.getTimeperday()))
+            if(StringUtil.isNotEmpty(item.getTimeperday()))
                 dto.setTimeperday(item.getTimeperday());
-            if (StringUtil.isNotEmpty(item.getTeacherGenderoption()))
+            if(StringUtil.isNotEmpty(item.getTeacherGenderoption()))
                 dto.setTeacherGenderoption(item.getTeacherGenderoption());
-            if (StringUtil.isNotEmpty(item.getTeacherAgeRange()))
+            if(StringUtil.isNotEmpty(item.getTeacherAgeRange()))
                 dto.setTeacherAgeRange(item.getTeacherAgeRange());
-            if (StringUtil.isNotEmpty(item.getTeacherPersonnality()))
+            if(StringUtil.isNotEmpty(item.getTeacherPersonnality()))
                 dto.setTeacherPersonnality(item.getTeacherPersonnality());
-            dto.setStatus(item.getStatus());
-            if (item.getDateConfirmation() != null)
+                dto.setStatus(item.getStatus());
+            if(item.getDateConfirmation()!=null)
                 dto.setDateConfirmation(DateUtil.dateTimeToString(item.getDateConfirmation()));
-            if (this.inscription && item.getInscription() != null) {
-                dto.setInscription(inscriptionConverter.toDto(item.getInscription()));
+            if(this.inscription && item.getInscription()!=null) {
+                dto.setInscription(inscriptionConverter.toDto(item.getInscription())) ;
 
             }
 
 
-            return dto;
+        return dto;
         }
     }
 
     public void copy(FreeTrialformuleDto dto, FreeTrialformule t) {
-        super.copy(dto, t);
-        if (dto.getInscription() != null)
-            inscriptionConverter.copy(dto.getInscription(), t.getInscription());
+    super.copy(dto, t);
+    if(t.getInscription() == null && dto.getInscription() != null) {
+        t.setInscription(new Inscription());
     }
+    if (dto.getInscription() != null)
+        inscriptionConverter.copy(dto.getInscription(), t.getInscription());
+    }
+
 
 
     public void initObject(boolean value) {
@@ -98,19 +109,16 @@ public class FreeTrialformuleConverter extends AbstractConverter<FreeTrialformul
     }
 
 
-    public InscriptionConverter getInscriptionConverter() {
+    public InscriptionConverter getInscriptionConverter(){
         return this.inscriptionConverter;
     }
-
-    public void setInscriptionConverter(InscriptionConverter inscriptionConverter) {
+    public void setInscriptionConverter(InscriptionConverter inscriptionConverter ){
         this.inscriptionConverter = inscriptionConverter;
     }
-
-    public boolean isInscription() {
+    public boolean  isInscription(){
         return this.inscription;
     }
-
-    public void setInscription(boolean inscription) {
+    public void  setInscription(boolean inscription){
         this.inscription = inscription;
     }
 }

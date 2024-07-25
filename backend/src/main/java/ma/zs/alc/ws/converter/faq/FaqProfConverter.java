@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.faq.FaqTypeConverter;
+import ma.zs.alc.bean.core.faq.FaqType;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.bean.core.prof.Prof;
 
 import ma.zs.alc.bean.core.prof.Prof;
 
@@ -86,6 +88,12 @@ public class FaqProfConverter extends AbstractConverter<FaqProf, FaqProfDto> {
 
     public void copy(FaqProfDto dto, FaqProf t) {
     super.copy(dto, t);
+    if(t.getProf() == null && dto.getProf() != null) {
+        t.setProf(new Prof());
+    }
+    if(t.getFaqType() == null && dto.getFaqType() != null) {
+        t.setFaqType(new FaqType());
+    }
     if (dto.getProf() != null)
         profConverter.copy(dto.getProf(), t.getProf());
     if (dto.getFaqType() != null)

@@ -4,6 +4,7 @@ import ma.zs.alc.bean.core.course.Cours;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.bean.core.learning.SessionCours;
 import ma.zs.alc.bean.core.prof.Prof;
+import ma.zs.alc.bean.core.salary.Salary;
 import ma.zs.alc.ws.converter.course.CoursConverter;
 import ma.zs.alc.ws.converter.course.SectionConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
@@ -62,9 +63,9 @@ public class SessionCoursConverter extends AbstractConverter<SessionCours, Sessi
             if (StringUtil.isNotEmpty(dto.getAnnee()))
                 item.setAnnee(dto.getAnnee());
             if (StringUtil.isNotEmpty(dto.getDateFin()))
-                item.setDateFin(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFin()));
+                item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin(), DateUtil.DATE_FORMAT_ENG));
             if (StringUtil.isNotEmpty(dto.getDateDebut()))
-                item.setDateDebut(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateDebut()));
+                item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut(), DateUtil.DATE_FORMAT_ENG));
             if (dto.getPayer() != null)
                 item.setPayer(dto.getPayer());
             if (StringUtil.isNotEmpty(dto.getNreKeySectionFinished()))
@@ -175,6 +176,18 @@ public class SessionCoursConverter extends AbstractConverter<SessionCours, Sessi
 
     public void copy(SessionCoursDto dto, SessionCours t) {
         super.copy(dto, t);
+        if (t.getProf() == null && dto.getProf() != null) {
+            t.setProf(new Prof());
+        }
+        if (t.getCours() == null && dto.getCours() != null) {
+            t.setCours(new Cours());
+        }
+        if (t.getGroupeEtudiant() == null && dto.getGroupeEtudiant() != null) {
+            t.setGroupeEtudiant(new GroupeEtudiant());
+        }
+        if (t.getSalary() == null && dto.getSalary() != null) {
+            t.setSalary(new Salary());
+        }
         if (dto.getProf() != null)
             profConverter.copy(dto.getProf(), t.getProf());
         if (dto.getCours() != null)

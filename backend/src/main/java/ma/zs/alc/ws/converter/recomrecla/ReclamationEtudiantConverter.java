@@ -3,6 +3,10 @@ package  ma.zs.alc.ws.converter.recomrecla;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ma.zs.alc.ws.converter.recomrecla.TypeReclamationEtudiantConverter;
+import ma.zs.alc.bean.core.recomrecla.TypeReclamationEtudiant;
+
+
 
 import ma.zs.alc.zynerator.util.StringUtil;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
@@ -33,7 +37,7 @@ public class ReclamationEtudiantConverter extends AbstractConverter<ReclamationE
             if(StringUtil.isNotEmpty(dto.getReference()))
                 item.setReference(dto.getReference());
             if(StringUtil.isNotEmpty(dto.getDateReclamation()))
-                item.setDateReclamation(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateReclamation()));
+                item.setDateReclamation(DateUtil.stringEnToDate(dto.getDateReclamation(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getMessage()))
                 item.setMessage(dto.getMessage());
             if(StringUtil.isNotEmpty(dto.getSetFrom()))
@@ -43,9 +47,9 @@ public class ReclamationEtudiantConverter extends AbstractConverter<ReclamationE
             if(dto.getTraite() != null)
                 item.setTraite(dto.getTraite());
             if(StringUtil.isNotEmpty(dto.getDateTraitement()))
-                item.setDateTraitement(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateTraitement()));
+                item.setDateTraitement(DateUtil.stringEnToDate(dto.getDateTraitement(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateReponse()))
-                item.setDateReponse(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateReponse()));
+                item.setDateReponse(DateUtil.stringEnToDate(dto.getDateReponse(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getPostView() != null)
                 item.setPostView(dto.getPostView());
             if(StringUtil.isNotEmpty(dto.getObjetReclamationEtudiant()))
@@ -106,6 +110,9 @@ public class ReclamationEtudiantConverter extends AbstractConverter<ReclamationE
 
     public void copy(ReclamationEtudiantDto dto, ReclamationEtudiant t) {
     super.copy(dto, t);
+    if(t.getTypeReclamationEtudiant() == null && dto.getTypeReclamationEtudiant() != null) {
+        t.setTypeReclamationEtudiant(new TypeReclamationEtudiant());
+    }
     if (dto.getTypeReclamationEtudiant() != null)
         typeReclamationEtudiantConverter.copy(dto.getTypeReclamationEtudiant(), t.getTypeReclamationEtudiant());
     }

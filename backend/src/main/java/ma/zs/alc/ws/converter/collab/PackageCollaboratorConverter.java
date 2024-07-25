@@ -1,4 +1,4 @@
-package ma.zs.alc.ws.converter.collab;
+package  ma.zs.alc.ws.converter.collab;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

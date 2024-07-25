@@ -1,5 +1,6 @@
 package  ma.zs.alc.ws.converter.freetrial;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -28,9 +29,9 @@ public class FreeTrialConfigurationConverter extends AbstractConverter<FreeTrial
             if(StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
             if(StringUtil.isNotEmpty(dto.getDateApplicationDebut()))
-                item.setDateApplicationDebut(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateApplicationDebut()));
+                item.setDateApplicationDebut(DateUtil.stringEnToDate(dto.getDateApplicationDebut(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateApplicationFin()))
-                item.setDateApplicationFin(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateApplicationFin()));
+                item.setDateApplicationFin(DateUtil.stringEnToDate(dto.getDateApplicationFin(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getNombreStudentMax()))
                 item.setNombreStudentMax(dto.getNombreStudentMax());
             if(StringUtil.isNotEmpty(dto.getNombreStudentMin()))
