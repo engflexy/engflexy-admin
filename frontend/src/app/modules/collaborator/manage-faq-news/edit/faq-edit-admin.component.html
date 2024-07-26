@@ -1,0 +1,47 @@
+        <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+            <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+                <div class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+                    justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+                                <div class="w-full">
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>description</mat-label>
+                                                    <textarea required matInput autocomplete="off" placeholder="Description" [(ngModel)]="item.answer"  name="description"></textarea>
+                                                </mat-form-field>
+
+
+                                                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                                    <mat-label>libelle</mat-label>
+                                                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.question"  name="libelle">
+                                                </mat-form-field>
+
+
+
+                                        <mat-form-field class="w-full">
+                                            <mat-label>FaqType</mat-label>
+                                            <input type="text" matInput (input)="filterFaqType(faqTypeInput.value)" #faqTypeInput [matAutocomplete]="faqTypeAutocomplete"  [(ngModel)]="item.faqType"  name="faqType">
+
+                                            <mat-autocomplete #faqTypeAutocomplete="matAutocomplete" [displayWith]="displayFaqType" [compareWith]="compareObjects" >
+                                              <mat-option *ngFor="let faqType of _faqTypesFilter" [value]="faqType">
+                                                {{faqType.libelle}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+
+                                </div>
+
+
+
+
+
+    </div>
+
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+       <button (click)="refDialog.close(null)" mat-button>Cancel</button>
+       <button class="px-6 ml-3" (click)="edit()" mat-flat-button [color]="'primary'"> Update </button>
+    </mat-dialog-actions>

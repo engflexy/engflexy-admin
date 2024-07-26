@@ -1,0 +1,82 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden">
+    <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+        <form
+            [formGroup]="form"
+            #ngForm="ngForm"
+            class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+            justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>collaborator name</mat-label>
+                <input required
+                       matInput
+                       [placeholder]="'fullName'"
+                       [formControlName]="'fullName'"
+                       name="fullName">
+                <mat-error *ngIf="form.get('fullName').hasError('required')">
+                    Full name is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>collaborator email</mat-label>
+                <input required
+                       type="email"
+                       matInput
+                       autocomplete="email"
+                       [placeholder]="'email'"
+                       [formControlName]="'email'"
+                       name="email">
+                <mat-error *ngIf="form.get('email').hasError('required')">
+                    Email is required
+                </mat-error>
+                <mat-error *ngIf="form.get('email').hasError('email')">
+                    Please enter a valid email address
+                </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Collaborator type</mat-label>
+                <mat-select required [formControlName]="'type'">
+                    <mat-option value="school">School</mat-option>
+                    <mat-option value="academy">Academy</mat-option>
+                    <mat-option value="center">Language center</mat-option>
+                    <mat-option value="other">other</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('type').hasError('required')">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>phone number</mat-label>
+                <input
+                    matInput
+                    [placeholder]="'Ex: +212 6xxxxxxxx'"
+                    [formControlName]="'phone'"
+                    name="phone">
+            </mat-form-field>
+
+        </form>
+
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>
+        Cancel
+    </button>
+    <button
+        class="px-6 ml-3"
+        [disabled]="form.disabled"
+        (click)="save()"
+        mat-flat-button
+        [color]="'primary'">
+        Create
+    </button>
+
+</mat-dialog-actions>

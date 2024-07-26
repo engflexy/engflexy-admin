@@ -1,0 +1,42 @@
+<div class="flex items-center gap-2 flex-row ">
+    <div class="ubuntu-bold-italic  text-md">{{question?.numero}}.</div>
+    <div
+        [class.correct]="is_correct===true"
+        [class.incorrect]="is_correct===false"
+        [class.border-gray-300]="is_correct===null"
+        class="flex m-3 flex-row items-center flex-grow
+         rounded-xl px-1 py-2.5 border gap-2 border-solid flex-wrap">
+        <button
+            (click)=" sound(question?.libelle)"
+            mat-icon-button>
+            <mat-icon
+                class="icon-size-5 mr-2"
+                [svgIcon]="'heroicons_solid:speaker-wave'"></mat-icon>
+        </button>
+        <div [matTooltip]="correctAnswer?.lib"
+             class=" flex-grow ">
+            <div class="font-ubuntu inline-block">
+                {{question?.libelle}}
+            </div>
+        </div>
+
+        <div class="font-[sans-serif] w-max mx-auto bg-white border-2
+         border-gray-200  dark:border-gray-700 rounded-lg overflow-hidden flex">
+            <button [disabled]="checked" type="button"
+                    [class.bg-green-400]="checked && correctAnswer?.lib === 'true'"
+                    (click)="check(true)"
+                    class="px-6 py-2.5 text-[#333] text-sm tracking-wider font-semibold
+                    border-r-2 border-gray-200  dark:border-gray-700
+                     outline-none hover:bg-gray-100  active:bg-gray-200">
+                True
+            </button>
+
+            <button [disabled]="checked" type="button"
+                    [class.bg-green-400]="checked && correctAnswer?.lib === 'false'"
+                    (click)="check(false)"
+                    class="px-6 py-2.5 text-[#333] text-sm tracking-wider font-semibold
+                    border-none outline-none hover:bg-gray-100 active:bg-gray-200">False
+            </button>
+        </div>
+    </div>
+</div>

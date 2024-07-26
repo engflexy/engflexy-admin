@@ -32,12 +32,14 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {ToFixed} from "../../../core/pipes/ToFixed";
 import {PriceFormatPipe} from "../../../core/pipes/PriceFormatPipe";
-import { CreateTeacherComponent } from './teachers/create-teacher/create-teacher.component';
-import { TeacherDetailsComponent } from './teachers/teacher-details/teacher-details.component';
-import { TeacherProfileComponent } from './teachers/teacher-details/teacher-profile/teacher-profile.component';
-import { CreateCollaboratorComponent } from './collaborators/create-collaborator/create-collaborator.component';
-import { CollaboratorDetialsComponent } from './collaborators/collaborator-detials/collaborator-detials.component';
-import { CollaboratorProfileComponent } from './collaborators/collaborator-detials/collaborator-profile/collaborator-profile.component';
+import {CreateTeacherComponent} from './teachers/create-teacher/create-teacher.component';
+import {TeacherDetailsComponent} from './teachers/teacher-details/teacher-details.component';
+import {TeacherProfileComponent} from './teachers/teacher-details/teacher-profile/teacher-profile.component';
+import {CreateCollaboratorComponent} from './collaborators/create-collaborator/create-collaborator.component';
+import {CollaboratorDetialsComponent} from './collaborators/collaborator-detials/collaborator-detials.component';
+import {
+    CollaboratorProfileComponent
+} from './collaborators/collaborator-detials/collaborator-profile/collaborator-profile.component';
 
 
 const userRoutes: Route[] = [
@@ -83,9 +85,6 @@ const userRoutes: Route[] = [
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
-    ],
-    exports: [
-        CollaboratorProfileComponent
     ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
         Location]
