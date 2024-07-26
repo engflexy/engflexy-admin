@@ -1,6 +1,6 @@
 import {BaseCriteria} from "../../zynerator/criteria/BaseCriteria.model";
 
-export class UserCriteria extends BaseCriteria{
+export class ManageUserDto extends BaseCriteria{
     public id: number
     public email: string
     public avatar: string

@@ -5,9 +5,9 @@ import {TypeTeacherCriteria} from './TypeTeacherCriteria.model';
 import {RecommendTeacherCriteria} from '../recomrecla/RecommendTeacherCriteria.model';
 import {CategorieProfCriteria} from './CategorieProfCriteria.model';
 import {TrancheHoraireProfCriteria} from './TrancheHoraireProfCriteria.model';
-import {UserCriteria} from "../../../core/criteria/user-criteria";
+import {ManageUserDto} from "../../../core/criteria/manage-user-dto";
 
-export class ProfCriteria extends UserCriteria {
+export class ProfCriteria extends ManageUserDto {
 
     public ref: string;
     public refLike: string;
