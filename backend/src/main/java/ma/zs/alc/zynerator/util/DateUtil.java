@@ -22,7 +22,7 @@ public class DateUtil {
     public final static String DATE_FORMAT_FILE = "yyMMddHHmmss";
     public static final String DATE_FORMAT_STANDARD = "yyyy-MM-dd";//2023-07-26
 
-    public static final String DATE_FORMAT_ALTERNATIVE = "MM/dd/yyyy HH:mm";
+    public static final String DATE_FORMAT_ALTERNATIVE = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
     public static final String HOUR_FORMAT = "HH:mm:ss";
     public static final String DATE_FORMAT_ENG = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DATE_FORMAT_ENG_WITHOUT_SECOND = "yyyy-MM-dd'T'HH:mm";
@@ -56,7 +56,7 @@ public class DateUtil {
             LocalDateTime parse = LocalDateTime.parse(strDate, formatter);
             return parse;
         } catch (DateTimeParseException e) {
-            return null;
+            throw new DateTimeParseException("Unable to parse date: " + strDate, strDate, 0);
         }
     }
 
@@ -100,7 +100,7 @@ public static LocalDateTime stringEnToDate(final String strDate) {
     public static LocalDate stringToDate(final String strDate) {
         if (StringUtils.hasLength(strDate)) {
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_STANDARD);
                 return LocalDate.parse(strDate, formatter);
 
             } catch (Exception e) {

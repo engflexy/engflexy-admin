@@ -76,7 +76,7 @@
 
             <div class="flex flex-col mt-6">
                 <div class=" overflow-x-auto">
-
+                    <ng-container *ngIf="active_status===1 || active_status===2">
                     <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
                       flex flex-row justify-center items-center gap-4">
                         <mat-form-field
@@ -94,129 +94,241 @@
 
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-800">
-                                <tr>
-                                    <th scope="col"
-                                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        <div class="flex items-center gap-x-3">
-                                            <input type="checkbox"
-                                                   class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
-                                            <span>Name</span>
-                                        </div>
-                                    </th>
 
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        N° students
-                                    </th>
-
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Price
-                                    </th>
-
-
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        State
-                                    </th>
-
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Start Date
-                                    </th>
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        End Date
-                                    </th>
-                                    <th scope="col" class="relative py-3.5 px-4">
-                                        <span class="sr-only">Edit</span>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                <ng-container *ngFor="let item of items?.content">
+                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                    <thead class="bg-gray-50 dark:bg-gray-800">
                                     <tr>
-                                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <div class="inline-flex items-center gap-x-3">
+                                        <th scope="col"
+                                            class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <div class="flex items-center gap-x-3">
                                                 <input type="checkbox"
                                                        class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
-                                                <div class="flex items-center gap-x-2">
-                                                    <div
-                                                        class="object-cover flex items-center justify-center
+                                                <span>Name</span>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            N° students
+                                        </th>
+
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            Price
+                                        </th>
+
+
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            State
+                                        </th>
+
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            Start Date
+                                        </th>
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            End Date
+                                        </th>
+                                        <th scope="col" class="relative py-3.5 px-4">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody
+                                        class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                    <ng-container *ngFor="let item of items?.content">
+                                        <tr>
+                                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                <div class="inline-flex items-center gap-x-3">
+                                                    <input type="checkbox"
+                                                           class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
+                                                    <div class="flex items-center gap-x-2">
+                                                        <div
+                                                            class="object-cover flex items-center justify-center
                                                              uppercase bg-gray-100 text-center dark:bg-gray-600 w-10 h-10
                                                               rounded-full">
-                                                        <strong>{{ item?.collaborator?.username.at(0) }}</strong>
-                                                    </div>
+                                                            <strong>{{ item?.collaborator?.username.at(0) }}</strong>
+                                                        </div>
 
-                                                    <div>
-                                                        <h2 class="font-medium text-gray-800 dark:text-white ">
-                                                            {{ item?.collaborator?.username }}
-                                                        </h2>
-                                                        <p>
-                                                            {{ item?.collaborator?.email }}
-                                                        </p>
+                                                        <div>
+                                                            <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                                {{ item?.collaborator?.username }}
+                                                            </h2>
+                                                            <p>
+                                                                {{ item?.collaborator?.email }}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            {{ item?.nbrStudent}}
+                                            </td>
+                                            <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                {{ item?.nbrStudent }}
 
-                                        </td>
-                                        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            {{ item?.price}}
-                                        </td>
-
-
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.inscriptionCollaboratorState?.libelle}}
-                                        </td>
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.startDate|date:'dd-MM-yyyy'}}
-                                        </td>
-                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ item?.endDate|date:'dd-MM-yyyy'}}
-                                        </td>
-
-                                        <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div class="flex items-center gap-x-6">
-                                                <button (click)="delete(item)" class="group">
-                                                    <mat-icon class="icon-size-4 group-hover:text-red-500"
-                                                              svgIcon="heroicons_solid:trash"></mat-icon>
-                                                </button>
-
-                                                <button (click)="edit(item)" class="group">
-                                                    <mat-icon class="icon-size-4 group-hover:text-orange-500"
-                                                              svgIcon="heroicons_solid:pencil"></mat-icon>
-                                                </button>
-
-                                                <button (click)="openDetail(item)" class="group">
-                                                    <mat-icon class="icon-size-4 group-hover:text-blue-500"
-                                                              svgIcon="heroicons_outline:bars-3"></mat-icon>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </ng-container>
+                                            </td>
+                                            <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                {{ item?.price }}
+                                            </td>
 
 
-                                </tbody>
-                            </table>
-                            <!-- load more events -->
-                            <div class="w-full  flex justify-center items-center my-5">
-                                <mat-paginator
-                                    (page)="handle_pageable_change($event)"
-                                    [length]="items?.totalElements"
-                                    [pageSize]="items?.size"
-                                    [pageSizeOptions]="[5,10,25]"
-                                    aria-label="Select page">
-                                </mat-paginator>
-                            </div>
+                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {{ item?.inscriptionCollaboratorState?.libelle }}
+                                            </td>
+                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {{ item?.startDate|date:'dd-MM-yyyy' }}
+                                            </td>
+                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {{ item?.endDate|date:'dd-MM-yyyy' }}
+                                            </td>
+
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div class="flex items-center gap-x-6">
+                                                    <button (click)="delete(item)" class="group">
+                                                        <mat-icon class="icon-size-4 group-hover:text-red-500"
+                                                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                                                    </button>
+
+                                                    <button (click)="edit(item)" class="group">
+                                                        <mat-icon class="icon-size-4 group-hover:text-orange-500"
+                                                                  svgIcon="heroicons_solid:pencil"></mat-icon>
+                                                    </button>
+
+                                                    <button (click)="openDetail(item)" class="group">
+                                                        <mat-icon class="icon-size-4 group-hover:text-blue-500"
+                                                                  svgIcon="heroicons_outline:bars-3"></mat-icon>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+
+
+                                    </tbody>
+                                </table>
+
+                                <!-- load more events -->
+                                <div class="w-full  flex justify-center items-center my-5">
+                                    <mat-paginator
+                                        (page)="handle_pageable_change($event)"
+                                        [length]="items?.totalElements"
+                                        [pageSize]="items?.size"
+                                        [pageSizeOptions]="[5,10,25]"
+                                        aria-label="Select page">
+                                    </mat-paginator>
+                                </div>
+
+
                         </div>
                     </div>
+                    </ng-container>
+                    <ng-container *ngIf="active_status==3">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-800">
+                            <tr>
+                                <th scope="col"
+                                    class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <div class="flex items-center gap-x-3">
+                                        <input type="checkbox"
+                                               class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
+                                        <span>Name</span>
+                                    </div>
+                                </th>
+
+                                <th scope="col"
+                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Price Base
+                                </th>
+
+
+
+                                <th scope="col"
+                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Price Banner Ad
+                                </th>
+
+                                <th scope="col"
+                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Price Banner Color
+                                </th>
+                                <th scope="col"
+                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Price Banner Logo
+                                </th>
+                                <th scope="col" class="relative py-3.5 px-4">
+                                    <span class="sr-only">Edit</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody
+                                class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                            <ng-container *ngFor="let item of itemsPackages">
+                                <tr>
+                                    <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                        <div class="inline-flex items-center gap-x-3">
+                                            <input type="checkbox"
+                                                   class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
+                                            <div class="flex items-center gap-x-2">
+                                                <div
+                                                    class="object-cover flex items-center justify-center
+                                                             uppercase bg-gray-100 text-center dark:bg-gray-600 w-10 h-10
+                                                              rounded-full">
+                                                    <strong>{{ item?.libelle.at(0) }}</strong>
+                                                </div>
+
+                                                <div>
+                                                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                        {{ item?.libelle }}
+                                                    </h2>
+                                                    <p>
+                                                        {{ item?.libelle}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                        {{ item?.priceBase }}
+
+                                    </td>
+
+
+
+                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        {{ item?.priceBannerAd }}
+                                    </td>
+
+                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        {{ item?.priceColor}}
+                                    </td>
+
+                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        {{ item?.priceLogo}}
+                                    </td>
+
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                        <div class="flex items-center gap-x-6">
+
+                                            <button (click)="editPack(item)" class="group">
+                                                <mat-icon class="icon-size-4 group-hover:text-orange-500"
+                                                          svgIcon="heroicons_solid:pencil"></mat-icon>
+                                            </button>
+
+                                            <button (click)="openDetailPack(item)" class="group">
+                                                <mat-icon class="icon-size-4 group-hover:text-blue-500"
+                                                          svgIcon="heroicons_outline:bars-3"></mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+
+
+                            </tbody>
+                        </table>
+                    </ng-container>
                 </div>
+
             </div>
         </section>
 
