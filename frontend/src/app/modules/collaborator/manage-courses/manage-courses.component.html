@@ -1,0 +1,102 @@
+<div class="w-full overflow-y-auto flex  items-center content-center justify-center">
+    <div class="w-full bg-white shadow-md max-w-5xl h-auto min-h-screen">
+        <header class="bg-gray-50 w-full">
+            <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <div class="text-center sm:text-left">
+                        <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Materials 📚</h1>
+                    </div>
+
+                    <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+                        <button
+                            class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-5 py-3 text-gray-500 transition hover:text-gray-700 focus:outline-none focus:ring"
+                            type="button"
+                        >
+                            <span class="text-sm font-medium">How does it work ?</span>
+
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <mat-tab-group>
+            <mat-tab label="Personal">
+                <div class="grid p-2 grid-cols-1 gap-4 md:grid-cols-4 md:gap-8">
+                    <div class="col-span-4 flex flex-row justify-center items-center gap-4">
+                        <mat-form-field
+                            class="flex-auto fuse-mat-bold fuse-mat-dense fuse-mat-rounded flex-grow">
+                            <input placeholder="search.." matInput>
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                        </mat-form-field>
+                        <button mat-icon-button class="mb-5" color="accent">
+                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle"></mat-icon>
+                        </button>
+                    </div>
+
+                    <div
+                        (click)="createMaterial()"
+                        class="h-40 max-w-80 flex cursor-pointer flex-col text-orange-600 gap-3
+                        hover:border-orange-600 hover:bg-gray-50
+                         items-center justify-center content-center border border-gray-300 rounded-lg">
+                        <mat-icon class="icon-size-8 text-orange-600" svgIcon="heroicons_solid:plus"></mat-icon>
+                        <strong class="text-lg font-bold">Create new material</strong>
+                    </div>
+
+
+                    <ng-container *ngFor="let item of levels">
+                        <fuse-card
+                            (click)="navigateTo(item)"
+                            class="flex cursor-pointer   rounded-lg flex-col
+                         hover:border-{{item?.color}}-600 hover:border hover:bg-gray-50 max-w-80 w-full">
+                            <ng-container *ngIf="item?.url else showColor">
+                                <img
+                                    height="400"
+                                    class="object-cover h-40 w-full"
+                                    [src]="item?.url"
+                                    alt="Card cover image">
+                            </ng-container>
+
+                            <ng-template #showColor>
+                                <div
+                                    class="h-40 flex items-center justify-center content-center bg-{{item?.color}}-100 w-full">
+                                    <strong class="text-5xl opacity-60 font-bold uppercase text-{{item?.color}}-600">{{item?.code}}</strong>
+                                </div>
+                            </ng-template>
+
+
+                            <div class="m-2">
+                                <div class="ubuntu-bold opacity-90">{{item?.libelle}}</div>
+                                <div class="ubuntu-regular-italic opacity-80 mt-1">{{item?.description}}</div>
+                            </div>
+                        </fuse-card>
+                    </ng-container>
+
+
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Catalog"> EngFlexy's lessons</mat-tab>
+        </mat-tab-group>
+
+
+    </div>
+</div>
+

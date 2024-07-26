@@ -1,0 +1,138 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden">
+    <div class="w-[80vw] md:w-[800px] ">
+        <div class=" w-full flex flex-row items-center flex-wrap gap-4">
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.IMAGE)" class="flex flex-col
+             max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/image-type.png"
+                        alt="Card cover image" height="456" width="816">
+                </div>
+
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">
+                        Picture
+                    </div>
+                </div>
+            </fuse-card>
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.VIDEO)"
+                       class="flex flex-col  max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/video-type.png"
+                        alt="Card cover image" height="456" width="816">
+                </div>
+
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">
+                        Video
+                    </div>
+                </div>
+            </fuse-card>
+
+            <fuse-card (click)="choseType('CONTENT')"
+                       class="flex flex-col  max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/content.png"
+                        alt="Card cover image" height="456" width="816">
+                </div>
+
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">
+                        Article, Text or Writing
+                    </div>
+                </div>
+            </fuse-card>
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.QUIZ,TYPE.TRUE_OR_FALSE)"
+                       class="flex flex-col   max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/true-or-false-type.png"
+                        alt="Card cover image" height="456" width="816">
+                </div>
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">True or False</div>
+                </div>
+            </fuse-card>
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.QUIZ,TYPE.CHOOSE_THE_CORRECT_ALTERNATIVE)"
+                       class="flex flex-col  max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/choose-correct-alternative.png"
+                        alt="Card cover image" height="456" width="1032">
+                </div>
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">Choose the correct option</div>
+                </div>
+            </fuse-card>
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.QUIZ,TYPE.WRITE_THE_CORRECT_FORM)"
+                       class="flex flex-col  max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/write-correct-form.png"
+                        alt="Card cover image" height="456" width="1068">
+                </div>
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">Write the correct form</div>
+                </div>
+            </fuse-card>
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.QUIZ,TYPE.CORRECT_THE_MISTAKE)"
+                       class="flex flex-col  max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/correct-mistake.png"
+                        alt="Card cover image" height="456" width="1069"></div>
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">
+                        Correct the mistake
+                    </div>
+                </div>
+            </fuse-card>
+
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.QUIZ,TYPE.DRAG_AND_DROP)"
+                       class="flex flex-col  max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/drag-and-drop-type.png"
+                        alt="Card cover image" height="456" width="816"></div>
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">
+                        Fill in the gaps from the box
+                    </div>
+                </div>
+            </fuse-card>
+
+
+            <fuse-card (click)="choseType(CONTENT_TYPE.QUIZ,TYPE.PUT_IN_ORDER)"
+                       class="flex flex-col  max-h-80 max-w-64 h-[220px]  cursor-pointer   w-full filter-article">
+                <div class="w-full vignette">
+                    <img
+                        class="object-cover"
+                        ngSrc="assets/images/exercises/put-in-order.png"
+                        alt="Card cover image" height="456" width="816"></div>
+                <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">Put the text in order</div>
+                </div>
+            </fuse-card>
+
+
+        </div>
+    </div>
+</mat-dialog-content>
+
