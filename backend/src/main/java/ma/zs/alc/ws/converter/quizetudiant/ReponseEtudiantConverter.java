@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.quizetudiant.QuizEtudiantConverter;
+import ma.zs.alc.bean.core.quizetudiant.QuizEtudiant;
 import ma.zs.alc.ws.converter.quiz.QuestionConverter;
+import ma.zs.alc.bean.core.quiz.Question;
 import ma.zs.alc.ws.converter.quiz.ReponseConverter;
+import ma.zs.alc.bean.core.quiz.Reponse;
 
 import ma.zs.alc.bean.core.quizetudiant.QuizEtudiant;
 import ma.zs.alc.bean.core.quiz.Question;
@@ -105,6 +108,15 @@ public class ReponseEtudiantConverter extends AbstractConverter<ReponseEtudiant,
 
     public void copy(ReponseEtudiantDto dto, ReponseEtudiant t) {
     super.copy(dto, t);
+    if(t.getReponse() == null && dto.getReponse() != null) {
+        t.setReponse(new Reponse());
+    }
+    if(t.getQuizEtudiant() == null && dto.getQuizEtudiant() != null) {
+        t.setQuizEtudiant(new QuizEtudiant());
+    }
+    if(t.getQuestion() == null && dto.getQuestion() != null) {
+        t.setQuestion(new Question());
+    }
     if (dto.getReponse() != null)
         reponseConverter.copy(dto.getReponse(), t.getReponse());
     if (dto.getQuizEtudiant() != null)

@@ -1,10 +1,9 @@
 package ma.zs.alc.ws.converter.collab;
 
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.collab.InscriptionCollaborator;
 import ma.zs.alc.bean.core.collab.InscriptionCollaboratorState;
 import ma.zs.alc.bean.core.collab.PackageCollaborator;
-import ma.zs.alc.bean.core.common.Collaborator;
-import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.collab.InscriptionCollaboratorDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.DateUtil;
@@ -49,9 +48,9 @@ public class InscriptionCollaboratorConverter extends AbstractConverter<Inscript
             if (dto.getBannerAd() != null)
                 item.setBannerAd(dto.getBannerAd());
             if (StringUtil.isNotEmpty(dto.getStartDate()))
-                item.setStartDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_STANDARD,dto.getStartDate()));
+                item.setStartDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ALTERNATIVE,dto.getStartDate()));
             if (StringUtil.isNotEmpty(dto.getEndDate()))
-                item.setEndDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_STANDARD,dto.getEndDate()));
+                item.setEndDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ALTERNATIVE,dto.getEndDate()));
             if (this.packageCollaborator && dto.getPackageCollaborator() != null)
                 item.setPackageCollaborator(packageCollaboratorConverter.toItem(dto.getPackageCollaborator()));
 

@@ -8,11 +8,6 @@ import java.util.List;
 import java.math.BigDecimal;
 
 
-import ma.zs.alc.ws.dto.vocab.CollaboratorDto;
-import ma.zs.alc.ws.dto.course.ParcoursDto;
-import ma.zs.alc.ws.dto.recomrecla.RecommendTeacherDto;
-
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategorieProfDto  extends AuditBaseDto {
 

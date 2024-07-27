@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -59,7 +59,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         MatButtonModule,
         NgForOf,
         TranslocoModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        DatePipe
     ],
 })
 export class EditComponent implements OnInit{
@@ -80,6 +81,7 @@ export class EditComponent implements OnInit{
 
 
 
+
     private _validPackageCollaboratorLibelle = true;
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
@@ -92,6 +94,7 @@ export class EditComponent implements OnInit{
         this.packageCollaboratorService.findAll().subscribe((data) => {this.packageCollaborators = data; this._packageCollaboratorsFilter = [...this.packageCollaborators]});
         this.collaboratorService.findAll().subscribe((data) => {this.collaborators = data; this._collaboratorsFilter = [...this.collaborators]});
         this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {this.inscriptionCollaboratorStates = data; this._inscriptionCollaboratorStatesFilter = [...this.inscriptionCollaboratorStates]});
+        this.service.findAll().subscribe((data)=>{this.inscriptionCollaborator=data;});
     }
 
     displayPackageCollaborator(item: PackageCollaboratorDto): string {
@@ -147,7 +150,19 @@ export class EditComponent implements OnInit{
         return item && item.username ? item.username : "";
 
     }
+    onStartDateChange(): void {
+        const timer = setInterval(s => {
+            if (this.item.startDate) {
 
+                const startDate = new Date(this.item.startDate);
+                console.log(startDate)
+                const endDate = new Date(startDate.setDate(startDate.getDate() + 30));
+                this.item.endDate = endDate;
+                console.log(endDate)
+            }
+            clearInterval(timer)
+        }, 100)
+    }
     filterCollaborator(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {
@@ -192,6 +207,8 @@ export class EditComponent implements OnInit{
             if (item != null) {
                 this.items.push({...item});
                 this.item = new InscriptionCollaboratorDto();
+                this.alert.show('info', 'Inscription successfully updated!');
+                this.refDialog.close()
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }
@@ -291,6 +308,12 @@ export class EditComponent implements OnInit{
     }
     set inscriptionCollaboratorStates(value: Array<InscriptionCollaboratorStateDto>) {
         this.inscriptionCollaboratorStateService.items = value;
+    }
+    get inscriptionCollaborator(): Array<InscriptionCollaboratorDto> {
+        return this.service.items;
+    }
+    set inscriptionCollaborator(value: Array<InscriptionCollaboratorDto>) {
+        this.service.items = value;
     }
     get createInscriptionCollaboratorStateDialog(): boolean {
         return this.inscriptionCollaboratorStateService.createDialog;

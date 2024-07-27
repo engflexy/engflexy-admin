@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ma.zs.alc.service.facade.collaborator.vocab.CollaboratorCollaboratorService ;
+import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.CoursCollaboratorService ;
 import ma.zs.alc.bean.core.course.Cours ;
 

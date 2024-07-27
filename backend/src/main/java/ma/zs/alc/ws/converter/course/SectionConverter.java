@@ -1,10 +1,10 @@
 package ma.zs.alc.ws.converter.course;
 
-import ma.zs.alc.bean.core.course.Cours;
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.ws.converter.courseref.ContentTypeConverter;
 import ma.zs.alc.ws.converter.quiz.QuestionConverter;
 import ma.zs.alc.ws.converter.quiz.QuizConverter;
+import ma.zs.alc.ws.converter.quizetudiant.QuizEtudiantConverter;
 import ma.zs.alc.ws.dto.course.SectionDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.ListUtil;
@@ -18,15 +18,15 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
     @Autowired
     private QuizConverter quizConverter;
     @Autowired
+    private QuizEtudiantConverter quizEtudiantConverter;
+    @Autowired
     private ContentTypeConverter contentTypeConverter;
     @Autowired
     private QuestionConverter questionConverter;
     @Autowired
     private ExerciceConverter exerciceConverter;
-    @Autowired
-    private CoursConverter coursConverter;
-    private boolean cours;
     private boolean quizs;
+    private boolean cours;
     private boolean exercices;
 
     public SectionConverter() {
@@ -48,16 +48,6 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
                 item.setLibelle(dto.getLibelle());
             if (StringUtil.isNotEmpty(dto.getDescription()))
                 item.setDescription(dto.getDescription());
-
-            if (StringUtil.isNotEmpty(dto.getNumero()))
-                item.setNumero(dto.getNumero());
-
-            if (dto.getCours() != null && dto.getCours().getId() != null) {
-                item.setCours(new Cours());
-                item.getCours().setId(dto.getCours().getId());
-                item.getCours().setLibelle(dto.getCours().getLibelle());
-            }
-
             if (this.exercices && ListUtil.isNotEmpty(dto.getExercices()))
                 item.setExercices(exerciceConverter.toItem(dto.getExercices()));
 
@@ -78,16 +68,8 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
                 dto.setCode(item.getCode());
             if (StringUtil.isNotEmpty(item.getLibelle()))
                 dto.setLibelle(item.getLibelle());
-
             if (StringUtil.isNotEmpty(item.getDescription()))
                 dto.setDescription(item.getDescription());
-            if (StringUtil.isNotEmpty(item.getNumero()))
-                dto.setNumero(item.getNumero());
-
-            if (this.cours && item.getCours() != null) {
-                dto.setCours(coursConverter.toDto(item.getCours()));
-
-            }
             if (this.exercices && ListUtil.isNotEmpty(item.getExercices())) {
                 exerciceConverter.init(true);
                 exerciceConverter.setSection(false);
@@ -103,8 +85,6 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
 
     public void copy(SectionDto dto, Section t) {
         super.copy(dto, t);
-        if (dto.getCours() != null)
-            coursConverter.copy(dto.getCours(), t.getCours());
         if (dto.getExercices() != null)
             t.setExercices(exerciceConverter.copy(dto.getExercices()));
     }
@@ -116,7 +96,6 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
     }
 
     public void initObject(boolean value) {
-        this.cours = value;
     }
 
 
@@ -126,6 +105,14 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
 
     public void setQuizConverter(QuizConverter quizConverter) {
         this.quizConverter = quizConverter;
+    }
+
+    public QuizEtudiantConverter getQuizEtudiantConverter() {
+        return this.quizEtudiantConverter;
+    }
+
+    public void setQuizEtudiantConverter(QuizEtudiantConverter quizEtudiantConverter) {
+        this.quizEtudiantConverter = quizEtudiantConverter;
     }
 
     public ContentTypeConverter getContentTypeConverter() {
@@ -152,22 +139,6 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
         this.exerciceConverter = exerciceConverter;
     }
 
-    public CoursConverter getCoursConverter() {
-        return this.coursConverter;
-    }
-
-    public void setCoursConverter(CoursConverter coursConverter) {
-        this.coursConverter = coursConverter;
-    }
-
-    public boolean isCours() {
-        return this.cours;
-    }
-
-    public void setCours(boolean cours) {
-        this.cours = cours;
-    }
-
     public boolean isQuizs() {
         return this.quizs;
     }
@@ -183,4 +154,12 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
     public void setExercices(boolean exercices) {
         this.exercices = exercices;
     }
+    public boolean isCours() {
+        return this.cours;
+    }
+
+    public void setCours(boolean exercices) {
+        this.cours = exercices;
+    }
+
 }

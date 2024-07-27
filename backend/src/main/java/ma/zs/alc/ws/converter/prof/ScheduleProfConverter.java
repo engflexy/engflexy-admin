@@ -41,27 +41,19 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
                 item.setId(dto.getId());
             if (StringUtil.isNotEmpty(dto.getSubject()))
                 item.setSubject(dto.getSubject());
-
             if (StringUtil.isNotEmpty(dto.getStartTime()))
-                item.setStartTime(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getStartTime()));
-
+                item.setStartTime(DateUtil.stringEnToDate(dto.getStartTime(), DateUtil.DATE_FORMAT_ENG));
             if (StringUtil.isNotEmpty(dto.getEndTime()))
-                item.setEndTime(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getEndTime()));
-
+                item.setEndTime(DateUtil.stringEnToDate(dto.getEndTime(), DateUtil.DATE_FORMAT_ENG));
             if (StringUtil.isNotEmpty(dto.getRef()))
                 item.setRef(dto.getRef());
-
             if (StringUtil.isNotEmpty(dto.getGrpName()))
                 item.setGrpName(dto.getGrpName());
-
             if (StringUtil.isNotEmpty(dto.getProfName()))
                 item.setProfName(dto.getProfName());
-
             if (StringUtil.isNotEmpty(dto.getProfsId()))
                 item.setProfsId(dto.getProfsId());
-
             item.setCourseFinished(dto.getCourseFinished());
-
             if (dto.getGroupeEtudiant() != null && dto.getGroupeEtudiant().getId() != null) {
                 item.setGroupeEtudiant(new GroupeEtudiant());
                 item.getGroupeEtudiant().setId(dto.getGroupeEtudiant().getId());
@@ -80,7 +72,7 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
                 item.getCours().setLibelle(dto.getCours().getLibelle());
             }
 
-            System.out.println("item.getStartTime() = " + item.getStartTime());
+
             return item;
         }
     }
@@ -128,6 +120,15 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
 
     public void copy(ScheduleProfDto dto, ScheduleProf t) {
         super.copy(dto, t);
+        if (t.getGroupeEtudiant() == null && dto.getGroupeEtudiant() != null) {
+            t.setGroupeEtudiant(new GroupeEtudiant());
+        }
+        if (t.getProf() == null && dto.getProf() != null) {
+            t.setProf(new Prof());
+        }
+        if (t.getCours() == null && dto.getCours() != null) {
+            t.setCours(new Cours());
+        }
         if (dto.getGroupeEtudiant() != null)
             groupeEtudiantConverter.copy(dto.getGroupeEtudiant(), t.getGroupeEtudiant());
         if (dto.getProf() != null)

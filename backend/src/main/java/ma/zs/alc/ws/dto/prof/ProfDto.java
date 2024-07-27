@@ -3,7 +3,7 @@ package ma.zs.alc.ws.dto.prof;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ma.zs.alc.ws.dto.course.ParcoursDto;
 import ma.zs.alc.ws.dto.recomrecla.RecommendTeacherDto;
-import ma.zs.alc.ws.dto.vocab.CollaboratorDto;
+import ma.zs.alc.ws.dto.collab.CollaboratorDto;
 import ma.zs.alc.zynerator.audit.Log;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.ws.dto.UserDto;
