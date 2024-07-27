@@ -13,6 +13,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {CreateCourseComponent} from "./create-course/create-course.component";
 import {MatDialog} from "@angular/material/dialog";
+import {EditMaterialComponent} from "../edit-material/edit-material.component";
 
 @Component({
     selector: 'app-material-detail',
@@ -81,6 +82,13 @@ export class MaterialDetailComponent implements OnInit {
         this.course = new CoursDto()
         this.course.parcours = this.item
         this._matDialog.open(CreateCourseComponent, {
+            autoFocus: false,
+        });
+    }
+
+    edit(item: ParcoursDto) {
+        this.item = item
+        this._matDialog.open(EditMaterialComponent, {
             autoFocus: false,
         });
     }

@@ -61,7 +61,6 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         TranslocoModule,
         MatDatepickerModule
     ],
-    styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit{
     protected _submitted = false;

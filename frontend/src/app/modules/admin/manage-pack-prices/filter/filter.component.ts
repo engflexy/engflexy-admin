@@ -49,7 +49,6 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         TranslocoModule,
         MatDatepickerModule
     ],
-    styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit{
     protected _submitted = false;
