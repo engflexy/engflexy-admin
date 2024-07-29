@@ -28,7 +28,7 @@ public class SectionCollaboratorServiceImpl extends AbstractServiceImpl<Section,
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Section create(Section t) {
         Section saved = super.create(t);
-        if (saved != null) {
+        if (saved != null && saved.getCours() != null) {
             Cours cours = coursService.findById(saved.getCours().getId());
             cours.increaseNreSection();
             System.out.println("LINK FINALIST ==> " + cours.getNombreSectionFinalise());
@@ -39,7 +39,7 @@ public class SectionCollaboratorServiceImpl extends AbstractServiceImpl<Section,
                     exerciceService.create(element);
                 });
             }
-        }
+        } else throw new RuntimeException("cours is required.");
 
         return saved;
 
