@@ -42,9 +42,9 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
             if (StringUtil.isNotEmpty(dto.getSubject()))
                 item.setSubject(dto.getSubject());
             if (StringUtil.isNotEmpty(dto.getStartTime()))
-                item.setStartTime(DateUtil.stringEnToDate(dto.getStartTime()));
+                item.setStartTime(DateUtil.stringEnToDate(dto.getStartTime(), DateUtil.DATE_FORMAT_ENG));
             if (StringUtil.isNotEmpty(dto.getEndTime()))
-                item.setEndTime(DateUtil.stringEnToDate(dto.getEndTime()));
+                item.setEndTime(DateUtil.stringEnToDate(dto.getEndTime(), DateUtil.DATE_FORMAT_ENG));
             if (StringUtil.isNotEmpty(dto.getRef()))
                 item.setRef(dto.getRef());
             if (StringUtil.isNotEmpty(dto.getGrpName()))
@@ -120,6 +120,15 @@ public class ScheduleProfConverter extends AbstractConverter<ScheduleProf, Sched
 
     public void copy(ScheduleProfDto dto, ScheduleProf t) {
         super.copy(dto, t);
+        if (t.getGroupeEtudiant() == null && dto.getGroupeEtudiant() != null) {
+            t.setGroupeEtudiant(new GroupeEtudiant());
+        }
+        if (t.getProf() == null && dto.getProf() != null) {
+            t.setProf(new Prof());
+        }
+        if (t.getCours() == null && dto.getCours() != null) {
+            t.setCours(new Cours());
+        }
         if (dto.getGroupeEtudiant() != null)
             groupeEtudiantConverter.copy(dto.getGroupeEtudiant(), t.getGroupeEtudiant());
         if (dto.getProf() != null)

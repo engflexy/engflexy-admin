@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {PageEvent} from "@angular/material/paginator";
-import {UserCriteria} from "../../../../core/criteria/user-criteria";
+import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {Pageable} from "../../../../shared/utils/Pageable";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -14,7 +14,7 @@ import {CreateCollaboratorComponent} from "./create-collaborator/create-collabor
     templateUrl: './collaborators.component.html'
 })
 export class CollaboratorsComponent implements OnInit {
-    criteria: Criteria<UserCriteria>
+    criteria: PageRequest<ManageUserDto>
     pageable: Pageable = new Pageable(0, 5)
 
     constructor(private profService: CollaboratorAdminService,
@@ -55,7 +55,7 @@ export class CollaboratorsComponent implements OnInit {
         })
     }
 
-    navigateToDetail(item: UserCriteria) {
+    navigateToDetail(item: ManageUserDto) {
         this.router.navigate([`collaborator/${item.id}`], {relativeTo: this.route})
     }
 }

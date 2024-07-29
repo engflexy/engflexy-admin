@@ -24,6 +24,7 @@ import {
 } from "../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
 import {GroupFilterComponent} from "./group-filter/group-filter.component";
 import {ActivatedRoute, Router} from "@angular/router";
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
     selector: 'app-manage-groups',
@@ -42,14 +43,15 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ManageGroupsComponent {
     status = TYPE_INSCRIPTION
-    criteria: PaginatedList<any> = new PaginatedList<any>()
-    pageable: GroupeEtudiantCriteria = new GroupeEtudiantCriteria();
+    paginatedList = new PaginatedList<GroupeEtudiantDto>()
+    criteria = new GroupeEtudiantCriteria();
     active_status = 1;
 
     constructor(private service: GroupeEtudiantCollaboratorService,
                 private _fuseConfirmation: FuseConfirmationService,
                 private router: Router,
                 private route: ActivatedRoute,
+                private breakpointObserver: BreakpointObserver,
                 private groupDetailService: GroupeEtudiantDetailCollaboratorService,
                 private alert: FuseAlertService,
                 private _matDialog: MatDialog) {
@@ -64,26 +66,25 @@ export class ManageGroupsComponent {
     }
 
     ngOnInit() {
-        this.fetchData()
+        this.findPaginatedByCriteria()
     }
 
 
-    private fetchData() {
+    private findPaginatedByCriteria() {
         if (this.active_status === 1) {
-            this.pageable.groupeEtude = new GroupeEtudeCriteria(2, 'group of students')
+            this.criteria.groupeEtude = new GroupeEtudeCriteria(2, 'group of students')
         } else {
-            this.pageable.groupeEtude = new GroupeEtudeCriteria(1, 'individual')
+            this.criteria.groupeEtude = new GroupeEtudeCriteria(1, 'individual')
         }
-        this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
-            this.criteria = res
-            console.log(res)
+        this.service.findPaginatedByCriteria(this.criteria).subscribe(res => {
+            this.paginatedList = res
         })
     }
 
     handle_pageable_change(event: PageEvent) {
-        this.pageable.page = event?.pageIndex
-        this.pageable.maxResults = event?.pageSize
-        this.fetchData();
+        this.criteria.page = event?.pageIndex
+        this.criteria.maxResults = event?.pageSize
+        this.findPaginatedByCriteria();
     }
 
     create() {
@@ -91,20 +92,39 @@ export class ManageGroupsComponent {
         const dialog = this._matDialog.open(GroupeEtudiantCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",
-            width: "calc(100% - 100px)",
+            width: "65vw",
             maxWidth: "100%",
             disableClose: true,
             maxHeight: "100%"
         });
         dialog.afterClosed().subscribe(res => {
-            if (res != null) this.criteria.list.unshift({...res})
+            if (res != null) this.paginatedList.list.unshift({...res})
         })
+
+        /*
+           this.breakpointObserver.observe([
+      Breakpoints.Handset,
+      Breakpoints.Tablet,
+      Breakpoints.Web
+    ]).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+        if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
+          console.log('Screen size is small (sm)');
+        } else if (this.breakpointObserver.isMatched(Breakpoints.Tablet)) {
+          console.log('Screen size is medium (md)');
+        } else if (this.breakpointObserver.isMatched(Breakpoints.Web)) {
+          console.log('Screen size is large (lg)');
+        }
+      }
+    });
+  }
+         */
     }
 
     changeType(index: number) {
         this.active_status = index
-        this.pageable = new GroupeEtudiantCriteria()
-        this.fetchData()
+        this.criteria = new GroupeEtudiantCriteria()
+        this.findPaginatedByCriteria()
     }
 
     delete(item: GroupeEtudiantDto) {
@@ -123,7 +143,7 @@ export class ManageGroupsComponent {
             // If the confirmation button pressed...
             if (result === 'confirmed') {
                 this.service.delete(item).subscribe(res => {
-                    this.criteria.list.splice(this.criteria.list.indexOf(item), 1)
+                    this.paginatedList.list.splice(this.paginatedList.list.indexOf(item), 1)
                 }, error => {
                     this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                 })
@@ -168,13 +188,13 @@ export class ManageGroupsComponent {
         });
         dialog.afterClosed().subscribe(res => {
             if (res != null) {
-                this.pageable = res
-                this.service.findPaginatedByCriteria(this.pageable).subscribe(res => {
-                    this.criteria = res
+                this.criteria = res
+                this.service.findPaginatedByCriteria(this.criteria).subscribe(res => {
+                    this.paginatedList = res
                 })
             } else {
-                this.pageable = new GroupeEtudiantCriteria()
-                this.fetchData()
+                this.criteria = new GroupeEtudiantCriteria()
+                this.findPaginatedByCriteria()
             }
         })
     }

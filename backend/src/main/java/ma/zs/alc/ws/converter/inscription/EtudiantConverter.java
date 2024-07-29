@@ -1,19 +1,21 @@
 package ma.zs.alc.ws.converter.inscription;
 
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.bean.core.grpe.GroupeEtude;
 import ma.zs.alc.bean.core.inscription.Etudiant;
+import ma.zs.alc.bean.core.inscriptionref.*;
+import ma.zs.alc.bean.core.pack.PackStudent;
+import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
 import ma.zs.alc.ws.converter.course.ParcoursConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudeConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantDetailConverter;
-import ma.zs.alc.ws.converter.grpe.InscriptionConverter;
 import ma.zs.alc.ws.converter.inscriptionref.*;
 import ma.zs.alc.ws.converter.pack.PackStudentConverter;
 import ma.zs.alc.ws.converter.quiz.QuizConverter;
 import ma.zs.alc.ws.converter.quizetudiant.QuizEtudiantConverter;
 import ma.zs.alc.ws.converter.quizetudiant.ReponseEtudiantConverter;
-import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.inscription.EtudiantDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.ListUtil;
@@ -51,8 +53,6 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
     @Autowired
     private GroupeEtudiantDetailConverter groupeEtudiantDetailConverter;
     @Autowired
-    private InscriptionConverter inscriptionConverter;
-    @Autowired
     private PackStudentConverter packStudentConverter;
     @Autowired
     private TeacherLocalityConverter teacherLocalityConverter;
@@ -71,7 +71,6 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
     private boolean collaborator;
     private boolean quizEtudiants;
     private boolean groupeEtudiantDetails;
-    private boolean inscriptions;
 
     public EtudiantConverter() {
         super(Etudiant.class, EtudiantDto.class);
@@ -84,28 +83,27 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
             return null;
         } else {
             Etudiant item = new Etudiant();
-            if (StringUtil.isNotEmpty(dto.getId())) item.setId(dto.getId());
-
-            if (StringUtil.isNotEmpty(dto.getGroupOption())) item.setGroupOption(dto.getGroupOption());
-
-            if (StringUtil.isNotEmpty(dto.getFullName())) item.setFullName(dto.getFullName());
-            if (StringUtil.isNotEmpty(dto.getEmail())) item.setEmail(dto.getEmail());
-            if (StringUtil.isNotEmpty(dto.getUsername())) item.setUsername(dto.getUsername());
-            if (StringUtil.isNotEmpty(dto.getPasswordChanged())) item.setPasswordChanged(dto.getPasswordChanged());
-            if (StringUtil.isNotEmpty(dto.getPhone())) item.setPhone(dto.getPhone());
-            if (StringUtil.isNotEmpty(dto.getCountry())) item.setCountry(dto.getCountry());
-            if (StringUtil.isNotEmpty(dto.getAbout())) item.setAbout(dto.getAbout());
-            if (StringUtil.isNotEmpty(dto.getAvatar())) item.setAvatar(dto.getAvatar());
-            if (dto.getSubscribe() != null) item.setSubscribe(dto.getSubscribe());
+            if (StringUtil.isNotEmpty(dto.getId()))
+                item.setId(dto.getId());
+            if (StringUtil.isNotEmpty(dto.getGroupOption()))
+                item.setGroupOption(dto.getGroupOption());
+            if (dto.getSubscribe() != null)
+                item.setSubscribe(dto.getSubscribe());
             item.setCredentialsNonExpired(dto.getCredentialsNonExpired());
             item.setEnabled(dto.getEnabled());
             item.setAccountNonExpired(dto.getAccountNonExpired());
             item.setAccountNonLocked(dto.getAccountNonLocked());
             item.setPasswordChanged(dto.getPasswordChanged());
-            if (StringUtil.isNotEmpty(dto.getUsername())) item.setUsername(dto.getUsername());
-            if (StringUtil.isNotEmpty(dto.getPassword())) item.setPassword(dto.getPassword());
-
-
+            if (StringUtil.isNotEmpty(dto.getUsername()))
+                item.setUsername(dto.getUsername());
+            if (StringUtil.isNotEmpty(dto.getPassword()))
+                item.setPassword(dto.getPassword());
+            if (StringUtil.isNotEmpty(dto.getAvatar()))
+                item.setAvatar(dto.getAvatar());
+            if (StringUtil.isNotEmpty(dto.getFullName()))
+                item.setFullName(dto.getFullName());
+            if (StringUtil.isNotEmpty(dto.getAbout()))
+                item.setAbout(dto.getAbout());
             if (this.teacherLocality && dto.getTeacherLocality() != null)
                 item.setTeacherLocality(teacherLocalityConverter.toItem(dto.getTeacherLocality()));
 
@@ -130,12 +128,14 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
             if (this.niveauEtude && dto.getNiveauEtude() != null)
                 item.setNiveauEtude(niveauEtudeConverter.toItem(dto.getNiveauEtude()));
 
-            if (this.skill && dto.getSkill() != null) item.setSkill(skillConverter.toItem(dto.getSkill()));
+            if (this.skill && dto.getSkill() != null)
+                item.setSkill(skillConverter.toItem(dto.getSkill()));
 
             if (this.fonction && dto.getFonction() != null)
                 item.setFonction(fonctionConverter.toItem(dto.getFonction()));
 
-            if (this.langue && dto.getLangue() != null) item.setLangue(langueConverter.toItem(dto.getLangue()));
+            if (this.langue && dto.getLangue() != null)
+                item.setLangue(langueConverter.toItem(dto.getLangue()));
 
             if (dto.getCollaborator() != null && dto.getCollaborator().getId() != null) {
                 item.setCollaborator(new Collaborator());
@@ -146,12 +146,8 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
 
             if (this.quizEtudiants && ListUtil.isNotEmpty(dto.getQuizEtudiants()))
                 item.setQuizEtudiants(quizEtudiantConverter.toItem(dto.getQuizEtudiants()));
-
             if (this.groupeEtudiantDetails && ListUtil.isNotEmpty(dto.getGroupeEtudiantDetails()))
                 item.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.toItem(dto.getGroupeEtudiantDetails()));
-
-            if (this.inscriptions && ListUtil.isNotEmpty(dto.getInscriptions()))
-                item.setInscriptions(inscriptionConverter.toItem(dto.getInscriptions()));
 
             //item.setRoles(dto.getRoles());
 
@@ -165,25 +161,29 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
             return null;
         } else {
             EtudiantDto dto = new EtudiantDto();
-            if (StringUtil.isNotEmpty(item.getId())) dto.setId(item.getId());
-            if (StringUtil.isNotEmpty(item.getGroupOption())) dto.setGroupOption(item.getGroupOption());
-            if (StringUtil.isNotEmpty(item.getFullName())) dto.setFullName(item.getFullName());
-            if (StringUtil.isNotEmpty(item.getEmail())) dto.setEmail(item.getEmail());
-            if (StringUtil.isNotEmpty(item.getUsername())) dto.setUsername(item.getUsername());
-            if (StringUtil.isNotEmpty(item.getPasswordChanged())) dto.setPasswordChanged(item.getPasswordChanged());
-            if (StringUtil.isNotEmpty(item.getPhone())) dto.setPhone(item.getPhone());
-            if (StringUtil.isNotEmpty(item.getCountry())) dto.setCountry(item.getCountry());
-            if (StringUtil.isNotEmpty(item.getAbout())) dto.setAbout(item.getAbout());
-            if (item.getSubscribe() != null) dto.setSubscribe(item.getSubscribe());
-            if (StringUtil.isNotEmpty(item.getAvatar())) dto.setAvatar(item.getAvatar());
+            if (StringUtil.isNotEmpty(item.getId()))
+                dto.setId(item.getId());
+            if (StringUtil.isNotEmpty(item.getGroupOption()))
+                dto.setGroupOption(item.getGroupOption());
+            dto.setSubscribe(item.getSubscribe());
             if (StringUtil.isNotEmpty(item.getCredentialsNonExpired()))
                 dto.setCredentialsNonExpired(item.getCredentialsNonExpired());
-            if (StringUtil.isNotEmpty(item.getEnabled())) dto.setEnabled(item.getEnabled());
+            if (StringUtil.isNotEmpty(item.getEnabled()))
+                dto.setEnabled(item.getEnabled());
             if (StringUtil.isNotEmpty(item.getAccountNonExpired()))
                 dto.setAccountNonExpired(item.getAccountNonExpired());
-            if (StringUtil.isNotEmpty(item.getAccountNonLocked())) dto.setAccountNonLocked(item.getAccountNonLocked());
-            if (StringUtil.isNotEmpty(item.getUsername())) dto.setUsername(item.getUsername());
-
+            if (StringUtil.isNotEmpty(item.getAccountNonLocked()))
+                dto.setAccountNonLocked(item.getAccountNonLocked());
+            if (StringUtil.isNotEmpty(item.getPasswordChanged()))
+                dto.setPasswordChanged(item.getPasswordChanged());
+            if (StringUtil.isNotEmpty(item.getUsername()))
+                dto.setUsername(item.getUsername());
+            if (StringUtil.isNotEmpty(item.getAvatar()))
+                dto.setAvatar(item.getAvatar());
+            if (StringUtil.isNotEmpty(item.getFullName()))
+                dto.setFullName(item.getFullName());
+            if (StringUtil.isNotEmpty(item.getAbout()))
+                dto.setAbout(item.getAbout());
             if (this.teacherLocality && item.getTeacherLocality() != null) {
                 dto.setTeacherLocality(teacherLocalityConverter.toDto(item.getTeacherLocality()));
 
@@ -222,30 +222,26 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
             }
             if (this.langue && item.getLangue() != null) {
                 dto.setLangue(langueConverter.toDto(item.getLangue()));
+
             }
             if (this.collaborator && item.getCollaborator() != null) {
                 dto.setCollaborator(collaboratorConverter.toDto(item.getCollaborator()));
 
             }
             if (this.quizEtudiants && ListUtil.isNotEmpty(item.getQuizEtudiants())) {
-                quizEtudiantConverter.init(true);
+                quizEtudiantConverter.init(false);
                 quizEtudiantConverter.setEtudiant(false);
                 dto.setQuizEtudiants(quizEtudiantConverter.toDto(item.getQuizEtudiants()));
                 quizEtudiantConverter.setEtudiant(true);
 
             }
+
             if (this.groupeEtudiantDetails && ListUtil.isNotEmpty(item.getGroupeEtudiantDetails())) {
-                groupeEtudiantDetailConverter.init(true);
+                groupeEtudiantDetailConverter.init(false);
                 groupeEtudiantDetailConverter.setEtudiant(false);
                 dto.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.toDto(item.getGroupeEtudiantDetails()));
                 groupeEtudiantDetailConverter.setEtudiant(true);
 
-            }
-            if (this.inscriptions && ListUtil.isNotEmpty(item.getInscriptions())) {
-                inscriptionConverter.init(true);
-                inscriptionConverter.setEtudiant(false);
-                dto.setInscriptions(inscriptionConverter.toDto(item.getInscriptions()));
-                inscriptionConverter.setEtudiant(true);
             }
 
 
@@ -255,35 +251,71 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
 
     public void copy(EtudiantDto dto, Etudiant t) {
         super.copy(dto, t);
-
+        if (t.getTeacherLocality() == null && dto.getTeacherLocality() != null) {
+            t.setTeacherLocality(new TeacherLocality());
+        }
+        if (t.getParcours() == null && dto.getParcours() != null) {
+            t.setParcours(new Parcours());
+        }
+        if (t.getGroupeEtude() == null && dto.getGroupeEtude() != null) {
+            t.setGroupeEtude(new GroupeEtude());
+        }
+        if (t.getPackStudent() == null && dto.getPackStudent() != null) {
+            t.setPackStudent(new PackStudent());
+        }
+        if (t.getStatutSocial() == null && dto.getStatutSocial() != null) {
+            t.setStatutSocial(new StatutSocial());
+        }
+        if (t.getInteretEtudiant() == null && dto.getInteretEtudiant() != null) {
+            t.setInteretEtudiant(new InteretEtudiant());
+        }
+        if (t.getNiveauEtude() == null && dto.getNiveauEtude() != null) {
+            t.setNiveauEtude(new NiveauEtude());
+        }
+        if (t.getSkill() == null && dto.getSkill() != null) {
+            t.setSkill(new Skill());
+        }
+        if (t.getFonction() == null && dto.getFonction() != null) {
+            t.setFonction(new Fonction());
+        }
+        if (t.getLangue() == null && dto.getLangue() != null) {
+            t.setLangue(new Langue());
+        }
+        if (t.getCollaborator() == null && dto.getCollaborator() != null) {
+            t.setCollaborator(new Collaborator());
+        }
         if (dto.getTeacherLocality() != null)
             teacherLocalityConverter.copy(dto.getTeacherLocality(), t.getTeacherLocality());
-
-        if (dto.getParcours() != null) parcoursConverter.copy(dto.getParcours(), t.getParcours());
-
-        if (dto.getQuizEtudiants() != null) t.setQuizEtudiants(quizEtudiantConverter.copy(dto.getQuizEtudiants()));
-        if (dto.getGroupeEtude() != null) groupeEtudeConverter.copy(dto.getGroupeEtude(), t.getGroupeEtude());
+        if (dto.getParcours() != null)
+            parcoursConverter.copy(dto.getParcours(), t.getParcours());
+        if (dto.getQuizEtudiants() != null)
+            t.setQuizEtudiants(quizEtudiantConverter.copy(dto.getQuizEtudiants()));
+        if (dto.getGroupeEtude() != null)
+            groupeEtudeConverter.copy(dto.getGroupeEtude(), t.getGroupeEtude());
         if (dto.getGroupeEtudiantDetails() != null)
             t.setGroupeEtudiantDetails(groupeEtudiantDetailConverter.copy(dto.getGroupeEtudiantDetails()));
-        if (dto.getPackStudent() != null) packStudentConverter.copy(dto.getPackStudent(), t.getPackStudent());
-        if (dto.getStatutSocial() != null) statutSocialConverter.copy(dto.getStatutSocial(), t.getStatutSocial());
+        if (dto.getPackStudent() != null)
+            packStudentConverter.copy(dto.getPackStudent(), t.getPackStudent());
+        if (dto.getStatutSocial() != null)
+            statutSocialConverter.copy(dto.getStatutSocial(), t.getStatutSocial());
         if (dto.getInteretEtudiant() != null)
             interetEtudiantConverter.copy(dto.getInteretEtudiant(), t.getInteretEtudiant());
-        if (dto.getNiveauEtude() != null) niveauEtudeConverter.copy(dto.getNiveauEtude(), t.getNiveauEtude());
-        if (dto.getSkill() != null) skillConverter.copy(dto.getSkill(), t.getSkill());
-        if (dto.getFonction() != null) fonctionConverter.copy(dto.getFonction(), t.getFonction());
-        if (dto.getLangue() != null) langueConverter.copy(dto.getLangue(), t.getLangue());
-        if (dto.getCollaborator() != null) collaboratorConverter.copy(dto.getCollaborator(), t.getCollaborator());
-
-        System.out.println("dto = " + dto);
-        System.out.println("dto = " + t);
+        if (dto.getNiveauEtude() != null)
+            niveauEtudeConverter.copy(dto.getNiveauEtude(), t.getNiveauEtude());
+        if (dto.getSkill() != null)
+            skillConverter.copy(dto.getSkill(), t.getSkill());
+        if (dto.getFonction() != null)
+            fonctionConverter.copy(dto.getFonction(), t.getFonction());
+        if (dto.getLangue() != null)
+            langueConverter.copy(dto.getLangue(), t.getLangue());
+        if (dto.getCollaborator() != null)
+            collaboratorConverter.copy(dto.getCollaborator(), t.getCollaborator());
     }
 
 
     public void initList(boolean value) {
         this.quizEtudiants = value;
         this.groupeEtudiantDetails = value;
-        this.inscriptions = value;
     }
 
     public void initObject(boolean value) {
@@ -532,14 +564,4 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
     public void setGroupeEtudiantDetails(boolean groupeEtudiantDetails) {
         this.groupeEtudiantDetails = groupeEtudiantDetails;
     }
-
-    public boolean isInscriptions() {
-        return this.inscriptions;
-    }
-
-    public void setInscriptions(boolean inscriptions) {
-        this.inscriptions = inscriptions;
-    }
-
-
 }

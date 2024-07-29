@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.bean.core.prof.Prof;
 
 import ma.zs.alc.bean.core.prof.Prof;
 
@@ -49,7 +50,7 @@ public class RecommendTeacherConverter extends AbstractConverter<RecommendTeache
             if(StringUtil.isNotEmpty(dto.getLogin()))
                 item.setLogin(dto.getLogin());
             if(StringUtil.isNotEmpty(dto.getDateRecommamdation()))
-                item.setDateRecommamdation(DateUtil.stringEnToDate(dto.getDateRecommamdation()));
+                item.setDateRecommamdation(DateUtil.stringEnToDate(dto.getDateRecommamdation(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getProf() != null && dto.getProf().getId() != null){
                 item.setProf(new Prof());
                 item.getProf().setId(dto.getProf().getId());
@@ -99,6 +100,9 @@ public class RecommendTeacherConverter extends AbstractConverter<RecommendTeache
 
     public void copy(RecommendTeacherDto dto, RecommendTeacher t) {
     super.copy(dto, t);
+    if(t.getProf() == null && dto.getProf() != null) {
+        t.setProf(new Prof());
+    }
     if (dto.getProf() != null)
         profConverter.copy(dto.getProf(), t.getProf());
     }

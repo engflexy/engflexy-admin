@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.ws.converter.freetrial.FreeTrialConverter;
+import ma.zs.alc.bean.core.freetrial.FreeTrial;
 
 import ma.zs.alc.bean.core.freetrial.FreeTrial;
 import ma.zs.alc.bean.core.inscription.Etudiant;
@@ -44,11 +46,11 @@ public class FreeTrialDetailConverter extends AbstractConverter<FreeTrialDetail,
             if(dto.getWhatsUpMessageSent() != null)
                 item.setWhatsUpMessageSent(dto.getWhatsUpMessageSent());
             if(StringUtil.isNotEmpty(dto.getDateEnvoiwhatsUpMessage()))
-                item.setDateEnvoiwhatsUpMessage(DateUtil.stringEnToDate(dto.getDateEnvoiwhatsUpMessage()));
+                item.setDateEnvoiwhatsUpMessage(DateUtil.stringEnToDate(dto.getDateEnvoiwhatsUpMessage(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getEmailMessageSent() != null)
                 item.setEmailMessageSent(dto.getEmailMessageSent());
             if(StringUtil.isNotEmpty(dto.getDateEnvoiEmailMessage()))
-                item.setDateEnvoiEmailMessage(DateUtil.stringEnToDate(dto.getDateEnvoiEmailMessage()));
+                item.setDateEnvoiEmailMessage(DateUtil.stringEnToDate(dto.getDateEnvoiEmailMessage(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getAbonne() != null)
                 item.setAbonne(dto.getAbonne());
             if(dto.getFreeTrial() != null && dto.getFreeTrial().getId() != null){
@@ -102,6 +104,12 @@ public class FreeTrialDetailConverter extends AbstractConverter<FreeTrialDetail,
 
     public void copy(FreeTrialDetailDto dto, FreeTrialDetail t) {
     super.copy(dto, t);
+    if(t.getFreeTrial() == null && dto.getFreeTrial() != null) {
+        t.setFreeTrial(new FreeTrial());
+    }
+    if(t.getEtudiant() == null && dto.getEtudiant() != null) {
+        t.setEtudiant(new Etudiant());
+    }
     if (dto.getFreeTrial() != null)
         freeTrialConverter.copy(dto.getFreeTrial(), t.getFreeTrial());
     if (dto.getEtudiant() != null)

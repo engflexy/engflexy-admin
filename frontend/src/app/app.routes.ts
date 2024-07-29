@@ -6,7 +6,7 @@ import {LayoutComponent} from 'app/layout/layout.component';
 import {AdminDashboardComponent} from "./modules/admin/admin-dashboard/admin-dashboard.component";
 import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/manage-inscriptions.component";
 import {ScheduleComponent} from "./modules/admin/schedule/schedule.component";
-import {SalaryListAdminComponent} from "./modules/admin/manage-salary/salary-list-admin.component";
+import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
 import {ManagePackPricesComponent} from "./modules/admin/manage-pack-prices/manage-pack-prices.component";
 
 // @formatter:off
@@ -116,7 +116,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'teacher-salary',
-                component: SalaryListAdminComponent
+                component: ManageSalaryComponent
             },
             {
                 path: 'manage-pack-prices',

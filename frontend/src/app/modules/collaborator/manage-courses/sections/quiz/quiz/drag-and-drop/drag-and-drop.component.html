@@ -1,0 +1,60 @@
+<div *ngIf="!showError" class="flex flex-col p-4">
+    <div class="flex flex-row p-4 border-2 border-dotted border-gray-100 flex-wrap">
+
+        <input disabled draggable="true"
+               (drag)="drag($event)" *ngFor="let item of listOfWords"
+               [value]="item"
+               class="min-h-10 w-auto p-0 text-center
+        mr-2.5 cursor-move rounded-xl mb-5
+        bg-gray-100 border-2 border-dashed border-gray-300">
+
+    </div>
+
+    <div class=" flex-col drag--box flex-nowrap pt-7 ">
+
+        <ng-container *ngFor="let item of listOfText| keyvalue">
+            <span [innerHTML]="item?.value" class="font-ubuntu"></span>
+
+            <div class="inline-flex flex-col">
+                <span
+                    [id]="'tool-tip-' + item.key.toString()"
+                    class=" hidden drag-and-drop-tooltip">
+                    <span class="true">{{values.get(item.key)}}</span> ,
+                    <span class="false">{{dragAndDropAnswer.get(item.key.toString())}}</span>
+                </span>
+
+                <input name="value"
+                       *ngIf="listOfText.has(item.key+ 1)"
+                       [matTooltip]="values.get(item.key)"
+                       (drop)="drop($event)"
+                       [id]="item.key.toString()"
+                       (dragover)="allowDrop($event)"
+                       class="font-ubuntu border-dotted
+                            text-center mb-2 h-8
+                            focus:border-blue-500 focus:text-blue-800
+                             border border-gray-400 rounded-full mx-2" type="text" matInput>
+            </div>
+
+        </ng-container>
+
+    </div>
+
+    <div
+        [class.opacity-50]="checked"
+        [class.pointer-events-none]="checked"
+        class="flex flex-row-reverse flex-wrap items-center p-4">
+        <!-------show button after user drag all elements ------>
+        <button
+            *ngIf="listOfWords?.length === 0"
+            mat-flat-button
+            (click)="check()"
+            class="ml-2"
+            color="primary">
+            check
+        </button>
+
+    </div>
+</div>
+<div *ngIf="showError" class="w-full  text-center flex-col items-center p-4">
+    can't load question!
+</div>

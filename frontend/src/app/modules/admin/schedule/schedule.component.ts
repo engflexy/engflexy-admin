@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, Input, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CalendarOptions, EventDropArg} from "@fullcalendar/core";
 // @ts-ignore
 import {DateSelectArg, EventApi, EventClickArg, FullCalendarComponent, FullCalendarModule} from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, {DateClickArg} from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import {DatePipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
@@ -13,23 +13,22 @@ import {
 } from "../../../shared/service/collaborator/prof/ScheduleProfCollaborator.service";
 import {AuthService} from "../../../zynerator/security/shared/service/Auth.service";
 import {PopUpInfoComponent} from "./pop-up-info/pop-up-info.component";
-import {MatButtonModule} from "@angular/material/button";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {MatInputModule} from "@angular/material/input";
 import {GroupeEtudiantDto} from "../../../shared/model/grpe/GroupeEtudiant.model";
 import {ProfDto} from "../../../shared/model/prof/Prof.model";
 import {ScheduleProfCreateCollaboratorComponent} from "./create/schedule-prof-create-collaborator.component";
 import {ScheduleProfDto} from "../../../shared/model/prof/ScheduleProf.model";
+import {ProfCollaboratorService} from "../../../shared/service/collaborator/prof/ProfCollaborator.service";
+import {
+    GroupeEtudiantCollaboratorService
+} from "../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
+import {compareObjects} from "../../../shared/constant/global-funsctions";
 
 @Component({
     selector: 'app-calendar',
     styleUrls: ['./schedule.component.scss'],
-    templateUrl: './schedule.component.html',
-    standalone: true,
-    imports: [FullCalendarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule]
+    templateUrl: './schedule.component.html'
 })
-export class ScheduleComponent {
+export class ScheduleComponent implements OnInit {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     schedules: Array<Class> = new Array<Class>();
     @Input()
@@ -66,40 +65,84 @@ export class ScheduleComponent {
         },
         eventClick: this.handleEventClick.bind(this),
         eventReceive: this.handleEventReceive.bind(this), // bind to make `this` refer to the component
-        eventDrop: this.handleEventDrop.bind(this)
+        eventDrop: this.handleEventDrop.bind(this),
+        dateClick: this.handleDateClick.bind(this), // bind to make `this` refer to the component
     };
-
-    private handle_dateSet(start: Date, end: Date) {
-        console.log(this.group)
-        console.log(this.prof)
-        const startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        const endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        const id = this.auth.authenticatedUser?.id
-
-        this.scheduleService.get_schedules_between(startDate, endDate, id, this.group, this.prof)
-            .subscribe(response => {
-                this.schedules = response
-                console.log(response)
-                // @ts-ignore
-                this.calendarOptions.events = this.schedules
-                this.ref.markForCheck()
-            })
-    }
+    profs: Array<ProfDto>;
+    _profs: Array<ProfDto>;
+    groups: Array<GroupeEtudiantDto>;
+    _groups: Array<GroupeEtudiantDto>;
+    private startDate: string;
+    private endDate: string;
 
 
     constructor(private scheduleService: ScheduleProfCollaboratorService,
+                private profService: ProfCollaboratorService,
+                private groupService: GroupeEtudiantCollaboratorService,
                 private ref: ChangeDetectorRef,
                 public dialog: MatDialog,
                 private auth: AuthService,
                 private datePipe: DatePipe) {
     }
 
+    ngOnInit() {
+        this.profService.findAllOptimized().subscribe(res => {
+            this.profs = res
+            this._profs = [...res]
+        });
+        this.groupService.findAllOptimized().subscribe(res => {
+            this.groups = res
+            this._groups = [...res]
+        });
+    }
+
+    get item(): ScheduleProfDto {
+        return this.scheduleService.item;
+    }
+
+    set item(value: ScheduleProfDto) {
+        this.scheduleService.item = value;
+    }
+
+    private handle_dateSet(start: Date, end: Date) {
+        this.startDate = this.datePipe.transform(start, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        this.endDate = this.datePipe.transform(end, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        this.getScheduleBetween();
+    }
+
+    private getScheduleBetween() {
+        const id = this.auth.authenticatedUser?.id
+        this.scheduleService.get_schedules_between(this.startDate, this.endDate, id, this.group, this.prof)
+            .subscribe(response => {
+                this.schedules = response
+                // @ts-ignore
+                this.calendarOptions.events = this.schedules
+                this.ref.markForCheck()
+            })
+    }
+
+    handleDateClick(arg: DateClickArg) {
+        console.log('Date clicked: ', arg.dateStr);
+        this.item.startTime = arg.date
+        this.item.endTime = new Date(arg.date.getTime() + 60 * 60 * 1000); // ajouter une heure
+        this.create()
+    }
+
     handleEventClick(clickInfo: EventClickArg) {
         const id = Number(clickInfo.event.id);
         const classe = this.schedules.filter(s => s.id === id)[0]
-        this.dialog.open(PopUpInfoComponent, {
+        const dialog = this.dialog.open(PopUpInfoComponent, {
             data: classe,
         });
+
+        dialog.afterClosed().subscribe((res: { data: Class, type: string }) => {
+            if (res != null) {
+                if (res.type === 'create')
+                    this.add_class_schedule(res.data);
+                else
+                    this.remove_class_schedule(res.data);
+            }
+        })
     }
 
     handleEventReceive(info) {
@@ -127,6 +170,10 @@ export class ScheduleComponent {
     }
 
     create() {
+        if (this.group && this.group?.id) {
+            this.item.groupeEtudiant = this.group
+            this.item.prof = this.group.prof
+        }
         const dialog = this.dialog.open(ScheduleProfCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",
@@ -143,9 +190,74 @@ export class ScheduleComponent {
                 classe.title = res.cours.libelle;
                 classe.group = res.groupeEtudiant.libelle;
                 classe.teacher = res.prof.fullName;
-                this.schedules.unshift({...classe})
+                this.add_class_schedule(classe);
             }
+            this.item = new ScheduleProfDto()
         })
     }
 
+    private add_class_schedule(classe: Class) {
+        if (classe?.id) {
+            const index = this.schedules.findIndex(s => s.id === classe.id)
+            this.schedules.splice(index, 1);
+        }
+        this.schedules.push({...classe});
+        // @ts-ignore
+        this.calendarOptions.events = [...this.schedules];
+
+        // Refresh the calendar to show the new event
+        const calendarApi = this.calendarComponent.getApi();
+        calendarApi.removeAllEvents(); // Clear all existing events
+        // @ts-ignore
+        calendarApi.addEventSource(this.schedules); // Add updated events
+
+        this.ref.markForCheck();
+    }
+
+    private remove_class_schedule(classe: Class) {
+        if (classe?.id) {
+            const index = this.schedules.findIndex(s => s.id === classe.id)
+            this.schedules.splice(index, 1);
+        }
+        // @ts-ignore
+        this.calendarOptions.events = [...this.schedules];
+
+        // Refresh the calendar to show the new event
+        const calendarApi = this.calendarComponent.getApi();
+        calendarApi.removeAllEvents(); // Clear all existing events
+        // @ts-ignore
+        calendarApi.addEventSource(this.schedules); // Add updated events
+
+        this.ref.markForCheck();
+    }
+
+    filterTeachers(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this.profs = this._profs.filter((s) =>
+                s.fullName?.toLowerCase()?.includes(value) ||
+                s.email?.toLowerCase()?.includes(value)
+            );
+        } else {
+            this.profs = this._profs
+        }
+    }
+
+    filterGroups(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this.groups = this._groups.filter((s) =>
+                s.libelle?.toLowerCase()?.includes(value)
+            );
+        } else {
+            this.groups = this._groups
+        }
+    }
+
+    protected readonly compareObjects = compareObjects;
+
+    findByCriteria() {
+        this.getScheduleBetween();
+
+    }
 }

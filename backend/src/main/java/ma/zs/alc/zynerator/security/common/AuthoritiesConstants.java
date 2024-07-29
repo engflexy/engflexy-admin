@@ -6,6 +6,7 @@ public final class AuthoritiesConstants {
     public static final String TEACHER = "ROLE_TEACHER";
     public static final String COLLABORATOR = "ROLE_COLLABORATOR";
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
+    public static final String MANAGER = "ROLE_MANAGER";
 
     private AuthoritiesConstants() {
     }

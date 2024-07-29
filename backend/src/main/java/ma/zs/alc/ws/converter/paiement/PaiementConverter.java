@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
+import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.bean.core.prof.Prof;
 
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
@@ -40,7 +42,7 @@ public class PaiementConverter extends AbstractConverter<Paiement, PaiementDto> 
             if(StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
             if(StringUtil.isNotEmpty(dto.getDatePaiement()))
-                item.setDatePaiement(DateUtil.stringEnToDate(dto.getDatePaiement()));
+                item.setDatePaiement(DateUtil.stringEnToDate(dto.getDatePaiement(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getProf() != null && dto.getProf().getId() != null){
                 item.setProf(new Prof());
                 item.getProf().setId(dto.getProf().getId());
@@ -86,6 +88,12 @@ public class PaiementConverter extends AbstractConverter<Paiement, PaiementDto> 
 
     public void copy(PaiementDto dto, Paiement t) {
     super.copy(dto, t);
+    if(t.getProf() == null && dto.getProf() != null) {
+        t.setProf(new Prof());
+    }
+    if(t.getGroupeEtudiant() == null && dto.getGroupeEtudiant() != null) {
+        t.setGroupeEtudiant(new GroupeEtudiant());
+    }
     if (dto.getProf() != null)
         profConverter.copy(dto.getProf(), t.getProf());
     if (dto.getGroupeEtudiant() != null)

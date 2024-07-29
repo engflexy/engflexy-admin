@@ -1,28 +1,14 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-
-import {MatButtonModule} from "@angular/material/button";
-import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {MatDialogRef} from "@angular/material/dialog";
+import {DatePipe} from "@angular/common";
 
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
-
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatIconModule} from "@angular/material/icon";
-import {MatTooltipModule} from "@angular/material/tooltip";
 import {Router} from '@angular/router';
 
 
 import {environment} from '../../../../../environments/environment';
 
 import {RoleService} from '../../../../zynerator/security/shared/service/Role.service';
-import {StringUtilService} from '../../../../zynerator/util/StringUtil.service';
-
-import {FormsModule} from "@angular/forms";
-
-import {TranslocoModule} from "@ngneat/transloco";
 
 
 import {
@@ -38,7 +24,6 @@ import {CoursDto} from '../../../../shared/model/course/Cours.model';
 import {CoursCollaboratorService} from '../../../../shared/service/collaborator/course/CoursCollaborator.service';
 import {ProfDto} from '../../../../shared/model/prof/Prof.model';
 import {ProfCollaboratorService} from '../../../../shared/service/collaborator/prof/ProfCollaborator.service';
-import {MatSelectModule} from "@angular/material/select";
 import {compareObjects} from "../../../../zynerator/util/Gloabl";
 import {ParcoursDto} from "../../../../shared/model/course/Parcours.model";
 import {ParcoursCollaboratorService} from "../../../../shared/service/collaborator/course/ParcoursCollaborator.service";
@@ -52,23 +37,7 @@ import {
 
 @Component({
     selector: 'app-schedule-prof-create-collaborator',
-    templateUrl: './schedule-prof-create-collaborator.component.html',
-    imports: [
-        MatButtonModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        NgIf,
-        MatAutocompleteModule,
-        NgForOf,
-        MatIconModule,
-        MatTooltipModule,
-        TranslocoModule,
-        FormsModule,
-        MatCheckboxModule,
-        MatSelectModule
-    ],
-    standalone: true
+    templateUrl: './schedule-prof-create-collaborator.component.html'
 })
 export class ScheduleProfCreateCollaboratorComponent implements OnInit {
 
@@ -79,7 +48,6 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
 
     protected roleService: RoleService;
     protected router: Router;
-    protected stringUtilService: StringUtilService;
     private _activeTab = 0;
 
     _groupeEtudiantsFilter: GroupeEtudiantDto[];
@@ -108,6 +76,11 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        if (this.item?.groupeEtudiant?.parcours?.id) {
+            this.getCoursByParcours()
+        }
+
         this.groupeEtudiantService.findAll().subscribe((data) => {
             this.groupeEtudiants = data;
             this._groupeEtudiantsFilter = {...this.groupeEtudiants}
@@ -235,11 +208,7 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
         this.item.profName = this.item.prof.fullName
         this.service.save().subscribe(item => {
             if (item != null) {
-                this.items.push({...item});
-                this.createDialog = false;
-                this.submitted = false;
-                this.item = new ScheduleProfDto();
-                this.refDialog.close(item);
+                this.refDialog.close(this.item);
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }
@@ -484,8 +453,9 @@ export class ScheduleProfCreateCollaboratorComponent implements OnInit {
     protected readonly compareObjects = compareObjects;
 
 
-    getCoursByParcours() {
-        this.coursService.findByParcoursId(this.item.groupeEtudiant.parcours.id).subscribe(data => {
+    getCoursByParcours(data?) {
+        let id: number = data?.id ? data.id : this.item.groupeEtudiant.parcours.id
+        this.coursService.findByParcoursId(id).subscribe(data => {
             this.courses = data;
             console.log(data)
         })

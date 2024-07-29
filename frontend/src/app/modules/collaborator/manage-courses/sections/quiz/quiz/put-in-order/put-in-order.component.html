@@ -1,0 +1,28 @@
+<div *ngIf="!showError" class="drop-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="drag-element font-ubuntu"
+         [class.correct-put-in-order]="checked && (i +1).toString() === dragAndDropAnswer.get(sentence)"
+         [class.incorrect-put-in-order]="checked && (i +1).toString() !== dragAndDropAnswer.get(sentence)"
+         [matTooltip]="dragAndDropAnswer.get(sentence)"
+         *ngFor="let sentence of listOfWords; let i = index" cdkDrag>
+        {{sentence}}
+        <span *ngIf="checked" class="rounded-full p-3 font-bold text-lg">{{dragAndDropAnswer.get(sentence)}}</span>
+    </div>
+</div>
+<div *ngIf="!showError"
+     [class.opacity-50]="checked"
+     [class.pointer-events-none]="checked"
+     class="flex flex-row-reverse flex-wrap items-center p-4">
+    <!-------show button after user drag all elements ------>
+    <button
+        mat-flat-button
+        (click)="check()"
+        class="ml-2"
+        color="primary">
+        check
+    </button>
+
+</div>
+
+<div *ngIf="showError" class="w-full  text-center flex-col items-center p-4">
+    can't load question!
+</div>

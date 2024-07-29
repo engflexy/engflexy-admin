@@ -3,16 +3,18 @@ import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 export class TypeCollaboratorDto extends BaseDto{
 
+    public id:number;
     public libelle: string;
 
     public code: string;
 
 
 
-    constructor() {
+    constructor(id?:number,lib?:string) {
         super();
 
-        this.libelle = '';
+        this.id=id;
+        this.libelle = lib;
         this.code = '';
 
         }

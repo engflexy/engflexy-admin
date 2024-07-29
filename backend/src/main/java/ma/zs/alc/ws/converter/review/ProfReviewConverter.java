@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.ws.converter.course.CoursConverter;
+import ma.zs.alc.bean.core.course.Cours;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.bean.core.prof.Prof;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.prof.Prof;
@@ -49,7 +52,7 @@ public class ProfReviewConverter extends AbstractConverter<ProfReview, ProfRevie
             if(StringUtil.isNotEmpty(dto.getComment()))
                 item.setComment(dto.getComment());
             if(StringUtil.isNotEmpty(dto.getDateReview()))
-                item.setDateReview(DateUtil.stringEnToDate(dto.getDateReview()));
+                item.setDateReview(DateUtil.stringEnToDate(dto.getDateReview(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
@@ -109,6 +112,15 @@ public class ProfReviewConverter extends AbstractConverter<ProfReview, ProfRevie
 
     public void copy(ProfReviewDto dto, ProfReview t) {
     super.copy(dto, t);
+    if(t.getEtudiant() == null && dto.getEtudiant() != null) {
+        t.setEtudiant(new Etudiant());
+    }
+    if(t.getProf() == null && dto.getProf() != null) {
+        t.setProf(new Prof());
+    }
+    if(t.getCours() == null && dto.getCours() != null) {
+        t.setCours(new Cours());
+    }
     if (dto.getEtudiant() != null)
         etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
     if (dto.getProf() != null)

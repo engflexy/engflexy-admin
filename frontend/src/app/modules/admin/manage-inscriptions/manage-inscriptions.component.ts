@@ -70,6 +70,7 @@ export class ManageInscriptionsComponent implements OnInit {
     }
 
     create() {
+        this.item = new InscriptionDto();
         const dialog = this._matDialog.open(InscriptionCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",
@@ -143,5 +144,14 @@ export class ManageInscriptionsComponent implements OnInit {
             }
         })
     }
+
+    get item(): InscriptionDto {
+        return this.service.item;
+    }
+
+    set item(value: InscriptionDto) {
+        this.service.item = value;
+    }
+
 }
 

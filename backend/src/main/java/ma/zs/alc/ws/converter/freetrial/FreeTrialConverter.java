@@ -5,15 +5,25 @@ import org.springframework.stereotype.Component;
 import ma.zs.alc.zynerator.util.ListUtil;
 
 import ma.zs.alc.ws.converter.freetrial.FreeTrialTeacherEmailTemplateConverter;
+import ma.zs.alc.bean.core.freetrial.FreeTrialTeacherEmailTemplate;
 import ma.zs.alc.ws.converter.freetrial.FreeTrialTeacherWhatsTemplateConverter;
+import ma.zs.alc.bean.core.freetrial.FreeTrialTeacherWhatsTemplate;
 import ma.zs.alc.ws.converter.freetrial.StatutFreeTrialConverter;
+import ma.zs.alc.bean.core.freetrial.StatutFreeTrial;
 import ma.zs.alc.ws.converter.freetrial.FreeTrialConfigurationConverter;
+import ma.zs.alc.bean.core.freetrial.FreeTrialConfiguration;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.ws.converter.freetrial.FreeTrialStudentEmailTemplateConverter;
+import ma.zs.alc.bean.core.freetrial.FreeTrialStudentEmailTemplate;
 import ma.zs.alc.ws.converter.freetrial.FreeTrialDetailConverter;
+import ma.zs.alc.bean.core.freetrial.FreeTrialDetail;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.ws.converter.inscriptionref.NiveauEtudeConverter;
+import ma.zs.alc.bean.core.inscriptionref.NiveauEtude;
 import ma.zs.alc.ws.converter.freetrial.FreeTrialStudentWhatsTemplateConverter;
+import ma.zs.alc.bean.core.freetrial.FreeTrialStudentWhatsTemplate;
 
 import ma.zs.alc.bean.core.prof.Prof;
 
@@ -73,21 +83,21 @@ public class FreeTrialConverter extends AbstractConverter<FreeTrial, FreeTrialDt
             if(StringUtil.isNotEmpty(dto.getReference()))
                 item.setReference(dto.getReference());
             if(StringUtil.isNotEmpty(dto.getDateFreeTrial()))
-                item.setDateFreeTrial(DateUtil.stringEnToDate(dto.getDateFreeTrial()));
+                item.setDateFreeTrial(DateUtil.stringEnToDate(dto.getDateFreeTrial(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getLink()))
                 item.setLink(dto.getLink());
             if(dto.getEmailTeacherSent() != null)
                 item.setEmailTeacherSent(dto.getEmailTeacherSent());
             if(StringUtil.isNotEmpty(dto.getEmailTeacherSendingDate()))
-                item.setEmailTeacherSendingDate(DateUtil.stringEnToDate(dto.getEmailTeacherSendingDate()));
+                item.setEmailTeacherSendingDate(DateUtil.stringEnToDate(dto.getEmailTeacherSendingDate(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getWhatsTeacherSent() != null)
                 item.setWhatsTeacherSent(dto.getWhatsTeacherSent());
             if(StringUtil.isNotEmpty(dto.getWhatsTeacherSendingDate()))
-                item.setWhatsTeacherSendingDate(DateUtil.stringEnToDate(dto.getWhatsTeacherSendingDate()));
+                item.setWhatsTeacherSendingDate(DateUtil.stringEnToDate(dto.getWhatsTeacherSendingDate(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateFreeTrialPremierRappel()))
-                item.setDateFreeTrialPremierRappel(DateUtil.stringEnToDate(dto.getDateFreeTrialPremierRappel()));
+                item.setDateFreeTrialPremierRappel(DateUtil.stringEnToDate(dto.getDateFreeTrialPremierRappel(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateFreeTrialPremierDeuxiemeRappel()))
-                item.setDateFreeTrialPremierDeuxiemeRappel(DateUtil.stringEnToDate(dto.getDateFreeTrialPremierDeuxiemeRappel()));
+                item.setDateFreeTrialPremierDeuxiemeRappel(DateUtil.stringEnToDate(dto.getDateFreeTrialPremierDeuxiemeRappel(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getNombreStudentTotal()))
                 item.setNombreStudentTotal(dto.getNombreStudentTotal());
             if(StringUtil.isNotEmpty(dto.getNombreStudentAbonne()))
@@ -207,6 +217,30 @@ public class FreeTrialConverter extends AbstractConverter<FreeTrial, FreeTrialDt
 
     public void copy(FreeTrialDto dto, FreeTrial t) {
     super.copy(dto, t);
+    if(t.getProf() == null && dto.getProf() != null) {
+        t.setProf(new Prof());
+    }
+    if(t.getNiveauEtude() == null && dto.getNiveauEtude() != null) {
+        t.setNiveauEtude(new NiveauEtude());
+    }
+    if(t.getFreeTrialStudentWhatsTemplate() == null && dto.getFreeTrialStudentWhatsTemplate() != null) {
+        t.setFreeTrialStudentWhatsTemplate(new FreeTrialStudentWhatsTemplate());
+    }
+    if(t.getFreeTrialStudentEmailTemplate() == null && dto.getFreeTrialStudentEmailTemplate() != null) {
+        t.setFreeTrialStudentEmailTemplate(new FreeTrialStudentEmailTemplate());
+    }
+    if(t.getFreeTrialTeacherEmailTemplate() == null && dto.getFreeTrialTeacherEmailTemplate() != null) {
+        t.setFreeTrialTeacherEmailTemplate(new FreeTrialTeacherEmailTemplate());
+    }
+    if(t.getFreeTrialTeacherWhatsTemplate() == null && dto.getFreeTrialTeacherWhatsTemplate() != null) {
+        t.setFreeTrialTeacherWhatsTemplate(new FreeTrialTeacherWhatsTemplate());
+    }
+    if(t.getFreeTrialConfiguration() == null && dto.getFreeTrialConfiguration() != null) {
+        t.setFreeTrialConfiguration(new FreeTrialConfiguration());
+    }
+    if(t.getStatutFreeTrial() == null && dto.getStatutFreeTrial() != null) {
+        t.setStatutFreeTrial(new StatutFreeTrial());
+    }
     if (dto.getProf() != null)
         profConverter.copy(dto.getProf(), t.getProf());
     if (dto.getNiveauEtude() != null)

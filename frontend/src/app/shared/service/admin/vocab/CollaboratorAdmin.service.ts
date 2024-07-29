@@ -8,8 +8,8 @@ import {CollaboratorCriteria} from '../../../criteria/vocab/CollaboratorCriteria
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
 import {Observable} from "rxjs";
-import {UserCriteria} from "../../../../core/criteria/user-criteria";
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ProfDto} from "../../../model/prof/Prof.model";
 
 
@@ -34,8 +34,8 @@ export class CollaboratorAdminService extends AbstractService<CollaboratorDto, C
         return new CollaboratorCriteria();
     }
 
-    findAllByCriteria(pageable: Pageable): Observable<Criteria<UserCriteria>> {
-        return this.http.get<Criteria<UserCriteria>>(this.API + `pageable`,
+    findAllByCriteria(pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+        return this.http.get<PageRequest<ManageUserDto>>(this.API + `pageable`,
             {
                 params: {
                     'page': pageable.page,

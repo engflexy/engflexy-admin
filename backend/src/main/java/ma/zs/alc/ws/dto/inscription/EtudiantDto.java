@@ -8,7 +8,7 @@ import ma.zs.alc.ws.dto.grpe.InscriptionDto;
 import ma.zs.alc.ws.dto.inscriptionref.*;
 import ma.zs.alc.ws.dto.pack.PackStudentDto;
 import ma.zs.alc.ws.dto.quizetudiant.QuizEtudiantDto;
-import ma.zs.alc.ws.dto.vocab.CollaboratorDto;
+import ma.zs.alc.ws.dto.collab.CollaboratorDto;
 import ma.zs.alc.zynerator.audit.Log;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.ws.dto.UserDto;

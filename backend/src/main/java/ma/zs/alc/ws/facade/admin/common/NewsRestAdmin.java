@@ -1,38 +1,24 @@
-package  ma.zs.alc.ws.facade.admin.common;
+package ma.zs.alc.ws.facade.admin.common;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import ma.zs.alc.bean.core.common.News;
 import ma.zs.alc.dao.criteria.core.common.NewsCriteria;
 import ma.zs.alc.service.facade.admin.common.NewsAdminService;
 import ma.zs.alc.ws.converter.common.NewsConverter;
 import ma.zs.alc.ws.dto.common.NewsDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
+import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
-
-
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
-
-
-import org.springframework.web.multipart.MultipartFile;
-import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/admin/news/")
-public class NewsRestAdmin  extends AbstractController<News, NewsDto, NewsCriteria, NewsAdminService, NewsConverter> {
-
+public class NewsRestAdmin extends AbstractController<News, NewsDto, NewsCriteria, NewsAdminService, NewsConverter> {
 
 
     @Operation(summary = "upload one news")
@@ -40,6 +26,7 @@ public class NewsRestAdmin  extends AbstractController<News, NewsDto, NewsCriter
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple newss")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -81,10 +68,11 @@ public class NewsRestAdmin  extends AbstractController<News, NewsDto, NewsCriter
     public ResponseEntity<List<NewsDto>> delete(@RequestBody List<NewsDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified news")
     @DeleteMapping("")
     public ResponseEntity<NewsDto> delete(@RequestBody NewsDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified news")
@@ -92,21 +80,23 @@ public class NewsRestAdmin  extends AbstractController<News, NewsDto, NewsCriter
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple newss by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "find by collaborator id")
     @GetMapping("collaborator/id/{id}")
-    public List<NewsDto> findByCollaboratorId(@PathVariable Long id){
+    public List<NewsDto> findByCollaboratorId(@PathVariable Long id) {
         return findDtos(service.findByCollaboratorId(id));
     }
+
     @Operation(summary = "delete by collaborator id")
     @DeleteMapping("collaborator/id/{id}")
-    public int deleteByCollaboratorId(@PathVariable Long id){
+    public int deleteByCollaboratorId(@PathVariable Long id) {
         return service.deleteByCollaboratorId(id);
     }
 
@@ -141,12 +131,9 @@ public class NewsRestAdmin  extends AbstractController<News, NewsDto, NewsCriter
     }
 
 
-
-    public NewsRestAdmin (NewsAdminService service, NewsConverter converter) {
+    public NewsRestAdmin(NewsAdminService service, NewsConverter converter) {
         super(service, converter);
     }
-
-
 
 
 }

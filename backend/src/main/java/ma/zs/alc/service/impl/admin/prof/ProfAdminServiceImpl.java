@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ma.zs.alc.service.facade.admin.vocab.CollaboratorAdminService ;
+import ma.zs.alc.service.facade.admin.collab.CollaboratorAdminService;
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService ;
 import ma.zs.alc.service.facade.admin.prof.TypeTeacherAdminService ;
 import ma.zs.alc.service.facade.admin.recomrecla.RecommendTeacherAdminService ;

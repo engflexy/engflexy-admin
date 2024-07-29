@@ -1,0 +1,192 @@
+<mat-dialog-content class="mat-typography  overflow-x-hidden">
+
+
+    <div class="w-full items-center flex flex-col gap-4">
+
+        <ng-container *ngIf="_data?.type === ContentType?.CONTENT">
+            <div class="w-full flex  md:w-[70vw]  flex-col gap-4 items-center justify-start content-center">
+                <ng-container *ngIf="exercise?.id">
+                    <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                        <mat-label>Order</mat-label>
+                        <input type="number"
+                               matInput
+                               [placeholder]="'numero'"
+                               [(ngModel)]="exercise.numero"
+                               name="numero">
+                    </mat-form-field>
+                </ng-container>
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Title</mat-label>
+                    <textarea
+                        matInput
+                        [placeholder]="'Title'"
+                        [(ngModel)]="exercise.libelle"
+                        name="libelle"
+                        cdkTextareaAutosize></textarea>
+                </mat-form-field>
+
+
+                <angular-editor [(ngModel)]="exercise.content" name="content"
+                                [config]="editorConfig"></angular-editor>
+
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="_data?.type === ContentType?.VIDEO">
+            <div class="w-full md:w-[70vw] flex  flex-col gap-4 items-center justify-start content-center">
+                <ng-container *ngIf="exercise?.id">
+                    <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                        <mat-label>Order</mat-label>
+                        <input type="number"
+                               matInput
+                               [placeholder]="'numero'"
+                               [(ngModel)]="exercise.numero"
+                               name="numero">
+                    </mat-form-field>
+                </ng-container>
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Title</mat-label>
+                    <textarea
+                        matInput
+                        [placeholder]="'Title'"
+                        [(ngModel)]="exercise.libelle"
+                        name="libelle"
+                        cdkTextareaAutosize></textarea>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Video url</mat-label>
+                    <textarea
+                        matInput
+                        [placeholder]="'Ex: https://www.youtube.com/watch?v=gA4RCQhQeCo'"
+                        [(ngModel)]="exercise.content"
+                        name="content"
+                        cdkTextareaAutosize></textarea>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Description</mat-label>
+                    <textarea
+                        matInput
+                        [placeholder]="'add description..'"
+                        [(ngModel)]="exercise.description"
+                        name="description"
+                        cdkTextareaAutosize></textarea>
+                </mat-form-field>
+            </div>
+        </ng-container>
+
+
+        <ng-container *ngIf="_data?.type === ContentType?.IMAGE">
+            <ng-container *ngIf="exercise?.id">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Order</mat-label>
+                    <input type="number"
+                           matInput
+                           [placeholder]="'numero'"
+                           [(ngModel)]="exercise.numero"
+                           name="numero">
+                </mat-form-field>
+            </ng-container>
+            <div class="w-full md:w-[70vw] flex  flex-col gap-4 items-center justify-start content-center">
+                <label for="uploadFile1"
+                       class="bg-white text-gray-500 font-semibold text-base rounded max-w-lg
+                        h-30 flex flex-col px-4 items-center justify-center cursor-pointer border-2
+                        border-gray-300 border-dashed mx-auto font-[sans-serif]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-11 mb-2 fill-gray-500" viewBox="0 0 32 32">
+                        <path
+                            d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
+                            data-original="#000000"/>
+                        <path
+                            d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
+                            data-original="#000000"/>
+                    </svg>
+                    Upload file
+
+                    <input (change)="onFileSelected($event)" accept="image/**" type="file" id='uploadFile1'
+                           class="hidden"/>
+                    <p class="text-xs font-medium text-gray-400 mt-2">PNG, JPG SVG, WEBP, and GIF are Allowed.</p>
+                </label>
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Exercise instruction</mat-label>
+                    <textarea
+                        matInput
+                        [placeholder]="'Exercise instruction'"
+                        [(ngModel)]="exercise.libelle"
+                        name="libelle"
+                        cdkTextareaAutosize></textarea>
+                </mat-form-field>
+            </div>
+            <div class="font-[sans-serif]">
+                <div class="p-4 mx-auto lg:max-w-6xl max-w-xl md:max-w-full">
+                    <ng-container *ngIf="imagesList?.length > 0">
+                        <span class="relative flex justify-center">
+                            <div
+                                class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"></div>
+                            <span
+                                class="relative ubuntu-medium z-10 bg-white dark:bg-gray-700 px-6">Uploaded images</span>
+                        </span>
+                        <div class="grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                            <ng-container *ngFor="let item of imagesList ; index as i">
+                                <div
+                                    class="bg-gray-100 rounded-2xl p-6 cursor-pointer  transition-all relative">
+                                    <div
+                                        class="bg-gray-200 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer absolute top-4 right-4">
+                                        <mat-icon (click)="removeImage(item,i)" class="icon-size-4"
+                                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                                    </div>
+
+                                    <div class="w-full h-[220px] overflow-hidden mx-auto aspect-w-16 aspect-h-8">
+                                        <img src="{{item?.url}}" alt="Product 1"
+                                             class="h-full w-full rounded-md bg-cover object-cover"/>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                        <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                                        <textarea
+                                            matInput
+                                            [placeholder]="'Legend'"
+                                            [(ngModel)]="item.desc"
+                                            name="desc"
+                                            cdkTextareaAutosize></textarea>
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+                            </ng-container>
+
+
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+
+        </ng-container>
+
+
+        <div class="w-full max-w-5xl" *ngIf="_data?.type === ContentType?.QUIZ">
+            <app-create-quiz [type]="_data.quizType"></app-create-quiz>
+        </div>
+
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-dialog-close mat-button>
+        Cancel
+    </button>
+    <button
+        class="px-6 ml-3"
+        (click)="save()"
+        mat-flat-button
+        [color]="'primary'">
+        Create
+    </button>
+
+</mat-dialog-actions>

@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {FormsModule, NgForm} from "@angular/forms";
-import {UserCriteria} from "../../../../core/criteria/user-criteria";
+import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {ParcoursDto} from "../../../../shared/model/course/Parcours.model";
 import {EtatInscriptionDto} from "../../../../shared/model/inscriptionref/EtatInscription.model";
 import {GroupeEtudeDto} from "../../../../shared/model/grpe/GroupeEtude.model";
@@ -51,7 +51,7 @@ import {NgForOf, NgIf} from "@angular/common";
 })
 export class EditInscriptionComponent {
     @ViewChild('ngForm') ngForm: NgForm;
-    _students: UserCriteria[]
+    _students: ManageUserDto[]
     _materials: ParcoursDto[]
     _etats: EtatInscriptionDto[]
     _groupeEtudes: GroupeEtudeDto[]
@@ -78,7 +78,7 @@ export class EditInscriptionComponent {
         this.service.item = value;
     }
 
-    get students(): Array<UserCriteria> {
+    get students(): Array<ManageUserDto> {
         return this.etudiantService.students;
     }
 
@@ -175,7 +175,7 @@ export class EditInscriptionComponent {
 
     }
 
-    handleNgModelChange(event: UserCriteria) {
+    handleNgModelChange(event: ManageUserDto) {
         const student = new EtudiantDto()
         student.id = event.id
         student.fullName = event.fullName

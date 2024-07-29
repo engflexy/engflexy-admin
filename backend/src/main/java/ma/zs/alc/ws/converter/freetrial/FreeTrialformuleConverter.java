@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.grpe.InscriptionConverter;
+import ma.zs.alc.bean.core.grpe.Inscription;
 
 
 
@@ -48,7 +49,7 @@ public class FreeTrialformuleConverter extends AbstractConverter<FreeTrialformul
             if(dto.getStatus() != null)
                 item.setStatus(dto.getStatus());
             if(StringUtil.isNotEmpty(dto.getDateConfirmation()))
-                item.setDateConfirmation(DateUtil.stringEnToDate(dto.getDateConfirmation()));
+                item.setDateConfirmation(DateUtil.stringEnToDate(dto.getDateConfirmation(),DateUtil.DATE_FORMAT_ENG));
             if(this.inscription && dto.getInscription()!=null)
                 item.setInscription(inscriptionConverter.toItem(dto.getInscription())) ;
 
@@ -94,6 +95,9 @@ public class FreeTrialformuleConverter extends AbstractConverter<FreeTrialformul
 
     public void copy(FreeTrialformuleDto dto, FreeTrialformule t) {
     super.copy(dto, t);
+    if(t.getInscription() == null && dto.getInscription() != null) {
+        t.setInscription(new Inscription());
+    }
     if (dto.getInscription() != null)
         inscriptionConverter.copy(dto.getInscription(), t.getInscription());
     }

@@ -8,15 +8,15 @@ import {EtudiantCriteria} from '../../../criteria/inscription/EtudiantCriteria.m
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
 import {Observable, tap} from "rxjs";
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
-import {UserCriteria} from "../../../../core/criteria/user-criteria";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, EtudiantCriteria> {
-    private _students: Array<UserCriteria> = new Array<UserCriteria>();
+    private _students: Array<ManageUserDto> = new Array<ManageUserDto>();
 
 
     constructor(private http: HttpClient) {
@@ -25,11 +25,11 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     }
 
 
-    get students(): Array<UserCriteria> {
+    get students(): Array<ManageUserDto> {
         return this._students;
     }
 
-    set students(value: Array<UserCriteria>) {
+    set students(value: Array<ManageUserDto>) {
         this._students = value;
     }
 
@@ -45,8 +45,8 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
         return new EtudiantCriteria();
     }
 
-    findAllByCollaboratorId(id: number): Observable<Array<UserCriteria>> {
-        return this.http.get<Array<UserCriteria>>(this.API + `collaborator/id/${id}`)
+    findAllByCollaboratorId(id: number): Observable<Array<ManageUserDto>> {
+        return this.http.get<Array<ManageUserDto>>(this.API + `collaborator/id/${id}`)
             .pipe(
                 tap((response) => {
                     this._students = response
@@ -54,8 +54,8 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
             );
     }
 
-    findByCollaboratorId(id: number, pageable: Pageable): Observable<Criteria<UserCriteria>> {
-        return this.http.get<Criteria<UserCriteria>>(this.API + `pageable/collaborator/id/${id}`,
+    findByCollaboratorId(id: number, pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+        return this.http.get<PageRequest<ManageUserDto>>(this.API + `pageable/collaborator/id/${id}`,
             {
                 params: {
                     'page': pageable.page,

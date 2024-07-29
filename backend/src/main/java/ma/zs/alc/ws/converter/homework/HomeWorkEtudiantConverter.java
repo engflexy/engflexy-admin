@@ -5,10 +5,15 @@ import org.springframework.stereotype.Component;
 import ma.zs.alc.zynerator.util.ListUtil;
 
 import ma.zs.alc.ws.converter.homework.HoweWorkQSTReponseConverter;
+import ma.zs.alc.bean.core.homework.HoweWorkQSTReponse;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.ws.converter.homework.ReponseEtudiantHomeWorkConverter;
+import ma.zs.alc.bean.core.homework.ReponseEtudiantHomeWork;
 import ma.zs.alc.ws.converter.homework.HomeWorkQuestionConverter;
+import ma.zs.alc.bean.core.homework.HomeWorkQuestion;
 import ma.zs.alc.ws.converter.homework.HomeWorkConverter;
+import ma.zs.alc.bean.core.homework.HomeWork;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.homework.HomeWork;
@@ -55,7 +60,7 @@ public class HomeWorkEtudiantConverter extends AbstractConverter<HomeWorkEtudian
             if(StringUtil.isNotEmpty(dto.getResultat()))
                 item.setResultat(dto.getResultat());
             if(StringUtil.isNotEmpty(dto.getDateHomeWork()))
-                item.setDateHomeWork(DateUtil.stringEnToDate(dto.getDateHomeWork()));
+                item.setDateHomeWork(DateUtil.stringEnToDate(dto.getDateHomeWork(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
@@ -114,6 +119,12 @@ public class HomeWorkEtudiantConverter extends AbstractConverter<HomeWorkEtudian
 
     public void copy(HomeWorkEtudiantDto dto, HomeWorkEtudiant t) {
     super.copy(dto, t);
+    if(t.getEtudiant() == null && dto.getEtudiant() != null) {
+        t.setEtudiant(new Etudiant());
+    }
+    if(t.getHomeWork() == null && dto.getHomeWork() != null) {
+        t.setHomeWork(new HomeWork());
+    }
     if (dto.getEtudiant() != null)
         etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
     if (dto.getHomeWork() != null)

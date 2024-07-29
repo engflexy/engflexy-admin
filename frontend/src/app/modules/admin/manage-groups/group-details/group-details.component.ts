@@ -13,9 +13,9 @@ import {GroupeEtudiantDto} from "../../../../shared/model/grpe/GroupeEtudiant.mo
 import {
     GroupeEtudiantCollaboratorService
 } from "../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
-import {ScheduleComponent} from "../../schedule/schedule.component";
 import {MatButtonModule} from "@angular/material/button";
 import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ScheduleModule} from "../../schedule/schedule.module";
 
 @Component({
     selector: 'app-group-details',
@@ -26,9 +26,9 @@ import {ActivatedRoute, RouterLink} from "@angular/router";
         NgIf,
         MatDialogModule,
         TranslocoModule,
-        ScheduleComponent,
         MatButtonModule,
-        RouterLink
+        RouterLink,
+        ScheduleModule
     ],
     standalone: true
 })

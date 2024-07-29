@@ -1,0 +1,464 @@
+<div class="w-full flex flex-col gap-3 items-center">
+    <div *ngIf="quiz?.questions?.length > 0" class="w-full flex content-center justify-center">
+        <button mat-stroked-button (click)="showSimulation=!showSimulation"
+                color="primary">
+            <span class="ubuntu-medium">SIMULATION</span>
+            <mat-icon class="mr-2 icon-size-4" svgIcon="heroicons_mini:arrow-path-rounded-square"></mat-icon>
+        </button>
+    </div>
+
+    <ng-container *ngIf="showSimulation">
+        <div class="w-full max-w-5xl">
+            <app-quiz [selectedQuiz]="quiz"></app-quiz>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!showSimulation">
+        <div class="w-full flex flex-col items-center md:w-2/4">
+            <mat-form-field
+                class="flex-auto cursor-pointer w-full flex-grow fuse-mat-dense">
+                <mat-label>Type of exercise</mat-label>
+                <mat-select disabled [(ngModel)]="question.typeDeQuestion" [compareWith]="compareObjects">
+                    <mat-option *ngFor="let item of types" [value]="item">
+                        {{item.lib}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <ng-container *ngIf="exercise?.id">
+                <mat-form-field class="flex-auto cursor-pointer w-full flex-grow fuse-mat-dense">
+                    <mat-label>Order</mat-label>
+                    <input type="number"
+                           matInput
+                           [placeholder]="'numero'"
+                           [(ngModel)]="exercise.numero"
+                           name="numero">
+                </mat-form-field>
+            </ng-container>
+        </div>
+
+
+        <ng-container *ngIf="question?.libelle?.length > 2">
+            <div class="w-full flex items-center justify-center">
+                <a
+                    (click)="saveQuestion()"
+                    class="inline-block cursor-pointer rounded border border-primary-600 px-12 py-3 text-sm font-medium
+                text-primary-600 hover:bg-primary-600 hover:text-white focus:outline-none focus:ring
+                active:bg-primary-500">
+                    Save question
+                </a>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="question?.typeDeQuestion?.ref === TYPE_QUESTION.TRUE_OR_FALSE">
+
+            <div
+                class="w-full flex flex-row  bg-gray-100 dark:bg-gray-700 p-2 gap-2
+                 rounded-md items-center justify-between">
+                <div class="flex items-center">
+                    <mat-form-field class="flex-auto  fuse-mat-dense">
+                        <mat-label [class.text-red-600]="answerFieldRequired">answer</mat-label>
+                        <mat-select required [(ngModel)]="answer.lib" (ngModelChange)="answerFieldRequired=false"
+                                    name="lib">
+                            <mat-option [value]="'true'">True</mat-option>
+                            <mat-option [value]="'false'">False</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field class="flex-auto w-full flex-grow fuse-mat-dense">
+                    <mat-label>sentence</mat-label>
+                    <textarea required
+                              matInput
+                              [placeholder]="'Sentence'"
+                              [(ngModel)]="question.libelle"
+                              name="libelle"
+                              cdkTextareaAutosize></textarea>
+                </mat-form-field>
+            </div>
+
+            <ng-container *ngIf="quiz?.questions?.length > 0">
+                <div class="w-full">
+                    <section class="container px-4 mx-auto">
+                        <h2 class="text-lg font-medium text-gray-800 dark:text-white">List of questions</h2>
+
+                        <div class="flex flex-col mt-6">
+                            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                    <div
+                                        class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+
+                                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                            <thead class="bg-gray-50 dark:bg-gray-800">
+                                            <tr>
+
+                                                <th scope="col"
+                                                    class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    N°
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    Sentence
+                                                </th>
+
+                                                <th scope="col"
+                                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    Answer
+                                                </th>
+
+                                                <th scope="col" class="relative py-3.5 px-4">
+                                                    <span class="sr-only">Edit</span>
+                                                </th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody
+                                                class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                            <tr *ngFor="let qst of quiz.questions; index as i">
+                                                <td class="px-4 py-4 ubuntu-regular whitespace-nowrap">
+                                                    <ng-container *ngIf="editQstField!==i">
+                                                        {{qst?.numero}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="editQstField===i">
+                                                        <mat-form-field
+                                                            class="flex-auto w-full col-span-4 flex-grow fuse-mat-dense">
+                                                            <input type="number"
+                                                                   (focusout)="editQstField=-1"
+                                                                   matInput
+                                                                   [(ngModel)]="qst.numero"
+                                                                   name="numero">
+                                                        </mat-form-field>
+                                                    </ng-container>
+                                                </td>
+
+                                                <td class="px-12 py-4 text-sm font-medium ubuntu-medium whitespace-nowrap">
+                                                    <ng-container *ngIf="editQstField!==i">
+                                                        {{qst?.libelle}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="editQstField===i">
+                                                        <mat-form-field
+                                                            class="flex-auto w-full col-span-4 flex-grow fuse-mat-dense">
+                                                            <input
+                                                                (focusout)="editQstField=-1"
+                                                                matInput
+                                                                [(ngModel)]="qst.libelle"
+                                                                name="libelle">
+                                                        </mat-form-field>
+                                                    </ng-container>
+                                                </td>
+
+                                                <td class="px-4 py-4 text-sm ubuntu-medium whitespace-nowrap">
+                                                    <ng-container *ngIf="editQstField!==i">
+                                                        {{qst?.reponses?.at(0)?.lib}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="editQstField === i">
+                                                        <mat-form-field class="flex-auto  fuse-mat-dense">
+                                                            <mat-select (ngModelChange)="editQstField=-1"
+                                                                        [(ngModel)]="qst.reponses.at(0).lib"
+                                                                        name="lib">
+                                                                <mat-option [value]="'true'">True</mat-option>
+                                                                <mat-option [value]="'false'">False</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </ng-container>
+                                                </td>
+
+
+                                                <td class="px-4 py-4 flex flex-row flex-wrap gap-2 items-center text-sm whitespace-nowrap">
+                                                    <button (click)="editQstField = i" mat-icon-button color="primary">
+                                                        <mat-icon class="icon-size-4"
+                                                                  svgIcon="heroicons_solid:pencil"></mat-icon>
+                                                    </button>
+                                                    <button (click)="deleteQst(i,qst)" mat-icon-button color="warn">
+                                                        <mat-icon class="icon-size-4"
+                                                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </ng-container>
+
+        </ng-container>
+
+        <ng-container *ngIf="question?.typeDeQuestion?.ref === TYPE_QUESTION.CORRECT_THE_MISTAKE ||
+                        question?.typeDeQuestion?.ref === TYPE_QUESTION.WRITE_THE_CORRECT_FORM ||
+                        question?.typeDeQuestion?.ref === TYPE_QUESTION.CHOOSE_THE_CORRECT_ALTERNATIVE">
+
+            <div
+                class="grid w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-md  grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+
+                <div>
+                    <mat-form-field class="flex-auto w-full col-span-4 flex-grow fuse-mat-dense">
+                        <mat-label>question number</mat-label>
+                        <input type="number"
+                               matInput
+                               [(ngModel)]="question.numero"
+                               name="numero">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="flex-auto w-full col-span-4 flex-grow fuse-mat-dense">
+                        <mat-label>correct answer point</mat-label>
+                        <input type="number"
+                               matInput
+                               [(ngModel)]="question.pointReponseJuste"
+                               name="numero">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="flex-auto w-full col-span-4 flex-grow fuse-mat-dense">
+                        <mat-label>wrong answer point</mat-label>
+                        <input type="number"
+                               matInput
+                               [(ngModel)]="question.pointReponsefausse"
+                               name="numero">
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field class="flex-auto w-full col-span-3 flex-grow fuse-mat-dense">
+                    <mat-label>Sentence</mat-label>
+                    <textarea
+                        matInput
+                        [placeholder]="getPlaceHolder()"
+                        [(ngModel)]="question.libelle"
+                        name="libelle"
+                        cdkTextareaAutosize></textarea>
+                    <mat-hint>{{getPlaceHolder()}}</mat-hint>
+                </mat-form-field>
+
+                <div class="col-span-3">
+                    <app-divider color="gray-100" text="Answers"></app-divider>
+                </div>
+
+
+                <mat-form-field class="flex-auto w-full col-span-2 flex-grow fuse-mat-dense">
+                    <mat-label>answer</mat-label>
+                    <textarea
+                        matInput
+                        [placeholder]="'put your answer here..'"
+                        [(ngModel)]="answer.lib"
+                        name="libelle"
+                        cdkTextareaAutosize></textarea>
+                </mat-form-field>
+
+                <div class="flex flex-row flex-wrap gap-1 justify-between items-center">
+                    <label class="relative cursor-pointer">
+                        <input [(ngModel)]="answer.etatReponse" type="checkbox" class="sr-only peer"/>
+                        <div
+                            class="w-[53px] h-7 flex items-center bg-red-300 peer-checked:bg-green-300 rounded-full text-[9px]
+                        peer-checked:text-[#007bff] text-gray-300 font-extrabold after:flex
+                        after:items-center after:justify-center peer after:content-['False']
+                         peer-checked:after:content-['True'] peer-checked:after:translate-x-full
+                         after:absolute
+                         after:bg-red-200 peer-checked:after:bg-green-200
+                          after:text-red-700 peer-checked:after:text-green-700 after:border
+                           after:border-red-500 peer-checked:after:border-green-500 after:rounded-full
+                          after:h-8 after:w-8 after:transition-all">
+                        </div>
+                    </label>
+
+                    <button mat-stroked-button (click)="addAnswer()" color="primary">add</button>
+                </div>
+
+                <ng-container *ngIf="question?.reponses?.length > 0">
+                    <div class="col-span-3">
+                        <section class="container px-4 mx-auto">
+                            <h2 class="text-lg font-medium text-gray-800 dark:text-white">List of answers</h2>
+
+                            <div class="flex flex-col mt-6">
+                                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                        <div
+                                            class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+
+                                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                <thead class="bg-gray-50 dark:bg-gray-800">
+                                                <tr>
+
+                                                    <th scope="col"
+                                                        class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                        N°
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                        Answer
+                                                    </th>
+
+                                                    <th scope="col"
+                                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                        State of Answer
+                                                    </th>
+
+                                                    <th scope="col" class="relative py-3.5 px-4">
+                                                        <span class="sr-only">Edit</span>
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody
+                                                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                                <tr *ngFor="let rps of question.reponses; index as i">
+                                                    <td class="px-4 py-4 ubuntu-regular whitespace-nowrap">
+                                                        {{rps.numero}}
+                                                    </td>
+
+                                                    <td class="px-12 py-4 text-sm font-medium ubuntu-medium whitespace-nowrap">
+                                                        {{rps?.lib}}
+                                                    </td>
+                                                    <td class="px-4 py-4 text-sm  whitespace-nowrap">
+
+                                                        <div *ngIf="rps?.etatReponse"
+                                                             class="inline px-3 py-1 text-sm font-normal rounded-full
+                                                        text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                            {{rps.etatReponse}}
+                                                        </div>
+                                                        <div *ngIf="!rps?.etatReponse"
+                                                             class="inline px-3 py-1 text-sm font-normal rounded-full
+                                                        text-red-500 gap-x-2 bg-red-100/60">
+                                                            {{rps.etatReponse}}
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td class="px-4 py-4 flex flex-row flex-wrap gap-2 items-center text-sm whitespace-nowrap">
+                                                        <button (click)="edit(rps)" mat-icon-button color="primary">
+                                                            <mat-icon class="icon-size-4"
+                                                                      svgIcon="heroicons_solid:pencil"></mat-icon>
+                                                        </button>
+                                                        <button (click)="delete(i,rps)" mat-icon-button color="warn">
+                                                            <mat-icon class="icon-size-4"
+                                                                      svgIcon="heroicons_solid:trash"></mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </ng-container>
+            </div>
+
+            <ng-container *ngIf="quiz?.questions?.length > 0">
+
+                <div
+                    class="p-4 border-grayMain w-full rounded-md shadow-sm dark:bg-gray-800 bg-gray-100">
+                    <div class="md:block hidden relative overflow-x-auto mt-8">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 border-b uppercase dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="py-3">
+                                    N°
+                                </th>
+                                <th scope="col" class="py-3">
+                                    question
+                                </th>
+
+                                <th scope="col" class="py-3">
+                                    answers
+                                </th>
+                                <th scope="col" class="py-3">
+
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let question of quiz.questions; index as i "
+                                class="bg-white p-2 border-b border-b-gray-100 dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row"
+                                    class="p-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{question?.numero}}
+                                </th>
+                                <th scope="row"
+                                    class="p-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                                    <ng-container *ngIf="editField !== i">
+                                        {{question?.libelle}}
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editField === i">
+                                        <mat-form-field class="flex-auto w-full col-span-2 flex-grow fuse-mat-dense">
+                                            <textarea
+                                                matInput
+                                                (focusout)="editField=-1"
+                                                [(ngModel)]="question.libelle"
+                                                name="libelle"
+                                                cdkTextareaAutosize></textarea>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </th>
+                                <th scope="row"
+                                    class="p-4 flex flex-row items-center gap-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <button (click)="editField=i"
+                                            mat-icon-button color="primary">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:pencil"></mat-icon>
+                                    </button>
+                                    <button (click)="deleteQst(i,question)" mat-icon-button color="warn">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                                    </button>
+                                    <button (click)="openAnswers(question)" mat-icon-button color="primary">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:bars-3"></mat-icon>
+                                    </button>
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngFor="let question of quiz.questions; index as i "
+                         class="md:hidden mt-8 mb-4 flex flex-col justify-start items-start gap-2">
+                        <div class="w-full border-b py-3">
+                            <span class="mr-4">N° :</span>
+                            <span> {{question?.numero}}</span>
+                        </div>
+
+                        <div class="w-full border-b py-3">
+                            <span class="mr-4">question :</span>
+                            <span>{{question?.libelle}}</span>
+                        </div>
+
+                        <div class="w-full border-b py-3">
+                            <span class="mr-4"> answers :</span>
+                            <span class="flex flex-row flex-wrap gap-1">
+                                 <button mat-icon-button color="primary">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:pencil"></mat-icon>
+                                    </button>
+                                    <button (click)="deleteQst(i,question)" mat-icon-button color="warn">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                                    </button>
+                                    <button (click)="openAnswers(question)" mat-icon-button color="primary">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:bars-3"></mat-icon>
+                                    </button>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </ng-container>
+        </ng-container>
+
+
+    </ng-container>
+
+
+</div>

@@ -2,22 +2,22 @@ import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 
 import {FaqTypeDto} from './FaqType.model';
 
-export class FaqDto extends BaseDto{
+export class FaqDto extends BaseDto {
 
-    public description: string;
+    public answer: string;
 
-    public libelle: string;
+    public question: string;
 
-    public faqType: FaqTypeDto ;
+    public faqType: FaqTypeDto;
 
 
     constructor() {
         super();
 
-        this.description = '';
-        this.libelle = '';
-        this.faqType = new FaqTypeDto() ;
+        this.answer = '';
+        this.question = '';
+        this.faqType = new FaqTypeDto();
 
-        }
+    }
 
 }

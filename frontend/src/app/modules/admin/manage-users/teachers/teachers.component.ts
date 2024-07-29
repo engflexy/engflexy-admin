@@ -1,20 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {Criteria} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {PageEvent} from "@angular/material/paginator";
 import {ProfCollaboratorService} from "../../../../shared/service/collaborator/prof/ProfCollaborator.service";
 import {Pageable} from "../../../../shared/utils/Pageable";
 import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
-import {UserCriteria} from "../../../../core/criteria/user-criteria";
+import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {CreateTeacherComponent} from "./create-teacher/create-teacher.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
+import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
 
 @Component({
     selector: 'app-teachers',
     templateUrl: './teachers.component.html'
 })
 export class TeachersComponent implements OnInit {
-    criteria: Criteria<UserCriteria>
+    items: PageRequest<ManageUserDto>
+    criteria: UserCriteria = new UserCriteria()
     pageable: Pageable = new Pageable(0, 5)
 
     constructor(private profService: ProfCollaboratorService,
@@ -31,8 +33,8 @@ export class TeachersComponent implements OnInit {
     private findByCollaboratorId() {
         this.profService.findByCollaboratorId(this.auth.authenticatedUser?.id, this.pageable)
             .subscribe(res => {
-                this.criteria = res
-                console.log(this.criteria)
+                this.items = res
+                console.log(this.items)
             })
     }
 
@@ -51,11 +53,15 @@ export class TeachersComponent implements OnInit {
             maxHeight: "100%"
         });
         dialog.afterClosed().subscribe(res => {
-            if (res != null) this.criteria.content.unshift({...res})
+            if (res != null) this.items.content.unshift({...res})
         })
     }
 
-    navigateToDetail(item: UserCriteria) {
+    navigateToDetail(item: ManageUserDto) {
         this.router.navigate([`teacher/${item.id}`], {relativeTo: this.route})
+    }
+
+    findPaginatedByCriteria() {
+
     }
 }

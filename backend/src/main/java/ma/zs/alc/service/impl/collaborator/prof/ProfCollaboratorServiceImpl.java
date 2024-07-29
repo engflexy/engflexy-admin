@@ -14,7 +14,7 @@ import ma.zs.alc.service.facade.collaborator.prof.ProfCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.prof.TrancheHoraireProfCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.prof.TypeTeacherCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.recomrecla.RecommendTeacherCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.vocab.CollaboratorCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;

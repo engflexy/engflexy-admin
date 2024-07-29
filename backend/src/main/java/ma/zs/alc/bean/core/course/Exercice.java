@@ -16,8 +16,7 @@ import java.util.Objects;
 public class Exercice extends AuditBusinessObject {
 
     private Long id;
-    @Lob
-    @Column(length = 512)
+
     private String content;
     @Lob
     @Column(length = 512)
@@ -59,6 +58,7 @@ public class Exercice extends AuditBusinessObject {
         this.id = id;
     }
 
+    @Column(columnDefinition = "TEXT")
     public String getContent() {
         return this.content;
     }

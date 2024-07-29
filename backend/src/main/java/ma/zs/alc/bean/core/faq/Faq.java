@@ -8,14 +8,12 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "faq")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
 public class Faq extends AuditBusinessObject {
 
     private Long id;
 
-    @Column(length = 500)
+    @Column(columnDefinition = "TEXT")
     private String question;
     @Column(columnDefinition = "TEXT")
     private String answer;

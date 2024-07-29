@@ -2,10 +2,14 @@ package ma.zs.alc.dao.specification.core.prof;
 
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
+import ma.zs.alc.zynerator.security.dao.specification.core.UserSpecification;
 import ma.zs.alc.zynerator.specification.AbstractSpecification;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class ProfSpecification extends AbstractSpecification<ProfCriteria, Prof> {
+
+
 
     @Override
     public void constructPredicates() {

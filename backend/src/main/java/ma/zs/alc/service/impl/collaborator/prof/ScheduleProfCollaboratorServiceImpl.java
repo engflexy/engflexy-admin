@@ -24,6 +24,33 @@ import java.util.List;
 public class ScheduleProfCollaboratorServiceImpl extends AbstractServiceImpl<ScheduleProf, ScheduleProfCriteria, ScheduleProfDao> implements ScheduleProfCollaboratorService {
 
 
+    @Override
+    public ScheduleProf update(ScheduleProf scheduleProf) {
+        ScheduleProf saved = findById(scheduleProf.getId());
+        if (saved == null) {
+            throw new RuntimeException("class not found !");
+        }
+        saved.setEndTime(scheduleProf.getEndTime());
+
+        assert scheduleProf.getProf() != null;
+        saved.setProf(profService.findById(scheduleProf.getProf().getId()));
+
+        assert scheduleProf.getCours() != null;
+        saved.setCours(coursService.findById(scheduleProf.getCours().getId()));
+
+        assert scheduleProf.getGroupeEtudiant() != null;
+        saved.setGroupeEtudiant(groupeEtudiantService.findById(scheduleProf.getGroupeEtudiant().getId()));
+
+        saved.setStartTime(scheduleProf.getStartTime());
+        saved.setColor(scheduleProf.getColor());
+        saved.setCourseFinished(scheduleProf.getCourseFinished());
+        saved.setGrpName(scheduleProf.getGrpName());
+        saved.setProfName(scheduleProf.getProfName());
+        saved.setSubject(scheduleProf.getSubject());
+        dao.save(saved);
+        return scheduleProf;
+    }
+
     public void findOrSaveAssociatedObject(ScheduleProf t) {
         if (t != null) {
             t.setGroupeEtudiant(groupeEtudiantService.findOrSave(t.getGroupeEtudiant()));

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 
@@ -43,11 +44,11 @@ public class InviteStudentConverter extends AbstractConverter<InviteStudent, Inv
             if(StringUtil.isNotEmpty(dto.getEmailInvited()))
                 item.setEmailInvited(dto.getEmailInvited());
             if(StringUtil.isNotEmpty(dto.getDateSentInvitation()))
-                item.setDateSentInvitation(DateUtil.stringEnToDate(dto.getDateSentInvitation()));
+                item.setDateSentInvitation(DateUtil.stringEnToDate(dto.getDateSentInvitation(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateAcceptInvitation()))
-                item.setDateAcceptInvitation(DateUtil.stringEnToDate(dto.getDateAcceptInvitation()));
+                item.setDateAcceptInvitation(DateUtil.stringEnToDate(dto.getDateAcceptInvitation(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDatePayPack()))
-                item.setDatePayPack(DateUtil.stringEnToDate(dto.getDatePayPack()));
+                item.setDatePayPack(DateUtil.stringEnToDate(dto.getDatePayPack(),DateUtil.DATE_FORMAT_ENG));
             if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
@@ -93,6 +94,9 @@ public class InviteStudentConverter extends AbstractConverter<InviteStudent, Inv
 
     public void copy(InviteStudentDto dto, InviteStudent t) {
     super.copy(dto, t);
+    if(t.getEtudiant() == null && dto.getEtudiant() != null) {
+        t.setEtudiant(new Etudiant());
+    }
     if (dto.getEtudiant() != null)
         etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
     }

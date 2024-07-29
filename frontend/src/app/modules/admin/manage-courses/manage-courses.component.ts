@@ -11,6 +11,7 @@ import {colors} from "../../../shared/constant/colors";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateMaterialComponent} from "./create-material/create-material.component";
 import {Router} from "@angular/router";
+import {EditMaterialComponent} from "./edit-material/edit-material.component";
 
 @Component({
     selector: 'app-manage-courses',
@@ -64,6 +65,8 @@ export class ManageCoursesComponent implements OnInit {
             autoFocus: false,
         });
     }
+
+
 
     navigateTo(item: ParcoursDto) {
         this.item = item
