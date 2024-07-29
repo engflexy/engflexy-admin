@@ -51,7 +51,7 @@
                         </button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="edit(item)">Edit</button>
-                            <button mat-menu-item>Delete</button>
+                            <button mat-menu-item (click)="delete(item)">Delete</button>
                         </mat-menu>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                                                     </td>
                                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                         <div class="flex items-center gap-x-6">
-                                                            <button
+                                                            <button (click)="deleteCourse()"
                                                                 class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                      viewBox="0 0 24 24" stroke-width="1.5"
@@ -171,7 +171,7 @@
                                                                 </svg>
                                                             </button>
 
-                                                            <button
+                                                            <button (click)="editCourse(item)"
                                                                 class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                      viewBox="0 0 24 24" stroke-width="1.5"

@@ -62,7 +62,7 @@ import { HomeworkComponent } from './homework/homework.component';
 
 
 @NgModule({
-    declarations: [SafePipe, ClassroomComponent,
+    declarations: [ ClassroomComponent,
         TypeExercisesComponent, CreateExerciseComponent,
         DisplayMultiImagesComponent, DisplayVideoComponent
         , CreateQuizComponent, TypesQuestionComponent,

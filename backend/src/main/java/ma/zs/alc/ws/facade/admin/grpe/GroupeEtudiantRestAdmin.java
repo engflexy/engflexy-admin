@@ -145,6 +145,11 @@ public class GroupeEtudiantRestAdmin  extends AbstractController<GroupeEtudiant,
     public ResponseEntity<GroupeEtudiantDto> findById(@PathVariable Long id) {
         return super.findWithAssociatedLists(id);
     }
+    @Operation(summary = "Finds an optimized list of all profs")
+    @GetMapping("optimized")
+    public ResponseEntity<List<GroupeEtudiantDto>> findAllOptimized() throws Exception {
+        return super.findAllOptimized();
+    }
 
     @Operation(summary = "Finds groupeEtudiants by criteria")
     @PostMapping("find-by-criteria")

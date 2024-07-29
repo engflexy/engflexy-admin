@@ -49,6 +49,10 @@ public class ParcoursConverter extends AbstractConverter<Parcours, ParcoursDto> 
                 item.setCode(dto.getCode());
             if (StringUtil.isNotEmpty(dto.getLibelle()))
                 item.setLibelle(dto.getLibelle());
+            if (StringUtil.isNotEmpty(dto.getColor()))
+                item.setColor(dto.getColor());
+            if (StringUtil.isNotEmpty(dto.getUrl()))
+                item.setUrl(dto.getUrl());
             if (StringUtil.isNotEmpty(dto.getNumeroOrder()))
                 item.setNumeroOrder(dto.getNumeroOrder());
             if (StringUtil.isNotEmpty(dto.getNombreCours()))
@@ -84,6 +88,10 @@ public class ParcoursConverter extends AbstractConverter<Parcours, ParcoursDto> 
                 dto.setDescription(item.getDescription());
             if (StringUtil.isNotEmpty(item.getCode()))
                 dto.setCode(item.getCode());
+            if (StringUtil.isNotEmpty(item.getColor()))
+                dto.setColor(item.getColor());
+            if (StringUtil.isNotEmpty(item.getUrl()))
+                dto.setUrl(item.getUrl());
             if (StringUtil.isNotEmpty(item.getLibelle()))
                 dto.setLibelle(item.getLibelle());
             if (StringUtil.isNotEmpty(item.getNumeroOrder()))
