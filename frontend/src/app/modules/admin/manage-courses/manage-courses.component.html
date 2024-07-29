@@ -40,14 +40,17 @@
                     <div class="col-span-4 flex flex-row justify-center items-center gap-4">
                         <mat-form-field
                             class="flex-auto fuse-mat-bold fuse-mat-dense fuse-mat-rounded flex-grow">
-                            <input placeholder="search.." matInput>
+                            <input placeholder="search.." matInput (keyup.enter)="findPaginatedByCriteria()" [(ngModel)]="criteria.libelle">
                             <mat-icon
                                 class="icon-size-5"
                                 matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
                         <button mat-icon-button class="mb-5" color="accent">
-                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle"></mat-icon>
+                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle" (click)="findPaginatedByCriteria()" ></mat-icon>
+                        </button>
+                        <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
+                            <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
                         </button>
                     </div>
 
