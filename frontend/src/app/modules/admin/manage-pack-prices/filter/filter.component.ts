@@ -50,7 +50,6 @@ import {CreateComponent} from "../create/create.component";
         TranslocoModule,
         MatDatepickerModule
     ],
-    styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit{
     protected _submitted = false;

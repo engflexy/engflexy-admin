@@ -74,7 +74,6 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         MatCheckboxModule,
         MatDatepickerModule
     ],
-    styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
     protected _submitted = false;

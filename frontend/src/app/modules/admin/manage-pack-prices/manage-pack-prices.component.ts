@@ -116,9 +116,6 @@ export class ManagePackPricesComponent implements OnInit{
         }
     }
 
-    private fetchPackages(){
-
-    }
     handle_pageable_change(event: PageEvent) {
         this.pageable.page = event?.pageIndex
         this.pageable.size = event?.pageSize

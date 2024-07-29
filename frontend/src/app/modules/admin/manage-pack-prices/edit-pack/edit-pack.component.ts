@@ -1,34 +1,35 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
-import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import {MatInputModule} from "@angular/material/input";
-import {FormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button";
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {RoleService} from "../../../../zynerator/security/shared/service/Role.service";
 import {Router} from "@angular/router";
 import {StringUtilService} from "../../../../zynerator/util/StringUtil.service";
-import {EditComponent} from "../edit/edit.component";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {
-    PackageCollaboratorAdminService
-} from "../../../../shared/service/admin/collab/PackageCollaboratorAdmin.service";
+    PackageCollaboratorCollaboratorService
+} from "../../../../shared/service/collaborator/collab/PackageCollaboratorCollaborator.service";
 import {PackageCollaboratorDto} from "../../../../shared/model/collab/PackageCollaborator.model";
 import {PackageCollaboratorCriteria} from "../../../../shared/criteria/collab/PackageCollaboratorCriteria.model";
 import {environment} from "../../../../../environments/environment";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
+import {TranslocoModule} from "@ngneat/transloco";
 
 @Component({
     selector: 'app-edit-pack',
     templateUrl: './edit-pack.component.html',
     standalone: true,
     imports: [
-        MatDialogModule,
         MatInputModule,
         FormsModule,
-        MatButtonModule
+        MatDialogModule,
+        MatButtonModule,
+        TranslocoModule
     ],
     styleUrls: ['./edit-pack.component.scss']
 })
-export class EditPackComponent {
+export class EditPackComponent implements OnInit{
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
@@ -45,11 +46,12 @@ export class EditPackComponent {
 
     private _validPackageCollaboratorLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<EditPackComponent>, private alert: FuseAlertService, private service: PackageCollaboratorAdminService , @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public refDialog: MatDialogRef<EditPackComponent>, private alert: FuseAlertService, private service: PackageCollaboratorCollaboratorService , @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
     ngOnInit(): void {
+        console.log(this.item)
     }
 
 
@@ -61,6 +63,7 @@ export class EditPackComponent {
         this.validateForm();
         if (this.errorMessages.length === 0) {
             this.editWithShowOption(false);
+
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
@@ -71,6 +74,8 @@ export class EditPackComponent {
             if (item != null) {
                 this.items.push({...item});
                 this.item = new PackageCollaboratorDto();
+                this.alert.show('info', 'Pack successfully updated!');
+                this.refDialog.close()
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }
@@ -96,7 +101,7 @@ export class EditPackComponent {
     }
 
     public validatePackageCollaboratorLibelle(){
-        if (this.stringUtilService.isEmpty(this.item.libelle)) {
+        if (this.item.libelle==""||this.item.libelle==null) {
             this.errorMessages.push('Libelle non valide');
             this.validPackageCollaboratorLibelle = false;
         } else {
@@ -194,5 +199,4 @@ export class EditPackComponent {
     set activeTab(value: number) {
         this._activeTab = value;
     }
-
 }
