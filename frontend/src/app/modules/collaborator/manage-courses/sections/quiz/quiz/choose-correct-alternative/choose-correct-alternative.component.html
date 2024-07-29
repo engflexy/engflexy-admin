@@ -1,0 +1,60 @@
+<div *ngIf="!showError" class="flex my-2 flex-col">
+    <div class="flex items-center flex-row gap-1">
+        <div class="ubuntu-bold-italic mr-1 text-md">
+            {{question?.numero}}.
+        </div>
+
+        <button
+            [disabled]="!checked"
+            (click)="sound()"
+            mat-icon-button>
+            <mat-icon
+                class="icon-size-5"
+                [svgIcon]="'heroicons_solid:speaker-wave'"></mat-icon>
+        </button>
+        <div (mouseenter)="showMeAnswer(true)"
+             (mouseleave)="showMeAnswer(false)"
+             class=" ">
+            <div *ngIf="left" class="font-ubuntu inline-block">
+                {{left}}
+            </div>
+
+            <input name="selectedValue" disabled
+                   [class.correct]="is_correct===true"
+                   [class.incorrect]="is_correct===false"
+                   [class.border-dotted]="is_correct===null"
+                   class="font-ubuntu  inline-block text-center mb-2  border  rounded-full mx-2"
+                   [(ngModel)]="value" type="text" matInput>
+
+            <div *ngIf="right" class="font-ubuntu inline-block ">
+                {{right}}
+            </div>
+        </div>
+    </div>
+    <div [class.pointer-events-none]="checked" class="flex flex-col mt-8">
+        <span class="font-semibold mb-2">Select the correct answer</span>
+        <mat-radio-group [disabled]="checked"
+                         (ngModelChange)="check()"
+                         class="flex flex-col"
+                         [color]="'primary'"
+                         [(ngModel)]="value"
+                         name="selectedValue">
+
+            <ng-container *ngFor="let answer of question?.reponses">
+                <mat-radio-button
+                    class="mb-2 disabled:text-black dark:disabled:text-white"
+                    [class.correct-answer]="(showMe && answer?.lib === correctAnswer?.lib) || (checked && answer?.lib === correctAnswer?.lib)"
+                    [value]="answer?.lib">
+                    {{answer?.lib}}
+                </mat-radio-button>
+            </ng-container>
+
+
+        </mat-radio-group>
+    </div>
+</div>
+
+
+<div *ngIf="showError" class="w-full  text-center flex-col items-center p-4">
+    can't load question!
+</div>

@@ -6,7 +6,7 @@ import ma.zs.alc.bean.core.grpe.GroupeEtude;
 import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.inscriptionref.*;
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.dao.criteria.core.inscription.EtudiantCriteria;
 import ma.zs.alc.dao.facade.core.inscription.EtudiantDao;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
@@ -19,7 +19,7 @@ import ma.zs.alc.service.facade.collaborator.inscription.EtudiantCollaboratorSer
 import ma.zs.alc.service.facade.collaborator.inscriptionref.*;
 import ma.zs.alc.service.facade.collaborator.pack.PackStudentCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.quizetudiant.QuizEtudiantCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.vocab.CollaboratorCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;

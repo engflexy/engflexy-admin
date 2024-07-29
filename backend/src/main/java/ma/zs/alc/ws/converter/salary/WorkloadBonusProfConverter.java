@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.salary.SalaryConverter;
+import ma.zs.alc.bean.core.salary.Salary;
 import ma.zs.alc.ws.converter.salary.WorkloadBonusConverter;
+import ma.zs.alc.bean.core.salary.WorkloadBonus;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.bean.core.prof.Prof;
 
 import ma.zs.alc.bean.core.prof.Prof;
 
@@ -97,6 +100,15 @@ public class WorkloadBonusProfConverter extends AbstractConverter<WorkloadBonusP
 
     public void copy(WorkloadBonusProfDto dto, WorkloadBonusProf t) {
     super.copy(dto, t);
+    if(t.getWorkloadBonus() == null && dto.getWorkloadBonus() != null) {
+        t.setWorkloadBonus(new WorkloadBonus());
+    }
+    if(t.getProf() == null && dto.getProf() != null) {
+        t.setProf(new Prof());
+    }
+    if(t.getSalary() == null && dto.getSalary() != null) {
+        t.setSalary(new Salary());
+    }
     if (dto.getWorkloadBonus() != null)
         workloadBonusConverter.copy(dto.getWorkloadBonus(), t.getWorkloadBonus());
     if (dto.getProf() != null)

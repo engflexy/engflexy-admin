@@ -1,59 +1,52 @@
-package  ma.zs.alc.ws.converter.grpe;
+package ma.zs.alc.ws.converter.grpe;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import ma.zs.alc.ws.converter.course.ParcoursConverter;
-import ma.zs.alc.ws.converter.quiz.QuizConverter;
-import ma.zs.alc.ws.converter.inscriptionref.SkillConverter;
-import ma.zs.alc.ws.converter.inscriptionref.InteretEtudiantConverter;
-import ma.zs.alc.ws.converter.inscriptionref.FonctionConverter;
-import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
-import ma.zs.alc.ws.converter.inscriptionref.EtatInscriptionConverter;
-import ma.zs.alc.ws.converter.grpe.GroupeTypeConverter;
-import ma.zs.alc.ws.converter.inscriptionref.StatutSocialConverter;
-import ma.zs.alc.ws.converter.pack.PackStudentConverter;
-import ma.zs.alc.ws.converter.grpe.GroupeEtudeConverter;
-import ma.zs.alc.ws.converter.inscriptionref.NiveauEtudeConverter;
-
-import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.course.Parcours;
+import ma.zs.alc.bean.core.grpe.GroupeEtude;
+import ma.zs.alc.bean.core.grpe.GroupeType;
+import ma.zs.alc.bean.core.grpe.Inscription;
+import ma.zs.alc.bean.core.inscription.Etudiant;
+import ma.zs.alc.bean.core.inscriptionref.*;
+import ma.zs.alc.bean.core.pack.PackStudent;
 import ma.zs.alc.bean.core.quiz.Quiz;
-
-
-import ma.zs.alc.zynerator.util.StringUtil;
+import ma.zs.alc.ws.converter.course.ParcoursConverter;
+import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
+import ma.zs.alc.ws.converter.inscriptionref.*;
+import ma.zs.alc.ws.converter.pack.PackStudentConverter;
+import ma.zs.alc.ws.converter.quiz.QuizConverter;
+import ma.zs.alc.ws.dto.grpe.InscriptionDto;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.util.DateUtil;
-import ma.zs.alc.bean.core.grpe.Inscription;
-import ma.zs.alc.ws.dto.grpe.InscriptionDto;
+import ma.zs.alc.zynerator.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InscriptionConverter extends AbstractConverter<Inscription, InscriptionDto> {
 
     @Autowired
-    private ParcoursConverter parcoursConverter ;
+    private ParcoursConverter parcoursConverter;
     @Autowired
-    private QuizConverter quizConverter ;
+    private QuizConverter quizConverter;
     @Autowired
-    private SkillConverter skillConverter ;
+    private SkillConverter skillConverter;
     @Autowired
-    private InteretEtudiantConverter interetEtudiantConverter ;
+    private InteretEtudiantConverter interetEtudiantConverter;
     @Autowired
-    private FonctionConverter fonctionConverter ;
+    private FonctionConverter fonctionConverter;
     @Autowired
-    private EtudiantConverter etudiantConverter ;
+    private EtudiantConverter etudiantConverter;
     @Autowired
-    private EtatInscriptionConverter etatInscriptionConverter ;
+    private EtatInscriptionConverter etatInscriptionConverter;
     @Autowired
-    private GroupeTypeConverter groupeTypeConverter ;
+    private GroupeTypeConverter groupeTypeConverter;
     @Autowired
-    private StatutSocialConverter statutSocialConverter ;
+    private StatutSocialConverter statutSocialConverter;
     @Autowired
-    private PackStudentConverter packStudentConverter ;
+    private PackStudentConverter packStudentConverter;
     @Autowired
-    private GroupeEtudeConverter groupeEtudeConverter ;
+    private GroupeEtudeConverter groupeEtudeConverter;
     @Autowired
-    private NiveauEtudeConverter niveauEtudeConverter ;
+    private NiveauEtudeConverter niveauEtudeConverter;
     private boolean etudiant;
     private boolean etatInscription;
     private boolean parcours;
@@ -67,7 +60,7 @@ public class InscriptionConverter extends AbstractConverter<Inscription, Inscrip
     private boolean packStudent;
     private boolean skill;
 
-    public  InscriptionConverter() {
+    public InscriptionConverter() {
         super(Inscription.class, InscriptionDto.class);
         init(true);
     }
@@ -77,74 +70,72 @@ public class InscriptionConverter extends AbstractConverter<Inscription, Inscrip
         if (dto == null) {
             return null;
         } else {
-        Inscription item = new Inscription();
-            if(StringUtil.isNotEmpty(dto.getId()))
+            Inscription item = new Inscription();
+            if (StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
-            if(StringUtil.isNotEmpty(dto.getNumeroInscription()))
+            if (StringUtil.isNotEmpty(dto.getNumeroInscription()))
                 item.setNumeroInscription(dto.getNumeroInscription());
-            if(StringUtil.isNotEmpty(dto.getNoteQuizNiveau()))
+            if (StringUtil.isNotEmpty(dto.getNoteQuizNiveau()))
                 item.setNoteQuizNiveau(dto.getNoteQuizNiveau());
-            if(dto.getQuizFinished() != null)
+            if (dto.getQuizFinished() != null)
                 item.setQuizFinished(dto.getQuizFinished());
-            if(dto.getSubscriptionFinished() != null)
+            if (dto.getSubscriptionFinished() != null)
                 item.setSubscriptionFinished(dto.getSubscriptionFinished());
-            if(StringUtil.isNotEmpty(dto.getDateRegistration()))
+            if (StringUtil.isNotEmpty(dto.getDateRegistration()))
                 item.setDateRegistration(dto.getDateRegistration());
-            if(StringUtil.isNotEmpty(dto.getDatedebutinscription()))
+            if (StringUtil.isNotEmpty(dto.getDatedebutinscription()))
                 item.setDatedebutinscription(dto.getDatedebutinscription());
-            if(StringUtil.isNotEmpty(dto.getDatefininscription()))
+            if (StringUtil.isNotEmpty(dto.getDatefininscription()))
                 item.setDatefininscription(dto.getDatefininscription());
-            if(StringUtil.isNotEmpty(dto.getSkype()))
+            if (StringUtil.isNotEmpty(dto.getSkype()))
                 item.setSkype(dto.getSkype());
-            if(dto.getEtudiant() != null && dto.getEtudiant().getId() != null){
+            if (dto.getEtudiant() != null && dto.getEtudiant().getId() != null) {
                 item.setEtudiant(new Etudiant());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
                 item.getEtudiant().setId(dto.getEtudiant().getId());
             }
 
-            if(this.etatInscription && dto.getEtatInscription()!=null)
-                item.setEtatInscription(etatInscriptionConverter.toItem(dto.getEtatInscription())) ;
+            if (this.etatInscription && dto.getEtatInscription() != null)
+                item.setEtatInscription(etatInscriptionConverter.toItem(dto.getEtatInscription()));
 
-            if(dto.getParcours() != null && dto.getParcours().getId() != null){
+            if (dto.getParcours() != null && dto.getParcours().getId() != null) {
                 item.setParcours(new Parcours());
                 item.getParcours().setId(dto.getParcours().getId());
                 item.getParcours().setLibelle(dto.getParcours().getLibelle());
             }
 
-            if(this.groupeEtude && dto.getGroupeEtude()!=null)
-                item.setGroupeEtude(groupeEtudeConverter.toItem(dto.getGroupeEtude())) ;
+            if (this.groupeEtude && dto.getGroupeEtude() != null)
+                item.setGroupeEtude(groupeEtudeConverter.toItem(dto.getGroupeEtude()));
 
-            if(this.groupeType && dto.getGroupeType()!=null)
-                item.setGroupeType(groupeTypeConverter.toItem(dto.getGroupeType())) ;
+            if (this.groupeType && dto.getGroupeType() != null)
+                item.setGroupeType(groupeTypeConverter.toItem(dto.getGroupeType()));
 
-            if(this.statutSocial && dto.getStatutSocial()!=null)
-                item.setStatutSocial(statutSocialConverter.toItem(dto.getStatutSocial())) ;
+            if (this.statutSocial && dto.getStatutSocial() != null)
+                item.setStatutSocial(statutSocialConverter.toItem(dto.getStatutSocial()));
 
-            if(this.interetEtudiant && dto.getInteretEtudiant()!=null)
-                item.setInteretEtudiant(interetEtudiantConverter.toItem(dto.getInteretEtudiant())) ;
+            if (this.interetEtudiant && dto.getInteretEtudiant() != null)
+                item.setInteretEtudiant(interetEtudiantConverter.toItem(dto.getInteretEtudiant()));
 
-            if(this.niveauEtude && dto.getNiveauEtude()!=null)
-                item.setNiveauEtude(niveauEtudeConverter.toItem(dto.getNiveauEtude())) ;
+            if (this.niveauEtude && dto.getNiveauEtude() != null)
+                item.setNiveauEtude(niveauEtudeConverter.toItem(dto.getNiveauEtude()));
 
-            if(this.fonction && dto.getFonction()!=null)
-                item.setFonction(fonctionConverter.toItem(dto.getFonction())) ;
+            if (this.fonction && dto.getFonction() != null)
+                item.setFonction(fonctionConverter.toItem(dto.getFonction()));
 
-            if(dto.getQuiz() != null && dto.getQuiz().getId() != null){
+            if (dto.getQuiz() != null && dto.getQuiz().getId() != null) {
                 item.setQuiz(new Quiz());
                 item.getQuiz().setId(dto.getQuiz().getId());
                 item.getQuiz().setLib(dto.getQuiz().getLib());
             }
 
-            if(this.packStudent && dto.getPackStudent()!=null)
-                item.setPackStudent(packStudentConverter.toItem(dto.getPackStudent())) ;
+            if (this.packStudent && dto.getPackStudent() != null)
+                item.setPackStudent(packStudentConverter.toItem(dto.getPackStudent()));
 
-            if(this.skill && dto.getSkill()!=null)
-                item.setSkill(skillConverter.toItem(dto.getSkill())) ;
-
-
+            if (this.skill && dto.getSkill() != null)
+                item.setSkill(skillConverter.toItem(dto.getSkill()));
 
 
-        return item;
+            return item;
         }
     }
 
@@ -154,106 +145,139 @@ public class InscriptionConverter extends AbstractConverter<Inscription, Inscrip
             return null;
         } else {
             InscriptionDto dto = new InscriptionDto();
-            if(StringUtil.isNotEmpty(item.getId()))
+            if (StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
-            if(StringUtil.isNotEmpty(item.getNumeroInscription()))
+            if (StringUtil.isNotEmpty(item.getNumeroInscription()))
                 dto.setNumeroInscription(item.getNumeroInscription());
-            if(StringUtil.isNotEmpty(item.getNoteQuizNiveau()))
+            if (StringUtil.isNotEmpty(item.getNoteQuizNiveau()))
                 dto.setNoteQuizNiveau(item.getNoteQuizNiveau());
-                dto.setQuizFinished(item.getQuizFinished());
-                dto.setSubscriptionFinished(item.getSubscriptionFinished());
-            if(StringUtil.isNotEmpty(item.getDateRegistration()))
+            dto.setQuizFinished(item.getQuizFinished());
+            dto.setSubscriptionFinished(item.getSubscriptionFinished());
+            if (StringUtil.isNotEmpty(item.getDateRegistration()))
                 dto.setDateRegistration(item.getDateRegistration());
-            if(item.getDatedebutinscription()!=null)
+            if (item.getDatedebutinscription() != null)
                 dto.setDatedebutinscription(item.getDatedebutinscription());
-
-            if(item.getDatefininscription()!=null)
+            if (item.getDatefininscription() != null)
                 dto.setDatefininscription(item.getDatefininscription());
-
-            if(StringUtil.isNotEmpty(item.getSkype()))
+            if (StringUtil.isNotEmpty(item.getSkype()))
                 dto.setSkype(item.getSkype());
-            if(this.etudiant && item.getEtudiant()!=null) {
-                dto.setEtudiant(etudiantConverter.toDto(item.getEtudiant())) ;
+            if (this.etudiant && item.getEtudiant() != null) {
+                dto.setEtudiant(etudiantConverter.toDto(item.getEtudiant()));
 
             }
-            if(this.etatInscription && item.getEtatInscription()!=null) {
-                dto.setEtatInscription(etatInscriptionConverter.toDto(item.getEtatInscription())) ;
+            if (this.etatInscription && item.getEtatInscription() != null) {
+                dto.setEtatInscription(etatInscriptionConverter.toDto(item.getEtatInscription()));
 
             }
-            if(this.parcours && item.getParcours()!=null) {
-                dto.setParcours(parcoursConverter.toDto(item.getParcours())) ;
+            if (this.parcours && item.getParcours() != null) {
+                dto.setParcours(parcoursConverter.toDto(item.getParcours()));
 
             }
-            if(this.groupeEtude && item.getGroupeEtude()!=null) {
-                dto.setGroupeEtude(groupeEtudeConverter.toDto(item.getGroupeEtude())) ;
+            if (this.groupeEtude && item.getGroupeEtude() != null) {
+                dto.setGroupeEtude(groupeEtudeConverter.toDto(item.getGroupeEtude()));
 
             }
-            if(this.groupeType && item.getGroupeType()!=null) {
-                dto.setGroupeType(groupeTypeConverter.toDto(item.getGroupeType())) ;
+            if (this.groupeType && item.getGroupeType() != null) {
+                dto.setGroupeType(groupeTypeConverter.toDto(item.getGroupeType()));
 
             }
-            if(this.statutSocial && item.getStatutSocial()!=null) {
-                dto.setStatutSocial(statutSocialConverter.toDto(item.getStatutSocial())) ;
+            if (this.statutSocial && item.getStatutSocial() != null) {
+                dto.setStatutSocial(statutSocialConverter.toDto(item.getStatutSocial()));
 
             }
-            if(this.interetEtudiant && item.getInteretEtudiant()!=null) {
-                dto.setInteretEtudiant(interetEtudiantConverter.toDto(item.getInteretEtudiant())) ;
+            if (this.interetEtudiant && item.getInteretEtudiant() != null) {
+                dto.setInteretEtudiant(interetEtudiantConverter.toDto(item.getInteretEtudiant()));
 
             }
-            if(this.niveauEtude && item.getNiveauEtude()!=null) {
-                dto.setNiveauEtude(niveauEtudeConverter.toDto(item.getNiveauEtude())) ;
+            if (this.niveauEtude && item.getNiveauEtude() != null) {
+                dto.setNiveauEtude(niveauEtudeConverter.toDto(item.getNiveauEtude()));
 
             }
-            if(this.fonction && item.getFonction()!=null) {
-                dto.setFonction(fonctionConverter.toDto(item.getFonction())) ;
+            if (this.fonction && item.getFonction() != null) {
+                dto.setFonction(fonctionConverter.toDto(item.getFonction()));
 
             }
-            if(this.quiz && item.getQuiz()!=null) {
-                dto.setQuiz(quizConverter.toDto(item.getQuiz())) ;
+            if (this.quiz && item.getQuiz() != null) {
+                dto.setQuiz(quizConverter.toDto(item.getQuiz()));
 
             }
-            if(this.packStudent && item.getPackStudent()!=null) {
-                dto.setPackStudent(packStudentConverter.toDto(item.getPackStudent())) ;
+            if (this.packStudent && item.getPackStudent() != null) {
+                dto.setPackStudent(packStudentConverter.toDto(item.getPackStudent()));
 
             }
-            if(this.skill && item.getSkill()!=null) {
-                dto.setSkill(skillConverter.toDto(item.getSkill())) ;
+            if (this.skill && item.getSkill() != null) {
+                dto.setSkill(skillConverter.toDto(item.getSkill()));
 
             }
 
 
-        return dto;
+            return dto;
         }
     }
 
     public void copy(InscriptionDto dto, Inscription t) {
-    super.copy(dto, t);
-    if (dto.getEtudiant() != null)
-        etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
-    if (dto.getEtatInscription() != null)
-        etatInscriptionConverter.copy(dto.getEtatInscription(), t.getEtatInscription());
-    if (dto.getParcours() != null)
-        parcoursConverter.copy(dto.getParcours(), t.getParcours());
-    if (dto.getGroupeEtude() != null)
-        groupeEtudeConverter.copy(dto.getGroupeEtude(), t.getGroupeEtude());
-    if (dto.getGroupeType() != null)
-        groupeTypeConverter.copy(dto.getGroupeType(), t.getGroupeType());
-    if (dto.getStatutSocial() != null)
-        statutSocialConverter.copy(dto.getStatutSocial(), t.getStatutSocial());
-    if (dto.getInteretEtudiant() != null)
-        interetEtudiantConverter.copy(dto.getInteretEtudiant(), t.getInteretEtudiant());
-    if (dto.getNiveauEtude() != null)
-        niveauEtudeConverter.copy(dto.getNiveauEtude(), t.getNiveauEtude());
-    if (dto.getFonction() != null)
-        fonctionConverter.copy(dto.getFonction(), t.getFonction());
-    if (dto.getQuiz() != null)
-        quizConverter.copy(dto.getQuiz(), t.getQuiz());
-    if (dto.getPackStudent() != null)
-        packStudentConverter.copy(dto.getPackStudent(), t.getPackStudent());
-    if (dto.getSkill() != null)
-        skillConverter.copy(dto.getSkill(), t.getSkill());
+        super.copy(dto, t);
+        if (t.getEtudiant() == null && dto.getEtudiant() != null) {
+            t.setEtudiant(new Etudiant());
+        }
+        if (t.getEtatInscription() == null && dto.getEtatInscription() != null) {
+            t.setEtatInscription(new EtatInscription());
+        }
+        if (t.getParcours() == null && dto.getParcours() != null) {
+            t.setParcours(new Parcours());
+        }
+        if (t.getGroupeEtude() == null && dto.getGroupeEtude() != null) {
+            t.setGroupeEtude(new GroupeEtude());
+        }
+        if (t.getGroupeType() == null && dto.getGroupeType() != null) {
+            t.setGroupeType(new GroupeType());
+        }
+        if (t.getStatutSocial() == null && dto.getStatutSocial() != null) {
+            t.setStatutSocial(new StatutSocial());
+        }
+        if (t.getInteretEtudiant() == null && dto.getInteretEtudiant() != null) {
+            t.setInteretEtudiant(new InteretEtudiant());
+        }
+        if (t.getNiveauEtude() == null && dto.getNiveauEtude() != null) {
+            t.setNiveauEtude(new NiveauEtude());
+        }
+        if (t.getFonction() == null && dto.getFonction() != null) {
+            t.setFonction(new Fonction());
+        }
+        if (t.getQuiz() == null && dto.getQuiz() != null) {
+            t.setQuiz(new Quiz());
+        }
+        if (t.getPackStudent() == null && dto.getPackStudent() != null) {
+            t.setPackStudent(new PackStudent());
+        }
+        if (t.getSkill() == null && dto.getSkill() != null) {
+            t.setSkill(new Skill());
+        }
+        if (dto.getEtudiant() != null)
+            etudiantConverter.copy(dto.getEtudiant(), t.getEtudiant());
+        if (dto.getEtatInscription() != null)
+            etatInscriptionConverter.copy(dto.getEtatInscription(), t.getEtatInscription());
+        if (dto.getParcours() != null)
+            parcoursConverter.copy(dto.getParcours(), t.getParcours());
+        if (dto.getGroupeEtude() != null)
+            groupeEtudeConverter.copy(dto.getGroupeEtude(), t.getGroupeEtude());
+        if (dto.getGroupeType() != null)
+            groupeTypeConverter.copy(dto.getGroupeType(), t.getGroupeType());
+        if (dto.getStatutSocial() != null)
+            statutSocialConverter.copy(dto.getStatutSocial(), t.getStatutSocial());
+        if (dto.getInteretEtudiant() != null)
+            interetEtudiantConverter.copy(dto.getInteretEtudiant(), t.getInteretEtudiant());
+        if (dto.getNiveauEtude() != null)
+            niveauEtudeConverter.copy(dto.getNiveauEtude(), t.getNiveauEtude());
+        if (dto.getFonction() != null)
+            fonctionConverter.copy(dto.getFonction(), t.getFonction());
+        if (dto.getQuiz() != null)
+            quizConverter.copy(dto.getQuiz(), t.getQuiz());
+        if (dto.getPackStudent() != null)
+            packStudentConverter.copy(dto.getPackStudent(), t.getPackStudent());
+        if (dto.getSkill() != null)
+            skillConverter.copy(dto.getSkill(), t.getSkill());
     }
-
 
 
     public void initObject(boolean value) {
@@ -272,148 +296,195 @@ public class InscriptionConverter extends AbstractConverter<Inscription, Inscrip
     }
 
 
-    public ParcoursConverter getParcoursConverter(){
+    public ParcoursConverter getParcoursConverter() {
         return this.parcoursConverter;
     }
-    public void setParcoursConverter(ParcoursConverter parcoursConverter ){
+
+    public void setParcoursConverter(ParcoursConverter parcoursConverter) {
         this.parcoursConverter = parcoursConverter;
     }
-    public QuizConverter getQuizConverter(){
+
+    public QuizConverter getQuizConverter() {
         return this.quizConverter;
     }
-    public void setQuizConverter(QuizConverter quizConverter ){
+
+    public void setQuizConverter(QuizConverter quizConverter) {
         this.quizConverter = quizConverter;
     }
-    public SkillConverter getSkillConverter(){
+
+    public SkillConverter getSkillConverter() {
         return this.skillConverter;
     }
-    public void setSkillConverter(SkillConverter skillConverter ){
+
+    public void setSkillConverter(SkillConverter skillConverter) {
         this.skillConverter = skillConverter;
     }
-    public InteretEtudiantConverter getInteretEtudiantConverter(){
+
+    public InteretEtudiantConverter getInteretEtudiantConverter() {
         return this.interetEtudiantConverter;
     }
-    public void setInteretEtudiantConverter(InteretEtudiantConverter interetEtudiantConverter ){
+
+    public void setInteretEtudiantConverter(InteretEtudiantConverter interetEtudiantConverter) {
         this.interetEtudiantConverter = interetEtudiantConverter;
     }
-    public FonctionConverter getFonctionConverter(){
+
+    public FonctionConverter getFonctionConverter() {
         return this.fonctionConverter;
     }
-    public void setFonctionConverter(FonctionConverter fonctionConverter ){
+
+    public void setFonctionConverter(FonctionConverter fonctionConverter) {
         this.fonctionConverter = fonctionConverter;
     }
-    public EtudiantConverter getEtudiantConverter(){
+
+    public EtudiantConverter getEtudiantConverter() {
         return this.etudiantConverter;
     }
-    public void setEtudiantConverter(EtudiantConverter etudiantConverter ){
+
+    public void setEtudiantConverter(EtudiantConverter etudiantConverter) {
         this.etudiantConverter = etudiantConverter;
     }
-    public EtatInscriptionConverter getEtatInscriptionConverter(){
+
+    public EtatInscriptionConverter getEtatInscriptionConverter() {
         return this.etatInscriptionConverter;
     }
-    public void setEtatInscriptionConverter(EtatInscriptionConverter etatInscriptionConverter ){
+
+    public void setEtatInscriptionConverter(EtatInscriptionConverter etatInscriptionConverter) {
         this.etatInscriptionConverter = etatInscriptionConverter;
     }
-    public GroupeTypeConverter getGroupeTypeConverter(){
+
+    public GroupeTypeConverter getGroupeTypeConverter() {
         return this.groupeTypeConverter;
     }
-    public void setGroupeTypeConverter(GroupeTypeConverter groupeTypeConverter ){
+
+    public void setGroupeTypeConverter(GroupeTypeConverter groupeTypeConverter) {
         this.groupeTypeConverter = groupeTypeConverter;
     }
-    public StatutSocialConverter getStatutSocialConverter(){
+
+    public StatutSocialConverter getStatutSocialConverter() {
         return this.statutSocialConverter;
     }
-    public void setStatutSocialConverter(StatutSocialConverter statutSocialConverter ){
+
+    public void setStatutSocialConverter(StatutSocialConverter statutSocialConverter) {
         this.statutSocialConverter = statutSocialConverter;
     }
-    public PackStudentConverter getPackStudentConverter(){
+
+    public PackStudentConverter getPackStudentConverter() {
         return this.packStudentConverter;
     }
-    public void setPackStudentConverter(PackStudentConverter packStudentConverter ){
+
+    public void setPackStudentConverter(PackStudentConverter packStudentConverter) {
         this.packStudentConverter = packStudentConverter;
     }
-    public GroupeEtudeConverter getGroupeEtudeConverter(){
+
+    public GroupeEtudeConverter getGroupeEtudeConverter() {
         return this.groupeEtudeConverter;
     }
-    public void setGroupeEtudeConverter(GroupeEtudeConverter groupeEtudeConverter ){
+
+    public void setGroupeEtudeConverter(GroupeEtudeConverter groupeEtudeConverter) {
         this.groupeEtudeConverter = groupeEtudeConverter;
     }
-    public NiveauEtudeConverter getNiveauEtudeConverter(){
+
+    public NiveauEtudeConverter getNiveauEtudeConverter() {
         return this.niveauEtudeConverter;
     }
-    public void setNiveauEtudeConverter(NiveauEtudeConverter niveauEtudeConverter ){
+
+    public void setNiveauEtudeConverter(NiveauEtudeConverter niveauEtudeConverter) {
         this.niveauEtudeConverter = niveauEtudeConverter;
     }
-    public boolean  isEtudiant(){
+
+    public boolean isEtudiant() {
         return this.etudiant;
     }
-    public void  setEtudiant(boolean etudiant){
+
+    public void setEtudiant(boolean etudiant) {
         this.etudiant = etudiant;
     }
-    public boolean  isEtatInscription(){
+
+    public boolean isEtatInscription() {
         return this.etatInscription;
     }
-    public void  setEtatInscription(boolean etatInscription){
+
+    public void setEtatInscription(boolean etatInscription) {
         this.etatInscription = etatInscription;
     }
-    public boolean  isParcours(){
+
+    public boolean isParcours() {
         return this.parcours;
     }
-    public void  setParcours(boolean parcours){
+
+    public void setParcours(boolean parcours) {
         this.parcours = parcours;
     }
-    public boolean  isGroupeEtude(){
+
+    public boolean isGroupeEtude() {
         return this.groupeEtude;
     }
-    public void  setGroupeEtude(boolean groupeEtude){
+
+    public void setGroupeEtude(boolean groupeEtude) {
         this.groupeEtude = groupeEtude;
     }
-    public boolean  isGroupeType(){
+
+    public boolean isGroupeType() {
         return this.groupeType;
     }
-    public void  setGroupeType(boolean groupeType){
+
+    public void setGroupeType(boolean groupeType) {
         this.groupeType = groupeType;
     }
-    public boolean  isStatutSocial(){
+
+    public boolean isStatutSocial() {
         return this.statutSocial;
     }
-    public void  setStatutSocial(boolean statutSocial){
+
+    public void setStatutSocial(boolean statutSocial) {
         this.statutSocial = statutSocial;
     }
-    public boolean  isInteretEtudiant(){
+
+    public boolean isInteretEtudiant() {
         return this.interetEtudiant;
     }
-    public void  setInteretEtudiant(boolean interetEtudiant){
+
+    public void setInteretEtudiant(boolean interetEtudiant) {
         this.interetEtudiant = interetEtudiant;
     }
-    public boolean  isNiveauEtude(){
+
+    public boolean isNiveauEtude() {
         return this.niveauEtude;
     }
-    public void  setNiveauEtude(boolean niveauEtude){
+
+    public void setNiveauEtude(boolean niveauEtude) {
         this.niveauEtude = niveauEtude;
     }
-    public boolean  isFonction(){
+
+    public boolean isFonction() {
         return this.fonction;
     }
-    public void  setFonction(boolean fonction){
+
+    public void setFonction(boolean fonction) {
         this.fonction = fonction;
     }
-    public boolean  isQuiz(){
+
+    public boolean isQuiz() {
         return this.quiz;
     }
-    public void  setQuiz(boolean quiz){
+
+    public void setQuiz(boolean quiz) {
         this.quiz = quiz;
     }
-    public boolean  isPackStudent(){
+
+    public boolean isPackStudent() {
         return this.packStudent;
     }
-    public void  setPackStudent(boolean packStudent){
+
+    public void setPackStudent(boolean packStudent) {
         this.packStudent = packStudent;
     }
-    public boolean  isSkill(){
+
+    public boolean isSkill() {
         return this.skill;
     }
-    public void  setSkill(boolean skill){
+
+    public void setSkill(boolean skill) {
         this.skill = skill;
     }
 }

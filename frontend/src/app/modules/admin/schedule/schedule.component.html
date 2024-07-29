@@ -27,7 +27,7 @@
 
                             <mat-form-field class="w-full">
                                 <mat-select placeholder="filter by teacher"
-                                            [(ngModel)]="criteria.profNameLike"
+                                            [(ngModel)]="prof"
                                             [compareWith]="compareObjects">
                                     <div class="mat-option mx-4">
                                         <input
@@ -41,8 +41,12 @@
                                         />
                                     </div>
 
+                                    <mat-option class="my-2" [value]="null">
+                                        clear
+                                    </mat-option>
+
                                     <mat-option class="my-2" *ngFor="let item of profs"
-                                                [value]="item.fullName">
+                                                [value]="item">
                                         <div class="w-full flex flex-row items-center justify-center flex-wrap gap-2">
                                             <div class="w-12 h-12 bg-gray-200 uppercase flex items-center justify-center
                                  dark:bg-gray-600 text-xl rounded-full">
@@ -59,7 +63,7 @@
 
                             <mat-form-field class="w-full">
                                 <mat-select placeholder="filter by groups"
-                                            [(ngModel)]="criteria.grpNameLike">
+                                            [(ngModel)]="group" [compareWith]="compareObjects">
                                     <div class="mat-option mx-4">
                                         <input
                                             #groupField
@@ -73,7 +77,7 @@
                                     </div>
 
                                     <mat-option class="my-2" *ngFor="let item of groups"
-                                                [value]="item.libelle">
+                                                [value]="item">
                                         {{ item?.libelle }}
                                     </mat-option>
                                 </mat-select>

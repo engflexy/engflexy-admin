@@ -9,7 +9,7 @@ import {AuthService} from "../../../../zynerator/security/shared/service/Auth.se
 import {Pageable} from "../../../../shared/utils/Pageable";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateStudentComponent} from "./create-student/create-student.component";
-import {UserCriteria} from "../../../../core/criteria/user-criteria";
+import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -18,7 +18,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class StudentsComponent implements OnInit {
 
-    criteria: PageRequest<UserCriteria>
+    criteria: PageRequest<ManageUserDto>
     pageable: Pageable = new Pageable(0, 5)
     etudiant: UserCriteria
     constructor(private etudiantService: EtudiantCollaboratorService,
@@ -91,7 +91,7 @@ export class StudentsComponent implements OnInit {
         })
     }
 
-    navigateToDetail(item: UserCriteria) {
+    navigateToDetail(item: ManageUserDto) {
         this.router.navigate([`student/${item.id}`], {relativeTo: this.route})
     }
 

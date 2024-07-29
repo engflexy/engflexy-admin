@@ -25,24 +25,24 @@
             <fuse-card
                 class="flex flex-col rounded-none shadow-none border border-gray-100 dark:border-gray-700  w-full p-8 pb-4 filter-article">
                 <div class="flex relative items-center">
-                    <ng-container *ngIf="item?.url else showColor">
+                    <ng-container *ngIf="item.url else showColor">
                         <img
                             class="w-20 h-20 relative rounded-lg object-cover"
-                            ngSrc="{{item?.url}}"
+                            ngSrc="{{item.url}}"
                             alt="Card cover image" fill>
                     </ng-container>
                     <ng-template #showColor>
                         <div
-                            class="w-20 h-20 rounded-lg bg-{{item?.color}}-100 flex items-center justify-center content-center">
+                            class="w-20 h-20 rounded-lg bg-{{item.color}}-100 flex items-center justify-center content-center">
                             <strong
-                                class="text-5xl opacity-60 font-bold uppercase text-{{item?.color}}-600">{{item?.code}}
+                                class="text-5xl opacity-60 font-bold uppercase text-{{item.color}}-600">{{item.code}}
                             </strong>
                         </div>
                     </ng-template>
 
                     <div class="flex flex-col ml-6">
-                        <div class="text-2xl font-semibold leading-tight">{{item?.libelle}}</div>
-                        <div class="text-secondary font-medium text-md">{{item?.nombreCours}} course includes</div>
+                        <div class="text-2xl font-semibold leading-tight">{{item.libelle}}</div>
+                        <div class="text-secondary font-medium text-md">{{item.nombreCours}} course includes</div>
                     </div>
 
                     <div class="flex flex-grow  items-center flex-row-reverse">
@@ -50,8 +50,8 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Edit</button>
-                            <button mat-menu-item>Delete</button>
+                            <button mat-menu-item (click)="edit(item)">Edit</button>
+                            <button mat-menu-item (click)="delete(item)">Delete</button>
                         </mat-menu>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                     <div class="flex flex-row  flex-wrap items-center gap-x-5">
                         <mat-form-field
                             class="flex-auto fuse-mat-bold fuse-mat-dense  flex-grow">
-                            <input placeholder="search.." matInput>
+                            <input placeholder="search.." matInput >
                             <mat-icon
                                 class="icon-size-5"
                                 matPrefix
@@ -161,7 +161,7 @@
                                                     </td>
                                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                         <div class="flex items-center gap-x-6">
-                                                            <button
+                                                            <button (click)="deleteCourse()"
                                                                 class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                      viewBox="0 0 24 24" stroke-width="1.5"
@@ -171,7 +171,7 @@
                                                                 </svg>
                                                             </button>
 
-                                                            <button
+                                                            <button (click)="editCourse(item)"
                                                                 class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                      viewBox="0 0 24 24" stroke-width="1.5"

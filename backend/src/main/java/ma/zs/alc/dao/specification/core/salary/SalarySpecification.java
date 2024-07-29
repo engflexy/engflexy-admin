@@ -15,6 +15,7 @@ public class SalarySpecification extends  AbstractSpecification<SalaryCriteria, 
         addPredicateInt("annee", criteria.getAnnee(), criteria.getAnneeMin(), criteria.getAnneeMax());
         addPredicateBigDecimal("nbrSessionMensuel", criteria.getNbrSessionMensuel(), criteria.getNbrSessionMensuelMin(), criteria.getNbrSessionMensuelMax());
         addPredicateBool("payer", criteria.getPayer());
+        addPredicateBool("status", criteria.getPayer());
         addPredicateBigDecimal("totalPayment", criteria.getTotalPayment(), criteria.getTotalPaymentMin(), criteria.getTotalPaymentMax());
         addPredicateBigDecimal("totalBonusClassAverage", criteria.getTotalBonusClassAverage(), criteria.getTotalBonusClassAverageMin(), criteria.getTotalBonusClassAverageMax());
         addPredicateBigDecimal("totalBonusWorkload", criteria.getTotalBonusWorkload(), criteria.getTotalBonusWorkloadMin(), criteria.getTotalBonusWorkloadMax());

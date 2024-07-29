@@ -1,0 +1,103 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden">
+    <div class="w-full items-center justify-center flex flex-col gap-4">
+        <div class="w-full flex max-w-4xl md:w-[70vw] flex-col gap-4 items-center justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a teacher</mat-label>
+                <input required #teacher type="text"
+                       placeholder="choose a teacher"
+                       (input)="filter(teacher.value, 'PROF')"
+                       [(ngModel)]="pageable.prof"
+                       name="prof"
+                       matInput
+                       [matAutocomplete]="autoTeacher">
+                <mat-autocomplete #autoTeacher="matAutocomplete" [displayWith]="displayFnName">
+                    <mat-option *ngFor="let item of _profs" class="border-b border-solid" [value]="item">
+                        <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
+                            <ng-container *ngIf="item?.avatar else noImg">
+                                <img
+                                    class="w-14 h-14 mr-4 rounded-none object-cover"
+                                    src="{{item?.avatar}}"
+                                    width="56"
+                                    height="56"
+                                    alt="Card cover image">
+                            </ng-container>
+                            <ng-template #noImg>
+                                <div class="flex flex-grow flex-col min-w-0">
+                                    <div class="font-medium leading-none">
+                                        {{ item?.fullName }}
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a year</mat-label>
+                <input required #year type="text"
+                       placeholder="choose a year"
+                       (input)="filter(year.value, 'YEAR')"
+                       [(ngModel)]="pageable.annee"
+                       name="year"
+                       matInput
+                       [matAutocomplete]="autoYear">
+                <mat-autocomplete #autoYear="matAutocomplete">
+                    <mat-option *ngFor="let item of years" class="border-b border-solid" [value]="item">
+                        <div class="w-full flex flex-col gap-2">
+                            <div>{{ item }}</div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a month</mat-label>
+                <input required #month type="text"
+                       placeholder="choose a month"
+                       (input)="filter(month.value, 'MONTH')"
+                       [(ngModel)]="pageable.mois"
+                       name="month"
+                       matInput
+                       [matAutocomplete]="autoMonth">
+                <mat-autocomplete #autoMonth="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let item of months" class="border-b border-solid" [value]="item.month">
+                        <div class="w-full flex flex-col gap-2">
+                            <div>{{ item?.name }}</div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a status</mat-label>
+                <input required  type="text"
+                       placeholder="choose a C"
+                       [(ngModel)]="pageable.payer"
+                       name="status"
+                       matInput
+                       [matAutocomplete]="autoStatus">
+                <mat-autocomplete #autoStatus="matAutocomplete" [displayWith]="displayFnStatus">
+                    <mat-option *ngFor="let item of _statuses" class="border-b border-solid" [value]="item.value">
+                        <div class="w-full flex flex-col gap-2">
+                            <div>{{ item?.label }}</div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>
+        Clear
+    </button>
+    <button class="px-6 ml-3" (click)="applyFilter()" mat-flat-button [color]="'primary'">
+        Apply
+    </button>
+</mat-dialog-actions>

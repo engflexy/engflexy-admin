@@ -11,6 +11,10 @@ import {colors} from "../../../shared/constant/colors";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateMaterialComponent} from "./create-material/create-material.component";
 import {Router} from "@angular/router";
+import {ParcoursCriteria} from "../../../shared/criteria/course/ParcoursCriteria.model";
+import {FormsModule} from "@angular/forms";
+import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscription/filter-inscription.component";
+import {FilterMaterialComponent} from "./filter-material/filter-material.component";
 
 @Component({
     selector: 'app-manage-courses',
@@ -24,14 +28,23 @@ import {Router} from "@angular/router";
         MatButtonModule,
         FuseCardComponent,
         NgForOf,
-        NgIf
+        NgIf,
+        FormsModule
     ]
 })
 export class ManageCoursesComponent implements OnInit {
 
+
     constructor(private parcourService: ParcoursAdminService,
                 private router: Router,
                 private _matDialog: MatDialog,) {
+    }
+
+    public findPaginatedByCriteria() {
+        this.parcourService.findPaginatedByCriteria(this.criteria).subscribe(paginatedItems => {
+            this.levels = paginatedItems.list
+            console.log(this.levels)
+        }, error => console.log(error));
     }
 
     get item(): ParcoursDto {
@@ -40,6 +53,15 @@ export class ManageCoursesComponent implements OnInit {
 
     set item(item: ParcoursDto) {
         this.parcourService.item = item
+    }
+
+
+    get criteria(): ParcoursCriteria {
+        return this.parcourService.criteria;
+    }
+
+    set criteria(value: ParcoursCriteria) {
+        this.parcourService.criteria = value;
     }
 
     get levels(): ParcoursDto[] {
@@ -55,6 +77,7 @@ export class ManageCoursesComponent implements OnInit {
             this.levels = res
             console.log(this.levels)
         })
+
     }
 
     createMaterial() {
@@ -65,8 +88,27 @@ export class ManageCoursesComponent implements OnInit {
         });
     }
 
+
+
     navigateTo(item: ParcoursDto) {
         this.item = item
         this.router.navigate(['/admin/manage-courses/materials/' + item?.id])
+    }
+
+    openFilter() {
+        const dialog = this._matDialog.open(FilterMaterialComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+
+        dialog.afterClosed().subscribe(res => {
+            if (res != null) {
+
+            }
+        })
     }
 }

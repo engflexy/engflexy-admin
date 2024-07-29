@@ -3,9 +3,10 @@ package  ma.zs.alc.ws.converter.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ma.zs.alc.ws.converter.vocab.CollaboratorConverter;
+import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
+import ma.zs.alc.bean.core.collab.Collaborator;
 
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.bean.core.collab.Collaborator;
 
 
 import ma.zs.alc.zynerator.util.StringUtil;
@@ -43,11 +44,11 @@ public class NewsConverter extends AbstractConverter<News, NewsDto> {
             if(StringUtil.isNotEmpty(dto.getDescription()))
                 item.setDescription(dto.getDescription());
             if(StringUtil.isNotEmpty(dto.getDateNews()))
-                item.setDateNews(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateNews()));
+                item.setDateNews(DateUtil.stringEnToDate(dto.getDateNews(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateDebut()))
-                item.setDateDebut(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateDebut()));
+                item.setDateDebut(DateUtil.stringEnToDate(dto.getDateDebut(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getDateFin()))
-                item.setDateFin(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ENG_WITH_TIME_ZONE,dto.getDateFin()));
+                item.setDateFin(DateUtil.stringEnToDate(dto.getDateFin(),DateUtil.DATE_FORMAT_ENG));
             if(StringUtil.isNotEmpty(dto.getNumeroOrdre()))
                 item.setNumeroOrdre(dto.getNumeroOrdre());
             if(StringUtil.isNotEmpty(dto.getDestinataire()))
@@ -103,6 +104,9 @@ public class NewsConverter extends AbstractConverter<News, NewsDto> {
 
     public void copy(NewsDto dto, News t) {
     super.copy(dto, t);
+    if(t.getCollaborator() == null && dto.getCollaborator() != null) {
+        t.setCollaborator(new Collaborator());
+    }
     if (dto.getCollaborator() != null)
         collaboratorConverter.copy(dto.getCollaborator(), t.getCollaborator());
     }

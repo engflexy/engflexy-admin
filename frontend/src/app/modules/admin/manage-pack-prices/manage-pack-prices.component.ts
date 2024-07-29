@@ -1,5 +1,5 @@
 import {DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {FuseCardComponent} from '@fuse/components/card';
@@ -44,6 +44,14 @@ import {EditComponent} from "./edit/edit.component";
 import {FilterComponent} from "./filter/filter.component";
 import {PageRequest} from "../../../zynerator/criteria/BaseCriteria.model";
 import {Pageable} from "../../../shared/utils/Pageable";
+import {
+    PackStudentCollaboratorService
+} from "../../../shared/service/collaborator/pack/PackStudentCollaborator.service";
+import {PackageCollaboratorDto} from "../../../shared/model/collab/PackageCollaborator.model";
+import {
+    PackageCollaboratorCollaboratorService
+} from "../../../shared/service/collaborator/collab/PackageCollaboratorCollaborator.service";
+import {EditPackComponent} from "./edit-pack/edit-pack.component";
 
 @Component({
     selector: 'app-manage-pack-prices',
@@ -61,17 +69,20 @@ export class ManagePackPricesComponent implements OnInit{
     /**
      * Constructor
      */
+
     status = TYPE_INSCRIPTION
     items: PageRequest<InscriptionCollaboratorDto> = new PageRequest<InscriptionCollaboratorDto>()
+    itemsPackages:Array<PackageCollaboratorDto> = new Array<PackageCollaboratorDto>();
     criteria:InscriptionCollaboratorCriteria = new InscriptionCollaboratorCriteria();
     active_status = 1;
 
     pageable=new Pageable(0,5);
     constructor(private service: InscriptionCollaboratorCollaboratorService,
+                public servicePackageCollaborator:PackageCollaboratorCollaboratorService,
                 private _fuseConfirmation: FuseConfirmationService,
                 private router: Router,
                 private route: ActivatedRoute,
-
+                private changeDetector:ChangeDetectorRef,
                 private breakpointObserver: BreakpointObserver,
                 private groupDetailService: GroupeEtudiantDetailCollaboratorService,
                 private alert: FuseAlertService,
@@ -89,11 +100,19 @@ export class ManagePackPricesComponent implements OnInit{
         if (this.active_status === 1) {
             this.service.findByCollaboratorTypeCollaboratorIdSchool(this.pageable).subscribe(res => {
                 this.items = res;
+                this.changeDetector.detectChanges();
             });
-        } else {
+        } else if(this.active_status===2){
             this.service.findByCollaboratorTypeCollaboratorIdTeacher(this.pageable).subscribe(res => {
                 this.items = res;
+                this.changeDetector.detectChanges();
             });
+        }
+        else{
+            this.servicePackageCollaborator.findAll().subscribe(res=>{
+                this.itemsPackages=res;
+                this.changeDetector.detectChanges();
+            })
         }
     }
 
@@ -164,8 +183,18 @@ export class ManagePackPricesComponent implements OnInit{
         return this.service.item;
     }
 
+
     set item(value: InscriptionCollaboratorDto) {
         this.service.item = value;
+    }
+
+    get itemPackage(): PackageCollaboratorDto {
+        return this.servicePackageCollaborator.item;
+    }
+
+
+    set itemPackage(value: PackageCollaboratorDto) {
+        this.servicePackageCollaborator.item = value;
     }
 
     openDetail(item: InscriptionCollaboratorDto) {
@@ -193,5 +222,21 @@ export class ManagePackPricesComponent implements OnInit{
                 this.fetchData()
             }
         })
+    }
+
+    editPack(item: PackageCollaboratorDto) {
+        this.itemPackage = item
+        this._matDialog.open(EditPackComponent, {
+            autoFocus: false,
+            height: "auto",
+            width: "calc(100% - 100px)",
+            maxWidth: "100%",
+            disableClose: true,
+            maxHeight: "100%"
+        });
+    }
+
+    openDetailPack(item: PackageCollaboratorDto) {
+
     }
 }

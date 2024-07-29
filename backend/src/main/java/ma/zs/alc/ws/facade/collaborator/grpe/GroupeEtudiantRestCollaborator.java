@@ -171,6 +171,11 @@ public class GroupeEtudiantRestCollaborator extends AbstractController<GroupeEtu
         return super.getDataSize(criteria);
     }
 
+    @Operation(summary = "Finds an optimized list of all profs")
+    @GetMapping("optimized")
+    public ResponseEntity<List<GroupeEtudiantDto>> findAllOptimized() throws Exception {
+        return super.findAllOptimized();
+    }
 
     public GroupeEtudiantRestCollaborator(GroupeEtudiantCollaboratorService service, GroupeEtudiantConverter converter) {
         super(service, converter);

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 
 
-import ma.zs.alc.bean.core.common.Collaborator;
+import ma.zs.alc.bean.core.collab.Collaborator;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

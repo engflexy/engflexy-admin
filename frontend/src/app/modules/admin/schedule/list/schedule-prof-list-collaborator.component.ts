@@ -1,45 +1,47 @@
 import {Component, OnInit, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {ScheduleProfCollaboratorService} from 'src/app/shared/service/collaborator/prof/ScheduleProfCollaborator.service';
-import {ScheduleProfDto} from 'src/app/shared/model/prof/ScheduleProf.model';
-import {ScheduleProfCriteria} from 'src/app/shared/criteria/prof/ScheduleProfCriteria.model';
+import {ScheduleProfCollaboratorService} from '../../../../shared/service/collaborator/prof/ScheduleProfCollaborator.service';
+import {ScheduleProfDto} from '../../../../shared/model/prof/ScheduleProf.model';
+import {ScheduleProfCriteria} from '../../../../shared/criteria/prof/ScheduleProfCriteria.model';
 
 
+// @ts-ignore
 import {ConfirmationService, MessageService,MenuItem} from 'primeng/api';
-import {FileTempDto} from 'src/app/zynerator/dto/FileTempDto.model';
+import {FileTempDto} from '../../../../zynerator/dto/FileTempDto.model';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 
-import {environment} from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
-import {RoleService} from 'src/app/zynerator/security/shared/service/Role.service';
-import {AbstractService} from 'src/app/zynerator/service/AbstractService';
-import {BaseDto} from 'src/app/zynerator/dto/BaseDto.model';
-import {BaseCriteria} from 'src/app/zynerator/criteria/BaseCriteria.model';
-import {StringUtilService} from 'src/app/zynerator/util/StringUtil.service';
-import {ServiceLocator} from 'src/app/zynerator/service/ServiceLocator';
+import {RoleService} from '../../../../zynerator/security/shared/service/Role.service';
+import {AbstractService} from '../../../../zynerator/service/AbstractService';
+import {BaseDto} from '../../../../zynerator/dto/BaseDto.model';
+import {BaseCriteria} from '../../../../zynerator/criteria/BaseCriteria.model';
+import {StringUtilService} from '../../../../zynerator/util/StringUtil.service';
+import {ServiceLocator} from '../../../../zynerator/service/ServiceLocator';
 
-import {AuthService} from 'src/app/zynerator/security/shared/service/Auth.service';
-import {ExportService} from 'src/app/zynerator/util/Export.service';
+import {AuthService} from '../../../../zynerator/security/shared/service/Auth.service';
+import {ExportService} from '../../../../zynerator/util/Export.service';
 
 
-import {GroupeEtudiantDto} from 'src/app/shared/model/grpe/GroupeEtudiant.model';
-import {GroupeEtudiantCollaboratorService} from 'src/app/shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service';
-import {CoursDto} from 'src/app/shared/model/course/Cours.model';
-import {CoursCollaboratorService} from 'src/app/shared/service/collaborator/course/CoursCollaborator.service';
-import {ProfDto} from 'src/app/shared/model/prof/Prof.model';
-import {ProfCollaboratorService} from 'src/app/shared/service/collaborator/prof/ProfCollaborator.service';
+import {GroupeEtudiantDto} from '../../../../shared/model/grpe/GroupeEtudiant.model';
+import {GroupeEtudiantCollaboratorService} from '../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service';
+import {CoursDto} from '../../../../shared/model/course/Cours.model';
+import {CoursCollaboratorService} from '../../../../shared/service/collaborator/course/CoursCollaborator.service';
+import {ProfDto} from '../../../../shared/model/prof/Prof.model';
+import {ProfCollaboratorService} from '../../../../shared/service/collaborator/prof/ProfCollaborator.service';
 
 import {CalendarOptions, EventClickArg} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {FullCalendarComponent} from '@fullcalendar/angular';
-import {ScheduleDto} from 'src/app/zynerator/dto/ScheduleDto.model';
+import {ScheduleDto} from '../../../../zynerator/dto/ScheduleDto.model';
 
 @Component({
-  selector: 'app-schedule-prof-list-collaborator',
-  templateUrl: './schedule-prof-list-collaborator.component.html'
+    selector: 'app-schedule-prof-list-collaborator',
+    standalone: true,
+    templateUrl: './schedule-prof-list-collaborator.component.html'
 })
 export class ScheduleProfListCollaboratorComponent implements OnInit {
 
@@ -66,11 +68,12 @@ export class ScheduleProfListCollaboratorComponent implements OnInit {
     protected enableSecurity = false;
 
 
-     yesOrNoCourseFinished: any[] = [];
+    yesOrNoCourseFinished: any[] = [];
     groupeEtudiants: Array<GroupeEtudiantDto>;
     profs: Array<ProfDto>;
     courss: Array<CoursDto>;
     schedules: ScheduleDto[];
+    // @ts-ignore
     schedule = new ScheduleDto();
 
     public events: Array<any> = new Array<any>();
@@ -460,7 +463,7 @@ export class ScheduleProfListCollaboratorComponent implements OnInit {
             'Prof name': this.criteria.profName ? this.criteria.profName : environment.emptyForExport ,
             'Profs id Min': this.criteria.profsIdMin ? this.criteria.profsIdMin : environment.emptyForExport ,
             'Profs id Max': this.criteria.profsIdMax ? this.criteria.profsIdMax : environment.emptyForExport ,
-            'Course finished': this.criteria.courseFinished ? (this.criteria.courseFinished ? environment.trueValue : environment.falseValue) : environment.emptyForExport ,
+            //'Course finished': this.criteria.courseFinished ? (this.criteria.courseFinished ? environment.trueValue : environment.falseValue) : environment.emptyForExport ,
         }];
       }
 

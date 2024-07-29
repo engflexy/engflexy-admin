@@ -88,6 +88,9 @@ const userRoutes: Route[] = [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
     ],
+    exports: [
+        CollaboratorProfileComponent
+    ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
         Location]
 })

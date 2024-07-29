@@ -13,8 +13,8 @@ export class UserCriteria  extends BaseCriteria  {
     public accountNonLocked: null | boolean;
     public username: string;
     public usernameLike: string;
-    public firstName: string;
-    public firstNameLike: string;
+    public fullName: string;
+    public fullNameLike: string;
     public lastName: string;
     public lastNameLike: string;
     public phone: string;

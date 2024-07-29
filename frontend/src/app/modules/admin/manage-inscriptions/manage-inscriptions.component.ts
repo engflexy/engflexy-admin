@@ -74,7 +74,7 @@ export class ManageInscriptionsComponent implements OnInit {
         const dialog = this._matDialog.open(InscriptionCreateCollaboratorComponent, {
             autoFocus: false,
             height: "auto",
-            width: "calc(100% - 100px)",
+            width: "calc(100% - 400px)",
             maxWidth: "100%",
             disableClose: true,
             maxHeight: "100%"

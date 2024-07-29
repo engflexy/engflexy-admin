@@ -2,6 +2,7 @@ package ma.zs.alc.ws.converter.pack;
 
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.pack.PackStudent;
+import ma.zs.alc.bean.core.price.Price;
 import ma.zs.alc.ws.converter.course.ParcoursConverter;
 import ma.zs.alc.ws.converter.price.PriceConverter;
 import ma.zs.alc.ws.dto.pack.PackStudentDto;
@@ -118,6 +119,12 @@ public class PackStudentConverter extends AbstractConverter<PackStudent, PackStu
 
     public void copy(PackStudentDto dto, PackStudent t) {
         super.copy(dto, t);
+        if (t.getLevel() == null && dto.getParcours() != null) {
+            t.setLevel(new Parcours());
+        }
+        if (t.getPrice() == null && dto.getPrice() != null) {
+            t.setPrice(new Price());
+        }
         if (dto.getParcours() != null)
             parcoursConverter.copy(dto.getParcours(), t.getLevel());
         if (dto.getPrice() != null)

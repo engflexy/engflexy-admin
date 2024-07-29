@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.homework.HomeWorkQuestionConverter;
+import ma.zs.alc.bean.core.homework.HomeWorkQuestion;
 
 import ma.zs.alc.bean.core.homework.HomeWorkQuestion;
 
@@ -83,6 +84,9 @@ public class HoweWorkQSTReponseConverter extends AbstractConverter<HoweWorkQSTRe
 
     public void copy(HoweWorkQSTReponseDto dto, HoweWorkQSTReponse t) {
     super.copy(dto, t);
+    if(t.getHomeWorkQuestion() == null && dto.getHomeWorkQuestion() != null) {
+        t.setHomeWorkQuestion(new HomeWorkQuestion());
+    }
     if (dto.getHomeWorkQuestion() != null)
         homeWorkQuestionConverter.copy(dto.getHomeWorkQuestion(), t.getHomeWorkQuestion());
     }

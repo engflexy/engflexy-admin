@@ -33,6 +33,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
 import {TranslocoModule} from "@ngneat/transloco";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {CreateComponent} from "../create/create.component";
 
 @Component({
     selector: 'app-filter',
@@ -49,7 +50,6 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         TranslocoModule,
         MatDatepickerModule
     ],
-    styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit{
     protected _submitted = false;
@@ -73,7 +73,7 @@ export class FilterComponent implements OnInit{
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<FilterComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public refDialog: MatDialogRef<CreateComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
@@ -99,7 +99,7 @@ export class FilterComponent implements OnInit{
         }
     }
     displayCollaborator(item: CollaboratorDto): string {
-        return item && item.libelle ? item.libelle : "";
+        return item && item.username ? item.username : "";
 
     }
 
@@ -107,7 +107,7 @@ export class FilterComponent implements OnInit{
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._collaboratorsFilter = this.collaborators.filter(s =>
-                s.libelle?.toLowerCase()?.includes(value)
+                s.username?.toLowerCase()?.includes(value)
             )
         } else {
             this._collaboratorsFilter = this.collaborators
@@ -333,5 +333,4 @@ export class FilterComponent implements OnInit{
         this._activeTab = value;
     }
 
-    protected readonly compareObjects = compareObjects;
 }

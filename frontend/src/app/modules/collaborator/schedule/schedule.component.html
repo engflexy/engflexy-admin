@@ -1,0 +1,100 @@
+<div class="w-full overflow-y-auto flex  items-center content-center justify-center">
+    <div class="w-full bg-white dark:bg-gray-700 shadow-md max-w-5xl h-auto min-h-screen">
+        <header class="bg-gray-50 dark:bg-gray-600 w-full">
+            <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <div class="text-center sm:text-left">
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-50 sm:text-3xl">
+                            Schedule📅
+                        </h1>
+                    </div>
+                    <button mat-button (click)="create()"
+                            mat-stroked-button color="primary">create new class
+                    </button>
+                </div>
+            </div>
+        </header>
+
+
+        <section class="container px-4 mx-auto">
+
+            <div class="flex flex-col mt-6">
+                <div class=" overflow-x-auto">
+                    <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
+                      flex flex-row justify-center items-center gap-4">
+
+                        <div class="flex-grow grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-2">
+
+                            <mat-form-field class="w-full">
+                                <mat-select placeholder="filter by teacher"
+                                            [(ngModel)]="prof"
+                                            [compareWith]="compareObjects">
+                                    <div class="mat-option mx-4">
+                                        <input
+                                            #teacherField
+                                            type="text"
+                                            (input)="filterTeachers(teacherField.value)"
+                                            placeholder="Search for teachers..."
+                                            class="peer h-10 w-full border-none bg-transparent p-0
+                                placeholder-transparent focus:border-transparent
+                                focus:outline-none focus:ring-0 sm:text-sm"
+                                        />
+                                    </div>
+
+                                    <mat-option class="my-2" [value]="null">
+                                        clear
+                                    </mat-option>
+
+                                    <mat-option class="my-2" *ngFor="let item of profs"
+                                                [value]="item">
+                                        <div class="w-full flex flex-row items-center justify-center flex-wrap gap-2">
+                                            <div class="w-12 h-12 bg-gray-200 uppercase flex items-center justify-center
+                                 dark:bg-gray-600 text-xl rounded-full">
+                                                <p>{{ item?.fullName?.at(0) }}</p>
+                                            </div>
+                                            <div class="flex-grow flex flex-col items-start justify-center">
+                                                <strong>{{ item?.fullName }}</strong>
+                                                <p>{{ item?.username }}</p>
+                                            </div>
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <mat-select placeholder="filter by groups"
+                                            [(ngModel)]="group" [compareWith]="compareObjects">
+                                    <div class="mat-option mx-4">
+                                        <input
+                                            #groupField
+                                            type="text"
+                                            (input)="filterGroups(groupField.value)"
+                                            placeholder="Search for groups..."
+                                            class="peer h-10 w-full border-none bg-transparent p-0
+                                placeholder-transparent focus:border-transparent
+                                focus:outline-none focus:ring-0 sm:text-sm"
+                                        />
+                                    </div>
+
+                                    <mat-option class="my-2" *ngFor="let item of groups"
+                                                [value]="item">
+                                        {{ item?.libelle }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <button (click)="findByCriteria()" mat-icon-button class="mb-5" color="primary">
+                            <mat-icon svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div class="calenderContainer bg-white dark:bg-gray-700">
+                        <full-calendar #calendar [style]="{width: '100%'}" [options]="calendarOptions"></full-calendar>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

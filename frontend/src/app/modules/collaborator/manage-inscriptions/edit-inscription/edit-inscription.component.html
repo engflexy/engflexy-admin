@@ -1,0 +1,127 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden">
+    <div class="w-full  items-center justify-center flex flex-col gap-4">
+
+        <form
+            #ngForm="ngForm"
+            class="w-full flex max-w-4xl  md:w-[70vw]  flex-col gap-4 items-center
+            justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a student</mat-label>
+                <input required #student type="text"
+                       placeholder="choose a student"
+                       (input)="filter(student.value, 'STUDENT')"
+                       (ngModelChange)="handleNgModelChange($event)"
+                       [(ngModel)]="inscription.etudiant"
+                       name="etudiant"
+                       matInput
+                       [matAutocomplete]="auto">
+
+                <mat-autocomplete aria-label="fullName"  #auto="matAutocomplete" [displayWith]="displayFnName">
+                    <mat-option *ngFor="let item of _students" class="border-b border-solid" [value]="item">
+                        <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
+                            <ng-container *ngIf="item?.avatar else noImg">
+                                <img
+                                    class="w-14 h-14 mr-4 rounded-none object-cover"
+                                    src="{{item?.avatar}}"
+                                    width="56"
+                                    height="56"
+                                    alt="Card cover image">
+                            </ng-container>
+                            <ng-template #noImg>
+                                <div
+                                    class="w-14 h-14 mr-4 uppercase bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-hint text-2xl">
+                                    <span>{{ item?.email?.at(0) }}</span>
+                                </div>
+                            </ng-template>
+
+                            <div class="flex flex-grow flex-col min-w-0">
+                                <div class="font-medium leading-none">
+                                    {{ item?.fullName }}
+                                </div>
+
+                                <div class="text-md truncate leading-none mt-1">
+                                    {{ item?.email }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a material</mat-label>
+                <input required #material type="text"
+                       placeholder="choose a material"
+                       (input)="filter(material.value, 'MATERIAL')"
+                       [(ngModel)]="inscription.parcours"
+                       name="parcours"
+                       matInput
+                       [matAutocomplete]="autoMaterial">
+                <mat-autocomplete aria-label="fullName" [displayWith]="displayFn" #autoMaterial="matAutocomplete">
+                    <mat-option *ngFor="let item of _materials" class="border-b border-solid" [value]="item">
+                        <div class="w-full flex flex-col gap-2">
+                            <div>{{ item?.libelle }}</div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a pack</mat-label>
+                <input required #pack type="text"
+                       placeholder="choose a pack"
+                       (input)="filter(pack.value, 'PACK')"
+                       [(ngModel)]="inscription.packStudent"
+                       name="packStudent"
+                       matInput
+                       [matAutocomplete]="autoPack">
+                <mat-autocomplete #autoPack="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let item of _packs" class="border-b border-solid" [value]="item">
+                        <div class="w-full flex flex-col gap-2">
+                            <div>{{ item?.libelle }}</div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose state</mat-label>
+                <input required #etatInscription type="text"
+                       placeholder="choose type of group"
+                       (input)="filter(etatInscription.value, 'STATE')"
+                       [(ngModel)]="inscription.etatInscription"
+                       (ngModelChange)="handleInscChange($event)"
+                       name="etatInscription"
+                       matInput
+                       [matAutocomplete]="autoEtatInscription">
+                <mat-autocomplete #autoEtatInscription="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let item of _etats" class="border-b border-solid" [value]="item">
+                        <div class="w-full flex flex-col gap-2">
+                            <div>{{ item?.libelle }}</div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>
+        Cancel
+    </button>
+    <button
+        class="px-6 ml-3"
+        [disabled]="ngForm.disabled"
+        (click)="update()"
+        mat-flat-button
+        [color]="'primary'">
+        Update
+    </button>
+
+</mat-dialog-actions>

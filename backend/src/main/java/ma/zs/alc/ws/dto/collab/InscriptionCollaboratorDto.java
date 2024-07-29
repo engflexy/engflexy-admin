@@ -1,13 +1,9 @@
 package ma.zs.alc.ws.dto.collab;
 
-import ma.zs.alc.ws.dto.vocab.CollaboratorDto;
 import ma.zs.alc.zynerator.audit.Log;
 import ma.zs.alc.zynerator.dto.AuditBaseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Date;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 

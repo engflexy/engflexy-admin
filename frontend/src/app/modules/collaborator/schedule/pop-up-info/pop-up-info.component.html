@@ -1,0 +1,63 @@
+<h1 mat-dialog-title
+    class="bg-gray-100 dark:bg-gray-600 font-bold text-lg rounded-sm text-center items-center">
+    {{ data.title }}
+</h1>
+
+<div mat-dialog-content class="p-2 border border-gray-100 dark:border-gray-600 rounded-sm">
+    <div class="flex mt-4 text-lg flex-col">
+
+        <div class="flex mb-3 pb-3 flex-row flex-wrap flex-grow items-center">
+            <strong class="flex">
+                <mat-icon class="mr-1" svgIcon="heroicons_solid:user-group"></mat-icon>
+                group :
+            </strong>
+            <p class="ml-2">{{ data?.group }}</p>
+        </div>
+
+
+        <div class="flex mb-3 pb-3 flex-row flex-wrap flex-grow items-center">
+            <strong class="flex">
+                <mat-icon class="mr-1" svgIcon="heroicons_solid:user"></mat-icon>
+                teacher :
+            </strong>
+            <p class="ml-2">{{ data?.teacher }}</p>
+        </div>
+
+        <div class="flex mb-3 pb-3 flex-row flex-wrap items-center">
+            <strong class="flex">
+                <mat-icon class="mr-1" svgIcon="heroicons_solid:calendar-days"></mat-icon>
+                start at :
+            </strong>
+            <p class="ml-2">{{ data?.start | date: 'EEE, yyyy/MM/dd -- HH:mm' }}</p>
+        </div>
+
+        <div class="flex mb-3 pb-3 flex-row flex-wrap items-center">
+            <strong class="flex">
+                <mat-icon class="mr-1" svgIcon="heroicons_solid:calendar-days"></mat-icon>
+                end at :
+            </strong>
+            <p class="ml-2">{{ data?.end | date: 'EEE, yyyy/MM/dd -- HH:mm' }}</p>
+        </div>
+
+    </div>
+
+</div>
+<mat-dialog-actions align="center">
+    <button
+        class="px-6 w-full mt-3"
+        (click)="edit()"
+        mat-flat-button
+        [color]="'primary'">
+        Edit
+    </button>
+
+    <button
+        class="px-6 w-full mt-3"
+        (click)="delete()"
+        mat-flat-button
+        color="warn">
+        delete
+    </button>
+
+</mat-dialog-actions>
+

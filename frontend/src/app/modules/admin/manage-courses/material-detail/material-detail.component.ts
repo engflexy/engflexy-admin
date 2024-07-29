@@ -13,6 +13,10 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {CreateCourseComponent} from "./create-course/create-course.component";
 import {MatDialog} from "@angular/material/dialog";
+import {EditMaterialComponent} from "../edit-material/edit-material.component";
+import {FuseConfirmationService} from "../../../../../@fuse/services/confirmation";
+import {FuseAlertService} from "../../../../../@fuse/components/alert";
+import {EditCourseComponent} from "./edit-course/edit-course.component";
 
 @Component({
     selector: 'app-material-detail',
@@ -37,6 +41,8 @@ export class MaterialDetailComponent implements OnInit {
                 private parcourService: ParcoursCollaboratorService,
                 private courseService: CoursCollaboratorService,
                 private _matDialog: MatDialog,
+                private _fuseConfirmation: FuseConfirmationService,
+                private alert: FuseAlertService,
                 private route: ActivatedRoute) {
     }
 
@@ -85,7 +91,59 @@ export class MaterialDetailComponent implements OnInit {
         });
     }
 
+    editCourse(item: CoursDto) {
+        this.course = item
+        this._matDialog.open(EditCourseComponent, {
+            autoFocus: false,
+        });
+
+    }
+
+    deleteCourse() {
+        this.courseService.delete(this.course).subscribe(res => {
+            this.alert.show('success', 'course deleted successfully.')
+            this.courses = this.courses.filter(c => c.id !== this.course.id)
+        }, error => {
+            this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
+        })
+
+    }
+
+    edit(item: ParcoursDto) {
+        this.item = item
+        this._matDialog.open(EditMaterialComponent, {
+            autoFocus: false,
+        });
+    }
+
     navigateToSections(item: CoursDto) {
         this.router.navigate([`courses/${item?.id}/lesson`], {relativeTo: this.route});
     }
+
+    delete(item: ParcoursDto) {
+            const confirmation = this._fuseConfirmation.open({
+                title: 'delete salary',
+                message: 'Are you sure you want to remove this material?',
+                actions: {
+                    confirm: {
+                        label: 'REMOVE',
+                    },
+                },
+            });
+            // Subscribe to the confirmation dialog closed action
+            confirmation.afterClosed().subscribe((result) => {
+                // If the confirmation button pressed...
+                if (result === 'confirmed') {
+                    this.parcourService.delete(item).subscribe(res => {
+                        this.alert.show('success', 'course deleted successfully.')
+                        this.router.navigate(['courses'])
+                    }, error => {
+                        this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
+                    })
+                }
+            });
+        }
+
+
+
 }

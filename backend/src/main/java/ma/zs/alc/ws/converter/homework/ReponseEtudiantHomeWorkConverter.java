@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ma.zs.alc.ws.converter.homework.HoweWorkQSTReponseConverter;
+import ma.zs.alc.bean.core.homework.HoweWorkQSTReponse;
 import ma.zs.alc.ws.converter.homework.HomeWorkEtudiantConverter;
+import ma.zs.alc.bean.core.homework.HomeWorkEtudiant;
 import ma.zs.alc.ws.converter.homework.HomeWorkQuestionConverter;
+import ma.zs.alc.bean.core.homework.HomeWorkQuestion;
 
 import ma.zs.alc.bean.core.homework.HomeWorkEtudiant;
 import ma.zs.alc.bean.core.homework.HomeWorkQuestion;
@@ -105,6 +108,15 @@ public class ReponseEtudiantHomeWorkConverter extends AbstractConverter<ReponseE
 
     public void copy(ReponseEtudiantHomeWorkDto dto, ReponseEtudiantHomeWork t) {
     super.copy(dto, t);
+    if(t.getHoweWorkQSTReponse() == null && dto.getHoweWorkQSTReponse() != null) {
+        t.setHoweWorkQSTReponse(new HoweWorkQSTReponse());
+    }
+    if(t.getHomeWorkEtudiant() == null && dto.getHomeWorkEtudiant() != null) {
+        t.setHomeWorkEtudiant(new HomeWorkEtudiant());
+    }
+    if(t.getHomeWorkQuestion() == null && dto.getHomeWorkQuestion() != null) {
+        t.setHomeWorkQuestion(new HomeWorkQuestion());
+    }
     if (dto.getHoweWorkQSTReponse() != null)
         howeWorkQSTReponseConverter.copy(dto.getHoweWorkQSTReponse(), t.getHoweWorkQSTReponse());
     if (dto.getHomeWorkEtudiant() != null)
