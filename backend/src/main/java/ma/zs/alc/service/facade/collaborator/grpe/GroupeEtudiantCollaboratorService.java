@@ -3,11 +3,14 @@ package ma.zs.alc.service.facade.collaborator.grpe;
 import java.util.List;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudiantCriteria;
+import ma.zs.alc.service.impl.collaborator.grpe.StatisticEtudiantDto;
 import ma.zs.alc.zynerator.service.IService;
 
 
 
 public interface GroupeEtudiantCollaboratorService extends  IService<GroupeEtudiant,GroupeEtudiantCriteria>  {
+
+    StatisticEtudiantDto calculateStat(Long idEtudiant);
 
     List<GroupeEtudiant> findByGroupeEtudeId(Long id);
     int deleteByGroupeEtudeId(Long id);

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudiantCriteria;
 import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantCollaboratorService;
+import ma.zs.alc.service.impl.collaborator.grpe.StatisticEtudiantDto;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
 import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
@@ -20,7 +21,10 @@ import java.util.List;
 @RequestMapping("/api/collaborator/groupeEtudiant/")
 public class GroupeEtudiantRestCollaborator extends AbstractController<GroupeEtudiant, GroupeEtudiantDto, GroupeEtudiantCriteria, GroupeEtudiantCollaboratorService, GroupeEtudiantConverter> {
 
-
+   @GetMapping("etudiant/id/{id}")
+    public StatisticEtudiantDto calculateStat(@PathVariable("id") Long idEtudiant){
+        return service.calculateStat(idEtudiant);
+    }
     @Operation(summary = "upload one groupeEtudiant")
     @RequestMapping(value = "upload", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
@@ -171,6 +175,5 @@ public class GroupeEtudiantRestCollaborator extends AbstractController<GroupeEtu
     public GroupeEtudiantRestCollaborator(GroupeEtudiantCollaboratorService service, GroupeEtudiantConverter converter) {
         super(service, converter);
     }
-
 
 }

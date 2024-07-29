@@ -20,7 +20,41 @@ import java.util.List;
 
 @Service
 public class GroupeEtudiantCollaboratorServiceImpl extends AbstractServiceImpl<GroupeEtudiant, GroupeEtudiantCriteria, GroupeEtudiantDao> implements GroupeEtudiantCollaboratorService {
+    @Autowired
+    GroupeEtudiantDetailCollaboratorService groupeEtudiantDetailCollaboratorService;
 
+    @Override
+    public StatisticEtudiantDto calculateStat(Long idEtudiant) {
+        StatisticEtudiantDto statisticEtudiantDto = new StatisticEtudiantDto();
+        List<GroupeEtudiantDetail> groupeEtudiantDetails = groupeEtudiantDetailCollaboratorService.findByEtudiantId(idEtudiant);
+        Long sumCourses = 0L;
+        Long sumCoursesComing = 0L;
+        Long sumCoursesCompleted = 0L;
+
+        for (GroupeEtudiantDetail groupeEtudiantDetail : groupeEtudiantDetails) {
+            if (groupeEtudiantDetail != null) {
+                if (groupeEtudiantDetail.getGroupeEtudiant().getNreCourses() == null) {
+                    groupeEtudiantDetail.getGroupeEtudiant().setNreCourses(0L);
+                }
+                if (groupeEtudiantDetail.getGroupeEtudiant().getNreCoursesComing() == null) {
+                    groupeEtudiantDetail.getGroupeEtudiant().setNreCoursesComing(0L);
+                }
+                if (groupeEtudiantDetail.getGroupeEtudiant().getNreCoursesCompleted() == null) {
+                    groupeEtudiantDetail.getGroupeEtudiant().setNreCoursesCompleted(0L);
+                }
+                sumCourses += groupeEtudiantDetail.getGroupeEtudiant().getNreCourses();
+                sumCoursesComing += groupeEtudiantDetail.getGroupeEtudiant().getNreCoursesComing();
+                sumCoursesCompleted += groupeEtudiantDetail.getGroupeEtudiant().getNreCoursesCompleted();
+            }
+
+        }
+        statisticEtudiantDto.setNreCourses(sumCourses);
+        statisticEtudiantDto.setNreCoursesComing(sumCoursesComing);
+        statisticEtudiantDto.setNreCoursesCompleted(sumCoursesCompleted);
+        statisticEtudiantDto.setNreCoursesCompleted(sumCoursesCompleted + sumCourses + sumCoursesComing);
+
+        return statisticEtudiantDto;
+    }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public GroupeEtudiant create(GroupeEtudiant t) {

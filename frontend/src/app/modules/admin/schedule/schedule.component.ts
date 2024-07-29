@@ -23,6 +23,7 @@ import {
 } from "../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
 import {compareObjects} from "../../../shared/constant/global-funsctions";
 import {ScheduleProfCriteria} from "../../../shared/criteria/prof/ScheduleProfCriteria.model";
+import {EtudiantDto} from "../../../shared/model/inscription/Etudiant.model";
 
 @Component({
     selector: 'app-calendar',
@@ -37,7 +38,8 @@ export class ScheduleComponent implements OnInit {
     @Input()
     prof: ProfDto = null;
     criteria: ScheduleProfCriteria = new ScheduleProfCriteria()
-
+    @Input()
+    hideSearch: boolean ;
     calendarOptions: CalendarOptions = {
         plugins: [timeGridPlugin, dayGridPlugin, interactionPlugin],
         headerToolbar: {
@@ -94,6 +96,8 @@ export class ScheduleComponent implements OnInit {
             this.groups = res
             this._groups = [...res]
         });
+
+        this.ref.detectChanges()
     }
 
     get item(): ScheduleProfDto {

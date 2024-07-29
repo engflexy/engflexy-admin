@@ -11,6 +11,7 @@ import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.util.PaginatedList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/collaborator/etudiant/")
@@ -44,6 +46,16 @@ public class EtudiantRestCollaborator extends AbstractController<Etudiant, Etudi
     }
 
 
+
+        @Autowired
+        private EtudiantCollaboratorService etudiantCollaboratorService;
+
+    @GetMapping("username/{username}")
+    public Etudiant findByUsername(@PathVariable String username) {
+        return service.findByUsername(username);
+    }
+
+
     @Operation(summary = "Saves the specified  etudiant")
     @PostMapping("")
     public ResponseEntity<EtudiantDto> save(@RequestBody EtudiantDto dto) throws Exception {
@@ -62,6 +74,58 @@ public class EtudiantRestCollaborator extends AbstractController<Etudiant, Etudi
         return service.update(dto);
     }
 
+
+    @Operation(summary = "Update account lock status")
+    @PatchMapping("update-lock-status/{id}")
+    public ResponseEntity<Boolean> updateAccountLockStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean accountNonLocked = status.get("accountNonLocked");
+        if (accountNonLocked == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateAccountLockStatus(id, accountNonLocked);
+        return ResponseEntity.ok(updated);
+    }
+
+    @Operation(summary = "Update account non-expired status")
+    @PatchMapping("update-account-non-expired/{id}")
+    public ResponseEntity<Boolean> updateAccountNonExpiredStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean accountNonExpired = status.get("accountNonExpired");
+        if (accountNonExpired == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateAccountNonExpiredStatus(id, accountNonExpired);
+        return ResponseEntity.ok(updated);
+    }
+    @Operation(summary = "Update credentials non-expired status")
+    @PatchMapping("update-credentials-non-expired/{id}")
+    public ResponseEntity<Boolean> updateCredentialsNonExpiredStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean credentialsNonExpired = status.get("credentialsNonExpired");
+        if (credentialsNonExpired == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateCredentialsNonExpiredStatus(id, credentialsNonExpired);
+        return ResponseEntity.ok(updated);
+    }
+    @Operation(summary = "Update password changed status")
+    @PatchMapping("update-password-changed/{id}")
+    public ResponseEntity<Boolean> updatePasswordChangedStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean passwordChanged = status.get("passwordChanged");
+        if (passwordChanged == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updatePasswordChangedStatus(id, passwordChanged);
+        return ResponseEntity.ok(updated);
+    }
+    @Operation(summary = "Update account status")
+    @PatchMapping("update-status/{id}")
+    public ResponseEntity<Boolean> updateAccountStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean enabled = status.get("enabled");
+        if (enabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateAccountStatus(id, enabled);
+        return ResponseEntity.ok(updated);
+    }
     @Operation(summary = "Delete list of etudiant")
     @PostMapping("multiple")
     public ResponseEntity<List<EtudiantDto>> delete(@RequestBody List<EtudiantDto> listToDelete) throws Exception {
@@ -243,12 +307,17 @@ public class EtudiantRestCollaborator extends AbstractController<Etudiant, Etudi
     }
 
 
-    @Operation(summary = "Change password to the specified  utilisateur")
-    @PutMapping("changePassword")
-    public boolean changePassword(@RequestBody User dto) throws Exception {
-        return service.changePassword(dto.getUsername(), dto.getPassword());
+    @Operation(summary = "Change password")
+    @PutMapping("/change-password")
+    public ResponseEntity<Boolean> changePassword(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String newPassword = request.get("newPassword");
+        if (username == null || newPassword == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.changePassword(username, newPassword);
+        return ResponseEntity.ok(updated);
     }
-
     public EtudiantRestCollaborator(EtudiantCollaboratorService service, EtudiantConverter converter) {
         super(service, converter);
     }

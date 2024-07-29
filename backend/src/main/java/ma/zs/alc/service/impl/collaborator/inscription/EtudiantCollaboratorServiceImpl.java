@@ -314,14 +314,74 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
             return dao.save(student);
         }
     }
+    @Override
+    public boolean updateAccountStatus(Long id, boolean enabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setEnabled(enabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setAccountNonExpired(accountNonExpired);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setCredentialsNonExpired(credentialsNonExpired);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updatePasswordChangedStatus(Long id, boolean passwordChanged) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setPasswordChanged(passwordChanged);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateAccountLockStatus(Long id, boolean accountNonLocked) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setAccountNonLocked(accountNonLocked);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
     public Etudiant findByUsername(String username) {
         return dao.findByUsername(username);
     }
 
+    @Override
     public boolean changePassword(String username, String newPassword) {
-        return userService.changePassword(username, newPassword);
+        Etudiant etudiant = findByUsername(username);
+        if (etudiant != null) {
+            etudiant.setPassword(newPassword);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
     }
+
 
     public String generatePassword() {
         return RandomStringUtils.randomAlphanumeric(10);

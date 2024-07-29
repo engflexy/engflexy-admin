@@ -97,6 +97,9 @@ export const appRoutes: Route[] = [
                 path: 'manage-users',
                 loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
             },
+            { path: 'manage-statistics',
+                loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
+            },
             {
                 path: 'manage-inscriptions',
                 component: ManageInscriptionsComponent

@@ -91,7 +91,7 @@ export const adminNavigation: FuseNavigationItem[] = [
         title: 'Schedule',
         type: 'basic',
         icon: 'heroicons_solid:calendar-days',
-        link: '/admin/schedule'
+        link: '/admin/schedule/home'
     }, {
         id: 'manage-inscriptions',
         title: 'Inscriptions',
