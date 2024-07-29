@@ -446,6 +446,9 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
 
     public hideCreateDialog() {
         this.createDialog = false;
+        this.submitted = false;
+        this.dialogRef.close();
+        this.errorMessages = [];
         this.setValidation(true);
     }
 
@@ -467,17 +470,9 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
 
     public validateForm(): void {
         this.errorMessages = new Array<string>();
-        //this.validateInscriptionNumeroInscription();
         this.validateInscriptionEtudiant();
         this.validateInscriptionEtatInscription();
         this.validateInscriptionParcours();
-        // this.validateInscriptionGroupeEtude();
-        // this.validateInscriptionGroupeType();
-        // this.validateInscriptionStatutSocial();
-        // this.validateInscriptionInteretEtudiant();
-        // this.validateInscriptionNiveauEtude();
-        // this.validateInscriptionFonction();
-        // this.validateInscriptionQuiz();
     }
 
     public validateInscriptionNumeroInscription() {

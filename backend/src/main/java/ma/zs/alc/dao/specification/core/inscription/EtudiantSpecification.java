@@ -18,7 +18,7 @@ public class EtudiantSpecification extends AbstractSpecification<EtudiantCriteri
         addPredicateBool("accountNonExpired", criteria.getAccountNonExpired());
         addPredicateBool("accountNonLocked", criteria.getAccountNonLocked());
         addPredicate("username", criteria.getUsername(), criteria.getUsernameLike());
-        addPredicate("fullName", criteria.getFullName(), criteria.getFullNameLike());
+        addPredicate("fullName", criteria.getFullName(), criteria.getFullName());
         addPredicate("phone", criteria.getPhone(), criteria.getPhoneLike());
         addPredicate("password", criteria.getPassword(), criteria.getPasswordLike());
         addPredicateBool("passwordChanged", criteria.getPasswordChanged());

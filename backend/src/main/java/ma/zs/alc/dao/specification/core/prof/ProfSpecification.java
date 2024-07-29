@@ -12,7 +12,7 @@ public class ProfSpecification extends AbstractSpecification<ProfCriteria, Prof>
         addPredicateId("id", criteria);
         addPredicate("email", criteria.getEmail(), criteria.getEmailLike());
         addPredicate("username", criteria.getUsername(), criteria.getUsernameLike());
-        addPredicate("fullName", criteria.getFullName(), criteria.getFullNameLike());
+        addPredicate("fullName", criteria.getFullName(), criteria.getFullName());
         addPredicate("phone", criteria.getPhone(), criteria.getPhoneLike());
         addPredicate("ref", criteria.getRef(), criteria.getRefLike());
         addPredicate("about", criteria.getAbout(), criteria.getAboutLike());

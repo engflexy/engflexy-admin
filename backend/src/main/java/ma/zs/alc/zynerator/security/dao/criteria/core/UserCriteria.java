@@ -59,6 +59,7 @@ public class UserCriteria extends  BaseCriteria  {
     public void setEmail(String email){
         this.email = email;
     }
+
     public String getEmailLike(){
         return this.emailLike;
     }
@@ -149,5 +150,6 @@ public class UserCriteria extends  BaseCriteria  {
     public void setPasswordChanged(Boolean passwordChanged){
         this.passwordChanged = passwordChanged;
     }
+
 
 }

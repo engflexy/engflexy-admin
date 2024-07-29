@@ -93,7 +93,6 @@ export class CreateSalaryComponent  implements OnInit {
     private _validProfRef = true;
 
     constructor(public dialogRef:MatDialogRef<CreateSalaryComponent> ,private alert: FuseAlertService, private service: SalaryAdminService , private profService: ProfAdminService, private stringUtilService: StringUtilService, @Inject(PLATFORM_ID) private platformId? ) {
-
     }
 
     ngOnInit(): void {
@@ -118,7 +117,7 @@ export class CreateSalaryComponent  implements OnInit {
 
 
 
-    public save(): void {
+    public async save() {
         this.submitted = true;
         this.validateForm();
         if (this.errorMessages.length === 0) {
@@ -146,14 +145,13 @@ export class CreateSalaryComponent  implements OnInit {
     //     });
     // }
 
-    public saveWithShowOption(showList: boolean) {
+    public async saveWithShowOption(showList: boolean) {
         if (this.isItemValid()) {
             this.service.save().subscribe(
                 item => {
                     if (item != null) {
                         this.items.push({...item});
-                        console.log('le mois : ',item.mois);
-                        this.createDialog = false;
+                        this.hideCreateDialog();
                         this.submitted = false;
                         this.item = new SalaryDto();
                         this.alert.show('success', 'Salary saved successfully.');

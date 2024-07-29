@@ -2,6 +2,7 @@ export class BaseCriteria {
     public maxResults: number;
     public page: number;
 
+
     constructor() {
         this.maxResults = 5;
         this.page = 0;
