@@ -6,7 +6,6 @@ import {TypeExercisesComponent} from './type-exercises/type-exercises.component'
 import {CreateExerciseComponent} from './create-exercise/create-exercise.component';
 import {DisplayMultiImagesComponent} from './classroom/display-multi-images/display-multi-images.component';
 import {DisplayVideoComponent} from './classroom/display-video/display-video.component';
-import {SafePipe} from "../../../../shared/utils/safe.pipe";
 import {CreateQuizComponent} from './quiz/create-quiz/create-quiz.component';
 import {TypesQuestionComponent} from './quiz/types-question/types-question.component';
 import {QuizComponent} from "./quiz/quiz/quiz.component";
