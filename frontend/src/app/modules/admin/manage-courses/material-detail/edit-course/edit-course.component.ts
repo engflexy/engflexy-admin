@@ -1,67 +1,62 @@
 import { Component } from '@angular/core';
-import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import {MatButtonModule} from "@angular/material/button";
-import {MatInputModule} from "@angular/material/input";
-import {MatIconModule} from "@angular/material/icon";
-import {MatSelectModule} from "@angular/material/select";
-import {MatRadioModule} from "@angular/material/radio";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatDividerModule} from "@angular/material/divider";
-import {FuseCardComponent} from "../../../../../@fuse/components/card";
-import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {FuseCardComponent} from "../../../../../../@fuse/components/card";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import {ParcoursAdminService} from "../../../../shared/service/admin/course/ParcoursAdmin.service";
-import {FuseAlertService} from "../../../../../@fuse/components/alert";
-import {ImagesService} from "../../../../shared/service/public/images.service";
-import {ParcoursDto} from "../../../../shared/model/course/Parcours.model";
-import {generateRandomString} from "../../../../shared/constant/global-funsctions";
+import {NgIf} from "@angular/common";
+import {CoursCollaboratorService} from "../../../../../shared/service/collaborator/course/CoursCollaborator.service";
+import {FuseAlertService} from "../../../../../../@fuse/components/alert";
+import {ImagesService} from "../../../../../shared/service/public/images.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CoursDto} from "../../../../../shared/model/course/Cours.model";
+import {generateRandomString} from "../../../../../shared/constant/global-funsctions";
 
 @Component({
-  selector: 'app-edit-material',
-  templateUrl: './edit-material.component.html',
+  selector: 'app-edit-course',
+  templateUrl: './edit-course.component.html',
     imports: [
-        MatDialogModule,
-        MatButtonModule,
-        MatInputModule,
-        MatIconModule,
-        MatSelectModule,
-        MatRadioModule,
-        MatCheckboxModule,
-        MatDividerModule,
-        FuseCardComponent,
-        NgIf,
         FormsModule,
-        MatProgressBarModule
+        FuseCardComponent,
+        MatButtonModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressBarModule,
+        NgIf
     ],
     standalone: true
 })
-export class EditMaterialComponent {
-
+export class EditCourseComponent {
     selectedFile: File | null = null;
     showLoader: boolean = false
 
-    constructor(private parcourService: ParcoursAdminService,
+    constructor(private courseService: CoursCollaboratorService,
                 private alert: FuseAlertService,
-                private _matDialogRef: MatDialogRef<EditMaterialComponent>,
-                private imageService: ImagesService) {
+                private imageService: ImagesService,
+                private route: ActivatedRoute,
+                private router: Router,
+                private _matDialogRef: MatDialogRef<EditCourseComponent>,) {
     }
 
-
-    get item(): ParcoursDto {
-        return this.parcourService.item
+    get courses(): CoursDto[] {
+        return this.courseService.items
     }
 
-    set item(item: ParcoursDto) {
-        this.parcourService.item = item
+    set courses(item: CoursDto[]) {
+        this.courseService.items = item
     }
 
-    get levels(): ParcoursDto[] {
-        return this.parcourService.items
+    get item(): CoursDto {
+        return this.courseService.item
     }
 
-    set levels(items: ParcoursDto[]) {
-        this.parcourService.items = items
+    set item(item: CoursDto) {
+        this.courseService.item = item
     }
 
     onFileSelected(event: any): void {
@@ -78,11 +73,11 @@ export class EditMaterialComponent {
             this.imageService.generate_img_url(name, formData)
                 .subscribe(res => {
                     this.showLoader = false
-                    this.item.url = res
+                    this.item.image = res
                 }, error => {
                     if (error?.status === 200) {
                         this.alert.show('success', 'image uploaded successfully.')
-                        this.item.url = error?.error?.text
+                        this.item.image = error?.error?.text
                     } else {
                         this.alert.show('warning', error?.error || 'something went wrong please try again.')
                     }
@@ -95,19 +90,16 @@ export class EditMaterialComponent {
         return ["image/gif", "image/webp", "image/jpeg", "image/png"].includes(file.type);
     }
 
-    edit() {
-        console.log(this.item)
-        this.parcourService.edit()
+    edit(item: CoursDto) {
+        this.courseService.item = item
+        this.courseService.edit()
             .subscribe(res => {
                 console.log(res)
                 this._matDialogRef.close()
+                this.router.navigate([`admin/manage-courses/materials/${this.item?.parcours?.id}/courses/${res?.id}`]);
             }, error => {
                 console.error(error)
                 this.alert.show('warning', error?.error || 'something went wrong, please try again.')
             })
     }
-
-
-
-
 }

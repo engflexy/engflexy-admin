@@ -16,6 +16,7 @@ import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {ImagesService} from "../../../../shared/service/public/images.service";
 import {generateRandomString} from "../../../../shared/constant/global-funsctions";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {ParcoursCollaboratorService} from "../../../../shared/service/collaborator/course/ParcoursCollaborator.service";
 
 @Component({
     selector: 'app-create-material',
@@ -40,7 +41,7 @@ export class CreateMaterialComponent {
     selectedFile: File | null = null;
     showLoader: boolean = false
 
-    constructor(private parcourService: ParcoursAdminService,
+    constructor(private parcourService: ParcoursCollaboratorService,
                 private alert: FuseAlertService,
                 private _matDialogRef: MatDialogRef<CreateMaterialComponent>,
                 private imageService: ImagesService) {
