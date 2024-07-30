@@ -8,7 +8,7 @@ import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/m
 import {ScheduleComponent} from "./modules/admin/schedule/schedule.component";
 //import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
 import {ManagePackPricesComponent} from "./modules/admin/manage-pack-prices/manage-pack-prices.component";
-import {ManageSalaryComponent} from "./modules/collaborator/manage-salary/manage-salary.component";
+//import {ManageSalaryComponent} from "./modules/collaborator/manage-salary/manage-salary.component";
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -118,10 +118,7 @@ export const appRoutes: Route[] = [
                 path: 'faqs-news',
                 loadChildren: () => import('app/modules/admin/manage-faq-news/help-center.routes')
             },
-            {
-                path: 'teacher-salary',
-                component: ManageSalaryComponent
-            },
+
             {
                 path: 'manage-pack-prices',
                 component: ManagePackPricesComponent

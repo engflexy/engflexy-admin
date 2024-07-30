@@ -255,6 +255,7 @@ export class ScheduleComponent implements OnInit {
     }
 
     protected readonly compareObjects = compareObjects;
+    hideSearch: any;
 
     findByCriteria() {
         this.getScheduleBetween();

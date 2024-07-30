@@ -54,27 +54,32 @@ export class SettingsTeamComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // Simuler le chargement des données
+        // Simulate data loading
         setTimeout(() => {
-            this.user?.inscriptions.forEach(s => {
-                if (s?.etatInscription?.libelle !== 'Pending') {
-                    this.total += s.packStudent?.price?.price;
-                    this.totalCourses++;
-                    if (s?.etatInscription?.libelle === 'Completed') {
-                        this.completedCourses++;
-                    } else if (s?.etatInscription?.libelle === 'Upcoming') {
-                        this.upcomingCourses++;
+            // Check if user and inscriptions are defined
+            if (this.user && Array.isArray(this.user.inscriptions)) {
+                this.user.inscriptions.forEach(s => {
+                    if (s?.etatInscription?.libelle !== 'Pending') {
+                        this.total += s.packStudent?.price?.price || 0; // Use a default value if price is undefined
+                        this.totalCourses++;
+                        if (s?.etatInscription?.libelle === 'Completed') {
+                            this.completedCourses++;
+                        } else if (s?.etatInscription?.libelle === 'Upcoming') {
+                            this.upcomingCourses++;
+                        }
                     }
-                }
-            });
-            this.isLoading = false; // Mettre à jour l'état de chargement une fois les données chargées
+                });
+            }
+
+            this.isLoading = false; // Update loading state once data is loaded
 
             // Call calculateStatistics with the dynamic user ID
             if (this.user?.id) {
                 this.calculateStatistics(this.user.id);
             }
-        }, 2000); // Par exemple, 2 secondes de délai pour simuler le chargement
+        }, 2000); // Simulate 2 seconds of loading time
     }
+
 
     calculateStatistics(idEtudiant: number): void {
         this.groupeEtudiantCollaboratorService.calculateStat(idEtudiant).subscribe(

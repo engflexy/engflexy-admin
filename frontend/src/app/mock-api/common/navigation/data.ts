@@ -98,13 +98,8 @@ export const adminNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_solid:identification',
         link: '/admin/manage-inscriptions'
-    }, {
-        id: 'manage-salary',
-        title: 'Salary',
-        type: 'basic',
-        icon: 'heroicons_solid:academic-cap',
-        link: '/admin/teacher-salary'
-    }, {
+    },
+    {
         id: 'FAQS & News',
         title: 'FAQS & News',
         type: 'basic',

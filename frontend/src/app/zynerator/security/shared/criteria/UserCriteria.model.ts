@@ -8,6 +8,7 @@ export class UserCriteria  extends BaseCriteria  {
     public credentialsNonExpired: null | boolean;
     public enabled: null | boolean;
     public email: string;
+    public avatar: string;
     public emailLike: string;
     public accountNonExpired: null | boolean;
     public accountNonLocked: null | boolean;

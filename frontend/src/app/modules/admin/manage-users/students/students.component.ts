@@ -11,6 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreateStudentComponent} from "./create-student/create-student.component";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {ActivatedRoute, Router} from "@angular/router";
+import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
 
 @Component({
     selector: 'app-students',
