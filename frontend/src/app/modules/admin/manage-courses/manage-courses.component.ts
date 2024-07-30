@@ -13,7 +13,6 @@ import {CreateMaterialComponent} from "./create-material/create-material.compone
 import {Router} from "@angular/router";
 import {ParcoursCriteria} from "../../../shared/criteria/course/ParcoursCriteria.model";
 import {FormsModule} from "@angular/forms";
-import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscription/filter-inscription.component";
 import {FilterMaterialComponent} from "./filter-material/filter-material.component";
 
 @Component({
@@ -87,7 +86,6 @@ export class ManageCoursesComponent implements OnInit {
             autoFocus: false,
         });
     }
-
 
 
     navigateTo(item: ParcoursDto) {

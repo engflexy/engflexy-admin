@@ -1,6 +1,7 @@
 package ma.zs.alc.service.impl.collaborator.course;
 
 
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.course.Cours;
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.dao.criteria.core.course.ParcoursCriteria;
@@ -9,6 +10,7 @@ import ma.zs.alc.dao.specification.core.course.ParcoursSpecification;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.CoursCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
+import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +105,17 @@ public class ParcoursCollaboratorServiceImpl extends AbstractServiceImpl<Parcour
         super.configure(Parcours.class, ParcoursSpecification.class);
     }
 
+    @Override
+    public List<Parcours> findByForExgFlexy() {
+        return dao.findByCollaboratorId(3L);
+    }
+
+    @Override
+    public List<Parcours> findForCurrentCollaborator() {
+        User currentUser = getCurrentUser();
+        Collaborator collaborator = collaboratorService.findByUsername(currentUser.getUsername());
+        return dao.findByCollaboratorId(collaborator.getId());
+    }
 
     @Autowired
     private CollaboratorCollaboratorService collaboratorService;
