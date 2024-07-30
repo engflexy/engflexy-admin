@@ -149,10 +149,10 @@ public class UserRest extends AbstractController<User, UserDto, UserCriteria, Us
 		return service.findByUsername(username);
 	}
 
-	////////////
-	@GetMapping("/except/{userId}")
-	public ResponseEntity<ApiResponse> findAllUsersExceptThisUserId(@PathVariable Long userId) {
-		return service.findAllUsersExceptThisUserId(userId);
+	///////////////////////////////////////////////
+	@GetMapping("/except/{id}")
+	public ResponseEntity<ApiResponse> findAllUsersExceptThisUserId(@PathVariable Long id) {
+		return service.findAllUsersExceptThisUserId(id);
 	}
 
 	@GetMapping("/conversation/id")
@@ -160,7 +160,7 @@ public class UserRest extends AbstractController<User, UserDto, UserCriteria, Us
 			@RequestParam Long user2Id) {
 		return service.findConversationIdByUser1IdAndUser2Id(user1Id, user2Id);
 	}
-	///////////////
+	///////////////////////////////////////////////////
 
 	public UserRest(UserService service, UserConverter converter) {
 		super(service, converter);

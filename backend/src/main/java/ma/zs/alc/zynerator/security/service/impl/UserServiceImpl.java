@@ -179,6 +179,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     	this.conversationRepository = conversationRepository;
     }
 
+    ////////////////////////////////////////////////
     @Override
     public ResponseEntity<ApiResponse> findAllUsersExceptThisUserId(Long userId) {
         List<User> list = dao.findAllUsersExceptThisUserId(userId);
@@ -209,4 +210,5 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         ApiResponse response = new ApiResponse(200, "Success", "OK", conversationId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    ///////////////////////////////////////
 }
