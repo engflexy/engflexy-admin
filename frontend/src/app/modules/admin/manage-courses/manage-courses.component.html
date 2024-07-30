@@ -40,14 +40,16 @@
                     <div class="col-span-4 flex flex-row justify-center items-center gap-4">
                         <mat-form-field
                             class="flex-auto fuse-mat-bold fuse-mat-dense fuse-mat-rounded flex-grow">
-                            <input placeholder="search.." matInput (keyup.enter)="findPaginatedByCriteria()" [(ngModel)]="criteria.libelle">
+                            <input placeholder="search.." matInput (keyup.enter)="findPaginatedByCriteria()"
+                                   [(ngModel)]="criteria.libelle">
                             <mat-icon
                                 class="icon-size-5"
                                 matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
                         <button mat-icon-button class="mb-5" color="accent">
-                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle" (click)="findPaginatedByCriteria()" ></mat-icon>
+                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle"
+                                      (click)="findPaginatedByCriteria()"></mat-icon>
                         </button>
                         <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
                             <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
@@ -80,14 +82,15 @@
                             <ng-template #showColor>
                                 <div
                                     class="h-40 flex items-center justify-center content-center bg-{{item?.color}}-100 w-full">
-                                    <strong class="text-5xl opacity-60 font-bold uppercase text-{{item?.color}}-600">{{item?.code}}</strong>
+                                    <strong
+                                        class="text-5xl opacity-60 font-bold uppercase text-{{item?.color}}-600">{{ item?.code }}</strong>
                                 </div>
                             </ng-template>
 
 
                             <div class="m-2">
-                                <div class="ubuntu-bold opacity-90">{{item?.libelle}}</div>
-                                <div class="ubuntu-regular-italic opacity-80 mt-1">{{item?.description}}</div>
+                                <div class="ubuntu-bold opacity-90">{{ item?.libelle }}</div>
+                                <div class="ubuntu-regular-italic opacity-80 mt-1">{{ item?.description }}</div>
                             </div>
                         </fuse-card>
                     </ng-container>
