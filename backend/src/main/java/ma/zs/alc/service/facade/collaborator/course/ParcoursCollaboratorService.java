@@ -20,4 +20,6 @@ public interface ParcoursCollaboratorService extends IService<Parcours, Parcours
     List<Parcours> findForCurrentCollaborator(Long id);
 
 
+    List<Parcours> findByLibelleLikeForEngFlexy(String libelle);
+    List<Parcours> findByLibelleLikeForCurrent(String libelle);
 }

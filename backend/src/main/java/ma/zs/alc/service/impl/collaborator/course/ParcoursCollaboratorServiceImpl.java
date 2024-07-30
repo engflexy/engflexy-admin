@@ -115,6 +115,26 @@ public class ParcoursCollaboratorServiceImpl extends AbstractServiceImpl<Parcour
        // User currentUser = getCurrentUser();
         //Collaborator collaborator = collaboratorService.findByUsername(currentUser.getUsername());
         return dao.findByCollaboratorId(id);
+        //return dao.findByCollaboratorId(collaborator.getId());
+    }
+
+
+    private List<Parcours> findByCollaboratorIdAndLibelleLike(Long idCollqborator, String libelle) {
+        return dao.findByCollaboratorIdAndLibelleLike(idCollqborator, "%" + libelle + "%");
+    }
+
+    @Override
+    public List<Parcours> findByLibelleLikeForEngFlexy(String libelle) {
+        return findByCollaboratorIdAndLibelleLike(3L, libelle);
+    }
+
+    @Override
+    public List<Parcours> findByLibelleLikeForCurrent(String libelle) {
+        User currentUser = getCurrentUser();
+        if (currentUser != null) {
+            Collaborator collaborator = collaboratorService.findByUsername(currentUser.getUsername());
+        }
+        return findByCollaboratorIdAndLibelleLike(2L, libelle);
     }
 
     @Autowired

@@ -146,6 +146,20 @@ public class ParcoursRestCollaborator extends AbstractController<Parcours, Parco
         return super.getDataSize(criteria);
     }
 
+    @Operation(summary = "Finds a list of parcourss by libelle like")
+    @GetMapping("/engflexy/libelle/{libelle}")
+    public ResponseEntity<List<ParcoursDto>> findByLibelleLikeForEngFlexy(@PathVariable String libelle) {
+        List<Parcours> parcourss = service.findByLibelleLikeForEngFlexy(libelle);
+        return ResponseEntity.ok(converter.toDto(parcourss));
+    }
+
+    @Operation(summary = "Finds a list of parcourss by libelle like")
+    @GetMapping("/current/libelle/{libelle}")
+    public ResponseEntity<List<ParcoursDto>> findByLibelleLikeForCurrent(@PathVariable String libelle) {
+        List<Parcours> parcourss = service.findByLibelleLikeForCurrent(libelle);
+        return ResponseEntity.ok(converter.toDto(parcourss));
+    }
+
 
     public ParcoursRestCollaborator(ParcoursCollaboratorService service, ParcoursConverter converter) {
         super(service, converter);

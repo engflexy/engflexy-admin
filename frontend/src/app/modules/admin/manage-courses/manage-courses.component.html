@@ -40,18 +40,16 @@
                     <div class="col-span-4 flex flex-row justify-center items-center gap-4">
                         <mat-form-field
                             class="flex-auto fuse-mat-bold fuse-mat-dense fuse-mat-rounded flex-grow">
-                            <input placeholder="search.." matInput (keyup.enter)="findPaginatedByCriteria()" [(ngModel)]="criteria.libelle">
+                            <input placeholder="search.." matInput (keyup.enter)="searchParcoursForCurrent(criteria.libelle)" [(ngModel)]="criteria.libelle">
                             <mat-icon
                                 class="icon-size-5"
                                 matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
                         <button mat-icon-button class="mb-5" color="accent">
-                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle" (click)="findPaginatedByCriteria()" ></mat-icon>
+                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle" (click)="searchParcoursForCurrent(criteria.libelle)" ></mat-icon>
                         </button>
-                        <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
-                            <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
-                        </button>
+
                     </div>
 
                     <div
@@ -64,7 +62,7 @@
                     </div>
 
 
-                    <ng-container *ngFor="let item of levels">
+                    <ng-container *ngFor="let item of personalParcours">
                         <fuse-card
                             (click)="navigateTo(item)"
                             class="flex cursor-pointer   rounded-lg flex-col
@@ -96,7 +94,60 @@
                 </div>
             </mat-tab>
 
-            <mat-tab label="Catalog"> EngFlexy's lessons</mat-tab>
+            <mat-tab label="Catalog">
+
+                <div class="grid p-2 grid-cols-1 gap-4 md:grid-cols-4 md:gap-8">
+                    <div class="col-span-4 flex flex-row justify-center items-center gap-4">
+                        <mat-form-field
+                            class="flex-auto fuse-mat-bold fuse-mat-dense fuse-mat-rounded flex-grow">
+                            <input placeholder="search.." matInput (keyup.enter)="searchParcoursForEngFlexy(criteria.libelle)" [(ngModel)]="criteria.libelle">
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                        </mat-form-field>
+                        <button mat-icon-button class="mb-5" color="accent">
+                            <mat-icon svgIcon="heroicons_solid:magnifying-glass-circle" (click)="searchParcoursForEngFlexy(criteria.libelle)" ></mat-icon>
+                        </button>
+
+                    </div>
+
+
+
+
+                    <ng-container *ngFor="let item of catalogParcours">
+                        <fuse-card
+                            (click)="navigateTo(item)"
+                            class="flex cursor-pointer   rounded-lg flex-col
+                         hover:border-{{item?.color}}-600 hover:border hover:bg-gray-50 max-w-80 w-full">
+                            <ng-container *ngIf="item?.url else showColor">
+                                <img
+                                    height="400"
+                                    class="object-cover h-40 w-full"
+                                    [src]="item?.url"
+                                    alt="Card cover image">
+                            </ng-container>
+
+                            <ng-template #showColor>
+                                <div
+                                    class="h-40 flex items-center justify-center content-center bg-{{item?.color}}-100 w-full">
+                                    <strong class="text-5xl opacity-60 font-bold uppercase text-{{item?.color}}-600">{{item?.code}}</strong>
+                                </div>
+                            </ng-template>
+
+
+                            <div class="m-2">
+                                <div class="ubuntu-bold opacity-90">{{item?.libelle}}</div>
+                                <div class="ubuntu-regular-italic opacity-80 mt-1">{{item?.description}}</div>
+                            </div>
+                        </fuse-card>
+                    </ng-container>
+
+
+                </div>
+
+
+            </mat-tab>
         </mat-tab-group>
 
 

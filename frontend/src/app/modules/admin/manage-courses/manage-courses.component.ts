@@ -13,7 +13,6 @@ import {CreateMaterialComponent} from "./create-material/create-material.compone
 import {Router} from "@angular/router";
 import {ParcoursCriteria} from "../../../shared/criteria/course/ParcoursCriteria.model";
 import {FormsModule} from "@angular/forms";
-import {FilterMaterialComponent} from "./filter-material/filter-material.component";
 import {ParcoursCollaboratorService} from "../../../shared/service/collaborator/course/ParcoursCollaborator.service";
 
 @Component({
@@ -110,22 +109,21 @@ export class ManageCoursesComponent implements OnInit {
         this.router.navigate(['/admin/manage-courses/materials/' + item?.id])
     }
 
-    openFilter() {
-        const dialog = this._matDialog.open(FilterMaterialComponent, {
-            autoFocus: false,
-            height: "auto",
-            width: "calc(100% - 100px)",
-            maxWidth: "100%",
-            disableClose: true,
-            maxHeight: "100%"
-        });
 
-        dialog.afterClosed().subscribe(res => {
-            if (res != null) {
+  searchParcoursForEngFlexy(libelle: string) {
+    this.parcourService.findByLibelleLikeForEngFlexy(libelle).subscribe(res => {
+        this.personalParcours = res;
+    }, error => console.log(error));
+}
 
-            }
-        })
+    searchParcoursForCurrent(libelle: string) {
+    this.parcourService.findByLibelleLikeForCurrent(libelle).subscribe(res => {
+        this.personalParcours = res;
+    }, error => console.log(error));
     }
+
+
+
 
 
 }

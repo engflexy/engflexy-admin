@@ -38,4 +38,13 @@ export class ParcoursCollaboratorService extends AbstractService<ParcoursDto, Pa
     constrcutCriteria(): ParcoursCriteria {
         return new ParcoursCriteria();
     }
+
+
+    findByLibelleLikeForEngFlexy(libelle: string): Observable<ParcoursDto[]> {
+    return this.http.get<ParcoursDto[]>(`${this.API}engflexy/libelle/${libelle}`);
+}
+
+    findByLibelleLikeForCurrent(libelle: string): Observable<ParcoursDto[]> {
+    return this.http.get<ParcoursDto[]>(`${this.API}current/libelle/${libelle}`);
+}
 }
