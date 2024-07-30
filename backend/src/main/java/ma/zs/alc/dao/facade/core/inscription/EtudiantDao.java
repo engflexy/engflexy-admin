@@ -83,5 +83,4 @@ public interface EtudiantDao extends AbstractRepository<Etudiant, Long> {
 
     Etudiant findByUsername(String username);
 
-
 }

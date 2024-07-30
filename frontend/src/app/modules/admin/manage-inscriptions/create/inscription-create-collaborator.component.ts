@@ -130,6 +130,7 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
     private _validPackStudentLibelle = true;
     private _validSkillCode = true;
     private _validSkillLibelle = true;
+    private dialogRef: any;
 
     constructor(public matDialog: MatDialogRef<InscriptionCreateCollaboratorComponent>,
                 private stringUtilService: StringUtilService,
@@ -422,6 +423,9 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
 
     public hideCreateDialog() {
         this.createDialog = false;
+        this.submitted = false;
+        this.dialogRef.close();
+        this.errorMessages = [];
         this.setValidation(true);
     }
 
@@ -443,17 +447,9 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
 
     public validateForm(): void {
         this.errorMessages = new Array<string>();
-        //this.validateInscriptionNumeroInscription();
         this.validateInscriptionEtudiant();
         this.validateInscriptionEtatInscription();
         this.validateInscriptionParcours();
-        // this.validateInscriptionGroupeEtude();
-        // this.validateInscriptionGroupeType();
-        // this.validateInscriptionStatutSocial();
-        // this.validateInscriptionInteretEtudiant();
-        // this.validateInscriptionNiveauEtude();
-        // this.validateInscriptionFonction();
-        // this.validateInscriptionQuiz();
     }
 
     public validateInscriptionNumeroInscription() {

@@ -6,60 +6,36 @@
         <div class="text-xl">Change your password</div>
         <div class="text-secondary">You can only change your password twice within 24 hours!</div>
     </div>
-    <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
-        <!-- Current password -->
-        <div class="sm:col-span-4">
-            <mat-form-field
-                class="w-full"
-                [subscriptSizing]="'dynamic'">
-                <mat-label>Current password</mat-label>
-                <mat-icon
-                    class="icon-size-5"
-                    [svgIcon]="'heroicons_solid:key'"
-                    matPrefix></mat-icon>
-                <input
-                    disabled
-                    [(ngModel)]="user.password"
-                    name="password"
-                    type="text"
-                    matInput>
-            </mat-form-field>
-        </div>
-        <!-- New password -->
-        <div class="sm:col-span-4">
-            <mat-form-field
-                class="w-full"
-                [subscriptSizing]="'dynamic'">
-                <mat-label>New password</mat-label>
-                <mat-icon
-                    class="icon-size-5"
-                    [svgIcon]="'heroicons_solid:key'"
-                    matPrefix></mat-icon>
-                <input #password
-                       type="password"
-                       matInput>
-                <ng-container *ngIf="password.type === 'password'">
-                    <mat-icon
-                        (click)="password.type='text'"
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:eye'"
-                        matSuffix></mat-icon>
-                </ng-container>
-
-                <ng-container *ngIf="password.type === 'text'">
-                    <mat-icon
-                        (click)="password.type='password'"
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:eye-slash'"
-                        matSuffix></mat-icon>
-                </ng-container>
-
-            </mat-form-field>
-            <div class="mt-1 text-md text-hint">Minimum 8 characters. Must include numbers, letters and special
-                characters.
+    <form (ngSubmit)="onChangePassword()">
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Current password -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Current password</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon>
+                    <input [(ngModel)]="user.password" name="password" type="text" matInput disabled>
+                </mat-form-field>
+            </div>
+            <!-- New password -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>New password</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'" matPrefix></mat-icon>
+                    <input [(ngModel)]="newPassword" name="newPassword" [type]="hidePassword ? 'password' : 'text'" matInput required>
+                    <ng-container *ngIf="hidePassword">
+                        <mat-icon (click)="togglePasswordVisibility()" class="icon-size-5" [svgIcon]="'heroicons_solid:eye'" matSuffix></mat-icon>
+                    </ng-container>
+                    <ng-container *ngIf="!hidePassword">
+                        <mat-icon (click)="togglePasswordVisibility()" class="icon-size-5" [svgIcon]="'heroicons_solid:eye-slash'" matSuffix></mat-icon>
+                    </ng-container>
+                </mat-form-field>
+                <div class="mt-1 text-md text-hint">Minimum 8 characters. Must include numbers, letters and special characters.</div>
             </div>
         </div>
-    </div>
+        <button mat-raised-button color="primary" type="submit">Change Password</button>
+    </form>
+
+
 
     <!-- Divider -->
     <div class="my-10 border-t"></div>
@@ -86,6 +62,7 @@
                 [color]="'primary'"
                 name="enabled"
                 [(ngModel)]="user.enabled"
+                (change)="onEnabledToggle()"
                 #enabled>
             </mat-slide-toggle>
         </div>
@@ -96,7 +73,7 @@
                 (click)="accountNonLocked.toggle()">
                 <div class="leading-6 font-medium">Account Non-Locked</div>
                 <div class="text-md text-secondary">
-                    Indicates that the account is not locked and can be accessed without restrictions..
+                    Indicates that the account is not locked and can be accessed without restrictions.
                 </div>
             </div>
             <mat-slide-toggle
@@ -104,6 +81,7 @@
                 [color]="'primary'"
                 name="accountNonLocked"
                 [(ngModel)]="user.accountNonLocked"
+                (change)="onAccountNonLockedToggle()"
                 #accountNonLocked>
             </mat-slide-toggle>
         </div>
@@ -115,7 +93,7 @@
                 (click)="accountNonExpired.toggle()">
                 <div class="leading-6 font-medium">Account Non-Expired</div>
                 <div class="text-md text-secondary">
-                    Ensures that the account has not expired and can still be used for authentication..
+                    Ensures that the account has not expired and can still be used for authentication.
                 </div>
             </div>
             <mat-slide-toggle
@@ -123,9 +101,11 @@
                 [color]="'primary'"
                 name="accountNonExpired"
                 [(ngModel)]="user.accountNonExpired"
+                (change)="onAccountNonExpiredToggle()"
                 #accountNonExpired>
             </mat-slide-toggle>
         </div>
+
 
         <div class="sm:col-span-4 flex items-center justify-between">
             <div
@@ -133,8 +113,7 @@
                 (click)="credentialsNonExpired.toggle()">
                 <div class="leading-6 font-medium">Credentials Non-Expired</div>
                 <div class="text-md text-secondary">
-                    Ensures that the user's credentials (e.g., password) have not expired and are still valid for
-                    authentication.
+                    Ensures that the user's credentials (e.g., password) have not expired and are still valid for authentication.
                 </div>
             </div>
             <mat-slide-toggle
@@ -142,9 +121,11 @@
                 [color]="'primary'"
                 name="credentialsNonExpired"
                 [(ngModel)]="user.credentialsNonExpired"
+                (change)="onCredentialsNonExpiredToggle()"
                 #credentialsNonExpired>
             </mat-slide-toggle>
         </div>
+
 
         <div class="sm:col-span-4 flex items-center justify-between">
             <div
@@ -160,9 +141,11 @@
                 [color]="'primary'"
                 name="passwordChanged"
                 [(ngModel)]="user.passwordChanged"
+                (change)="onPasswordChangedToggle()"
                 #passwordChanged>
             </mat-slide-toggle>
         </div>
+
 
 
     </div>

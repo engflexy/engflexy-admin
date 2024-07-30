@@ -18,7 +18,7 @@ export class PackStudentDto extends BaseDto{
     public preRequisites: string;
 
     public whyTakeThisCourse: string;
-
+    materialName: string;
     public expectations: string;
 
     public imgUrl: string;

@@ -3,6 +3,12 @@ import {initialDataResolver} from 'app/app.resolvers';
 import {AuthGuard} from 'app/core/auth/guards/auth.guard';
 import {NoAuthGuard} from 'app/core/auth/guards/noAuth.guard';
 import {LayoutComponent} from 'app/layout/layout.component';
+import {AdminDashboardComponent} from "./modules/admin/admin-dashboard/admin-dashboard.component";
+import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/manage-inscriptions.component";
+import {ScheduleComponent} from "./modules/admin/schedule/schedule.component";
+//import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
+import {ManagePackPricesComponent} from "./modules/admin/manage-pack-prices/manage-pack-prices.component";
+//import {ManageSalaryComponent} from "./modules/collaborator/manage-salary/manage-salary.component";
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -77,26 +83,46 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         children: [
-                {path: '', loadChildren: () => import('app/modules/admin/admin.routing')},
-        ]
-    },
-    // collaborator routes
-    {
-        path: 'collaborator',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        component: LayoutComponent,
-        data: {
-            layout: 'dense'
-        },
-        resolve: {
-            initialData: initialDataResolver
-        },
-        children: [
-                {
-                    path: '',
-                    loadChildren: () => import('app/modules/collaborator/collaborator.module').then(x => x.CollaboratorModule)
-                },
+            {
+                path: 'dashboard',
+                component: AdminDashboardComponent
+            },
+            {
+                path: 'manage-courses',
+                loadChildren: () => import('app/modules/admin/manage-courses/manage-course.routes')
+            },
+            {
+                path: 'chat',
+                loadChildren: () => import('app/modules/admin/chat-component/chat/chat.routes')
+            },
+            {
+                path: 'manage-users',
+                loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
+            },
+            { path: 'manage-statistics',
+                loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
+            },
+            {
+                path: 'manage-inscriptions',
+                component: ManageInscriptionsComponent
+            },
+            {
+                path: 'manage-groups',
+                loadChildren: () => import('app/modules/admin/manage-groups/group.routes')
+            },
+            {
+                path: 'schedule',
+                component: ScheduleComponent
+            },
+            {
+                path: 'faqs-news',
+                loadChildren: () => import('app/modules/admin/manage-faq-news/help-center.routes')
+            },
+
+            {
+                path: 'manage-pack-prices',
+                component: ManagePackPricesComponent
+            },
         ]
     }
 ];

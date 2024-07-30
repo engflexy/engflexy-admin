@@ -10,6 +10,7 @@ import {Pageable} from "../../../utils/Pageable";
 import {Observable, tap} from "rxjs";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
+import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
 
 
 @Injectable({
@@ -63,6 +64,11 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
                 }
             });
     }
+    findByUserName(username: string): Observable<UserCriteria> {
+
+        return this.http.get<UserCriteria>(this.API + `username/${username}`)
+
+    }
 
     create(student: EtudiantDto): Observable<EtudiantDto> {
         return this.http.post<EtudiantDto>(this.API + 'create', student);
@@ -71,5 +77,28 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     update(user: EtudiantDto): Observable<EtudiantDto> {
         return this.http.put<EtudiantDto>(this.API, user);
     }
+    updateAccountStatus(userId: number, enabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}update-status/${userId}`, { enabled });
+    }
+    updateAccountLockStatus(userId: number, accountNonLocked: boolean): Observable<any> {
+        return this.http.patch(`${this.API}update-lock-status/${userId}`, { accountNonLocked });
+    }
 
+
+
+    updateAccountNonExpiredStatus(id: number, accountNonExpired: boolean): Observable<any> {
+        return this.http.patch(`${this.API}update-account-non-expired/${id}`, { accountNonExpired });
+    }
+
+    updateCredentialsNonExpiredStatus(id: number, credentialsNonExpired: boolean): Observable<any> {
+        return this.http.patch(`${this.API}update-credentials-non-expired/${id}`, { credentialsNonExpired });
+    }
+
+    updatePasswordChangedStatus(id: number, passwordChanged: boolean): Observable<any> {
+        return this.http.patch(`${this.API}update-password-changed/${id}`, { passwordChanged });
+    }
+
+    changePassword(username: string, newPassword: string): Observable<any> {
+        return this.http.put(`${this.API}change-password`, { username, newPassword });
+    }
 }
