@@ -17,6 +17,8 @@ import {ImagesService} from "../../../../shared/service/public/images.service";
 import {generateRandomString} from "../../../../shared/constant/global-funsctions";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {ParcoursCollaboratorService} from "../../../../shared/service/collaborator/course/ParcoursCollaborator.service";
+import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
+import {CollaboratorDto} from "../../../../shared/model/vocab/Collaborator.model";
 
 @Component({
     selector: 'app-create-material',
@@ -43,7 +45,8 @@ export class CreateMaterialComponent {
 
     constructor(private parcourService: ParcoursCollaboratorService,
                 private alert: FuseAlertService,
-                private _matDialogRef: MatDialogRef<CreateMaterialComponent>,
+                private auth: AuthService,
+                public _matDialogRef: MatDialogRef<CreateMaterialComponent>,
                 private imageService: ImagesService) {
     }
 
@@ -96,11 +99,12 @@ export class CreateMaterialComponent {
 
     save() {
         this.item.code = this.item?.libelle?.at(0)?.toUpperCase()
+        this.item.collaborator =new CollaboratorDto( this.auth.authenticatedUser.id)
         this.parcourService.save()
             .subscribe(res => {
                 console.log(res)
                 this.levels.push({...res})
-                this._matDialogRef.close()
+                this._matDialogRef.close(res)
             }, error => {
                 console.error(error)
                 this.alert.show('warning', error?.error || 'something went wrong, please try again.')

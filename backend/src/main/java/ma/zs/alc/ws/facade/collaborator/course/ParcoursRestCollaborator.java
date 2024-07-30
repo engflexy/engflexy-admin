@@ -127,9 +127,9 @@ public class ParcoursRestCollaborator extends AbstractController<Parcours, Parco
     }
 
     @Operation(summary = "find for current collaborator")
-    @GetMapping("current")
-    public List<ParcoursDto> findForCurrentCollaborator() {
-        List<Parcours> forCurrentCollaborator = service.findForCurrentCollaborator();
+    @GetMapping("current/id/{id}")
+    public List<ParcoursDto> findForCurrentCollaborator(@PathVariable Long id) {
+        List<Parcours> forCurrentCollaborator = service.findForCurrentCollaborator(id);
         ResponseEntity<List<ParcoursDto>> listResponseEntity = getListResponseEntity(forCurrentCollaborator);
         return listResponseEntity.getBody();
     }

@@ -17,7 +17,7 @@ public interface ParcoursCollaboratorService extends IService<Parcours, Parcours
 
     List<Parcours> findByForExgFlexy();
 
-    List<Parcours> findForCurrentCollaborator();
+    List<Parcours> findForCurrentCollaborator(Long id);
 
 
 }

@@ -34,6 +34,8 @@ import {ParcoursCollaboratorService} from "../../../shared/service/collaborator/
 })
 export class ManageCoursesComponent implements OnInit {
 
+    personalParcours: ParcoursDto[] = [];
+    catalogParcours: ParcoursDto[] = [];
 
     constructor(private parcourService: ParcoursCollaboratorService,
                 private router: Router,
@@ -78,14 +80,28 @@ export class ManageCoursesComponent implements OnInit {
             console.log(this.levels)
         })
 
+        this.parcourService.findForCurrentCollaborator().subscribe(res => {
+            this.personalParcours = res;
+            console.log(this.personalParcours);
+        }, error => console.log(error));
+
+        this.parcourService.findByForExgFlexy().subscribe(res => {
+            this.catalogParcours = res;
+            console.log(this.catalogParcours);
+        }, error => console.log(error));
     }
 
     createMaterial() {
         this.item = new ParcoursDto()
         this.item.color = colors[Math.floor(Math.random() * colors.length)]
-        this._matDialog.open(CreateMaterialComponent, {
+        const diqlog = this._matDialog.open(CreateMaterialComponent, {
             autoFocus: false,
         });
+        diqlog.afterClosed().subscribe(res => {
+            if (res != null) {
+                this.personalParcours.unshift({...res})
+            }
+        })
     }
 
 
@@ -110,4 +126,6 @@ export class ManageCoursesComponent implements OnInit {
             }
         })
     }
+
+
 }
