@@ -149,15 +149,17 @@
                                                             class="object-cover flex items-center justify-center
                                                              uppercase bg-gray-100 text-center dark:bg-gray-600 w-10 h-10
                                                               rounded-full">
-                                                            <strong>{{ item?.collaborator?.username.at(0) }}</strong>
+                                                            <strong>{{ item?.collaborator?.fullName.at(0) }}</strong>
                                                         </div>
 
                                                         <div>
-                                                            <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                            <h2 class="text-gray-800 font-bold dark:text-white ">
                                                                 {{ item?.collaborator?.username }}
+                                                                <!-- email-->
                                                             </h2>
                                                             <p>
-                                                                {{ item?.collaborator?.email }}
+                                                                {{ item?.collaborator?.fullName }}
+                                                                <!-- username-->
                                                             </p>
                                                         </div>
                                                     </div>
@@ -171,9 +173,16 @@
                                                 {{ item?.price }}
                                             </td>
 
+                                            <td class="py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
 
-                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ item?.inscriptionCollaboratorState?.libelle }}
+                                                <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2
+                                            container-{{item?.inscriptionCollaboratorState?.libelle.toLowerCase()}} dark:bg-gray-800">
+                                                <span
+                                                    class="h-1.5 w-1.5 rounded-full type-{{item?.inscriptionCollaboratorState?.libelle}}"></span>
+
+                                                    <h2 class="text-sm font-normal text-{{item?.inscriptionCollaboratorState?.libelle?.toLowerCase()}}">{{ item?.inscriptionCollaboratorState?.libelle }}</h2>
+                                                </div>
+
                                             </td>
                                             <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {{ item?.startDate|date:'dd-MM-yyyy' }}
