@@ -8,7 +8,7 @@
 
                     <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator" [compareWith]="compareObjects" >
                         <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
-                            {{collaborator.id}}
+                            {{collaborator.fullName}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>

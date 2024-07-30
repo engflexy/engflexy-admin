@@ -12,7 +12,7 @@
                     <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator"
                                       [compareWith]="compareObjects">
                         <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
-                            {{ collaborator.username }}
+                            {{ collaborator.fullName }}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
@@ -20,7 +20,7 @@
 
                 <mat-form-field class="w-full">
                     <mat-label>Package</mat-label>
-                    <input type="text" matInput (ngModelChange)="calculatePrice()"  (input)="filterPackageCollaborator(packageCollaboratorInput.value)"
+                    <input type="text" matInput (ngModelChange)="onPackageChagne()"  (input)="filterPackageCollaborator(packageCollaboratorInput.value)"
                            #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"
                            [(ngModel)]="item.packageCollaborator" name="packageCollaborator">
 
@@ -36,10 +36,13 @@
 
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>Number of students</mat-label>
-                    <input required type="number" (ngModelChange)="calculatePrice()" matInput [step]="8" [min]="8"
-                           placeholder="NbrStudent" [(ngModel)]="item.nbrStudent"
-                           name="nbrStudent">
+                    <mat-select [(ngModel)]="item.nbrStudent" (selectionChange)="calculatePrice()">
+                        <mat-option *ngFor="let number of studentsForTeacher" [value]="number">
+                            {{number}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
+
 
             </div>
             <div class="flex gap-4">
