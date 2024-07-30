@@ -2,6 +2,8 @@ package ma.zs.alc.zynerator.security.dao.facade.core;
 
 import ma.zs.alc.zynerator.repository.AbstractRepository;
 import ma.zs.alc.zynerator.security.bean.User;
+import ma.zs.alc.zynerator.security.ws.dto.UserDto;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

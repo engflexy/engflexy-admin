@@ -12,6 +12,7 @@ import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
 import ma.zs.alc.zynerator.security.dao.facade.core.UserDao;
 import ma.zs.alc.zynerator.security.dao.specification.core.UserSpecification;
 import ma.zs.alc.zynerator.security.service.facade.*;
+import ma.zs.alc.zynerator.security.ws.dto.UserDto;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,20 +182,21 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     ////////////////////////////////////////////////
     @Override
-    public ResponseEntity<ApiResponse> findAllUsersExceptThisUserId(Long userId) {
+    public List<User> findAllUsersExceptThisUserId(Long userId) {
         List<User> list = dao.findAllUsersExceptThisUserId(userId);
-        ApiResponse response = new ApiResponse(200, "Success", "OK", list);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        //ApiResponse response = new ApiResponse(200, "Success", "OK", list);
+        return list;
     }
 
     @Override
-    public ResponseEntity<ApiResponse> findConversationIdByUser1IdAndUser2Id(Long user1Id, Long user2Id) {
+    public Long findConversationIdByUser1IdAndUser2Id(Long user1Id, Long user2Id) {
         Long conversationId;
         Optional<User> user1 = dao.findById(user1Id);
         Optional<User> user2 = dao.findById(user2Id);
         if (user1.isEmpty() || user2.isEmpty()) {
-            ApiResponse response = new ApiResponse(200, "Failed", "User not found", null);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            //ApiResponse response = new ApiResponse(200, "Failed", "User not found", null);
+            //return new ResponseEntity<>(response, HttpStatus.OK);
+        	return 0L;
         }
 
         Optional<Conversation> existingConversation = conversationRepository.findConversationByUsers(user1.get(), user2.get());
@@ -207,8 +209,10 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
             Conversation savedConversation = conversationRepository.save(newConversation);
             conversationId = savedConversation.getId();
         }
-        ApiResponse response = new ApiResponse(200, "Success", "OK", conversationId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        //ApiResponse response = new ApiResponse(200, "Success", "OK", conversationId);
+        //return new ResponseEntity<>(response, HttpStatus.OK);
+        return conversationId;
+
     }
     ///////////////////////////////////////
 }
