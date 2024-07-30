@@ -97,7 +97,7 @@ public class Section extends AuditBusinessObject {
         this.cours = cours;
     }
 
-    @OneToMany(mappedBy = "section")
+    @OneToMany(mappedBy = "section",cascade = CascadeType.REMOVE)
     public List<Exercice> getExercices() {
         return this.exercices;
     }

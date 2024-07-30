@@ -108,7 +108,7 @@ public class HomeWorkQuestion   extends AuditBusinessObject     {
     public void setTypeDeQuestion(TypeDeQuestion typeDeQuestion){
         this.typeDeQuestion = typeDeQuestion;
     }
-    @OneToMany(mappedBy = "homeWorkQuestion")
+    @OneToMany(mappedBy = "homeWorkQuestion",cascade = CascadeType.REMOVE)
 
     public List<HoweWorkQSTReponse> getHoweWorkQSTReponses(){
         return this.howeWorkQSTReponses;
