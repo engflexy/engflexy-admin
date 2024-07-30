@@ -1,7 +1,7 @@
 package  ma.zs.alc.dao.criteria.core.prof;
 
 
-import ma.zs.alc.dao.criteria.core.vocab.CollaboratorCriteria;
+import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.criteria.core.course.ParcoursCriteria;
 
 import ma.zs.alc.zynerator.criteria.BaseCriteria;

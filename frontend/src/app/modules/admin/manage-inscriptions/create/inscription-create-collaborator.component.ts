@@ -130,6 +130,7 @@ export class InscriptionCreateCollaboratorComponent implements OnInit {
     private _validPackStudentLibelle = true;
     private _validSkillCode = true;
     private _validSkillLibelle = true;
+    private dialogRef: any;
 
     constructor(public matDialog: MatDialogRef<InscriptionCreateCollaboratorComponent>,
                 private stringUtilService: StringUtilService,

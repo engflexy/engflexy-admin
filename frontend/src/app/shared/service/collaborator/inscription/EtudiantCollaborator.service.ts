@@ -10,6 +10,7 @@ import {Pageable} from "../../../utils/Pageable";
 import {Observable, tap} from "rxjs";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
+import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
 
 
 @Injectable({

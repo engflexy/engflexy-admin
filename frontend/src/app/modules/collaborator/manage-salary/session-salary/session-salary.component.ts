@@ -15,6 +15,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     selector: 'app-collaborator-session-salary',
     templateUrl: './session-salary.component.html'
 })
+
 export class SessionSalaryComponent implements OnInit {
     pageable: Pageable = new Pageable(0, 5);
     criteria: PageRequest<SessionSalary> = new PageRequest<SessionSalary>();

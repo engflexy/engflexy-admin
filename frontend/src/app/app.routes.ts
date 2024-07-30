@@ -6,8 +6,9 @@ import {LayoutComponent} from 'app/layout/layout.component';
 import {AdminDashboardComponent} from "./modules/admin/admin-dashboard/admin-dashboard.component";
 import {ManageInscriptionsComponent} from "./modules/admin/manage-inscriptions/manage-inscriptions.component";
 import {ScheduleComponent} from "./modules/admin/schedule/schedule.component";
-import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
+//import {ManageSalaryComponent} from "./modules/admin/manage-salary/manage-salary.component";
 import {ManagePackPricesComponent} from "./modules/admin/manage-pack-prices/manage-pack-prices.component";
+import {ManageSalaryComponent} from "./modules/collaborator/manage-salary/manage-salary.component";
 
 // @formatter:off
 /* eslint-disable max-len */
