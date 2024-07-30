@@ -91,20 +91,22 @@ export const adminNavigation: FuseNavigationItem[] = [
         title: 'Schedule',
         type: 'basic',
         icon: 'heroicons_solid:calendar-days',
-        link: '/admin/schedule'
+        link: '/admin/schedule/home'
     }, {
         id: 'manage-inscriptions',
         title: 'Inscriptions',
         type: 'basic',
         icon: 'heroicons_solid:identification',
         link: '/admin/manage-inscriptions'
-    }, {
+    },
+    {
         id: 'manage-salary',
         title: 'Salary',
         type: 'basic',
         icon: 'heroicons_solid:academic-cap',
         link: '/admin/teacher-salary'
-    }, {
+    },
+    {
         id: 'FAQS & News',
         title: 'FAQS & News',
         type: 'basic',
@@ -117,6 +119,7 @@ export const adminNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_solid:chat-bubble-left-right',
         link: '/admin/chat'
     },
+
 ];
 
 export const collaboratorNavigation: FuseNavigationItem[] = [

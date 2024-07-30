@@ -15,11 +15,9 @@ import {SalaryCollaboratorService} from "../../../shared/service/collaborator/sa
 import {SalaryCriteria} from "../../../shared/criteria/salary/SalaryCriteria.model";
 import {FormsModule} from "@angular/forms";
 import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
-import {FilterInscriptionComponent} from "../manage-inscriptions/filter-inscription/filter-inscription.component";
 import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.html";
 import {ProfDto} from "../../../shared/model/prof/Prof.model";
 import {SessionSalaryComponent} from "./session-salary/session-salary.component";
-import {InscriptionDto} from "../../../shared/model/grpe/Inscription.model";
 import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";
 import {FuseAlertService} from "../../../../@fuse/components/alert";
 import {EditSalaryComponent} from "./edit-salary/edit-salary.component";
@@ -59,7 +57,8 @@ export class ManageSalaryComponent {
     set criteria(value: PaginatedList<SalaryDto>) {
         this.service.criteriaList = value;
     }
-    get item(): SalaryDto{
+
+    get item(): SalaryDto {
         return this.service.item;
     }
 
@@ -123,7 +122,7 @@ export class ManageSalaryComponent {
         })
     }
 
-edit(item: SalaryDto) {
+    edit(item: SalaryDto) {
         this.item = item
         const dialog = this._matDialog.open(EditSalaryComponent, {
             autoFocus: false,
@@ -140,7 +139,6 @@ edit(item: SalaryDto) {
             }
         })
     }
-
 
 
     displayProf(item: ProfDto): string {

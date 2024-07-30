@@ -88,7 +88,7 @@ public class HomeWork   extends AuditBusinessObject     {
     public void setUrlVideo(String urlVideo){
         this.urlVideo = urlVideo;
     }
-    @OneToMany(mappedBy = "homeWork")
+    @OneToMany(mappedBy = "homeWork",cascade = CascadeType.REMOVE)
 
     public List<HomeWorkQuestion> getHomeWorkQuestions(){
         return this.homeWorkQuestions;

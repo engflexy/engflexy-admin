@@ -11,8 +11,6 @@ import ma.zs.alc.zynerator.exception.GlobalException;
 import ma.zs.alc.zynerator.export.ExportModel;
 import ma.zs.alc.zynerator.service.IService;
 import ma.zs.alc.zynerator.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -162,7 +160,19 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    public ResponseEntity<List<DTO>> getListResponseEntity(List<T> list) {
+        ResponseEntity<List<DTO>> res;
+        HttpStatus status = HttpStatus.NO_CONTENT;
+        converter.initList(false);
+        List<DTO> dtos = converter.toDto(list);
+        converter.initList(true);
 
+        if (dtos != null && !dtos.isEmpty())
+            status = HttpStatus.OK;
+
+        res = new ResponseEntity<>(dtos, status);
+        return res;
+    }
 
     public ResponseEntity<DTO> save(DTO dto) throws Exception {
         if (dto != null) {
@@ -179,7 +189,6 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
             return new ResponseEntity<>(dto, HttpStatus.NO_CONTENT);
         }
     }
-
 
 
     public ResponseEntity<DTO> update(DTO dto) throws Exception {

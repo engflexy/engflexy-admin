@@ -1,0 +1,47 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden">
+    <div class="w-full items-center justify-center flex flex-col gap-4">
+        <div class="w-full flex max-w-4xl md:w-[70vw] flex-col gap-4 items-center justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
+
+
+<!--            <mat-form-field class="flex-auto w-full fuse-mat-dense">-->
+<!--                <mat-label>Choose date of creation</mat-label>-->
+<!--                <input required #dateCreation type="date"-->
+<!--                       placeholder="Choose a material"-->
+<!--                       (input)="filter(dateCreation.value, 'DATECREATION')"-->
+<!--                       [(ngModel)]="item.dateCreation"-->
+<!--                       name="dateCreation"-->
+<!--                       matInput-->
+<!--                       [matAutocomplete]="autoDateCreation">-->
+<!--                <mat-autocomplete  #autoDateCreation="matAutocomplete">-->
+<!--                    <mat-option *ngFor="let item of items" class="border-b border-solid" [value]="item">-->
+<!--                        <div class="w-full flex flex-col gap-2">-->
+<!--                            <div>{{ item?.dateCreation | date }}</div>-->
+<!--                        </div>-->
+<!--                    </mat-option>-->
+<!--                </mat-autocomplete>-->
+<!--            </mat-form-field>-->
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>Choose a code</mat-label>
+                <input required  type="text"
+                       placeholder="Choose a libelle"
+                       [(ngModel)]="item.libelle"
+                       name="libelle"
+                       matInput
+                       [matAutocomplete]="autoCode">
+                <mat-autocomplete [displayWith]="displayFn" #autoCode="matAutocomplete">
+                    <mat-option *ngFor="let item of items" class="border-b border-solid" [value]="item">
+                        <div class="w-full flex flex-col gap-2">
+                            <div>{{ item?.libelle }}</div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="refDialog.close(null)">Cancel</button>
+    <button mat-flat-button color="primary" class="px-6 ml-3" (click)="applyFilter()">Apply</button>
+</mat-dialog-actions>

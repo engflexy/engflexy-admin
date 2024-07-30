@@ -6,8 +6,8 @@ import {environment} from '../../../../../environments/environment';
 import {GroupeEtudiantDto} from '../../../model/grpe/GroupeEtudiant.model';
 import {GroupeEtudiantCriteria} from '../../../criteria/grpe/GroupeEtudiantCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
-import {SalaryDto} from "../../../model/salary/Salary.model";
 import {Observable} from "rxjs";
+import {StatisticEtudiant} from "../../../model/grpe/StatisticEtudiant.model";
 
 
 @Injectable({
@@ -33,5 +33,9 @@ export class GroupeEtudiantCollaboratorService extends AbstractService<GroupeEtu
 
     findAllSalary(): Observable<any[]> {
         return this.http.get<any[]>('https://api.engflexy.com/app/prof/salary/')
+    }
+
+    calculateStat(idEtudiant: number): Observable<StatisticEtudiant> {
+        return this.http.get<StatisticEtudiant>(`${this.API}etudiant/id/${idEtudiant}`);
     }
 }

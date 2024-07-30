@@ -30,7 +30,7 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from '@danielmoncada/angular
 
 
 const routes: Route[] = [
-    {path: '', component: ScheduleComponent}
+    {path: 'home', component: ScheduleComponent}
 ]
 
 @NgModule({

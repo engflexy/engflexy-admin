@@ -11,6 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreateStudentComponent} from "./create-student/create-student.component";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {ActivatedRoute, Router} from "@angular/router";
+import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
 
 @Component({
     selector: 'app-students',
@@ -20,7 +21,7 @@ export class StudentsComponent implements OnInit {
 
     criteria: PageRequest<ManageUserDto>
     pageable: Pageable = new Pageable(0, 5)
-
+    etudiant: UserCriteria
     constructor(private etudiantService: EtudiantCollaboratorService,
                 private _matDialog: MatDialog,
                 private router: Router,
@@ -38,16 +39,40 @@ export class StudentsComponent implements OnInit {
 
     ngOnInit() {
         this.findByCollaboratorId();
+
     }
 
     private findByCollaboratorId() {
         this.etudiantService.findByCollaboratorId(this.auth.authenticatedUser?.id, this.pageable)
             .subscribe(res => {
                 this.criteria = res
-                console.log(this.criteria)
+               // console.log(this.criteria)
             })
     }
 
+    findUserByUsername(username: string): void {
+        this.etudiantService.findByUserName(username) .subscribe(res => {
+            this.etudiant = res
+            console.log(this.etudiant.email)
+            if(res){ this.criteria = {
+                content: [this.etudiant],
+                totalElements: 1,
+                totalPages: 1,
+                //pageable: this.pageable, // Ensure pageable is correctly initialized
+                size: 1,
+                number: 0, // Typically the page number starts from 0
+                // sort: { /* Initialize sort properties if required */ },
+                last: true,
+                first: true,
+                numberOfElements: 1,
+                empty: false // Set to false since we have one element
+            };}
+
+
+            console.log(this.criteria)
+
+        })
+    }
     handle_pageable_change(event: PageEvent) {
         this.pageable = new Pageable(event?.pageIndex, event?.pageSize)
         this.findByCollaboratorId();
@@ -69,5 +94,9 @@ export class StudentsComponent implements OnInit {
 
     navigateToDetail(item: ManageUserDto) {
         this.router.navigate([`student/${item.id}`], {relativeTo: this.route})
+    }
+
+    openFilter() {
+
     }
 }

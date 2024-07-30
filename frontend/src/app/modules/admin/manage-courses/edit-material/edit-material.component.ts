@@ -16,6 +16,7 @@ import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {ImagesService} from "../../../../shared/service/public/images.service";
 import {ParcoursDto} from "../../../../shared/model/course/Parcours.model";
 import {generateRandomString} from "../../../../shared/constant/global-funsctions";
+import {ParcoursCollaboratorService} from "../../../../shared/service/collaborator/course/ParcoursCollaborator.service";
 
 @Component({
   selector: 'app-edit-material',
@@ -41,7 +42,7 @@ export class EditMaterialComponent {
     selectedFile: File | null = null;
     showLoader: boolean = false
 
-    constructor(private parcourService: ParcoursAdminService,
+    constructor(private parcourService: ParcoursCollaboratorService,
                 private alert: FuseAlertService,
                 private _matDialogRef: MatDialogRef<EditMaterialComponent>,
                 private imageService: ImagesService) {

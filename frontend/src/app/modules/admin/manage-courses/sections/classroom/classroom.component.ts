@@ -24,6 +24,7 @@ import {
     ExerciceCollaboratorService
 } from "../../../../../shared/service/collaborator/course/ExerciceCollaborator.service";
 import {CreateExerciseComponent} from "../create-exercise/create-exercise.component";
+import {FuseConfirmationService} from "../../../../../../@fuse/services/confirmation";
 
 @Component({
     selector: 'app-classroom',
@@ -51,7 +52,10 @@ export class ClassroomComponent implements OnInit {
                 private _matDialog: MatDialog,
                 private quizService: QuizCollaboratorService,
                 private exerciseService: ExerciceCollaboratorService,
-                private route: ActivatedRoute
+                private route: ActivatedRoute,
+                private _fuseConfirmation: FuseConfirmationService,
+
+
     ) {
     }
 
@@ -265,4 +269,56 @@ export class ClassroomComponent implements OnInit {
         this.editSection = null
         this.sectionService.updateFields(section).subscribe()
     }
+
+    deleteExercise(exercise: ExerciceDto) {
+        const confirmation = this._fuseConfirmation.open({
+            title: 'delete exercise',
+            message: 'Are you sure you want to remove this exercise?',
+            actions: {
+                confirm: {
+                    label: 'REMOVE',
+                },
+            },
+        });
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirmation button pressed...
+            if (result === 'confirmed') {
+                this.exerciseService.delete(exercise).subscribe(res => {
+                    this.selectedSection.exercices = this.selectedSection.exercices.filter(e => e.id !== exercise.id)
+                    this.goToStep(this.currentStep)
+                }, error => {
+                    this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
+                })
+            }
+        });
+    }
+
+    deleteSection(section: SectionDto) {
+        const confirmation = this._fuseConfirmation.open({
+            title: 'delete section',
+            message: 'Are you sure you want to remove this section?',
+            actions: {
+                confirm: {
+                    label: 'REMOVE',
+                },
+            },
+        });
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirmation button pressed...
+            if (result === 'confirmed') {
+                this.sectionService.delete(section).subscribe(res => {
+                    this.sections = this.sections.filter(s => s.id !== section.id)
+                    this.goToStep(0)
+                }, error => {
+                    this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
+                })
+            }
+        });
+
+    }
 }
+//        <button mat-mini-fab color="accent">
+//           <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
+//         </button>

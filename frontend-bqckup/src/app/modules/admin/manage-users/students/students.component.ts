@@ -70,4 +70,6 @@ export class StudentsComponent implements OnInit {
     navigateToDetail(item: UserCriteria) {
         this.router.navigate([`student/${item.id}`], {relativeTo: this.route})
     }
+
+
 }

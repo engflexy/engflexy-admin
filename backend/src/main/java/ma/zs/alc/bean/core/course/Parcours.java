@@ -138,8 +138,7 @@ public class Parcours extends AuditBusinessObject {
         this.nombreCours = nombreCours;
     }
 
-    @OneToMany(mappedBy = "parcours")
-
+    @OneToMany(mappedBy = "parcours", cascade = CascadeType.REMOVE)
     public List<Cours> getCourss() {
         return this.courss;
     }

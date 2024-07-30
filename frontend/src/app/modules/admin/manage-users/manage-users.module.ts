@@ -26,7 +26,7 @@ import {SettingsAccountComponent} from "./students/student-settings/account/acco
 import {SettingsNotificationsComponent} from "./students/student-settings/notifications/notifications.component";
 import {SettingsPlanBillingComponent} from "./students/student-settings/plan-billing/plan-billing.component";
 import {SettingsSecurityComponent} from "./students/student-settings/security/security.component";
-import {SettingsTeamComponent} from "./students/student-settings/team/team.component";
+import {SettingsTeamComponent} from "./students/student-settings/team/statistics.component";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
@@ -38,6 +38,8 @@ import { TeacherProfileComponent } from './teachers/teacher-details/teacher-prof
 import { CreateCollaboratorComponent } from './collaborators/create-collaborator/create-collaborator.component';
 import { CollaboratorDetialsComponent } from './collaborators/collaborator-detials/collaborator-detials.component';
 import { CollaboratorProfileComponent } from './collaborators/collaborator-detials/collaborator-profile/collaborator-profile.component';
+import {TranslocoModule} from "@ngneat/transloco";
+import {ScheduleModule} from "../schedule/schedule.module";
 
 
 const userRoutes: Route[] = [
@@ -78,7 +80,9 @@ const userRoutes: Route[] = [
         MatSlideToggleModule,
         NgOptimizedImage,
         ToFixed,
-        PriceFormatPipe
+        PriceFormatPipe,
+        TranslocoModule,
+        ScheduleModule
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

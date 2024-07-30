@@ -1,8 +1,8 @@
 import {Routes} from "@angular/router";
 import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
 import {ManageInscriptionsComponent} from "./manage-inscriptions/manage-inscriptions.component";
-import {ManageSalaryComponent} from "./manage-salary/manage-salary.component";
 import {ManagePackPricesComponent} from "./manage-pack-prices/manage-pack-prices.component";
+import {ManageSalaryComponent} from "./manage-salary/manage-salary.component";
 
 export default [
     {

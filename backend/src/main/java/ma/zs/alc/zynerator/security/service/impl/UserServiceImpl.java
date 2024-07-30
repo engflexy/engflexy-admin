@@ -1,6 +1,10 @@
 package ma.zs.alc.zynerator.security.service.impl;
 
 
+import ma.zs.alc.bean.core.chat.Conversation;
+import ma.zs.alc.dao.facade.core.chat.ConversationRepository;
+import ma.zs.alc.ws.dto.chat.ApiResponse;
+import ma.zs.alc.ws.dto.inscription.EtudiantDto;
 import ma.zs.alc.zynerator.security.bean.ModelPermissionUser;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.bean.User;
@@ -8,10 +12,12 @@ import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
 import ma.zs.alc.zynerator.security.dao.facade.core.UserDao;
 import ma.zs.alc.zynerator.security.dao.specification.core.UserSpecification;
 import ma.zs.alc.zynerator.security.service.facade.*;
+import ma.zs.alc.zynerator.security.ws.dto.UserDto;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Observable;
+import org.springframework.http.HttpStatus;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, UserDao> implements UserService {
-
+	
+    private final ConversationRepository conversationRepository;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public User create(User t) {
@@ -165,8 +175,44 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     PasswordEncoder bCryptPasswordEncoder;
 
 
-    public UserServiceImpl(UserDao dao) {
+    public UserServiceImpl(UserDao dao, ConversationRepository conversationRepository) {
         super(dao);
+    	this.conversationRepository = conversationRepository;
     }
 
+    ////////////////////////////////////////////////
+    @Override
+    public List<User> findAllUsersExceptThisUserId(Long userId) {
+        List<User> list = dao.findAllUsersExceptThisUserId(userId);
+        //ApiResponse response = new ApiResponse(200, "Success", "OK", list);
+        return list;
+    }
+
+    @Override
+    public Long findConversationIdByUser1IdAndUser2Id(Long user1Id, Long user2Id) {
+        Long conversationId;
+        Optional<User> user1 = dao.findById(user1Id);
+        Optional<User> user2 = dao.findById(user2Id);
+        if (user1.isEmpty() || user2.isEmpty()) {
+            //ApiResponse response = new ApiResponse(200, "Failed", "User not found", null);
+            //return new ResponseEntity<>(response, HttpStatus.OK);
+        	return 0L;
+        }
+
+        Optional<Conversation> existingConversation = conversationRepository.findConversationByUsers(user1.get(), user2.get());
+        if (existingConversation.isPresent()) {
+            conversationId = existingConversation.get().getId();
+        } else {
+            Conversation newConversation = new Conversation();
+            newConversation.setUser1(user1.get());
+            newConversation.setUser2(user2.get());
+            Conversation savedConversation = conversationRepository.save(newConversation);
+            conversationId = savedConversation.getId();
+        }
+        //ApiResponse response = new ApiResponse(200, "Success", "OK", conversationId);
+        //return new ResponseEntity<>(response, HttpStatus.OK);
+        return conversationId;
+
+    }
+    ///////////////////////////////////////
 }

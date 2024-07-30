@@ -1,5 +1,6 @@
 package ma.zs.alc.ws.converter.course;
 
+import ma.zs.alc.bean.core.course.Cours;
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.ws.converter.courseref.ContentTypeConverter;
 import ma.zs.alc.ws.converter.quiz.QuestionConverter;
@@ -25,6 +26,8 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
     private QuestionConverter questionConverter;
     @Autowired
     private ExerciceConverter exerciceConverter;
+    @Autowired
+    private CoursConverter coursConverter;
     private boolean quizs;
     private boolean cours;
     private boolean exercices;
@@ -40,18 +43,18 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
             return null;
         } else {
             Section item = new Section();
-            if (StringUtil.isNotEmpty(dto.getId()))
-                item.setId(dto.getId());
-            if (StringUtil.isNotEmpty(dto.getCode()))
-                item.setCode(dto.getCode());
-            if (StringUtil.isNotEmpty(dto.getLibelle()))
-                item.setLibelle(dto.getLibelle());
-            if (StringUtil.isNotEmpty(dto.getDescription()))
-                item.setDescription(dto.getDescription());
+            if (StringUtil.isNotEmpty(dto.getId())) item.setId(dto.getId());
+            if (StringUtil.isNotEmpty(dto.getCode())) item.setCode(dto.getCode());
+            if (StringUtil.isNotEmpty(dto.getLibelle())) item.setLibelle(dto.getLibelle());
+            if (StringUtil.isNotEmpty(dto.getNumero())) item.setNumero(dto.getNumero());
+            if (StringUtil.isNotEmpty(dto.getDescription())) item.setDescription(dto.getDescription());
             if (this.exercices && ListUtil.isNotEmpty(dto.getExercices()))
                 item.setExercices(exerciceConverter.toItem(dto.getExercices()));
-
-
+            if (dto.getCours() != null && dto.getCours().getId() != null) {
+                item.setCours(new Cours());
+                item.getCours().setId(dto.getCours().getId());
+                item.getCours().setLibelle(dto.getCours().getLibelle());
+            }
             return item;
         }
     }
@@ -62,31 +65,27 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
             return null;
         } else {
             SectionDto dto = new SectionDto();
-            if (StringUtil.isNotEmpty(item.getId()))
-                dto.setId(item.getId());
-            if (StringUtil.isNotEmpty(item.getCode()))
-                dto.setCode(item.getCode());
-            if (StringUtil.isNotEmpty(item.getLibelle()))
-                dto.setLibelle(item.getLibelle());
-            if (StringUtil.isNotEmpty(item.getDescription()))
-                dto.setDescription(item.getDescription());
+            if (StringUtil.isNotEmpty(item.getId())) dto.setId(item.getId());
+            if (StringUtil.isNotEmpty(item.getCode())) dto.setCode(item.getCode());
+            if (StringUtil.isNotEmpty(item.getLibelle())) dto.setLibelle(item.getLibelle());
+            if (StringUtil.isNotEmpty(item.getNumero())) dto.setNumero(item.getNumero());
+            if (StringUtil.isNotEmpty(item.getDescription())) dto.setDescription(item.getDescription());
             if (this.exercices && ListUtil.isNotEmpty(item.getExercices())) {
                 exerciceConverter.init(true);
                 exerciceConverter.setSection(false);
                 dto.setExercices(exerciceConverter.toDto(item.getExercices()));
                 exerciceConverter.setSection(true);
-
             }
-
-
+            if (this.cours && item.getCours() != null) {
+                dto.setCours(coursConverter.toDto(item.getCours()));
+            }
             return dto;
         }
     }
 
     public void copy(SectionDto dto, Section t) {
         super.copy(dto, t);
-        if (dto.getExercices() != null)
-            t.setExercices(exerciceConverter.copy(dto.getExercices()));
+        if (dto.getExercices() != null) t.setExercices(exerciceConverter.copy(dto.getExercices()));
     }
 
 
@@ -154,6 +153,7 @@ public class SectionConverter extends AbstractConverter<Section, SectionDto> {
     public void setExercices(boolean exercices) {
         this.exercices = exercices;
     }
+
     public boolean isCours() {
         return this.cours;
     }

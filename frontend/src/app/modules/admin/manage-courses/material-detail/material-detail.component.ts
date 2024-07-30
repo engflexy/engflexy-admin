@@ -136,7 +136,7 @@ export class MaterialDetailComponent implements OnInit {
                 if (result === 'confirmed') {
                     this.parcourService.delete(item).subscribe(res => {
                         this.alert.show('success', 'course deleted successfully.')
-                        this.router.navigate(['courses'])
+                        this.router.navigate(['/admin/manage-courses'])
                     }, error => {
                         this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                     })

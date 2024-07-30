@@ -31,6 +31,7 @@ import {compareObjects} from "../../../shared/constant/global-funsctions";
 export class ScheduleComponent implements OnInit {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     schedules: Array<Class> = new Array<Class>();
+    hideSearch: boolean = false;
     @Input()
     group: GroupeEtudiantDto = null;
     @Input()
