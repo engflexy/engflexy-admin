@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 import {ParcoursCriteria} from "../../../shared/criteria/course/ParcoursCriteria.model";
 import {FormsModule} from "@angular/forms";
 import {FilterMaterialComponent} from "./filter-material/filter-material.component";
+import {ParcoursCollaboratorService} from "../../../shared/service/collaborator/course/ParcoursCollaborator.service";
 
 @Component({
     selector: 'app-manage-courses',
@@ -34,7 +35,7 @@ import {FilterMaterialComponent} from "./filter-material/filter-material.compone
 export class ManageCoursesComponent implements OnInit {
 
 
-    constructor(private parcourService: ParcoursAdminService,
+    constructor(private parcourService: ParcoursCollaboratorService,
                 private router: Router,
                 private _matDialog: MatDialog,) {
     }
