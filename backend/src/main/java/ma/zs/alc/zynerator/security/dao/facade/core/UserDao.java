@@ -20,4 +20,9 @@ public interface UserDao extends AbstractRepository<User,Long>  {
     List<User> findAllOptimized();
 
     User findUserById(Long id);
+    
+    
+    //////////////
+    @Query("SELECT u FROM User u WHERE u.id <> ?1")
+	List<User> findAllUsersExceptThisUserId(Long id);
 }

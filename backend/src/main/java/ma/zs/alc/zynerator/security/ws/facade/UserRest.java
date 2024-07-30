@@ -1,6 +1,7 @@
 package ma.zs.alc.zynerator.security.ws.facade;
 
 import io.swagger.v3.oas.annotations.Operation;
+import ma.zs.alc.ws.dto.chat.ApiResponse;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.security.bean.User;
@@ -22,137 +23,147 @@ import java.util.List;
 @RequestMapping("/api/user/")
 public class UserRest extends AbstractController<User, UserDto, UserCriteria, UserService, UserConverter> {
 
+	@Operation(summary = "upload one user")
+	@RequestMapping(value = "upload", method = RequestMethod.POST, consumes = "multipart/form-data")
+	public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
+		return super.uploadFileAndGetChecksum(file);
+	}
 
-    @Operation(summary = "upload one user")
-    @RequestMapping(value = "upload", method = RequestMethod.POST, consumes = "multipart/form-data")
-    public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
-        return super.uploadFileAndGetChecksum(file);
-    }
+	@Operation(summary = "upload multiple utilisateurs")
+	@RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
+	public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files)
+			throws Exception {
+		return super.uploadMultipleFileAndGetChecksum(files);
+	}
 
-    @Operation(summary = "upload multiple utilisateurs")
-    @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
-    public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
-        return super.uploadMultipleFileAndGetChecksum(files);
-    }
+	@Operation(summary = "Finds a list of all utilisateurs")
+	@GetMapping("")
+	public ResponseEntity<List<UserDto>> findAll() throws Exception {
+		return super.findAll();
+	}
 
-    @Operation(summary = "Finds a list of all utilisateurs")
-    @GetMapping("")
-    public ResponseEntity<List<UserDto>> findAll() throws Exception {
-        return super.findAll();
-    }
+	@Operation(summary = "Finds an optimized list of all utilisateurs")
+	@GetMapping("optimized")
+	public ResponseEntity<List<UserDto>> findAllOptimized() throws Exception {
+		return super.findAllOptimized();
+	}
 
+	@Operation(summary = "Finds a user by email")
+	@GetMapping("email/{email}")
+	public ResponseEntity<UserDto> findByEmail(@PathVariable String email) {
+		return super.findByReferenceEntity(new User(email));
+	}
 
-    @Operation(summary = "Finds an optimized list of all utilisateurs")
-    @GetMapping("optimized")
-    public ResponseEntity<List<UserDto>> findAllOptimized() throws Exception {
-        return super.findAllOptimized();
-    }
+	@Operation(summary = "Saves the specified  user")
+	@PostMapping("")
+	public ResponseEntity<UserDto> save(@RequestBody UserDto dto) throws Exception {
+		ResponseEntity<UserDto> save = super.save(dto);
+		return save;
+	}
 
-    @Operation(summary = "Finds a user by email")
-    @GetMapping("email/{email}")
-    public ResponseEntity<UserDto> findByEmail(@PathVariable String email) {
-        return super.findByReferenceEntity(new User(email));
-    }
+	@Operation(summary = "Updates the specified  user")
+	@PutMapping("")
+	public ResponseEntity<UserDto> update(@RequestBody UserDto dto) throws Exception {
+		return super.update(dto);
+	}
 
-    @Operation(summary = "Saves the specified  user")
-    @PostMapping("")
-    public ResponseEntity<UserDto> save(@RequestBody UserDto dto) throws Exception {
-        ResponseEntity<UserDto> save = super.save(dto);
-        return save;
-    }
+	@Operation(summary = "Delete list of user")
+	@PostMapping("multiple")
+	public ResponseEntity<List<UserDto>> delete(@RequestBody List<UserDto> listToDelete) throws Exception {
+		return super.delete(listToDelete);
+	}
 
-    @Operation(summary = "Updates the specified  user")
-    @PutMapping("")
-    public ResponseEntity<UserDto> update(@RequestBody UserDto dto) throws Exception {
-        return super.update(dto);
-    }
+	@Operation(summary = "Delete the specified user")
+	@DeleteMapping("")
+	public ResponseEntity<UserDto> delete(@RequestBody UserDto dto) throws Exception {
+		return super.delete(dto);
+	}
 
-    @Operation(summary = "Delete list of user")
-    @PostMapping("multiple")
-    public ResponseEntity<List<UserDto>> delete(@RequestBody List<UserDto> listToDelete) throws Exception {
-        return super.delete(listToDelete);
-    }
+	@Operation(summary = "Delete the specified user")
+	@DeleteMapping("id/{id}")
+	public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
+		return super.deleteById(id);
+	}
 
-    @Operation(summary = "Delete the specified user")
-    @DeleteMapping("")
-    public ResponseEntity<UserDto> delete(@RequestBody UserDto dto) throws Exception {
-        return super.delete(dto);
-    }
+	@Operation(summary = "Delete multiple utilisateurs by ids")
+	@DeleteMapping("multiple/id")
+	public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
+		return super.deleteByIdIn(ids);
+	}
 
-    @Operation(summary = "Delete the specified user")
-    @DeleteMapping("id/{id}")
-    public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
-        return super.deleteById(id);
-    }
+	@Operation(summary = "Finds a user by username")
+	@GetMapping("user-name/{username}")
+	public ResponseEntity<UserDto> findByUserName(@PathVariable String username) {
+		User user = service.findByUsername(username);
+		UserDto userDto = converter.toDto(user);
+		return new ResponseEntity<>(userDto, HttpStatus.OK);
+	}
 
-    @Operation(summary = "Delete multiple utilisateurs by ids")
-    @DeleteMapping("multiple/id")
-    public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-        return super.deleteByIdIn(ids);
-    }
+	@Operation(summary = "Finds a user and associated list by id")
+	@GetMapping("id/{id}")
+	public User findUserById(@PathVariable Long id) {
+		return service.findWithAssociatedLists(id);
+	}
 
-    @Operation(summary = "Finds a user by username")
-    @GetMapping("user-name/{username}")
-    public ResponseEntity<UserDto> findByUserName(@PathVariable String username) {
-        User user = service.findByUsername(username);
-        UserDto userDto = converter.toDto(user);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
-    }
+	@Operation(summary = "Finds utilisateurs by criteria")
+	@PostMapping("find-by-criteria")
+	public ResponseEntity<List<UserDto>> findByCriteria(@RequestBody UserCriteria criteria) throws Exception {
+		return super.findByCriteria(criteria);
+	}
 
-    @Operation(summary = "Finds a user and associated list by id")
-    @GetMapping("id/{id}")
-    public User findUserById(@PathVariable Long id) {
-        return service.findWithAssociatedLists(id);
-    }
+	@Operation(summary = "Finds paginated utilisateurs by criteria")
+	@PostMapping("find-paginated-by-criteria")
+	public ResponseEntity<PaginatedList> findPaginatedByCriteria(@RequestBody UserCriteria criteria) throws Exception {
+		return super.findPaginatedByCriteria(criteria);
+	}
 
-    @Operation(summary = "Finds utilisateurs by criteria")
-    @PostMapping("find-by-criteria")
-    public ResponseEntity<List<UserDto>> findByCriteria(@RequestBody UserCriteria criteria) throws Exception {
-        return super.findByCriteria(criteria);
-    }
+	@Operation(summary = "Exports utilisateurs by criteria")
+	@PostMapping("export")
+	public ResponseEntity<InputStreamResource> export(@RequestBody UserCriteria criteria) throws Exception {
+		return super.export(criteria);
+	}
 
-    @Operation(summary = "Finds paginated utilisateurs by criteria")
-    @PostMapping("find-paginated-by-criteria")
-    public ResponseEntity<PaginatedList> findPaginatedByCriteria(@RequestBody UserCriteria criteria) throws Exception {
-        return super.findPaginatedByCriteria(criteria);
-    }
+	@Operation(summary = "Gets user data size by criteria")
+	@PostMapping("data-size-by-criteria")
+	public ResponseEntity<Integer> getDataSize(@RequestBody UserCriteria criteria) throws Exception {
+		return super.getDataSize(criteria);
+	}
 
-    @Operation(summary = "Exports utilisateurs by criteria")
-    @PostMapping("export")
-    public ResponseEntity<InputStreamResource> export(@RequestBody UserCriteria criteria) throws Exception {
-        return super.export(criteria);
-    }
+	@GetMapping("/username/{username}")
+	public User findByUsernameWithRoles(@PathVariable String username) {
+		return service.findByUsernameWithRoles(username);
+	}
 
-    @Operation(summary = "Gets user data size by criteria")
-    @PostMapping("data-size-by-criteria")
-    public ResponseEntity<Integer> getDataSize(@RequestBody UserCriteria criteria) throws Exception {
-        return super.getDataSize(criteria);
-    }
+	@DeleteMapping("/username/{username}")
+	public int deleteByUsername(@PathVariable String username) {
+		return service.deleteByUsername(username);
+	}
 
-    @GetMapping("/username/{username}")
-    public User findByUsernameWithRoles(@PathVariable String username) {
-        return service.findByUsernameWithRoles(username);
-    }
+	@PostMapping("/changePassword")
+	public boolean changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+		return service.changePassword(changePasswordRequest.getUsername(), changePasswordRequest.getPassword());
+	}
 
-    @DeleteMapping("/username/{username}")
-    public int deleteByUsername(@PathVariable String username) {
-        return service.deleteByUsername(username);
-    }
+	@GetMapping("/user/{username}")
+	public User findByUsername(@PathVariable String username) {
+		return service.findByUsername(username);
+	}
 
-    @PostMapping("/changePassword")
-    public boolean changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
-        return service.changePassword(changePasswordRequest.getUsername(), changePasswordRequest.getPassword());
-    }
+	////////////
+	@GetMapping("/except/{userId}")
+	public ResponseEntity<ApiResponse> findAllUsersExceptThisUserId(@PathVariable Long userId) {
+		return service.findAllUsersExceptThisUserId(userId);
+	}
 
-    @GetMapping("/user/{username}")
-    public User findByUsername(@PathVariable String username) {
-        return service.findByUsername(username);
-    }
+	@GetMapping("/conversation/id")
+	public ResponseEntity<ApiResponse> findConversationIdByUser1IdAndUser2Id(@RequestParam Long user1Id,
+			@RequestParam Long user2Id) {
+		return service.findConversationIdByUser1IdAndUser2Id(user1Id, user2Id);
+	}
+	///////////////
 
-
-    public UserRest(UserService service, UserConverter converter) {
-        super(service, converter);
-    }
-
+	public UserRest(UserService service, UserConverter converter) {
+		super(service, converter);
+	}
 
 }
