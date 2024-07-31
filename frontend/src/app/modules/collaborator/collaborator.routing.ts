@@ -3,8 +3,8 @@ import {NgModule} from '@angular/core';
 import {AdminDashboardComponent} from "../admin/admin-dashboard/admin-dashboard.component";
 import {ManageInscriptionsComponent} from "./manage-inscriptions/manage-inscriptions.component";
 import {ManageSalaryComponent} from "./manage-salary/manage-salary.component";
-import {ManagePackPricesComponent} from "./manage-pack-prices/manage-pack-prices.component";
 import {ScheduleComponent} from "./schedule/schedule.component";
+import {CollaboratorSubscriptionComponent} from "./collaborator-subscription/collaborator-subscription.component";
 
 @NgModule({
     imports: [
@@ -48,7 +48,7 @@ import {ScheduleComponent} from "./schedule/schedule.component";
                 },
                 {
                     path: 'manage-pack-prices',
-                    component: ManagePackPricesComponent
+                    component: CollaboratorSubscriptionComponent
                 },
             ]
         ),

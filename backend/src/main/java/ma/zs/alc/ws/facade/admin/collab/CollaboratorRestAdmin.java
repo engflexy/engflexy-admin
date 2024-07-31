@@ -47,13 +47,15 @@ public class CollaboratorRestAdmin extends AbstractController<Collaborator, Coll
     @Operation(summary = "Saves the specified  collaborator")
     @PostMapping("")
     public Collaborator save(@RequestBody Collaborator dto) throws Exception {
-        return service.create(dto);
+        Collaborator collaborator = service.create(dto);
+        return collaborator;
     }
 
     @Operation(summary = "Updates the specified  collaborator")
     @PutMapping("")
-    public Collaborator update(@RequestBody Collaborator dto) throws Exception {
-        return service.update(dto);
+    public CollaboratorDto update(@RequestBody Collaborator dto) throws Exception {
+        Collaborator updated = service.update(dto);
+        return converter.toDto(updated);
     }
 
     @Operation(summary = "Delete list of collaborator")

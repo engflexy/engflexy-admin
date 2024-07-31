@@ -67,8 +67,6 @@ export class FilterComponent implements OnInit{
     _inscriptionCollaboratorStatesFilter:  InscriptionCollaboratorStateDto[];
 
 
-
-
     private _validPackageCollaboratorLibelle = true;
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
