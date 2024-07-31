@@ -13,7 +13,6 @@ import {CreateMaterialComponent} from "./create-material/create-material.compone
 import {Router} from "@angular/router";
 import {ParcoursCriteria} from "../../../shared/criteria/course/ParcoursCriteria.model";
 import {FormsModule} from "@angular/forms";
-import {FilterMaterialComponent} from "./filter-material/filter-material.component";
 import {ParcoursCollaboratorService} from "../../../shared/service/collaborator/course/ParcoursCollaborator.service";
 
 @Component({
@@ -34,6 +33,8 @@ import {ParcoursCollaboratorService} from "../../../shared/service/collaborator/
 })
 export class ManageCoursesComponent implements OnInit {
 
+    personalParcours: ParcoursDto[] = [];
+    catalogParcours: ParcoursDto[] = [];
 
     constructor(private parcourService: ParcoursCollaboratorService,
                 private router: Router,
@@ -78,14 +79,28 @@ export class ManageCoursesComponent implements OnInit {
             console.log(this.levels)
         })
 
+        this.parcourService.findForCurrentCollaborator().subscribe(res => {
+            this.personalParcours = res;
+            console.log(this.personalParcours);
+        }, error => console.log(error));
+
+        this.parcourService.findByForExgFlexy().subscribe(res => {
+            this.catalogParcours = res;
+            console.log(this.catalogParcours);
+        }, error => console.log(error));
     }
 
     createMaterial() {
         this.item = new ParcoursDto()
         this.item.color = colors[Math.floor(Math.random() * colors.length)]
-        this._matDialog.open(CreateMaterialComponent, {
+        const diqlog = this._matDialog.open(CreateMaterialComponent, {
             autoFocus: false,
         });
+        diqlog.afterClosed().subscribe(res => {
+            if (res != null) {
+                this.personalParcours.unshift({...res})
+            }
+        })
     }
 
 
@@ -94,20 +109,21 @@ export class ManageCoursesComponent implements OnInit {
         this.router.navigate(['/admin/manage-courses/materials/' + item?.id])
     }
 
-    openFilter() {
-        const dialog = this._matDialog.open(FilterMaterialComponent, {
-            autoFocus: false,
-            height: "auto",
-            width: "calc(100% - 100px)",
-            maxWidth: "100%",
-            disableClose: true,
-            maxHeight: "100%"
-        });
 
-        dialog.afterClosed().subscribe(res => {
-            if (res != null) {
+  searchParcoursForEngFlexy(libelle: string) {
+    this.parcourService.findByLibelleLikeForEngFlexy(libelle).subscribe(res => {
+        this.personalParcours = res;
+    }, error => console.log(error));
+}
 
-            }
-        })
+    searchParcoursForCurrent(libelle: string) {
+    this.parcourService.findByLibelleLikeForCurrent(libelle).subscribe(res => {
+        this.personalParcours = res;
+    }, error => console.log(error));
     }
+
+
+
+
+
 }

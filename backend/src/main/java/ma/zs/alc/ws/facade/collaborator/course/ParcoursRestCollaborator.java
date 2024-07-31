@@ -127,9 +127,9 @@ public class ParcoursRestCollaborator extends AbstractController<Parcours, Parco
     }
 
     @Operation(summary = "find for current collaborator")
-    @GetMapping("current")
-    public List<ParcoursDto> findForCurrentCollaborator() {
-        List<Parcours> forCurrentCollaborator = service.findForCurrentCollaborator();
+    @GetMapping("current/id/{id}")
+    public List<ParcoursDto> findForCurrentCollaborator(@PathVariable Long id) {
+        List<Parcours> forCurrentCollaborator = service.findForCurrentCollaborator(id);
         ResponseEntity<List<ParcoursDto>> listResponseEntity = getListResponseEntity(forCurrentCollaborator);
         return listResponseEntity.getBody();
     }
@@ -144,6 +144,20 @@ public class ParcoursRestCollaborator extends AbstractController<Parcours, Parco
     @PostMapping("data-size-by-criteria")
     public ResponseEntity<Integer> getDataSize(@RequestBody ParcoursCriteria criteria) throws Exception {
         return super.getDataSize(criteria);
+    }
+
+    @Operation(summary = "Finds a list of parcourss by libelle like")
+    @GetMapping("/engflexy/libelle/{libelle}")
+    public ResponseEntity<List<ParcoursDto>> findByLibelleLikeForEngFlexy(@PathVariable String libelle) {
+        List<Parcours> parcourss = service.findByLibelleLikeForEngFlexy(libelle);
+        return ResponseEntity.ok(converter.toDto(parcourss));
+    }
+
+    @Operation(summary = "Finds a list of parcourss by libelle like")
+    @GetMapping("/current/libelle/{libelle}")
+    public ResponseEntity<List<ParcoursDto>> findByLibelleLikeForCurrent(@PathVariable String libelle) {
+        List<Parcours> parcourss = service.findByLibelleLikeForCurrent(libelle);
+        return ResponseEntity.ok(converter.toDto(parcourss));
     }
 
 
