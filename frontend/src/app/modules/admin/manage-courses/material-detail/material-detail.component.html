@@ -45,7 +45,7 @@
                         <div class="text-secondary font-medium text-md">{{item.nombreCours}} course includes</div>
                     </div>
 
-                    <div class="flex flex-grow  items-center flex-row-reverse">
+                    <div *ngIf ="athenticatedUser.id === item.collaborator.id" class="flex flex-grow  items-center flex-row-reverse">
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                             <mat-icon>more_vert</mat-icon>
                         </button>
@@ -66,7 +66,7 @@
                 </span>
 
                 <section class="container w-full overflow-x-auto md:overflow-x-hidden px-4 mx-auto">
-                    <div class="flex flex-row  flex-wrap items-center gap-x-5">
+                    <div  class="flex flex-row  flex-wrap items-center gap-x-5">
                         <mat-form-field
                             class="flex-auto fuse-mat-bold fuse-mat-dense  flex-grow">
                             <input placeholder="search.." matInput >
@@ -75,12 +75,12 @@
                                 matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
                         </mat-form-field>
-                        <button mat-icon-button class="mb-5" color="warn">
+                        <button  mat-icon-button class="mb-5" color="warn">
                             <mat-icon class="icon-size-8"
                                       svgIcon="heroicons_solid:magnifying-glass-circle"></mat-icon>
                         </button>
 
-                        <a class="group cursor-pointer mb-5 relative  inline-block text-sm font-medium text-orange-600 focus:outline-none focus:ring active:text-orange-500"
+                        <a *ngIf ="athenticatedUser.id === item.collaborator.id"   class="group cursor-pointer mb-5 relative  inline-block text-sm font-medium text-orange-600 focus:outline-none focus:ring active:text-orange-500"
                            (click)="createCourse()">
                             <span
                                 class="absolute inset-0 translate-x-0 translate-y-0 bg-orange-600 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5"></span>
@@ -121,8 +121,8 @@
                                             </thead>
                                             <tbody
                                                 class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                            <ng-container *ngFor="let item of courses">
-                                                <tr (click)="navigateToSections(item)"
+                                            <ng-container *ngFor="let element of courses">
+                                                <tr (click)="navigateToSections(element)"
                                                     class="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600">
                                                     <td class="px-4 py-4  text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div class="inline-flex items-center gap-x-3">
@@ -130,10 +130,10 @@
                                                          dark:ring-offset-gray-900 dark:border-gray-700">
 
                                                             <div class="flex relative items-center gap-x-2">
-                                                                <ng-container *ngIf="item?.image else showcontainer">
+                                                                <ng-container *ngIf="element?.image else showcontainer">
                                                                     <img
                                                                         class="object-cover relative w-10 h-10 rounded-md"
-                                                                        src="{{item?.image}}"
+                                                                        src="{{element?.image}}"
                                                                         width="100"
                                                                         height="100"
                                                                         alt="">
@@ -142,25 +142,25 @@
                                                                     <div
                                                                         class="w-10 h-10 bg-yellow-100 rounded-md flex items-center justify-center content-center">
                                                                         <strong
-                                                                            class="uppercase text-yellow-600 ubuntu-bold">{{item?.libelle?.at(0)}}</strong>
+                                                                            class="uppercase text-yellow-600 ubuntu-bold">{{element?.libelle?.at(0)}}</strong>
                                                                     </div>
                                                                 </ng-template>
 
                                                                 <div>
                                                                     <h2 class="font-medium text-gray-800 dark:text-white ">
-                                                                        {{item?.libelle}}</h2>
+                                                                        {{element?.libelle}}</h2>
                                                                     <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                        {{item?.description}}</p>
+                                                                        {{element?.description}}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
 
                                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        {{item?.nombreSectionFinalise}} sections includes
+                                                        {{element?.nombreSectionFinalise}} sections includes
                                                     </td>
-                                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                        <div class="flex items-center gap-x-6">
+                                                    <td   class="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div  *ngIf ="athenticatedUser.id === item.collaborator.id"  class="flex items-center gap-x-6">
                                                             <button (click)="deleteCourse()"
                                                                 class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -171,7 +171,7 @@
                                                                 </svg>
                                                             </button>
 
-                                                            <button (click)="editCourse(item)"
+                                                            <button (click)="editCourse(element)"
                                                                 class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                      viewBox="0 0 24 24" stroke-width="1.5"

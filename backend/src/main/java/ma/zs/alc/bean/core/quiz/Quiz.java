@@ -92,7 +92,7 @@ public class Quiz extends AuditBusinessObject {
         this.dateFin = dateFin;
     }
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz",cascade = CascadeType.REMOVE)
 
     public List<Question> getQuestions() {
         return this.questions;

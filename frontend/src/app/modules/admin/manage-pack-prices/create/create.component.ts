@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatButtonModule} from "@angular/material/button";
@@ -59,6 +59,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     selector: 'app-create',
     templateUrl: './create.component.html',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         FormsModule,
         MatAutocompleteModule,
@@ -76,6 +77,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     ],
 })
 export class CreateComponent implements OnInit {
+    studentsForTeacher: number[] = [2, 7, 15, 20, 30, 50];
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
@@ -95,7 +97,7 @@ export class CreateComponent implements OnInit {
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<CreateComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService, private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
+    constructor(public refDialog: MatDialogRef<CreateComponent>,private changeDetector:ChangeDetectorRef, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService, private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
 
     }
 
@@ -148,6 +150,15 @@ export class CreateComponent implements OnInit {
 
     displayInscriptionCollaboratorState(item: InscriptionCollaboratorStateDto): string {
         return item && item.libelle ? item.libelle : "";
+
+    }
+    onPackageChagne(){
+        this.item.nbrStudent = null;
+        this.item.logo = false;
+        this.item.color = false;
+        this.item.bannerAd = false;
+        this.item.price = null;
+        this.changeDetector.detectChanges();
 
     }
 
@@ -452,6 +463,8 @@ export class CreateComponent implements OnInit {
                 // Update the item price
                 this.item.price = totalPrice;
                 console.log(this.item.price)
+                this.changeDetector.detectChanges();
+
             }
         }, 100)
     }

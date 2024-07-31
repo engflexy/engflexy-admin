@@ -160,6 +160,8 @@ export class ManagePackPricesComponent implements OnInit{
             if (result === 'confirmed') {
                 this.service.delete(item).subscribe(res => {
                     this.items.content.splice(this.items.content.indexOf(item), 1)
+                    this.alert.show('info', 'Inscription successfully deleted!')
+                    this.changeDetector.detectChanges();
                 }, error => {
                     this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                 })
@@ -169,13 +171,16 @@ export class ManagePackPricesComponent implements OnInit{
 
     edit(item: InscriptionCollaboratorDto) {
         this.item = item
-        this._matDialog.open(EditComponent, {
+        const dialogRef =this._matDialog.open(EditComponent, {
             autoFocus: false,
             height: "auto",
             width: "calc(100% - 100px)",
             maxWidth: "100%",
             disableClose: true,
             maxHeight: "100%"
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            this.changeDetector.detectChanges();
         });
     }
 
@@ -226,7 +231,7 @@ export class ManagePackPricesComponent implements OnInit{
 
     editPack(item: PackageCollaboratorDto) {
         this.itemPackage = item
-        this._matDialog.open(EditPackComponent, {
+        const dialogRef =this._matDialog.open(EditPackComponent, {
             autoFocus: false,
             height: "auto",
             width: "calc(100% - 100px)",
@@ -234,6 +239,10 @@ export class ManagePackPricesComponent implements OnInit{
             disableClose: true,
             maxHeight: "100%"
         });
+        dialogRef.afterClosed().subscribe(result => {
+            this.changeDetector.detectChanges();
+        });
+
     }
 
     openDetailPack(item: PackageCollaboratorDto) {

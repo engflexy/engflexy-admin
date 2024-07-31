@@ -5,12 +5,12 @@ import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.collab.TypeCollaborator;
 import ma.zs.alc.bean.core.inscriptionref.Langue;
 import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
-import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.dao.facade.core.collab.CollaboratorDao;
+import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.dao.specification.core.collab.CollaboratorSpecification;
-import ma.zs.alc.service.facade.admin.course.ParcoursAdminService;
-import ma.zs.alc.service.facade.admin.collab.TypeCollaboratorAdminService;
 import ma.zs.alc.service.facade.admin.collab.CollaboratorAdminService;
+import ma.zs.alc.service.facade.admin.collab.TypeCollaboratorAdminService;
+import ma.zs.alc.service.facade.admin.course.ParcoursAdminService;
 import ma.zs.alc.service.facade.collaborator.inscriptionref.LangueCollaboratorService;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
@@ -58,7 +58,8 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
 
     @Override
     public Collaborator create(Collaborator t) {
-        if (t.getUsername() == null || findByUsername(t.getUsername()) != null) return null;
+        if (t.getUsername() == null || findByUsername(t.getUsername()) != null)
+            return null;
         t.setPassword(t.getUsername());
         t.setEnabled(true);
         t.setAccountNonExpired(true);

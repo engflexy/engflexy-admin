@@ -1,8 +1,10 @@
 package ma.zs.alc.bean.core.course;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import ma.zs.alc.bean.core.homework.HomeWork;
+import ma.zs.alc.bean.core.prof.ScheduleProf;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 
 import java.util.List;
@@ -35,6 +37,7 @@ public class Cours extends AuditBusinessObject {
 
     private List<Section> sections;
     private List<HomeWork> homeWorks;
+    private List<ScheduleProf> scheduleProfs;
 
     public Cours() {
         super();
@@ -147,8 +150,18 @@ public class Cours extends AuditBusinessObject {
         this.numeroOrder = numeroOrder;
     }
 
-    @OneToMany(mappedBy = "cours")
+    @OneToMany(mappedBy = "cours", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    public List<ScheduleProf> getScheduleProfs() {
+        return scheduleProfs;
+    }
 
+    public void setScheduleProfs(List<ScheduleProf> scheduleProfs) {
+        this.scheduleProfs = scheduleProfs;
+    }
+
+
+    @OneToMany(mappedBy = "cours", cascade = CascadeType.REMOVE)
     public List<Section> getSections() {
         return this.sections;
     }
@@ -157,7 +170,7 @@ public class Cours extends AuditBusinessObject {
         this.sections = sections;
     }
 
-    @OneToMany(mappedBy = "cours")
+    @OneToMany(mappedBy = "cours", cascade = CascadeType.REMOVE)
 
     public List<HomeWork> getHomeWorks() {
         return this.homeWorks;

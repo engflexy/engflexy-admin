@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 
@@ -12,22 +12,17 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
-
-import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 
 
 import {environment} from '../../../../../environments/environment';
 
 import {RoleService} from '../../../../zynerator/security/shared/service/Role.service';
 import {StringUtilService} from '../../../../zynerator/util/StringUtil.service';
-import {ServiceLocator} from '../../../../zynerator/service/ServiceLocator';
 
 import {FormsModule} from "@angular/forms";
 
 import {translate, TranslocoModule} from "@ngneat/transloco";
-
 
 
 import {SalaryAdminService} from '../../../../shared/service/admin/salary/SalaryAdmin.service';
@@ -58,7 +53,7 @@ import {MatSelectModule} from "@angular/material/select";
     ],
     standalone: true
 })
-export class CreateSalaryComponent  implements OnInit {
+export class CreateSalaryComponent implements OnInit {
 
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
@@ -69,34 +64,38 @@ export class CreateSalaryComponent  implements OnInit {
     protected router: Router;
     private _activeTab = 0;
 
-    months:{month:number , name:string}[] = [
-        { month: 0, name: 'January' },
-        { month: 1, name: 'February' },
-        { month: 2, name: 'March' },
-        { month: 3, name: 'April' },
-        { month: 4, name: 'May' },
-        { month: 5, name: 'June' },
-        { month: 6, name: 'July' },
-        { month: 7, name: 'August' },
-        { month: 8, name: 'September' },
-        { month: 9, name: 'October' },
-        { month: 10, name: 'November' },
-        { month: 11, name: 'December' }
+    months: { month: number, name: string }[] = [
+        {month: 0, name: 'January'},
+        {month: 1, name: 'February'},
+        {month: 2, name: 'March'},
+        {month: 3, name: 'April'},
+        {month: 4, name: 'May'},
+        {month: 5, name: 'June'},
+        {month: 6, name: 'July'},
+        {month: 7, name: 'August'},
+        {month: 8, name: 'September'},
+        {month: 9, name: 'October'},
+        {month: 10, name: 'November'},
+        {month: 11, name: 'December'}
     ];
 
-    years: number[] = [2021, 2022, 2023,2024,2025,2026];
+    years: number[] = [2021, 2022, 2023, 2024, 2025, 2026];
 
 
-    _profsFilter:  ProfDto[];
+    _profsFilter: ProfDto[];
 
     private _validSalaryCode = true;
     private _validProfRef = true;
 
-    constructor(public dialogRef:MatDialogRef<CreateSalaryComponent> ,private alert: FuseAlertService, private service: SalaryAdminService , private profService: ProfAdminService, private stringUtilService: StringUtilService, @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public dialogRef: MatDialogRef<CreateSalaryComponent>, private alert: FuseAlertService, private service: SalaryAdminService, private profService: ProfAdminService, private stringUtilService: StringUtilService, @Inject(PLATFORM_ID) private platformId?) {
+
     }
 
     ngOnInit(): void {
-        this.profService.findAll().subscribe((data) => {this.profs = data; this._profsFilter = {...this.profs}});
+        this.profService.findAll().subscribe((data) => {
+            this.profs = data;
+            this._profsFilter = [...this.profs]
+        });
     }
 
     displayProf(item: ProfDto): string {
@@ -104,7 +103,7 @@ export class CreateSalaryComponent  implements OnInit {
 
     }
 
-    filterProf(value: string){
+    filterProf(value: string) {
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._profsFilter = this.profs.filter(s =>
@@ -116,8 +115,7 @@ export class CreateSalaryComponent  implements OnInit {
     }
 
 
-
-    public async save() {
+    public save(): void {
         this.submitted = true;
         this.validateForm();
         if (this.errorMessages.length === 0) {
@@ -145,16 +143,14 @@ export class CreateSalaryComponent  implements OnInit {
     //     });
     // }
 
-    public async saveWithShowOption(showList: boolean) {
+    public saveWithShowOption(showList: boolean) {
         if (this.isItemValid()) {
             this.service.save().subscribe(
                 item => {
                     if (item != null) {
-                        this.items.push({...item});
-                        this.hideCreateDialog();
-                        this.submitted = false;
                         this.item = new SalaryDto();
                         this.alert.show('success', 'Salary saved successfully.');
+                        this.dialogRef.close(item)
                     } else {
                         this.alert.show('error', 'Failed to save salary. Please try again.');
                     }
@@ -164,9 +160,9 @@ export class CreateSalaryComponent  implements OnInit {
                     this.alert.show('error', 'An error occurred while saving. Please try again.');
                 }
             );
-         } else {
+        } else {
             this.alert.show('error', 'Please fill in all required fields.');
-         }
+        }
     }
 
     private isItemValid(): boolean {
@@ -186,19 +182,17 @@ export class CreateSalaryComponent  implements OnInit {
     }
 
 
-
-    public  setValidation(value: boolean){
+    public setValidation(value: boolean) {
         this.validSalaryCode = value;
     }
 
 
-
-    public  validateForm(): void{
+    public validateForm(): void {
         this.errorMessages = new Array<string>();
         this.validateSalaryCode();
     }
 
-    public validateSalaryCode(){
+    public validateSalaryCode() {
         if (this.stringUtilService.isEmpty(this.item.code)) {
             this.errorMessages.push('Code non valide');
             this.validSalaryCode = false;
@@ -208,26 +202,29 @@ export class CreateSalaryComponent  implements OnInit {
     }
 
 
-
     get prof(): ProfDto {
         return this.profService.item;
     }
+
     set prof(value: ProfDto) {
         this.profService.item = value;
     }
+
     get profs(): Array<ProfDto> {
         return this.profService.items;
     }
+
     set profs(value: Array<ProfDto>) {
         this.profService.items = value;
     }
+
     get createProfDialog(): boolean {
         return this.profService.createDialog;
     }
-    set createProfDialog(value: boolean) {
-        this.profService.createDialog= value;
-    }
 
+    set createProfDialog(value: boolean) {
+        this.profService.createDialog = value;
+    }
 
 
     get validSalaryCode(): boolean {
@@ -241,6 +238,7 @@ export class CreateSalaryComponent  implements OnInit {
     get validProfRef(): boolean {
         return this._validProfRef;
     }
+
     set validProfRef(value: boolean) {
         this._validProfRef = value;
     }

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -44,12 +44,14 @@ import {
 } from "../../../../shared/service/collaborator/collab/PackageCollaboratorCollaborator.service";
 import {TranslocoModule} from "@ngneat/transloco";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         MatDialogModule,
         MatInputModule,
@@ -60,10 +62,12 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         NgForOf,
         TranslocoModule,
         MatDatepickerModule,
-        DatePipe
+        DatePipe,
+        MatSelectModule
     ],
 })
 export class EditComponent implements OnInit{
+    studentsForTeacher: number[] = [2, 7, 15, 20, 30, 50];
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
@@ -86,7 +90,7 @@ export class EditComponent implements OnInit{
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<EditComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public refDialog: MatDialogRef<EditComponent>,private changeDetector:ChangeDetectorRef, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
@@ -95,6 +99,12 @@ export class EditComponent implements OnInit{
         this.collaboratorService.findAll().subscribe((data) => {this.collaborators = data; this._collaboratorsFilter = [...this.collaborators]});
         this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {this.inscriptionCollaboratorStates = data; this._inscriptionCollaboratorStatesFilter = [...this.inscriptionCollaboratorStates]});
         this.service.findAll().subscribe((data)=>{this.inscriptionCollaborator=data;});
+        if (this.item.startDate) {
+            this.item.startDate = new Date(this.item.startDate);
+        }
+        if (this.item.endDate) {
+            this.item.endDate = new Date(this.item.endDate);
+        }
     }
 
     displayPackageCollaborator(item: PackageCollaboratorDto): string {
@@ -106,12 +116,15 @@ export class EditComponent implements OnInit{
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._packageCollaboratorsFilter = this.packageCollaborators.filter(s =>
-                s.libelle?.toLowerCase()?.includes(value)
+                s.libelle?.toLowerCase()?.includes(value),
+
             )
+
         } else {
             this._packageCollaboratorsFilter = this.packageCollaborators
         }
     }
+
     calculatePrice() {
         const timer  = setInterval(s => {
             if(this.item.packageCollaborator!=null && this.item.nbrStudent!=null){
@@ -143,7 +156,10 @@ export class EditComponent implements OnInit{
 
                 // Update the item price
                 this.item.price = totalPrice;
-                console.log(this.item.price)}
+                console.log(this.item.price)
+                this.changeDetector.detectChanges();
+
+            }
         },100)
     }
     displayCollaborator(item: CollaboratorDto): string {
@@ -151,14 +167,19 @@ export class EditComponent implements OnInit{
 
     }
     onStartDateChange(): void {
+        console.log('Start date changed:', this.item.startDate);
         const timer = setInterval(s => {
             if (this.item.startDate) {
 
                 const startDate = new Date(this.item.startDate);
-                console.log(startDate)
-                const endDate = new Date(startDate.setDate(startDate.getDate() + 30));
+                console.log('Parsed start date:', startDate);
+
+                const endDate = new Date(startDate);
+                endDate.setDate(startDate.getDate() + 30);
+                console.log('Calculated end date:', endDate);
+
                 this.item.endDate = endDate;
-                console.log(endDate)
+                this.changeDetector.detectChanges();
             }
             clearInterval(timer)
         }, 100)
@@ -209,6 +230,7 @@ export class EditComponent implements OnInit{
                 this.item = new InscriptionCollaboratorDto();
                 this.alert.show('info', 'Inscription successfully updated!');
                 this.refDialog.close()
+                this.changeDetector.detectChanges();
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }

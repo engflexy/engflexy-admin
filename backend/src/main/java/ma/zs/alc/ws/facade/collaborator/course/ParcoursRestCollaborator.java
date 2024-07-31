@@ -1,38 +1,24 @@
-package  ma.zs.alc.ws.facade.collaborator.course;
+package ma.zs.alc.ws.facade.collaborator.course;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.dao.criteria.core.course.ParcoursCriteria;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
 import ma.zs.alc.ws.converter.course.ParcoursConverter;
 import ma.zs.alc.ws.dto.course.ParcoursDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
+import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
-
-
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
-
-
-import org.springframework.web.multipart.MultipartFile;
-import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/collaborator/parcours/")
-public class ParcoursRestCollaborator  extends AbstractController<Parcours, ParcoursDto, ParcoursCriteria, ParcoursCollaboratorService, ParcoursConverter> {
-
+public class ParcoursRestCollaborator extends AbstractController<Parcours, ParcoursDto, ParcoursCriteria, ParcoursCollaboratorService, ParcoursConverter> {
 
 
     @Operation(summary = "upload one parcours")
@@ -40,6 +26,7 @@ public class ParcoursRestCollaborator  extends AbstractController<Parcours, Parc
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple parcourss")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -81,10 +68,11 @@ public class ParcoursRestCollaborator  extends AbstractController<Parcours, Parc
     public ResponseEntity<List<ParcoursDto>> delete(@RequestBody List<ParcoursDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified parcours")
     @DeleteMapping("")
     public ResponseEntity<ParcoursDto> delete(@RequestBody ParcoursDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified parcours")
@@ -92,21 +80,23 @@ public class ParcoursRestCollaborator  extends AbstractController<Parcours, Parc
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple parcourss by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "find by collaborator id")
     @GetMapping("collaborator/id/{id}")
-    public List<ParcoursDto> findByCollaboratorId(@PathVariable Long id){
+    public List<ParcoursDto> findByCollaboratorId(@PathVariable Long id) {
         return findDtos(service.findByCollaboratorId(id));
     }
+
     @Operation(summary = "delete by collaborator id")
     @DeleteMapping("collaborator/id/{id}")
-    public int deleteByCollaboratorId(@PathVariable Long id){
+    public int deleteByCollaboratorId(@PathVariable Long id) {
         return service.deleteByCollaboratorId(id);
     }
 
@@ -128,6 +118,22 @@ public class ParcoursRestCollaborator  extends AbstractController<Parcours, Parc
         return super.findPaginatedByCriteria(criteria);
     }
 
+    @Operation(summary = "find by parcours id")
+    @GetMapping("exgflexy")
+    public List<ParcoursDto> findByForExgFlexy() {
+        List<Parcours> byForExgFlexy = service.findByForExgFlexy();
+        ResponseEntity<List<ParcoursDto>> listResponseEntity = getListResponseEntity(byForExgFlexy);
+        return listResponseEntity.getBody();
+    }
+
+    @Operation(summary = "find for current collaborator")
+    @GetMapping("current/id/{id}")
+    public List<ParcoursDto> findForCurrentCollaborator(@PathVariable Long id) {
+        List<Parcours> forCurrentCollaborator = service.findForCurrentCollaborator(id);
+        ResponseEntity<List<ParcoursDto>> listResponseEntity = getListResponseEntity(forCurrentCollaborator);
+        return listResponseEntity.getBody();
+    }
+
     @Operation(summary = "Exports parcourss by criteria")
     @PostMapping("export")
     public ResponseEntity<InputStreamResource> export(@RequestBody ParcoursCriteria criteria) throws Exception {
@@ -140,13 +146,24 @@ public class ParcoursRestCollaborator  extends AbstractController<Parcours, Parc
         return super.getDataSize(criteria);
     }
 
+    @Operation(summary = "Finds a list of parcourss by libelle like")
+    @GetMapping("/engflexy/libelle/{libelle}")
+    public ResponseEntity<List<ParcoursDto>> findByLibelleLikeForEngFlexy(@PathVariable String libelle) {
+        List<Parcours> parcourss = service.findByLibelleLikeForEngFlexy(libelle);
+        return ResponseEntity.ok(converter.toDto(parcourss));
+    }
 
-
-    public ParcoursRestCollaborator (ParcoursCollaboratorService service, ParcoursConverter converter) {
-        super(service, converter);
+    @Operation(summary = "Finds a list of parcourss by libelle like")
+    @GetMapping("/current/libelle/{libelle}")
+    public ResponseEntity<List<ParcoursDto>> findByLibelleLikeForCurrent(@PathVariable String libelle) {
+        List<Parcours> parcourss = service.findByLibelleLikeForCurrent(libelle);
+        return ResponseEntity.ok(converter.toDto(parcourss));
     }
 
 
+    public ParcoursRestCollaborator(ParcoursCollaboratorService service, ParcoursConverter converter) {
+        super(service, converter);
+    }
 
 
 }

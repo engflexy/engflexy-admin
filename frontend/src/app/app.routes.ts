@@ -83,46 +83,11 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         children: [
-            {
-                path: 'dashboard',
-                component: AdminDashboardComponent
-            },
-            {
-                path: 'manage-courses',
-                loadChildren: () => import('app/modules/admin/manage-courses/manage-course.routes')
-            },
-            {
-                path: 'chat',
-                loadChildren: () => import('app/modules/admin/chat-component/chat/chat.routes')
-            },
-            {
-                path: 'manage-users',
-                loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
-            },
-            { path: 'manage-statistics',
-                loadChildren: () => import('app/modules/admin/manage-users/manage-users.module').then(x =>x.ManageUsersModule)
-            },
-            {
-                path: 'manage-inscriptions',
-                component: ManageInscriptionsComponent
-            },
-            {
-                path: 'manage-groups',
-                loadChildren: () => import('app/modules/admin/manage-groups/group.routes')
-            },
-            {
-                path: 'schedule',
-                component: ScheduleComponent
-            },
-            {
-                path: 'faqs-news',
-                loadChildren: () => import('app/modules/admin/manage-faq-news/help-center.routes')
-            },
 
             {
-                path: 'manage-pack-prices',
-                component: ManagePackPricesComponent
-            },
+                path: '',
+                loadChildren: () => import('app/modules/admin/admin.routing')
+            }
         ]
     }
 ];

@@ -20,4 +20,11 @@ public interface ParcoursDao extends AbstractRepository<Parcours,Long>  {
     @Query("SELECT NEW Parcours(item.id,item.libelle) FROM Parcours item")
     List<Parcours> findAllOptimized();
 
+
+
+    List<Parcours> findByCollaboratorIdAndLibelleLike(Long idCollqborator,String libelle);
+
+
+
+
 }
