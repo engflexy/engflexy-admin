@@ -160,6 +160,8 @@ export class ManagePackPricesComponent implements OnInit{
             if (result === 'confirmed') {
                 this.service.delete(item).subscribe(res => {
                     this.items.content.splice(this.items.content.indexOf(item), 1)
+                    this.alert.show('info', 'Inscription successfully deleted!')
+                    this.changeDetector.detectChanges();
                 }, error => {
                     this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                 })
