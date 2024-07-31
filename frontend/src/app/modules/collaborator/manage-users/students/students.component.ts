@@ -11,6 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreateStudentComponent} from "./create-student/create-student.component";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-collaborator-students',
@@ -25,7 +26,8 @@ export class StudentsComponent implements OnInit {
                 private _matDialog: MatDialog,
                 private router: Router,
                 private route: ActivatedRoute,
-                private auth: AuthService) {
+                private auth: AuthService,
+                private _snackBar: MatSnackBar) {
     }
 
     public get student(): EtudiantDto {
@@ -69,5 +71,13 @@ export class StudentsComponent implements OnInit {
 
     navigateToDetail(item: ManageUserDto) {
         this.router.navigate([`student/${item.id}`], {relativeTo: this.route})
+    }
+    deleteStudent(student: EtudiantDto) {
+        this.etudiantService.delete(student).subscribe(() => {
+            this.criteria.content = this.criteria.content.filter(s => s.id !== student.id);
+            this._snackBar.open('Student deleted successfully', 'Close', {
+                duration: 2000,
+            });
+        });
     }
 }
