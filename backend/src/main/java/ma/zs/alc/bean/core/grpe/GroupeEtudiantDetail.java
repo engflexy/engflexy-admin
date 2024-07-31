@@ -13,11 +13,11 @@ import java.util.Objects;
 @Table(name = "groupe_etudiant_detail")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class GroupeEtudiantDetail extends AuditBusinessObject {
+    public class GroupeEtudiantDetail extends AuditBusinessObject {
 
     private Long id;
 
-    @JsonIgnore
+   /* @JsonIgnore*/
     private GroupeEtudiant groupeEtudiant;
     private Etudiant etudiant;
 
@@ -42,7 +42,7 @@ public class GroupeEtudiantDetail extends AuditBusinessObject {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "groupe_etudiant")
     @JsonIgnore
     public GroupeEtudiant getGroupeEtudiant() {
