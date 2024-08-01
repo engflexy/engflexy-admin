@@ -1,15 +1,21 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    NgZone,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
 import { EtudiantDto } from "../../../../../../shared/model/inscription/Etudiant.model";
-import { GroupeEtudiantDto } from "../../../../../../shared/model/grpe/GroupeEtudiant.model";
+import { GroupeEtudiantDetailDto } from "../../../../../../shared/model/grpe/GroupeEtudiantDetail.model";
+import { GroupeEtudiantDetailCollaboratorService } from "../../../../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
+import { FuseConfirmationService } from "../../../../../../../@fuse/services/confirmation";
+import { StatisticEtudiant } from "../../../../../../shared/model/grpe/StatisticEtudiant.model";
 import {
     GroupeEtudiantCollaboratorService
 } from "../../../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
-import { GroupeEtudiantDetailDto } from "../../../../../../shared/model/grpe/GroupeEtudiantDetail.model";
-import {
-    GroupeEtudiantDetailCollaboratorService
-} from "../../../../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
-import { FuseConfirmationService } from "../../../../../../../@fuse/services/confirmation";
-import {StatisticEtudiant} from "../../../../../../shared/model/grpe/StatisticEtudiant.model";
+import {GroupeEtudiantDto} from "../../../../../../shared/model/grpe/GroupeEtudiant.model";
 
 @Component({
     selector: 'settings-team',
@@ -19,32 +25,28 @@ import {StatisticEtudiant} from "../../../../../../shared/model/grpe/StatisticEt
 })
 export class SettingsTeamComponent implements OnInit {
     @Input()
-    user: EtudiantDto = new EtudiantDto()
+    user: EtudiantDto = new EtudiantDto();
     current: Date = new Date();
-    total: number = 0
-    userCurrency: string = 'MAD'
+    total: number = 0;
+    userCurrency: string = 'MAD';
     showSchedule: boolean = false;
     isLoading: boolean = true; // Variable de contrôle pour l'état de chargement
     totalCourses: number = 0;
     completedCourses: number = 0;
     upcomingCourses: number = 0;
     statisticEtudiant: StatisticEtudiant;
+    groupes: Array<GroupeEtudiantDetailDto> = []; // Liste des groupes
+    selectedGroup: GroupeEtudiantDto = null;
     /**
      * Constructor
      */
-    constructor(private groupService: GroupeEtudiantCollaboratorService,
-                private service: GroupeEtudiantDetailCollaboratorService,
-                private groupeEtudiantCollaboratorService: GroupeEtudiantCollaboratorService,
-                private confirmation: FuseConfirmationService) {
-    }
-
-    get groups(): Array<GroupeEtudiantDetailDto> {
-        return this.service.items;
-    }
-
-    set groups(value: Array<GroupeEtudiantDetailDto>) {
-        this.service.items = value;
-    }
+    constructor(
+        private groupService: GroupeEtudiantCollaboratorService,
+        private service: GroupeEtudiantDetailCollaboratorService,
+        private confirmation: FuseConfirmationService,
+        private cdr: ChangeDetectorRef,
+        private zone: NgZone
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -72,35 +74,65 @@ export class SettingsTeamComponent implements OnInit {
             }
 
             this.isLoading = false; // Update loading state once data is loaded
-
+            this.cdr.markForCheck();
             // Call calculateStatistics with the dynamic user ID
             if (this.user?.id) {
                 this.calculateStatistics(this.user.id);
+                this.loadGroupes(this.user.id); // Charge les groupes
             }
         }, 2000); // Simulate 2 seconds of loading time
     }
 
+    /**
+     * Méthode pour charger les groupes par ID d'étudiant
+     */
+    loadGroupes(idEtudiant: number): void {
+        this.isLoading = true;
+        this.service.getGroupesByEtudiantId(idEtudiant).subscribe(
+            (data: GroupeEtudiantDetailDto[]) => {
+              /*  console.log('Nombre de groupes reçus:', data.length);
+                console.log('Groupes reçus (détaillé):', JSON.stringify(data, null, 2));*/
 
-    calculateStatistics(idEtudiant: number): void {
-        this.groupeEtudiantCollaboratorService.calculateStat(idEtudiant).subscribe(
-            (data: StatisticEtudiant) => {
-                this.statisticEtudiant = data;
-                console.log('Statistics for Etudiant ID:', idEtudiant);
-                console.log('Total Courses:', data.nreCourses);
-                console.log('Courses Coming:', data.nreCoursesComing);
-                console.log('Courses Completed:', data.nreCoursesCompleted);
+
+                this.zone.run(() => {
+                    this.groupes = data;
+/*
+                    console.log('Nombre de groupes après assignation:', this.groupes.length);
+*/ console.log('Groupes Data:', this.groupes);
+
+                    this.isLoading = false;
+                    this.cdr.detectChanges();
+                });
             },
             (error) => {
-                console.error('Error fetching statistics', error);
+                console.error('Error fetching groups', error);
+                this.isLoading = false;
             }
         );
     }
 
-
+    /**
+     * Méthode pour calculer les statistiques
+     */
+    calculateStatistics(idEtudiant: number): void {
+        this.isLoading = true;
+        this.groupService.calculateStat(idEtudiant).subscribe(
+            (data: StatisticEtudiant) => {
+                this.statisticEtudiant = data;
+                this.isLoading = false;
+                this.cdr.detectChanges();
+            },
+            (error) => {
+                console.error('Error fetching statistics', error);
+                this.isLoading = false;
+            }
+        );
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
     get item(): GroupeEtudiantDto {
         return this.groupService.item;
     }
@@ -121,14 +153,17 @@ export class SettingsTeamComponent implements OnInit {
 
     deleteStudent(item: GroupeEtudiantDetailDto, i: number) {
         const confirmation = this.confirmation.open({
-            title: 'remove student from group',
-            message: 'Are you sure you want to remove the student from group ?',
+            title: 'Remove student from group',
+            message: 'Are you sure you want to remove the student from group?',
             actions: {
                 confirm: {
                     label: 'REMOVE',
                 },
             },
         });
+    }
+    onGroupSelect(group: GroupeEtudiantDto) {
+        this.selectedGroup = group;
     }
 
 

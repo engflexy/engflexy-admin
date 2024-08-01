@@ -89,5 +89,25 @@ export const appRoutes: Route[] = [
                 loadChildren: () => import('app/modules/admin/admin.routing')
             }
         ]
+    },
+    // Collaborator routes
+    {
+        path: 'collaborator',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        data: {
+            layout: 'dense'
+        },
+        resolve: {
+            initialData: initialDataResolver
+        },
+        children: [
+
+            {
+                path: '',
+                loadChildren: () => import('app/modules/collaborator/collaborator.module').then(m => m.CollaboratorModule)
+            }
+        ]
     }
 ];

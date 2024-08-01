@@ -30,16 +30,6 @@ import {ScheduleProfCreateCollaboratorComponent} from "./schedule/create/schedul
 import {PopUpInfoComponent} from "./schedule/pop-up-info/pop-up-info.component";
 import {ScheduleProfEditComponent} from "./schedule/edit/schedule-prof-edit.component";
 import {ManageUsersModule} from "./manage-users/manage-users.module";
-import {ManageSalaryComponent} from "./manage-salary/manage-salary.component";
-import {SessionSalaryComponent} from "./manage-salary/session-salary/session-salary.component";
-import {FilterSalaryComponent} from "./manage-salary/filter-salary/filter.salary.component";
-import {EditSalaryComponent} from "./manage-salary/edit-salary/edit-salary.component";
-import {CreateSalaryComponent} from "./manage-salary/create-salary/create-salary.component";
-import {ManagePackPricesComponent} from "./manage-pack-prices/manage-pack-prices.component";
-import {FilterComponent} from "./manage-pack-prices/filter/filter.component";
-import {EditPackComponent} from "./manage-pack-prices/edit-pack/edit-pack.component";
-import {EditComponent} from "./manage-pack-prices/edit/edit.component";
-import {CreateComponent} from "./manage-pack-prices/create/create.component";
 import {ManageInscriptionsComponent} from "./manage-inscriptions/manage-inscriptions.component";
 import {FilterInscriptionComponent} from "./manage-inscriptions/filter-inscription/filter-inscription.component";
 import {EditInscriptionComponent} from "./manage-inscriptions/edit-inscription/edit-inscription.component";
@@ -70,6 +60,12 @@ import {ChatsComponent} from "./chat-component/chat/chats/chats.component";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {SafePipe} from "../../shared/utils/safe.pipe";
+import {ManageSalaryComponent} from "./manage-salary/manage-salary.component";
+import {SessionSalaryComponent} from "./manage-salary/session-salary/session-salary.component";
+import {CreateSalaryComponent} from "./manage-salary/create-salary/create-salary.component";
+import {FilterSalaryComponent} from "./manage-salary/filter-salary/filter.salary.component";
+import {EditSalaryComponent} from "./manage-salary/edit-salary/edit-salary.component";
+import { CollaboratorSubscriptionComponent } from './collaborator-subscription/collaborator-subscription.component';
 
 
 @NgModule({
@@ -82,12 +78,7 @@ import {SafePipe} from "../../shared/utils/safe.pipe";
         ManageSalaryComponent,
         SessionSalaryComponent,
         CreateSalaryComponent,
-        ManagePackPricesComponent,
         FilterSalaryComponent,
-        FilterComponent,
-        CreateComponent,
-        EditComponent,
-        EditPackComponent,
         EditSalaryComponent,
         ManageInscriptionsComponent,
         FilterInscriptionComponent,
@@ -111,7 +102,7 @@ import {SafePipe} from "../../shared/utils/safe.pipe";
         EmptyConversationComponent,
         ConversationComponent,
         ContactInfoComponent,
-        ChatsComponent, SafePipe,
+        ChatsComponent, SafePipe, CollaboratorSubscriptionComponent,
 
     ],
     imports: [

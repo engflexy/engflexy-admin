@@ -101,4 +101,5 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     changePassword(username: string, newPassword: string): Observable<any> {
         return this.http.put(`${this.API}change-password`, { username, newPassword });
     }
+
 }

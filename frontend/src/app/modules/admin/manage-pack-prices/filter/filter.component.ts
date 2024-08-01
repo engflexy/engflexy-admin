@@ -27,14 +27,13 @@ import {
 import {environment} from "../../../../../environments/environment";
 import {MatInputModule} from "@angular/material/input";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {compareObjects} from "../../../../zynerator/util/Gloabl";
 import {FormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
 import {TranslocoModule} from "@ngneat/transloco";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {PaginatedList} from "../../../../zynerator/dto/PaginatedList.model";
-import {CollaboratorCriteria} from "../../../../shared/criteria/vocab/CollaboratorCriteria.model";
-import {TypeCollaboratorCriteria} from "../../../../shared/criteria/prof/TypeCollaboratorCriteria.model";
+import {CreateComponent} from "../create/create.component";
 
 @Component({
     selector: 'app-filter',
@@ -52,7 +51,7 @@ import {TypeCollaboratorCriteria} from "../../../../shared/criteria/prof/TypeCol
         MatDatepickerModule
     ],
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit{
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
@@ -62,32 +61,24 @@ export class FilterComponent implements OnInit {
     protected router: Router;
     protected stringUtilService: StringUtilService;
     private _activeTab = 0;
-    _packageCollaboratorsFilter: PackageCollaboratorDto[];
-    _collaboratorsFilter: CollaboratorDto[];
-    _inscriptionCollaboratorStatesFilter: InscriptionCollaboratorStateDto[];
+
+    _packageCollaboratorsFilter:  PackageCollaboratorDto[];
+    _collaboratorsFilter:  CollaboratorDto[];
+    _inscriptionCollaboratorStatesFilter:  InscriptionCollaboratorStateDto[];
 
 
     private _validPackageCollaboratorLibelle = true;
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<FilterComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService, private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
+    constructor(public refDialog: MatDialogRef<FilterComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
     ngOnInit(): void {
-        this.packageCollaboratorService.findAll().subscribe((data) => {
-            this.packageCollaborators = data;
-            this._packageCollaboratorsFilter = [...this.packageCollaborators]
-        });
-        this.collaboratorService.findAll().subscribe((data) => {
-            this.collaborators = data;
-            this._collaboratorsFilter = [...this.collaborators]
-        });
-        this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {
-            this.inscriptionCollaboratorStates = data;
-            this._inscriptionCollaboratorStatesFilter = [...this.inscriptionCollaboratorStates]
-        });
+        this.packageCollaboratorService.findAll().subscribe((data) => {this.packageCollaborators = data; this._packageCollaboratorsFilter = [...this.packageCollaborators]});
+        this.collaboratorService.findAll().subscribe((data) => {this.collaborators = data; this._collaboratorsFilter = [...this.collaborators]});
+        this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {this.inscriptionCollaboratorStates = data; this._inscriptionCollaboratorStatesFilter = [...this.inscriptionCollaboratorStates]});
     }
 
     displayPackageCollaborator(item: PackageCollaboratorDto): string {
@@ -95,7 +86,7 @@ export class FilterComponent implements OnInit {
 
     }
 
-    filterPackageCollaborator(value: string) {
+    filterPackageCollaborator(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._packageCollaboratorsFilter = this.packageCollaborators.filter(s =>
@@ -105,13 +96,12 @@ export class FilterComponent implements OnInit {
             this._packageCollaboratorsFilter = this.packageCollaborators
         }
     }
-
     displayCollaborator(item: CollaboratorDto): string {
         return item && item.username ? item.username : "";
 
     }
 
-    filterCollaborator(value: string) {
+    filterCollaborator(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._collaboratorsFilter = this.collaborators.filter(s =>
@@ -121,13 +111,12 @@ export class FilterComponent implements OnInit {
             this._collaboratorsFilter = this.collaborators
         }
     }
-
     displayInscriptionCollaboratorState(item: InscriptionCollaboratorStateDto): string {
         return item && item.libelle ? item.libelle : "";
 
     }
 
-    filterInscriptionCollaboratorState(value: string) {
+    filterInscriptionCollaboratorState(value: string){
         value = value.toLowerCase();
         if (value && value.length > 0) {
             this._inscriptionCollaboratorStatesFilter = this.inscriptionCollaboratorStates.filter(s =>
@@ -139,170 +128,128 @@ export class FilterComponent implements OnInit {
     }
 
 
+
+
     public filter(): void {
-        this.submitted = true;
-        this.validateForm();
-        if (this.errorMessages.length === 0) {
-            if (this.criteria.collaborator == null) {
-                this.criteria.collaborator = new CollaboratorCriteria();
-            }
-            if (this.criteria.collaborator.typeCollaborator == null) {
-                this.criteria.collaborator.typeCollaborator = new TypeCollaboratorCriteria();
-            }
-            this.criteria.collaborator.typeCollaborator.id = this.active_status;
-            this.service.findPaginatedByCriteria(this.criteria).subscribe((res: PaginatedList<InscriptionCollaboratorDto>) => {
-                this.pageable = res;
-                console.log('ana f methode filter f componenet filter',res);
-                this.refDialog.close(res);
-            }, error => {
-                console.error('Error occurred:', error);
-            });
-        } else {
-            this.alert.show('info', 'something went wrong!, please try again.');
-        }
+        this.refDialog.close(this.item)
     }
 
 
-    public setValidation(value: boolean) {
+
+
+
+    public  setValidation(value: boolean){
     }
 
 
-    public validateForm(): void {
+
+    public  validateForm(): void{
         this.errorMessages = new Array<string>();
     }
 
 
+
     public async openCreateCollaborator(collaborator: string) {
         const isPermistted = await this.roleService.isPermitted('Collaborator', 'add');
-        if (isPermistted) {
+        if(isPermistted) {
             this.collaborator = new CollaboratorDto();
             this.createCollaboratorDialog = true;
-        } else {
+        }else{
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
-
     public async openCreatePackageCollaborator(packageCollaborator: string) {
         const isPermistted = await this.roleService.isPermitted('PackageCollaborator', 'add');
-        if (isPermistted) {
+        if(isPermistted) {
             this.packageCollaborator = new PackageCollaboratorDto();
             this.createPackageCollaboratorDialog = true;
-        } else {
+        }else{
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
-
     public async openCreateInscriptionCollaboratorState(inscriptionCollaboratorState: string) {
         const isPermistted = await this.roleService.isPermitted('InscriptionCollaboratorState', 'add');
-        if (isPermistted) {
+        if(isPermistted) {
             this.inscriptionCollaboratorState = new InscriptionCollaboratorStateDto();
             this.createInscriptionCollaboratorStateDialog = true;
-        } else {
+        }else{
             this.alert.show('info', 'something went wrong!, please try again.');
         }
-    }
-
-    get criteria(): InscriptionCollaboratorCriteria {
-        return this.service.criteria;
-    }
-
-    set criteria(value: InscriptionCollaboratorCriteria) {
-        this.service.criteria = value;
     }
 
     get collaborator(): CollaboratorDto {
         return this.collaboratorService.item;
     }
-
     set collaborator(value: CollaboratorDto) {
         this.collaboratorService.item = value;
     }
-
     get collaborators(): Array<CollaboratorDto> {
         return this.collaboratorService.items;
     }
-
     set collaborators(value: Array<CollaboratorDto>) {
         this.collaboratorService.items = value;
     }
-
     get createCollaboratorDialog(): boolean {
         return this.collaboratorService.createDialog;
     }
-
     set createCollaboratorDialog(value: boolean) {
-        this.collaboratorService.createDialog = value;
+        this.collaboratorService.createDialog= value;
     }
-
     get packageCollaborator(): PackageCollaboratorDto {
         return this.packageCollaboratorService.item;
     }
-
     set packageCollaborator(value: PackageCollaboratorDto) {
         this.packageCollaboratorService.item = value;
     }
-
     get packageCollaborators(): Array<PackageCollaboratorDto> {
         return this.packageCollaboratorService.items;
     }
-
     set packageCollaborators(value: Array<PackageCollaboratorDto>) {
         this.packageCollaboratorService.items = value;
     }
-
     get createPackageCollaboratorDialog(): boolean {
         return this.packageCollaboratorService.createDialog;
     }
-
     set createPackageCollaboratorDialog(value: boolean) {
-        this.packageCollaboratorService.createDialog = value;
+        this.packageCollaboratorService.createDialog= value;
     }
-
     get inscriptionCollaboratorState(): InscriptionCollaboratorStateDto {
         return this.inscriptionCollaboratorStateService.item;
     }
-
     set inscriptionCollaboratorState(value: InscriptionCollaboratorStateDto) {
         this.inscriptionCollaboratorStateService.item = value;
     }
-
     get inscriptionCollaboratorStates(): Array<InscriptionCollaboratorStateDto> {
         return this.inscriptionCollaboratorStateService.items;
     }
-
     set inscriptionCollaboratorStates(value: Array<InscriptionCollaboratorStateDto>) {
         this.inscriptionCollaboratorStateService.items = value;
     }
-
     get createInscriptionCollaboratorStateDialog(): boolean {
         return this.inscriptionCollaboratorStateService.createDialog;
     }
-
     set createInscriptionCollaboratorStateDialog(value: boolean) {
-        this.inscriptionCollaboratorStateService.createDialog = value;
+        this.inscriptionCollaboratorStateService.createDialog= value;
     }
+
+
 
 
     get validPackageCollaboratorLibelle(): boolean {
         return this._validPackageCollaboratorLibelle;
     }
-
     set validPackageCollaboratorLibelle(value: boolean) {
         this._validPackageCollaboratorLibelle = value;
     }
-
     get validInscriptionCollaboratorStateCode(): boolean {
         return this._validInscriptionCollaboratorStateCode;
     }
-
     set validInscriptionCollaboratorStateCode(value: boolean) {
         this._validInscriptionCollaboratorStateCode = value;
     }
-
     get validInscriptionCollaboratorStateLibelle(): boolean {
         return this._validInscriptionCollaboratorStateLibelle;
     }
-
     set validInscriptionCollaboratorStateLibelle(value: boolean) {
         this._validInscriptionCollaboratorStateLibelle = value;
     }
@@ -330,6 +277,14 @@ export class FilterComponent implements OnInit {
 
     set createDialog(value: boolean) {
         this.service.createDialog = value;
+    }
+
+    get criteria(): InscriptionCollaboratorCriteria {
+        return this.service.criteria;
+    }
+
+    set criteria(value: InscriptionCollaboratorCriteria) {
+        this.service.criteria = value;
     }
 
     get dateFormat() {
@@ -374,22 +329,6 @@ export class FilterComponent implements OnInit {
 
     set activeTab(value: number) {
         this._activeTab = value;
-    }
-
-    get active_status(): number {
-        return this.service.active_status;
-    }
-
-    set active_status(value: number) {
-        this.service.active_status = value;
-    }
-
-    get pageable(): PaginatedList<InscriptionCollaboratorDto> {
-        return this.service.pageable;
-    }
-
-    set pageable(value: PaginatedList<InscriptionCollaboratorDto>) {
-        this.service.pageable = value;
     }
 
 }
