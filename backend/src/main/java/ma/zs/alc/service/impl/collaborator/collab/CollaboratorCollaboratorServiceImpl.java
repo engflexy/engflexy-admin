@@ -14,10 +14,13 @@ import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +29,14 @@ import java.util.List;
 @Service
 public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Collaborator, CollaboratorCriteria, CollaboratorDao> implements CollaboratorCollaboratorService {
 
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
+    public boolean deleteById(Long id) {
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserIdForCollaborator(id);
+        dao.deleteById(id);
+        return true;
+    }
 
     public void findOrSaveAssociatedObject(Collaborator t) {
         if (t != null) {
@@ -99,6 +110,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
+
     private @Autowired ModelPermissionUserService modelPermissionUserService;
 
     @Autowired

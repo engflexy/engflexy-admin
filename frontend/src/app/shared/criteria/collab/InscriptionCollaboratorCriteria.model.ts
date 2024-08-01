@@ -3,6 +3,7 @@ import {BaseCriteria} from "../../../zynerator/criteria/BaseCriteria.model";
 import {CollaboratorDto} from "../../model/vocab/Collaborator.model";
 import {TypeCollaboratorDto} from "../../model/prof/TypeCollaborator.model";
 import {CollaboratorCriteria} from "../vocab/CollaboratorCriteria.model";
+import {InscriptionCollaboratorStateCriteria} from "./InscriptionCollaboratorStateCriteria.model";
 
 
 export class InscriptionCollaboratorCriteria extends BaseCriteria {
@@ -25,6 +26,7 @@ export class InscriptionCollaboratorCriteria extends BaseCriteria {
     public endDateTo: Date;
     public packageCollaborator: PackageCollaboratorCriteria;
     public collaborator: CollaboratorCriteria;
+    public inscriptionCollaboratorState: InscriptionCollaboratorStateCriteria;
     public packageCollaborators: Array<PackageCollaboratorCriteria>;
 
 }

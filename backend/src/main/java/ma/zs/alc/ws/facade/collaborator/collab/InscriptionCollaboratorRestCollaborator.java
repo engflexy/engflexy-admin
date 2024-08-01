@@ -147,7 +147,8 @@ public class InscriptionCollaboratorRestCollaborator  extends AbstractController
     @Operation(summary = "Finds paginated inscriptionCollaborators by criteria")
     @PostMapping("find-paginated-by-criteria")
     public ResponseEntity<PaginatedList> findPaginatedByCriteria(@RequestBody InscriptionCollaboratorCriteria criteria) throws Exception {
-        return super.findPaginatedByCriteria(criteria);
+        ResponseEntity<PaginatedList> paginatedByCriteria = super.findPaginatedByCriteria(criteria);
+        return paginatedByCriteria;
     }
 
     @Operation(summary = "Exports inscriptionCollaborators by criteria")

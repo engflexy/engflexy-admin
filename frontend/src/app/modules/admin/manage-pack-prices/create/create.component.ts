@@ -194,7 +194,6 @@ export class CreateComponent implements OnInit {
         this.validateForm();
         if (this.errorMessages.length === 0) {
             this.saveWithShowOption(false);
-            this.refDialog.close();
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
@@ -205,6 +204,9 @@ export class CreateComponent implements OnInit {
             if (item != null) {
                 this.items.push({...item});
                 this.item = new InscriptionCollaboratorDto();
+                this.alert.show('info', 'Inscription successfully created!');
+                this.refDialog.close()
+                this.changeDetector.detectChanges();
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }

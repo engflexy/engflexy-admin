@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
 import {CollaboratorAdminService} from "../../../../shared/service/admin/vocab/CollaboratorAdmin.service";
 import {CreateCollaboratorComponent} from "./create-collaborator/create-collaborator.component";
+import {FuseConfirmationService} from "../../../../../@fuse/services/confirmation";
 
 @Component({
     selector: 'app-collaborators',
@@ -17,8 +18,9 @@ export class CollaboratorsComponent implements OnInit {
     criteria: PageRequest<ManageUserDto>
     pageable: Pageable = new Pageable(0, 5)
 
-    constructor(private profService: CollaboratorAdminService,
+    constructor(private service: CollaboratorAdminService,
                 private _matDialog: MatDialog,
+                private _fuseConfirmation: FuseConfirmationService,
                 private router: Router,
                 private route: ActivatedRoute,
                 private auth: AuthService) {
@@ -29,7 +31,7 @@ export class CollaboratorsComponent implements OnInit {
     }
 
     private findAllByCriteria() {
-        this.profService.findAllByCriteria(this.pageable)
+        this.service.findAllByCriteria(this.pageable)
             .subscribe(res => {
                 this.criteria = res
                 console.log(this.criteria)
@@ -57,5 +59,29 @@ export class CollaboratorsComponent implements OnInit {
 
     navigateToDetail(item: ManageUserDto) {
         this.router.navigate([`collaborator/${item.id}`], {relativeTo: this.route})
+    }
+
+    protected readonly alert = alert;
+
+
+    delete(item: ManageUserDto) {
+        const confirmation = this._fuseConfirmation.open({
+            title: 'delete inscription',
+            message: `Are you sure you want to remove  <strong> ${item?.fullName} </strong> ?`,
+            actions: {
+                confirm: {
+                    label: 'REMOVE',
+                },
+            },
+        });
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirmation button pressed...
+            if (result === 'confirmed') {
+                this.service.deleteById(item.id).subscribe(res => {
+                    alert("awedaaaa deleted hamdolah")
+                }, error => {
+                })
+            }
+        });
     }
 }
