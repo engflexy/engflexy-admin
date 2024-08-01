@@ -19,6 +19,8 @@ import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
+import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
+import ma.zs.alc.zynerator.transverse.emailling.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -93,6 +95,7 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
                 parcoursService.create(element);
             });
         }
+        emailService.sendSimpleMessage(new EmailRequest("koko","awdaaa zeman s3ibbb o ana hi wlyia",t.getEmail()));
         return mySaved;
     }
 
@@ -145,6 +148,8 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
 
     @Autowired
     private ParcoursAdminService parcoursService;
+    @Autowired
+    private EmailService emailService;
     @Autowired
     private TypeCollaboratorAdminService typeCollaboratorService;
 
