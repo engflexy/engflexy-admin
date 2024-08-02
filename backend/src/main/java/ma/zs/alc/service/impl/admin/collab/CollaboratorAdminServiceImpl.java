@@ -117,7 +117,7 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
             }
 
             if (t.getTypeCollaborator() != null && t.getTypeCollaborator().getId() != null) {
-                TypeCollaborator type = typeCollaboratorService.findById(t.getLangue().getId());
+                TypeCollaborator type = typeCollaboratorService.findById(t.getTypeCollaborator().getId());
                 collaborator.setTypeCollaborator(type);
             }
 

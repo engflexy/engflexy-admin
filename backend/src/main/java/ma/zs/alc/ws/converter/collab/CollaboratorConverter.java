@@ -23,6 +23,8 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
     @Autowired
     private LangueConverter langueConverter;
     @Autowired
+    private TypeCollaboratorConverter typeCollaboratorConverter;
+    @Autowired
     private ParcoursConverter parcoursConverter;
     @Autowired
     private CoursConverter coursConverter;
@@ -30,6 +32,7 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
     private ManagerConverter managerConverter;
     private boolean parcourss;
     private boolean langue;
+    private boolean typeCollaborator;
     private boolean managers;
 
     public CollaboratorConverter() {
@@ -77,7 +80,9 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
             if (this.langue && dto.getLangue()!=null)
                 item.setLangue(langueConverter.toItem(dto.getLangue()));
 
-            item.setCountry(dto.getCountry());
+            if (this.typeCollaborator && dto.getTypeCollaborator()!=null)
+                item.setTypeCollaborator(typeCollaboratorConverter.toItem(dto.getTypeCollaborator()));
+
 
             if (this.parcourss && ListUtil.isNotEmpty(dto.getParcourss()))
                 item.setParcourss(parcoursConverter.toItem(dto.getParcourss()));
@@ -141,6 +146,9 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
             if (this.langue && item.getLangue()!=null)
                 dto.setLangue(langueConverter.toDto(item.getLangue()));
 
+            if (this.typeCollaborator && item.getTypeCollaborator()!=null)
+                dto.setTypeCollaborator(typeCollaboratorConverter.toDto(item.getTypeCollaborator()));
+
             dto.setCountry(item.getCountry());
 
 
@@ -156,6 +164,8 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
             t.setManagers(managerConverter.copy(dto.getManagers()));
         if (dto.getLangue() != null)
            BeanUtils.copyProperties(t.getLangue(),dto.getLangue());
+        if (dto.getTypeCollaborator() != null)
+              BeanUtils.copyProperties(t.getTypeCollaborator(),dto.getTypeCollaborator());
     }
 
 
@@ -166,6 +176,7 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
 
     public void initObject(boolean value) {
         langue = true;
+        typeCollaborator = true;
     }
 
 
@@ -215,5 +226,13 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
 
     public void setLangue(boolean langue) {
         this.langue = langue;
+    }
+
+    public boolean isTypeCollaborator() {
+        return typeCollaborator;
+    }
+
+    public void setTypeCollaborator(boolean typeCollaborator) {
+        this.typeCollaborator = typeCollaborator;
     }
 }
