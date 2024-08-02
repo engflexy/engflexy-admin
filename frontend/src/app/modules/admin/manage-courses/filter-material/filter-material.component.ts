@@ -112,8 +112,6 @@ export class FilterMaterialComponent {
 
 
     applyFilter() {
-
-
         this.refDialog.close(this.item);
     }
 

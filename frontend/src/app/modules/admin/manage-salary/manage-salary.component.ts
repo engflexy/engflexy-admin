@@ -15,7 +15,7 @@ import {SalaryCollaboratorService} from "../../../shared/service/collaborator/sa
 import {SalaryCriteria} from "../../../shared/criteria/salary/SalaryCriteria.model";
 import {FormsModule} from "@angular/forms";
 import {ProfCriteria} from "../../../shared/criteria/prof/ProfCriteria.model";
-import {FilterSalaryComponent} from "./filter-salary/filter.salary.component.html";
+import {FilterSalaryComponent} from "./filter-salary/filter.salary.component";
 import {ProfDto} from "../../../shared/model/prof/Prof.model";
 import {SessionSalaryComponent} from "./session-salary/session-salary.component";
 import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";

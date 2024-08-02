@@ -2,7 +2,7 @@ import {BaseCriteria} from '../../../zynerator/criteria/BaseCriteria.model';
 import {ParcoursCriteria} from '../course/ParcoursCriteria.model';
 import {TypeCollaboratorCriteria} from '../prof/TypeCollaboratorCriteria.model';
 
-export class CollaboratorCriteria  extends BaseCriteria  {
+export class CollaboratorCriteria extends BaseCriteria {
 
     public libelle: string;
     public libelleLike: string;
@@ -17,8 +17,8 @@ export class CollaboratorCriteria  extends BaseCriteria  {
     public usernameLike: string;
     public password: string;
     public passwordLike: string;
-  public typeCollaborator: TypeCollaboratorCriteria ;
-  public typeCollaborators: Array<TypeCollaboratorCriteria> ;
-      public parcourss: Array<ParcoursCriteria>;
+    public typeCollaborator: TypeCollaboratorCriteria;
+    public typeCollaborators: Array<TypeCollaboratorCriteria>;
+    public parcourss: Array<ParcoursCriteria>;
 
 }
