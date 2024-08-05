@@ -54,6 +54,8 @@ export class StudentsComponent implements OnInit {
         this.etudiantService.findByUserName(email) .subscribe(res => {
             this.etudiant = res
             if(res){
+                this.etudiant = res;
+                console.log('Etudiant found:', this.etudiant);
                 //console.log(res)
                 /*this.pageable = {
                 content: [this.etudiant],
@@ -66,12 +68,15 @@ export class StudentsComponent implements OnInit {
                 numberOfElements: 1,
                 empty: false
             };*/
+            }else {
+                console.log('No etudiant found with this email');}},
+            error => {
 
-
-            }
-
-        })
+                console.error('Error finding etudiant:', error);
+        });
     }
+
+
     handle_pageable_change(event: PageEvent) {
         this.pageable = new Pageable(event?.pageIndex, event?.pageSize)
         this.findByCollaboratorId();

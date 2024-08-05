@@ -65,11 +65,13 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
             });
     }
     findByUserName(email: string): Observable<EtudiantDto> {
-
-        return this.http.get<EtudiantDto>(`${this.API}username/${email}`)
-
+        return this.http.get<EtudiantDto>(`${this.API}username/${email}`).pipe(
+            catchError(error => {
+                console.error('Error fetching etudiant:', error);
+                return throwError(error);
+            })
+        );
     }
-
     create(student: EtudiantDto): Observable<EtudiantDto> {
         return this.http.post<EtudiantDto>(this.API + 'create', student);
     }

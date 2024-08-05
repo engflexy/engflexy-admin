@@ -29,10 +29,10 @@
         <ng-container *ngIf="!criteria?.empty">
 
             <app-divider class="my-6" color="white" text=" "></app-divider>
-            <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
+
+            <div   class=" min-w-full py-2 align-middle md:px-6 lg:px-8
                       flex flex-row justify-center items-center gap-4">
-                <mat-form-field
-                    class="flex-auto fuse-mat-dense flex-grow">
+                <mat-form-field class="flex-auto fuse-mat-dense flex-grow">
                     <input #usernameInput placeholder="search.." matInput (keyup.enter)="findUserByUsername(usernameInput.value)">
                     <mat-icon
                         class="icon-size-5"
