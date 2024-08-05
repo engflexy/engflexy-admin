@@ -39,7 +39,6 @@ public class Etudiant extends User {
     private NiveauEtude niveauEtude;
     private Skill skill;
     private Fonction fonction;
-    private Langue langue;
     private Collaborator collaborator;
     private List<QuizEtudiant> quizEtudiants;
     private List<Inscription> inscriptions;

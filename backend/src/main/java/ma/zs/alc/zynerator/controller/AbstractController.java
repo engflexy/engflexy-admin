@@ -64,6 +64,7 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
 
     public List<DTO> findDtos(List<T> list) {
         converter.initList(false);
+        converter.initObject(true);
         List<DTO> dtos = converter.toDto(list);
         converter.initList(false);
         return dtos;

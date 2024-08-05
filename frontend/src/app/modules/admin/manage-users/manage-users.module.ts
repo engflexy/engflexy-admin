@@ -44,7 +44,7 @@ import {ScheduleModule} from "../schedule/schedule.module";
 
 const userRoutes: Route[] = [
     {path: '', component: ManageUsersComponent},
-    {path: 'student/:id', component: StudentSettingsComponent},
+    {path: 'student/:email', component: StudentSettingsComponent},
     {path: 'teacher/:id', component: TeacherDetailsComponent},
     {path: 'collaborator/:id', component: CollaboratorDetialsComponent},
 ]

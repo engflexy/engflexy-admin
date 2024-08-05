@@ -99,11 +99,9 @@
                                           svgIcon="heroicons_mini:arrow-uturn-right"></mat-icon>
                             </button>
 
-                            <button mat-icon-button color="warn">
-                                <mat-icon class="icon-size-4"
-                                          svgIcon="heroicons_solid:trash"></mat-icon>
+                            <button (click)="deleteStudent(item.id)" mat-icon-button color="warn">
+                                <mat-icon class="icon-size-4" svgIcon="heroicons_solid:trash"></mat-icon>
                             </button>
-
                         </div>
                     </div>
 

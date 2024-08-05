@@ -51,7 +51,7 @@ public class publicController {
 
     @GetMapping("optimized/teacher-locality")
     public List<TypeTeacher> findTeacherLocality() {
-        return typeTeacherDao.findAllOptimized();
+        return typeTeacherDao.findAll();
     }
 
     @GetMapping("optimized/skill")

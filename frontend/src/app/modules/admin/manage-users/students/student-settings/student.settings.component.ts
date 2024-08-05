@@ -103,9 +103,9 @@ export class StudentSettingsComponent
                 this._changeDetectorRef.markForCheck();
             });
 
-        const id = this.route.snapshot.params.id
-        if (id) {
-            this.etudiantService.findByIdWithAssociatedList(new EtudiantDto(id))
+        const email = this.route.snapshot.params.email
+        if (email) {
+            this.etudiantService.findByUserName(email)
                 .subscribe(res => {
                     console.log(res)
                     this.student = res

@@ -21,7 +21,7 @@ export class StudentsComponent implements OnInit {
 
     criteria: PageRequest<ManageUserDto>
     pageable: Pageable = new Pageable(0, 5)
-    etudiant: UserCriteria
+    etudiant: EtudiantDto
     constructor(private etudiantService: EtudiantCollaboratorService,
                 private _matDialog: MatDialog,
                 private router: Router,
@@ -50,26 +50,25 @@ export class StudentsComponent implements OnInit {
             })
     }
 
-    findUserByUsername(username: string): void {
-        this.etudiantService.findByUserName(username) .subscribe(res => {
+    findUserByUsername(email: string): void {
+        this.etudiantService.findByUserName(email) .subscribe(res => {
             this.etudiant = res
-            console.log(this.etudiant.email)
-            if(res){ this.criteria = {
+            if(res){
+                console.log(res)
+                /*this.pageable = {
                 content: [this.etudiant],
                 totalElements: 1,
                 totalPages: 1,
-                //pageable: this.pageable, // Ensure pageable is correctly initialized
                 size: 1,
-                number: 0, // Typically the page number starts from 0
-                // sort: { /* Initialize sort properties if required */ },
+                number: 0,
                 last: true,
                 first: true,
                 numberOfElements: 1,
-                empty: false // Set to false since we have one element
-            };}
+                empty: false
+            };*/
 
 
-            console.log(this.criteria)
+            }
 
         })
     }
@@ -93,9 +92,12 @@ export class StudentsComponent implements OnInit {
     }
 
     navigateToDetail(item: ManageUserDto) {
-        this.router.navigate([`student/${item.id}`], {relativeTo: this.route})
+        this.router.navigate([`student/${item.email}`], {relativeTo: this.route})
     }
-
+    deleteStudent(id: number): void {
+        this.etudiantService.deleteById(id);
+        console.log(id)
+    }
     openFilter() {
 
     }

@@ -78,10 +78,9 @@ public interface EtudiantDao extends AbstractRepository<Etudiant, Long> {
 
 
     int deleteByCollaboratorId(Long id);
-
     long countByCollaboratorId(Long id);
 
-    Etudiant findByUsername(String username);
+    Etudiant findByUsername(String email);
 
 
 }
