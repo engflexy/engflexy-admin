@@ -68,7 +68,7 @@ export class SettingsAccountComponent implements OnInit {
 
         this.loadData();
 
-        //console.log(this.teacherLocality)
+
     }
 
     loadData(): void {
@@ -110,9 +110,9 @@ export class SettingsAccountComponent implements OnInit {
 
         });
         this.imageService.findOptimized('teacher-locality').subscribe(response => {
-            console.log('Teacher Locality data:', response); // Debugging
+
             this.teacherLocality = response;
-            this.ref.markForCheck(); // Ensure change detection
+
         });
     }
 

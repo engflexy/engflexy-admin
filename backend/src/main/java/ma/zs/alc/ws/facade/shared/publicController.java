@@ -50,8 +50,8 @@ public class publicController {
     }
 
     @GetMapping("optimized/teacher-locality")
-    public List<TypeTeacher> findTeacherLocality() {
-        return typeTeacherDao.findAll();
+    public List<TeacherLocality> findTeacherLocality() {
+        return teacherLocalityDao.findAllOptimized();
     }
 
     @GetMapping("optimized/skill")
@@ -126,4 +126,7 @@ public class publicController {
 
     @Autowired
     private LangueDao langueDao;
+
+    @Autowired
+    private TeacherLocalityDao teacherLocalityDao;
 }
