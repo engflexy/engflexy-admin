@@ -66,7 +66,7 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     }
     findByUserName(email: string): Observable<EtudiantDto> {
 
-        return this.http.get<EtudiantDto>(this.API + `username/${email}`)
+        return this.http.get<EtudiantDto>(`${this.API}username/${email}`)
 
     }
 

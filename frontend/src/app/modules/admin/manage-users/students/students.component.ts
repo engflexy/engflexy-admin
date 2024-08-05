@@ -54,7 +54,7 @@ export class StudentsComponent implements OnInit {
         this.etudiantService.findByUserName(email) .subscribe(res => {
             this.etudiant = res
             if(res){
-                console.log(res)
+                //console.log(res)
                 /*this.pageable = {
                 content: [this.etudiant],
                 totalElements: 1,
@@ -95,8 +95,15 @@ export class StudentsComponent implements OnInit {
         this.router.navigate([`student/${item.email}`], {relativeTo: this.route})
     }
     deleteStudent(id: number): void {
-        this.etudiantService.deleteById(id);
-        console.log(id)
+        this.etudiantService.deleteById(id).subscribe({
+            next: (response) => {
+                console.log(`Deleted student with id: ${id}`);
+                // Code to update the UI, e.g., remove the deleted item from the list
+            },
+            error: (error) => {
+                console.error('Error deleting student:', error);
+            }
+        });
     }
     openFilter() {
 

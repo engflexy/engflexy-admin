@@ -25,6 +25,7 @@ import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.DateUtil;
@@ -41,6 +42,15 @@ import java.util.List;
 
 @Service
 public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudiant, EtudiantCriteria, EtudiantDao> implements EtudiantCollaboratorService {
+
+
+   public void deleteAssociatedLists(Long id) {
+        quizEtudiantService.deleteByEtudiantId(id);
+        inscriptionService.deleteByEtudiantId(id);
+        groupeEtudiantDetailService.deleteByEtudiantId(id);
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserId(id);
+    }
 
 
     public void findOrSaveAssociatedObject(Etudiant t) {
@@ -67,9 +77,11 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         return dao.deleteByTeacherLocalityId(id);
     }
 
+
     public long countByTeacherLocalityCode(String code) {
         return dao.countByTeacherLocalityCode(code);
     }
+
 
     public List<Etudiant> findByParcoursId(Long id) {
         return dao.findByParcoursId(id);
@@ -404,6 +416,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
     private @Autowired ModelPermissionUserService modelPermissionUserService;
 
     @Autowired

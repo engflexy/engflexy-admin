@@ -301,6 +301,7 @@ public class EtudiantRestCollaborator extends AbstractController<Etudiant, Etudi
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+
     @Operation(summary = "Finds etudiants by criteria")
     @PostMapping("find-by-criteria")
     public ResponseEntity<List<EtudiantDto>> findByCriteria(@RequestBody EtudiantCriteria criteria) throws Exception {
