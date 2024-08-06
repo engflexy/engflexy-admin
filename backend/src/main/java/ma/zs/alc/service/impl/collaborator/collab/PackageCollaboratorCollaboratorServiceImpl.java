@@ -2,6 +2,7 @@ package ma.zs.alc.service.impl.collaborator.collab;
 
 
 import ma.zs.alc.bean.core.collab.PackageCollaborator;
+import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.dao.criteria.core.collab.PackageCollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.PackageCollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.PackageCollaboratorSpecification;
@@ -18,27 +19,18 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
-import java.util.List;
 @Service
 public class PackageCollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<PackageCollaborator, PackageCollaboratorCriteria, PackageCollaboratorDao> implements PackageCollaboratorCollaboratorService {
-
-
-
-
-
-
 
 
 
     public List<PackageCollaborator> findAllOptimized() {
         return dao.findAllOptimized();
     }
-
-
-
-
 
     public void configure() {
         super.configure(PackageCollaborator.class, PackageCollaboratorSpecification.class);
@@ -49,5 +41,7 @@ public class PackageCollaboratorCollaboratorServiceImpl extends AbstractServiceI
     public PackageCollaboratorCollaboratorServiceImpl(PackageCollaboratorDao dao) {
         super(dao);
     }
+
+
 
 }

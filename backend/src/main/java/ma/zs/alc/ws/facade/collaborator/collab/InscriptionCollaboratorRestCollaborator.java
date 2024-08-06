@@ -169,6 +169,13 @@ public class InscriptionCollaboratorRestCollaborator  extends AbstractController
         super(service, converter);
     }
 
+    @Operation(summary = "find for current collaborator")
+    @GetMapping("current/id/{id}")
+   public InscriptionCollaboratorDto findForCurrentCollaborator(@PathVariable Long id){
+        return converter.toDto(service.findForCurrentCollaborator(id));
+
+    }
+
 
 
 

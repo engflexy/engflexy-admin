@@ -5,6 +5,7 @@ import ma.zs.alc.dao.criteria.core.collab.InscriptionCollaboratorCriteria;
 import ma.zs.alc.zynerator.service.IService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -33,4 +34,7 @@ public interface InscriptionCollaboratorCollaboratorService extends IService<Ins
     Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdTeacher(Pageable pageable);
 
     Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorIdSchool(Pageable pageable);
+
+
+    InscriptionCollaborator findForCurrentCollaborator(Long id);
 }

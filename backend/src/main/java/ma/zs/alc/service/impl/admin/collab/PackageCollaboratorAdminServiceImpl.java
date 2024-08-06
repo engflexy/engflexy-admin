@@ -26,12 +26,6 @@ public class PackageCollaboratorAdminServiceImpl extends AbstractServiceImpl<Pac
 
 
 
-
-
-
-
-
-
     public List<PackageCollaborator> findAllOptimized() {
         return dao.findAllOptimized();
     }

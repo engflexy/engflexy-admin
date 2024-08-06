@@ -22,6 +22,7 @@ public class PackageCollaboratorDto  extends AuditBaseDto {
     private BigDecimal priceColorOld  ;
     private BigDecimal priceBannerAd  ;
     private BigDecimal priceBannerAdOld  ;
+    private CollaboratorDto collaborator ;
 
 
 
@@ -112,7 +113,13 @@ public class PackageCollaboratorDto  extends AuditBaseDto {
         this.priceBannerAdOld = priceBannerAdOld;
     }
 
+    public CollaboratorDto getCollaborator() {
+        return collaborator;
+    }
 
+    public void setCollaborator(CollaboratorDto collaborator) {
+        this.collaborator = collaborator;
+    }
 
 
 

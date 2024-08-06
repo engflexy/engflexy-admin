@@ -31,4 +31,5 @@ public interface InscriptionCollaboratorDao extends AbstractRepository<Inscripti
     long countByInscriptionCollaboratorStateCode(String code);
 
     Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorId(Long id, Pageable pageable);
+
 }
