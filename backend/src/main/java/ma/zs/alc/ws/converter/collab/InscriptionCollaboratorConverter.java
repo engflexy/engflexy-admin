@@ -48,9 +48,9 @@ public class InscriptionCollaboratorConverter extends AbstractConverter<Inscript
             if (dto.getBannerAd() != null)
                 item.setBannerAd(dto.getBannerAd());
             if (StringUtil.isNotEmpty(dto.getStartDate()))
-                item.setStartDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ALTERNATIVE,dto.getStartDate()));
+                item.setStartDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ALTERNATIVE, dto.getStartDate()));
             if (StringUtil.isNotEmpty(dto.getEndDate()))
-                item.setEndDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ALTERNATIVE,dto.getEndDate()));
+                item.setEndDate(DateUtil.stringEnToDate(DateUtil.DATE_FORMAT_ALTERNATIVE, dto.getEndDate()));
             if (this.packageCollaborator && dto.getPackageCollaborator() != null)
                 item.setPackageCollaborator(packageCollaboratorConverter.toItem(dto.getPackageCollaborator()));
 
@@ -106,14 +106,24 @@ public class InscriptionCollaboratorConverter extends AbstractConverter<Inscript
     }
 
     public void copy(InscriptionCollaboratorDto dto, InscriptionCollaborator t) {
+        collaboratorConverter.init(false);
         super.copy(dto, t);
-        if (t.getPackageCollaborator() == null && dto.getPackageCollaborator() != null) {
+        if (dto.getStartDate() != null) {
+            t.setStartDate(DateUtil.convert(dto.getStartDate(), DateUtil.DATE_FORMAT_ALTERNATIVE ));
+        }
+        if (dto.getEndDate() != null) {
+            t.setEndDate(DateUtil.convert(dto.getEndDate(), DateUtil.DATE_FORMAT_ALTERNATIVE ));
+        }
+        if (t.getPackageCollaborator() != null && dto.getPackageCollaborator() != null) {
+            t.setPackageCollaborator(null);
             t.setPackageCollaborator(new PackageCollaborator());
         }
-        if (t.getCollaborator() == null && dto.getCollaborator() != null) {
+        if (t.getCollaborator() != null && dto.getCollaborator() != null) {
+            t.setCollaborator(null);
             t.setCollaborator(new Collaborator());
         }
-        if (t.getInscriptionCollaboratorState() == null && dto.getInscriptionCollaboratorState() != null) {
+        if (t.getInscriptionCollaboratorState() != null && dto.getInscriptionCollaboratorState() != null) {
+            t.setInscriptionCollaboratorState(null);
             t.setInscriptionCollaboratorState(new InscriptionCollaboratorState());
         }
         if (dto.getPackageCollaborator() != null)

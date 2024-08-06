@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Service
 public class EmailService {
 
-    //@Autowired
+    @Autowired
     private JavaMailSender mailSender;
     @Value("${spring.mail.username}")
     private String email;

@@ -45,6 +45,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
             t.setCategorieProf(categorieProfService.findOrSave(t.getCategorieProf()));
             t.setTypeTeacher(typeTeacherService.findOrSave(t.getTypeTeacher()));
             t.setCollaborator(collaboratorService.findOrSave(t.getCollaborator()));
+
         }
     }
 
@@ -121,9 +122,9 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.TEACHER);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findOrSave(role);
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null)
             t.setRoleUsers(new ArrayList<>());
 

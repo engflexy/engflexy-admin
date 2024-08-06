@@ -1,6 +1,9 @@
 package ma.zs.alc.ws.converter.collab;
 
 import ma.zs.alc.bean.core.collab.Collaborator;
+import ma.zs.alc.bean.core.collab.PackageCollaborator;
+import ma.zs.alc.bean.core.collab.TypeCollaborator;
+import ma.zs.alc.bean.core.inscriptionref.Langue;
 import ma.zs.alc.ws.converter.inscriptionref.LangueConverter;
 import ma.zs.alc.ws.dto.collab.CollaboratorDto;
 import org.springframework.beans.BeanUtils;
@@ -77,10 +80,10 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
             if (StringUtil.isNotEmpty(dto.getCountry()))
                 item.setCountry(dto.getCountry());
 
-            if (this.langue && dto.getLangue()!=null)
+            if (this.langue && dto.getLangue() != null)
                 item.setLangue(langueConverter.toItem(dto.getLangue()));
 
-            if (this.typeCollaborator && dto.getTypeCollaborator()!=null)
+            if (this.typeCollaborator && dto.getTypeCollaborator() != null)
                 item.setTypeCollaborator(typeCollaboratorConverter.toItem(dto.getTypeCollaborator()));
 
 
@@ -143,10 +146,10 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
                 managerConverter.setCollaborator(true);
 
             }
-            if (this.langue && item.getLangue()!=null)
+            if (this.langue && item.getLangue() != null)
                 dto.setLangue(langueConverter.toDto(item.getLangue()));
 
-            if (this.typeCollaborator && item.getTypeCollaborator()!=null)
+            if (this.typeCollaborator && item.getTypeCollaborator() != null)
                 dto.setTypeCollaborator(typeCollaboratorConverter.toDto(item.getTypeCollaborator()));
 
             dto.setCountry(item.getCountry());
@@ -158,14 +161,23 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
 
     public void copy(CollaboratorDto dto, Collaborator t) {
         super.copy(dto, t);
-        if (dto.getParcourss() != null)
+        if (t.getLangue() != null && dto.getLangue() != null) {
+            t.setLangue(null);
+            t.setLangue(new Langue());
+        }
+        if (t.getTypeCollaborator() != null && dto.getTypeCollaborator() != null) {
+            t.setTypeCollaborator(null);
+            t.setTypeCollaborator(new TypeCollaborator());
+        }
+
+        if (parcourss && dto.getParcourss() != null)
             t.setParcourss(parcoursConverter.copy(dto.getParcourss()));
-        if (dto.getManagers() != null)
+        if (managers && dto.getManagers() != null)
             t.setManagers(managerConverter.copy(dto.getManagers()));
-        if (dto.getLangue() != null)
-           BeanUtils.copyProperties(t.getLangue(),dto.getLangue());
-        if (dto.getTypeCollaborator() != null)
-              BeanUtils.copyProperties(t.getTypeCollaborator(),dto.getTypeCollaborator());
+        if (langue && t.getLangue() != null && dto.getLangue() != null)
+            BeanUtils.copyProperties(t.getLangue(), dto.getLangue());
+        if (typeCollaborator && t.getTypeCollaborator() != null && dto.getTypeCollaborator() != null)
+            BeanUtils.copyProperties(t.getTypeCollaborator(), dto.getTypeCollaborator());
     }
 
 

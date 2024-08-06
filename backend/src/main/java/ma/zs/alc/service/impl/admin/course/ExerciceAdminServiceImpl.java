@@ -24,7 +24,10 @@ public class ExerciceAdminServiceImpl extends AbstractServiceImpl<Exercice, Exer
     @Override
     public Exercice create(Exercice exercice) {
         ContentType type = contentTypeService.findByReferenceEntity(exercice.getContentType());
-        Section section = sectionService.findById(exercice.getSection().getId());
+        Section section = null;
+        if (exercice.getSection() != null) {
+            section = sectionService.findById(exercice.getSection().getId());
+        }
         exercice.setContentType(type);
         exercice.setSection(section);
         if (exercice.getQuiz() != null) {
