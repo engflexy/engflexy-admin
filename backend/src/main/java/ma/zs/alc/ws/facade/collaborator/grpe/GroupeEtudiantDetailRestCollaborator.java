@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiantDetail;
 import ma.zs.alc.dao.criteria.core.grpe.GroupeEtudiantDetailCriteria;
 import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantDetailCollaboratorService;
+import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantDetailConverter;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
 import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDetailDto;
@@ -109,8 +110,15 @@ public class GroupeEtudiantDetailRestCollaborator  extends AbstractController<Gr
     @Operation(summary = "find by etudiant id")
     @GetMapping("etudiant/id/{id}")
     public List<GroupeEtudiantDetailDto> findByEtudiantId(@PathVariable Long id){
-        return findDtos(service.findByEtudiantId(id));
+        List<GroupeEtudiantDetail> byEtudiantId = service.findByEtudiantId(id);
+        GroupeEtudiantDetailConverter groupeEtudiantDetailConverter = (GroupeEtudiantDetailConverter) converter;
+        groupeEtudiantDetailConverter.setEtudiant(true);
+        groupeEtudiantDetailConverter.setGroupeEtudiant(true);
+        groupeEtudiantConverter.init(false);
+        return findDtos(byEtudiantId);
     }
+
+
     @Operation(summary = "delete by etudiant id")
     @DeleteMapping("etudiant/id/{id}")
     public int deleteByEtudiantId(@PathVariable Long id){
@@ -154,7 +162,8 @@ public class GroupeEtudiantDetailRestCollaborator  extends AbstractController<Gr
         this.etudiantConverter = etudiantConverter;
     }
 
-
+ @Autowired
+    private GroupeEtudiantConverter groupeEtudiantConverter ;
 
 
 }

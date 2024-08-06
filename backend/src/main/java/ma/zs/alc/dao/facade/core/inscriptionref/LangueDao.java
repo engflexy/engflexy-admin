@@ -12,7 +12,7 @@ import java.util.List;
 public interface LangueDao extends AbstractRepository<Langue,Long>  {
     Langue findByRef(String ref);
     int deleteByRef(String ref);
-
+ Langue findByLibelle(String libelle);
 
     @Query("SELECT NEW Langue(item.id,item.libelle) FROM Langue item")
     List<Langue> findAllOptimized();

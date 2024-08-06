@@ -12,10 +12,8 @@ import { GroupeEtudiantDetailDto } from "../../../../../../shared/model/grpe/Gro
 import { GroupeEtudiantDetailCollaboratorService } from "../../../../../../shared/service/collaborator/grpe/GroupeEtudiantDetailCollaborator.service";
 import { FuseConfirmationService } from "../../../../../../../@fuse/services/confirmation";
 import { StatisticEtudiant } from "../../../../../../shared/model/grpe/StatisticEtudiant.model";
-import {
-    GroupeEtudiantCollaboratorService
-} from "../../../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
-import {GroupeEtudiantDto} from "../../../../../../shared/model/grpe/GroupeEtudiant.model";
+import { GroupeEtudiantCollaboratorService } from "../../../../../../shared/service/collaborator/grpe/GroupeEtudiantCollaborator.service";
+import { GroupeEtudiantDto } from "../../../../../../shared/model/grpe/GroupeEtudiant.model";
 
 @Component({
     selector: 'settings-team',
@@ -30,16 +28,14 @@ export class SettingsTeamComponent implements OnInit {
     total: number = 0;
     userCurrency: string = 'MAD';
     showSchedule: boolean = false;
-    isLoading: boolean = true; // Variable de contrôle pour l'état de chargement
+    isLoading: boolean = true;
     totalCourses: number = 0;
     completedCourses: number = 0;
     upcomingCourses: number = 0;
     statisticEtudiant: StatisticEtudiant;
-    groupes: Array<GroupeEtudiantDetailDto> = []; // Liste des groupes
+    groupes: Array<GroupeEtudiantDetailDto> = [];
     selectedGroup: GroupeEtudiantDto = null;
-    /**
-     * Constructor
-     */
+
     constructor(
         private groupService: GroupeEtudiantCollaboratorService,
         private service: GroupeEtudiantDetailCollaboratorService,
@@ -48,21 +44,12 @@ export class SettingsTeamComponent implements OnInit {
         private zone: NgZone
     ) {}
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void {
-        // Simulate data loading
         setTimeout(() => {
-            // Check if user and inscriptions are defined
             if (this.user && Array.isArray(this.user.inscriptions)) {
                 this.user.inscriptions.forEach(s => {
                     if (s?.etatInscription?.libelle !== 'Pending') {
-                        this.total += s.packStudent?.price?.price || 0; // Use a default value if price is undefined
+                        this.total += s.packStudent?.price?.price || 0;
                         this.totalCourses++;
                         if (s?.etatInscription?.libelle === 'Completed') {
                             this.completedCourses++;
@@ -73,33 +60,22 @@ export class SettingsTeamComponent implements OnInit {
                 });
             }
 
-            this.isLoading = false; // Update loading state once data is loaded
+            this.isLoading = false;
             this.cdr.markForCheck();
-            // Call calculateStatistics with the dynamic user ID
+
             if (this.user?.id) {
                 this.calculateStatistics(this.user.id);
-                this.loadGroupes(this.user.id); // Charge les groupes
+                this.loadGroupes(this.user.id);
             }
-        }, 2000); // Simulate 2 seconds of loading time
+        }, 2000);
     }
 
-    /**
-     * Méthode pour charger les groupes par ID d'étudiant
-     */
     loadGroupes(idEtudiant: number): void {
         this.isLoading = true;
         this.service.getGroupesByEtudiantId(idEtudiant).subscribe(
             (data: GroupeEtudiantDetailDto[]) => {
-              /*  console.log('Nombre de groupes reçus:', data.length);
-                console.log('Groupes reçus (détaillé):', JSON.stringify(data, null, 2));*/
-
-
                 this.zone.run(() => {
                     this.groupes = data;
-/*
-                    console.log('Nombre de groupes après assignation:', this.groupes.length);
-*/ console.log('Groupes Data:', this.groupes);
-
                     this.isLoading = false;
                     this.cdr.detectChanges();
                 });
@@ -111,9 +87,6 @@ export class SettingsTeamComponent implements OnInit {
         );
     }
 
-    /**
-     * Méthode pour calculer les statistiques
-     */
     calculateStatistics(idEtudiant: number): void {
         this.isLoading = true;
         this.groupService.calculateStat(idEtudiant).subscribe(
@@ -129,10 +102,6 @@ export class SettingsTeamComponent implements OnInit {
         );
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
     get item(): GroupeEtudiantDto {
         return this.groupService.item;
     }
@@ -141,12 +110,6 @@ export class SettingsTeamComponent implements OnInit {
         this.groupService.item = value;
     }
 
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
@@ -161,10 +124,16 @@ export class SettingsTeamComponent implements OnInit {
                 },
             },
         });
+
+        confirmation.afterClosed().subscribe(result => {
+            if (result === 'confirmed') {
+                // Logic to delete the student from the group
+            }
+        });
     }
+
     onGroupSelect(group: GroupeEtudiantDto) {
         this.selectedGroup = group;
     }
-
 
 }

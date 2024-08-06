@@ -17,6 +17,7 @@ public interface EtudiantDao extends AbstractRepository<Etudiant, Long> {
     List<Etudiant> findByTeacherLocalityId(Long id);
 
     int deleteByTeacherLocalityId(Long id);
+   // int deleteByEtudiantId(Long id);
 
     long countByTeacherLocalityCode(String code);
 
@@ -78,10 +79,9 @@ public interface EtudiantDao extends AbstractRepository<Etudiant, Long> {
 
 
     int deleteByCollaboratorId(Long id);
-
     long countByCollaboratorId(Long id);
 
-    Etudiant findByUsername(String username);
+    Etudiant findByUsername(String email);
 
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public interface EtudiantCollaboratorService extends IService<Etudiant, EtudiantCriteria> {
-    Etudiant findByUsername(String username);
+    Etudiant findByUsername(String email);
     boolean updatePasswordChangedStatus(Long id, boolean passwordChanged);
     boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired);
     boolean updateAccountLockStatus(Long id, boolean accountNonLocked);
