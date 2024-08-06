@@ -1,4 +1,8 @@
 import {Component} from '@angular/core';
+import {
+    PackStudentCollaboratorService
+} from "../../../shared/service/collaborator/pack/PackStudentCollaborator.service";
+import {PackStudentDto} from "../../../shared/model/pack/PackStudent.model";
 
 @Component({
     selector: 'app-collaborator-subscription',
@@ -6,6 +10,10 @@ import {Component} from '@angular/core';
 })
 export class CollaboratorSubscriptionComponent {
 
-    constructor() {
+    constructor( private   privatpackStudentDto: PackStudentDto) {
+    }
+
+    ngOnInit(): void {
+        this.privatpackStudentDto = new PackStudentDto();
     }
 }
