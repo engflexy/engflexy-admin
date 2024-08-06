@@ -115,5 +115,13 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     changePassword(username: string, newPassword: string): Observable<any> {
         return this.http.put(`${this.API}change-password`, { username, newPassword });
     }
-
+    findAllByCriteria(pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+        return this.http.get<PageRequest<ManageUserDto>>(this.API + `pageable`,
+            {
+                params: {
+                    'page': pageable.page,
+                    'size': pageable.size
+                }
+            });
+    }
 }

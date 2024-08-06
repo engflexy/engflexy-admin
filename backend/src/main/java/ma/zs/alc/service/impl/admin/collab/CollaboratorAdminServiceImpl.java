@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,9 +74,11 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.COLLABORATOR);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findOrSave(role);
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
+
+
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
 
         t.getRoleUsers().add(roleUser);

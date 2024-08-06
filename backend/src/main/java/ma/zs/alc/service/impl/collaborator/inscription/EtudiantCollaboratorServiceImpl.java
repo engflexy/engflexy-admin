@@ -220,17 +220,20 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.STUDENT);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findOrSave(role);
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
 
         t.getRoleUsers().add(roleUser);
         if (t.getModelPermissionUsers() == null) t.setModelPermissionUsers(new ArrayList<>());
 
         t.setModelPermissionUsers(modelPermissionUserService.initModelPermissionUser());
+        String username = "collaborator";//getCurrentUser().getUsername();
+        Collaborator collaborator = collaboratorService.findByUsername(username);
+        t.setCollaborator(collaborator);
 
-        if (t.getCollaborator() != null) {
+        /*if (t.getCollaborator() != null) {
             System.out.println("COLLABORATOR==> " + t.getCollaborator().getId());
             Collaborator c = collaboratorService.findById(t.getCollaborator().getId());
             if (c == null) {
@@ -238,7 +241,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
             }
             System.out.println("COLLABORATOR==> " + c);
             t.setCollaborator(c);
-        }
+        }*/
 
         Etudiant mySaved = (Etudiant) userService.create(t);
         //create student inscription

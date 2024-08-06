@@ -70,9 +70,11 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.COLLABORATOR);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findOrSave(role);
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
+
+
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
 
         t.getRoleUsers().add(roleUser);

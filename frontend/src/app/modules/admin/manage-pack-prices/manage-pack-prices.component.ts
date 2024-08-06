@@ -110,7 +110,8 @@ export class ManagePackPricesComponent implements OnInit {
             maxHeight: "100%"
         });
         dialog.afterClosed().subscribe(res => {
-            if (res != null) this.items.content.unshift({...res})
+            this.fetchData()
+
         })
     }
 
@@ -133,17 +134,20 @@ export class ManagePackPricesComponent implements OnInit {
 
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
+            this.changeDetector.detectChanges();
             // If the confirmation button pressed...
             if (result === 'confirmed') {
                 this.service.delete(item).subscribe(res => {
                     this.items.content.splice(this.items.content.indexOf(item), 1)
                     this.alert.show('info', 'Inscription successfully deleted!')
-                    this.changeDetector.detectChanges();
+
                 }, error => {
                     this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                 })
             }
         });
+
+
     }
 
     edit(item: InscriptionCollaboratorDto) {
