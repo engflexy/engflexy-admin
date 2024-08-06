@@ -1,4 +1,5 @@
-<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
+<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden" xmlns:align-items="http://www.w3.org/1999/xhtml"
+     xmlns:justify-content="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
 
     <!-- Header & Cards -->
     <div class="relative pt-8 pb-12 sm:pt-20 sm:pb-24 px-6 sm:px-16 overflow-hidden">
@@ -26,7 +27,7 @@
         <div class="flex justify-center mt-10 sm:mt-20">
             <fuse-card class="flex flex-col lg:flex-row max-w-sm lg:max-w-240">
                 <div class="p-6 sm:p-8 lg:p-10">
-                    <div class="text-3xl font-bold">Lifetime Membership</div>
+                <div class="text-3xl font-bold">{{ inscriptionCollaboratorDto?.packageCollaborator?.libelle }}</div>
                     <div class="mt-2 leading-relaxed text-secondary">
                         Learn from like-minded individuals which are eager to make a living building stuff on the web. Pay once and get lifetime access to the community.
                     </div>
@@ -65,15 +66,16 @@
                 <!-- Price -->
                 <div class="flex flex-col items-center p-8 lg:px-10 lg:py-12 lg:min-w-80 bg-gray-100 dark:bg-black dark:bg-opacity-10">
                     <div class="flex items-center whitespace-nowrap">
-                        <div class="text-8xl font-extrabold tracking-tight">$599</div>
+                        <div class="text-8xl font-extrabold tracking-tight">${{inscriptionCollaboratorDto?.packageCollaborator?.priceBase}}</div>
                         <div class="ml-2 text-2xl font-semibold text-secondary">USD</div>
                     </div>
-                    <div class="font-medium text-center text-secondary">
-                        <div>No monthly subscription,</div>
-                        <div>you only pay once.</div>
+                    <div class="counter" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <button mat-button (click)="decrement()" style="min-width: 50px; height: 50px; font-size: 24px;">-</button>
+                        <input matInput type="number" [value]="inscriptionCollaboratorDto?.packageCollaborator?.nbrStudentBase" readonly style="width: 100px; height: 50px; font-size: 24px; text-align: center; margin: 0 10px; border: none; background: none; box-shadow: none;">
+                        <button mat-button (click)="increment()" style="min-width: 50px; height: 50px; font-size: 24px;">+</button>
                     </div>
-                    <button
-                        class="w-full mt-8 lg:mt-auto"
+
+                    <button class="w-full mt-8 lg:mt-auto"
                         mat-flat-button
                         [color]="'primary'">
                         Get Started
@@ -85,7 +87,7 @@
 
 
 
-   
+
 
 
 </div>
