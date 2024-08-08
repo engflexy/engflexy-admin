@@ -7,6 +7,8 @@ import {InscriptionCollaboratorCriteria} from "../../../criteria/collab/Inscript
 import {environment} from "../../../../../environments/environment";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
+import {ParcoursDto} from "../../../model/course/Parcours.model";
+import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +18,7 @@ export class InscriptionCollaboratorCollaboratorService extends AbstractService<
     private _active_status = 1;
 
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient , private auth:AuthService) {
         super();
         this.httpClient = http
     }
@@ -50,6 +52,11 @@ export class InscriptionCollaboratorCollaboratorService extends AbstractService<
             }
         });
     }
+
+
+    public findForCurrentCollaborator(): Observable<InscriptionCollaboratorDto> {
+    return this.http.get<InscriptionCollaboratorDto>(`${this.API}current/id/${this.auth.authenticatedUser.id}`);
+}
     constrcutCriteria(): InscriptionCollaboratorCriteria {
         return new InscriptionCollaboratorCriteria();
     }

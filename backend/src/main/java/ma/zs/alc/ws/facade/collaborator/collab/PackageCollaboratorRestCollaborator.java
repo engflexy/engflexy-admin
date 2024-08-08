@@ -8,11 +8,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import ma.zs.alc.bean.core.collab.InscriptionCollaborator;
 import ma.zs.alc.bean.core.collab.PackageCollaborator;
+import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.dao.criteria.core.collab.PackageCollaboratorCriteria;
 import ma.zs.alc.service.facade.collaborator.collab.PackageCollaboratorCollaboratorService;
 import ma.zs.alc.ws.converter.collab.PackageCollaboratorConverter;
 import ma.zs.alc.ws.dto.collab.InscriptionCollaboratorDto;
 import ma.zs.alc.ws.dto.collab.PackageCollaboratorDto;
+import ma.zs.alc.ws.dto.course.ParcoursDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
@@ -152,5 +154,12 @@ public class PackageCollaboratorRestCollaborator extends AbstractController<Pack
         List<PackageCollaboratorDto> dtos = converter.toDto(items.getContent());
         return new PageImpl<PackageCollaboratorDto>(dtos);
     }
+
+
+
+
+
+
+
 
 }

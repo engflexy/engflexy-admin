@@ -23,10 +23,9 @@ public class CollaboratorDto  extends UserDto {
     private List<ParcoursDto> parcourss ;
     private List<ManagerDto> managers ;
 
+
     private Collection<Role> roles;
-    public CollaboratorDto(){
-        super();
-    }
+    private PackageCollaboratorDto packageCollaborator;
 
 
 
@@ -81,5 +80,13 @@ public class CollaboratorDto  extends UserDto {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public PackageCollaboratorDto getPackageCollaborator() {
+        return packageCollaborator;
+    }
+
+    public void setPackageCollaborator(PackageCollaboratorDto packageCollaborator) {
+        this.packageCollaborator = packageCollaborator;
     }
 }
