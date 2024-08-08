@@ -18,6 +18,7 @@ public class PackageCollaborator extends AuditBusinessObject {
     @Column(length = 500)
     private String libelle;
 
+    private Boolean school=Boolean.FALSE;
     private BigDecimal nbrStudentBase = BigDecimal.ZERO;
 
     private BigDecimal priceBase = BigDecimal.ZERO;
@@ -146,6 +147,14 @@ public class PackageCollaborator extends AuditBusinessObject {
 
     public void setPriceBannerAdOld(BigDecimal priceBannerAdOld) {
         this.priceBannerAdOld = priceBannerAdOld;
+    }
+
+    public Boolean getSchool() {
+        return school;
+    }
+
+    public void setSchool(Boolean school) {
+        this.school = school;
     }
 
     @Transient

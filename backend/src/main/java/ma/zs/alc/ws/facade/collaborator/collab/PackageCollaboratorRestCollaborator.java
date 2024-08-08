@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+import ma.zs.alc.bean.core.collab.InscriptionCollaborator;
 import ma.zs.alc.bean.core.collab.PackageCollaborator;
 import ma.zs.alc.dao.criteria.core.collab.PackageCollaboratorCriteria;
 import ma.zs.alc.service.facade.collaborator.collab.PackageCollaboratorCollaboratorService;
 import ma.zs.alc.ws.converter.collab.PackageCollaboratorConverter;
+import ma.zs.alc.ws.dto.collab.InscriptionCollaboratorDto;
 import ma.zs.alc.ws.dto.collab.PackageCollaboratorDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
@@ -17,11 +19,15 @@ import ma.zs.alc.zynerator.util.PaginatedList;
 
 
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import ma.zs.alc.zynerator.process.Result;
 
@@ -31,8 +37,7 @@ import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/collaborator/packageCollaborator/")
-public class PackageCollaboratorRestCollaborator  extends AbstractController<PackageCollaborator, PackageCollaboratorDto, PackageCollaboratorCriteria, PackageCollaboratorCollaboratorService, PackageCollaboratorConverter> {
-
+public class PackageCollaboratorRestCollaborator extends AbstractController<PackageCollaborator, PackageCollaboratorDto, PackageCollaboratorCriteria, PackageCollaboratorCollaboratorService, PackageCollaboratorConverter> {
 
 
     @Operation(summary = "upload one packageCollaborator")
@@ -40,6 +45,7 @@ public class PackageCollaboratorRestCollaborator  extends AbstractController<Pac
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple packageCollaborators")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -81,10 +87,11 @@ public class PackageCollaboratorRestCollaborator  extends AbstractController<Pac
     public ResponseEntity<List<PackageCollaboratorDto>> delete(@RequestBody List<PackageCollaboratorDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified packageCollaborator")
     @DeleteMapping("")
     public ResponseEntity<PackageCollaboratorDto> delete(@RequestBody PackageCollaboratorDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified packageCollaborator")
@@ -125,12 +132,25 @@ public class PackageCollaboratorRestCollaborator  extends AbstractController<Pac
     }
 
 
-
-    public PackageCollaboratorRestCollaborator (PackageCollaboratorCollaboratorService service, PackageCollaboratorConverter converter) {
+    public PackageCollaboratorRestCollaborator(PackageCollaboratorCollaboratorService service, PackageCollaboratorConverter converter) {
         super(service, converter);
     }
 
 
+    @Operation(summary = "Finds a list of all CollaboratorSchool")
+    @GetMapping("school")
+    public Page<PackageCollaboratorDto> findByPackageTypeSchool(@RequestParam("size") int size, @RequestParam("page") int page) throws Exception {
+        Page<PackageCollaborator> items = service.findBySchool(PageRequest.of(page, size));
+        List<PackageCollaboratorDto> dtos = converter.toDto(items.getContent());
+        return new PageImpl<PackageCollaboratorDto>(dtos);
+    }
 
+    @Operation(summary = "Finds a list of all CollaboratorTeacher")
+    @GetMapping("teacher")
+    public Page<PackageCollaboratorDto> findByPackageTypeTeacher(@RequestParam("size") int size, @RequestParam("page") int page) throws Exception {
+        Page<PackageCollaborator> items = service.findByTeacher(PageRequest.of(page, size));
+        List<PackageCollaboratorDto> dtos = converter.toDto(items.getContent());
+        return new PageImpl<PackageCollaboratorDto>(dtos);
+    }
 
 }

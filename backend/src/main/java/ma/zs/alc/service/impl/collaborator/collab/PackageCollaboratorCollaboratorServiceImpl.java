@@ -8,19 +8,12 @@ import ma.zs.alc.dao.specification.core.collab.PackageCollaboratorSpecification;
 import ma.zs.alc.service.facade.collaborator.collab.PackageCollaboratorCollaboratorService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 
-import static ma.zs.alc.zynerator.util.ListUtil.*;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
 
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-
-
-import java.util.List;
 @Service
 public class PackageCollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<PackageCollaborator, PackageCollaboratorCriteria, PackageCollaboratorDao> implements PackageCollaboratorCollaboratorService {
 
@@ -48,6 +41,21 @@ public class PackageCollaboratorCollaboratorServiceImpl extends AbstractServiceI
 
     public PackageCollaboratorCollaboratorServiceImpl(PackageCollaboratorDao dao) {
         super(dao);
+    }
+
+
+    private Page<PackageCollaborator> findByPackageType(Boolean school,Pageable pageable){
+        return dao.findBySchool(school,pageable);
+    }
+
+    @Override
+    public Page<PackageCollaborator> findBySchool(Pageable pageable){
+        return findByPackageType(true,pageable);
+    }
+
+    @Override
+    public Page<PackageCollaborator> findByTeacher(PageRequest pageable) {
+        return findByPackageType(false,pageable);
     }
 
 }

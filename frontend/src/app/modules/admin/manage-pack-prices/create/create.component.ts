@@ -8,7 +8,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {TranslocoModule} from "@ngneat/transloco";
 import {PackStudentDto} from "../../../../shared/model/pack/PackStudent.model";
 import {PackStudentCriteria} from "../../../../shared/criteria/pack/PackStudentCriteria.model";
@@ -73,7 +73,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         NgForOf,
         TranslocoModule,
         MatCheckboxModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        NgIf
     ],
 })
 export class CreateComponent implements OnInit {
@@ -104,11 +105,27 @@ export class CreateComponent implements OnInit {
     ngOnInit(): void {
         this.packageCollaboratorService.findAll().subscribe((data) => {
             this.packageCollaborators = data;
-            this._packageCollaboratorsFilter = [...this.packageCollaborators]
+
+            if (this.activeStatus == 1) {
+                let filtred = this.packageCollaborators.filter(e=>e.school ==true)
+                this._packageCollaboratorsFilter = [...filtred]
+            }else if (this.activeStatus == 2) {
+                let filtred = this.packageCollaborators.filter(e=>e.school ==false)
+                this._packageCollaboratorsFilter = [...filtred]
+            }
         });
+
         this.collaboratorService.findAll().subscribe((data) => {
             this.collaborators = data;
-            this._collaboratorsFilter = [...this.collaborators]
+            if (this.activeStatus == 1) {
+                let filtred = this.collaborators.filter(e=>e.typeCollaborator.libelle =="school")
+                this._collaboratorsFilter = [...filtred]
+                console.log(filtred)
+            }else if (this.activeStatus == 2) {
+                let filtred = this.collaborators.filter(e=>e.typeCollaborator.libelle =="teacher")
+                this._collaboratorsFilter = [...filtred]
+                console.log(filtred)
+            }
         });
         this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {
             this.inscriptionCollaboratorStates = data;
@@ -435,6 +452,13 @@ export class CreateComponent implements OnInit {
 
     protected readonly compareObjects = compareObjects;
 
+    isCreateSchool(){
+        console.log("haaaa status ",this.service.active_status)
+        return this.service.active_status == 1
+    }
+
+
+
 
     calculatePrice() {
         const timer = setInterval(s => {
@@ -472,5 +496,9 @@ export class CreateComponent implements OnInit {
 
             }
         }, 100)
+    }
+
+    get activeStatus(): number {
+        return this.service.active_status ;
     }
 }

@@ -37,7 +37,6 @@ import ma.zs.alc.zynerator.dto.FileTempDto;
 public class InscriptionCollaboratorRestCollaborator  extends AbstractController<InscriptionCollaborator, InscriptionCollaboratorDto, InscriptionCollaboratorCriteria, InscriptionCollaboratorCollaboratorService, InscriptionCollaboratorConverter> {
 
 
-
     @Operation(summary = "upload one inscriptionCollaborator")
     @RequestMapping(value = "upload", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {

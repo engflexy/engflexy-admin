@@ -6,6 +6,7 @@ export class PackageCollaboratorCriteria extends BaseCriteria {
     public id: number;
     public libelle: string;
     public libelleLike: string;
+    public school:boolean;
      public nbrStudentBase: number;
      public nbrStudentBaseMin: number;
      public nbrStudentBaseMax: number;
