@@ -1,9 +1,11 @@
-<div class="flex m-1 flex-col flex-auto items-center sm:justify-center min-w-0">
-    <div class="w-full max-w-4xl sm:w-3/4 py-4 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
-        <div class="w-full mx-auto sm:mx-0">
+<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
+    <div class="w-full sm:w-auto py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
+            <div class="flex justify-center">
             <div class="w-24">
                 <img ngSrc="assets/images/logo/logo-text.svg" height="90" width="90" alt="EngFlexy">
+            </div>
             </div>
             <div class="flex items-baseline mt-4 font-medium">
                 <div>Already have an account?</div>
@@ -14,7 +16,7 @@
             </div>
             <!-- Sign Up form -->
             <form
-                class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8"
+                class="mt-4 "
                 [formGroup]="signUpForm">
 
                 <!-- Name field -->
@@ -44,8 +46,31 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!-- Password field -->
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Collaborator type</mat-label>
+                    <mat-select required [formControlName]="'type'">
+                        <mat-option value="school">School</mat-option>
+                        <mat-option value="teacher">Teacher</mat-option>
+                        <mat-option value="academy">Academy</mat-option>
+                        <mat-option value="center">Language center</mat-option>
+                        <mat-option value="other">other</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="signUpForm.get('type').hasError('required')">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>phone number</mat-label>
+                    <input
+                        matInput
+                        [placeholder]="'Ex: +212 6xxxxxxxx'"
+                        [formControlName]="'phone'"
+                        name="phone">
+                </mat-form-field>
+                <!-- Password field -->
+                <mat-form-field class="w-full">
                     <mat-label>Password</mat-label>
                     <input
                         id="password"
@@ -72,32 +97,9 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                    <mat-label>Collaborator type</mat-label>
-                    <mat-select required [formControlName]="'type'">
-                        <mat-option value="school">School</mat-option>
-                        <mat-option value="academy">Academy</mat-option>
-                        <mat-option value="center">Language center</mat-option>
-                        <mat-option value="other">other</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="signUpForm.get('type').hasError('required')">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-
-
-                <mat-form-field class="flex-auto w-full fuse-mat-dense">
-                    <mat-label>phone number</mat-label>
-                    <input
-                        matInput
-                        [placeholder]="'Ex: +212 6xxxxxxxx'"
-                        [formControlName]="'phone'"
-                        name="phone">
-                </mat-form-field>
-
                 <!-- Submit button -->
                 <button
-                    class="fuse-mat-button-large col-span-2 mt-6"
+                    class="fuse-mat-button-large w-full"
                     mat-flat-button
                     [color]="'primary'"
                     [disabled]="signUpForm.disabled"

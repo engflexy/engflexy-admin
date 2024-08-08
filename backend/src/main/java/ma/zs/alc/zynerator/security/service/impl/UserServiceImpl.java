@@ -3,8 +3,6 @@ package ma.zs.alc.zynerator.security.service.impl;
 
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.dao.facade.core.chat.ConversationRepository;
-import ma.zs.alc.ws.dto.chat.ApiResponse;
-import ma.zs.alc.ws.dto.inscription.EtudiantDto;
 import ma.zs.alc.zynerator.security.bean.ModelPermissionUser;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.bean.User;
@@ -12,12 +10,10 @@ import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
 import ma.zs.alc.zynerator.security.dao.facade.core.UserDao;
 import ma.zs.alc.zynerator.security.dao.specification.core.UserSpecification;
 import ma.zs.alc.zynerator.security.service.facade.*;
-import ma.zs.alc.zynerator.security.ws.dto.UserDto;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,8 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Observable;
-import org.springframework.http.HttpStatus;
 import java.util.Optional;
 
 @Service
@@ -102,6 +96,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     }
 
 
+
     public User findByReferenceEntity(User t) {
         return dao.findByEmail(t.getEmail());
     }
@@ -112,7 +107,14 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
             return null;
         return dao.findByUsername(username);
     }
-
+    @Override
+    public boolean findByUsernameAndValidationCode(String username,String validationCode){
+        if (username == null || validationCode == null) {
+            return false;
+        }
+        User user = dao.findByUsername(username);
+        return user != null && validationCode.equals(user.getValidationCode());
+    }
     public List<User> findAllOptimized() {
         return dao.findAllOptimized();
     }
@@ -214,5 +216,6 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         return conversationId;
 
     }
+
     ///////////////////////////////////////
 }
