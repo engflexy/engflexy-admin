@@ -2,6 +2,7 @@ package ma.zs.alc.dao.facade.core.inscription;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.zynerator.repository.AbstractRepository;
+import ma.zs.alc.zynerator.security.dao.facade.core.UserDao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,7 @@ public interface EtudiantDao extends AbstractRepository<Etudiant, Long> {
    // int deleteByEtudiantId(Long id);
 
     long countByTeacherLocalityCode(String code);
+
 
     List<Etudiant> findByParcoursId(Long id);
 

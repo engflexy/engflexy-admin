@@ -40,6 +40,7 @@ import { CollaboratorDetialsComponent } from './collaborators/collaborator-detia
 import { CollaboratorProfileComponent } from './collaborators/collaborator-detials/collaborator-profile/collaborator-profile.component';
 import {TranslocoModule} from "@ngneat/transloco";
 import {ScheduleModule} from "../schedule/schedule.module";
+import {ProfSecurityComponent} from "./teachers/teacher-details/security/security.component";
 
 
 const userRoutes: Route[] = [
@@ -56,6 +57,7 @@ const userRoutes: Route[] = [
         SettingsNotificationsComponent,
         SettingsPlanBillingComponent,
         SettingsSecurityComponent,
+        ProfSecurityComponent,
         SettingsTeamComponent, StudentSettingsComponent, CreateTeacherComponent, TeacherDetailsComponent, TeacherProfileComponent, CreateCollaboratorComponent, CollaboratorDetialsComponent, CollaboratorProfileComponent],
     imports: [
         RouterModule.forChild(userRoutes),
@@ -89,7 +91,8 @@ const userRoutes: Route[] = [
         NO_ERRORS_SCHEMA
     ],
     exports: [
-        CollaboratorProfileComponent
+        CollaboratorProfileComponent,
+        ProfSecurityComponent
     ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
         Location]

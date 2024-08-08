@@ -26,8 +26,9 @@ public interface ProfCollaboratorService extends  IService<Prof,ProfCriteria>  {
     Page<UserPageable> findByCollaboratorId(Long id, Pageable pageable);
     int deleteByCollaboratorId(Long id);
     long countByCollaboratorId(Long id);
-
-
-
-
+    boolean updateAccountLockStatus(Long id, boolean accountNonLocked);
+    boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired);
+    boolean updateAccountStatus(Long id, boolean enabled);
+    boolean updatePasswordChangedStatus(Long id, boolean passwordChanged);
+    boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired);
 }
