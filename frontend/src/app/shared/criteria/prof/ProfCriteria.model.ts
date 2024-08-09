@@ -24,5 +24,10 @@ export class ProfCriteria extends ManageUserDto {
     public passwordLike: string;
     public trancheHoraireProfs: Array<TrancheHoraireProfCriteria>;
     public recommendTeachers: Array<RecommendTeacherCriteria>;
+    public typeTeachers: Array<TypeTeacherCriteria>;
+    public parcours: ParcoursCriteria;
+    public collaborator: CollaboratorCriteria;
+    public categorieProfs: Array<CategorieProfCriteria>;
+
 
 }
