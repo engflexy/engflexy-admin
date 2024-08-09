@@ -62,6 +62,11 @@ public class User extends AuditBusinessObject implements UserDetails {
         this.email = username;
     }
 
+    public User(Long id, String fullName) {
+        this.id = id;
+        this.fullName = fullName;
+    }
+
 
     public Langue getLangue() {
         return this.langue;

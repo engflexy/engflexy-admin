@@ -242,6 +242,13 @@ public abstract class SpecificationHelper<Criteria extends BaseCriteria, H exten
             predicates.add(builder.equal(root.get(nameObject).get(nameAttribute), value));
         }
     }
+    public void addPredicateFk(String joinObject, String nestedJoinObject, String nameAttribute, Long value) {
+        if (value != null) {
+            Join<Object, Object> join = root.join(joinObject).join(nestedJoinObject);
+            predicates.add(builder.equal(join.get(nameAttribute), value));
+        }
+    }
+
     public void addOrderAndFilter() {
         addFilterConstraint();
         addOrderByAscConstraint();

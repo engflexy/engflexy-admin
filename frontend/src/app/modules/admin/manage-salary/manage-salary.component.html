@@ -101,6 +101,11 @@
                                     </th>
 
                                     <th scope="col"
+                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Collaborator
+                                </th>
+
+                                    <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         date
                                     </th>
@@ -130,6 +135,8 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 <ng-container *ngFor="let item of criteria?.list">
+
+
                                     <tr>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
@@ -147,6 +154,10 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                            {{ item?.prof?.collaborator?.fullName }}
+                                        </td>
+
 
                                         <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             {{ item?.mois + 1 }}/{{ item?.annee }}
