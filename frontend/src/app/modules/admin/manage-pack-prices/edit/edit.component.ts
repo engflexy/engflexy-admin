@@ -105,6 +105,7 @@ export class EditComponent implements OnInit{
         if (this.item.endDate) {
             this.item.endDate = new Date(this.item.endDate);
         }
+        console.log(this.item)
     }
 
     displayPackageCollaborator(item: PackageCollaboratorDto): string {

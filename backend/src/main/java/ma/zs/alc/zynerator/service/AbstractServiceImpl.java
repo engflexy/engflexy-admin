@@ -280,6 +280,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
         return dao.findAll();
         }
 
+
     public List<T> findAllOptimized() {
         return dao.findAll();
     }

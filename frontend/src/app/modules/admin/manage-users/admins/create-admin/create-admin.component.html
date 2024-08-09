@@ -1,0 +1,25 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+    <div class="w-full items-center justify-center flex flex-col gap-4">
+        <div class="w-full">
+            <div class="flex gap-4">
+                <mat-form-field class="w-full">
+                    <mat-label>Collaborator</mat-label>
+                    <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput
+                           [matAutocomplete]="collaboratorAutocomplete" [(ngModel)]="item.collaborator"
+                           name="collaborator">
+                    <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator"
+                                      [compareWith]="compareObjects">
+                        <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
+                            {{ collaborator.username }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>Cancel</button>
+    <button class="px-6 ml-3" (click)="save()" mat-flat-button [color]="'primary'">Create</button>
+</mat-dialog-actions>

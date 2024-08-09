@@ -22,6 +22,8 @@ import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
+import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
+import ma.zs.alc.zynerator.transverse.emailling.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -148,6 +150,8 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
                 recommendTeacherService.create(element);
             });
         }
+        emailService.sendSimpleMessage(new EmailRequest("koko","awdaaa zeman s3ibbb o ana hi wlyia",t.getEmail()));
+
         return mySaved;
     }
 
@@ -202,7 +206,8 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     private TrancheHoraireProfCollaboratorService trancheHoraireProfService;
     @Autowired
     private LangueCollaboratorService langueService;
-
+    @Autowired
+    private EmailService emailService;
     public ProfCollaboratorServiceImpl(ProfDao dao) {
         super(dao);
     }

@@ -1,6 +1,9 @@
 <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
 
     <div class="w-full">
+        <h1 class="font-bold  text-center text-gray-800 text-2xl mb-7 ">
+            Edit Pack
+        </h1>
         <div class="flex gap-4">
         <mat-form-field class="flex-auto w-full fuse-mat-dense">
             <mat-label>libelle</mat-label>
@@ -74,6 +77,9 @@
         </mat-form-field>
 
         </div>
+        <mat-checkbox class="w-full" [(ngModel)]="item.school" name="school">
+            {{ item.school ? 'For school' : 'For teacher' }}
+        </mat-checkbox>
     </div>
 
 </mat-dialog-content>

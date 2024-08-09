@@ -11,6 +11,7 @@ public class PackageCollaboratorSpecification extends  AbstractSpecification<Pac
     public void constructPredicates() {
         addPredicateId("id", criteria);
         addPredicate("libelle", criteria.getLibelle(),criteria.getLibelleLike());
+        addPredicateBool("school", criteria.getSchool());
         addPredicateBigDecimal("nbrStudentBase", criteria.getNbrStudentBase(), criteria.getNbrStudentBaseMin(), criteria.getNbrStudentBaseMax());
         addPredicateBigDecimal("priceBase", criteria.getPriceBase(), criteria.getPriceBaseMin(), criteria.getPriceBaseMax());
         addPredicateBigDecimal("priceBaseOld", criteria.getPriceBaseOld(), criteria.getPriceBaseOldMin(), criteria.getPriceBaseOldMax());
