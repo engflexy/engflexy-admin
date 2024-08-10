@@ -156,7 +156,8 @@ public class ProfRestAdmin  extends AbstractController<Prof, ProfDto, ProfCriter
     @Operation(summary = "Finds paginated profs by criteria")
     @PostMapping("find-paginated-by-criteria")
     public ResponseEntity<PaginatedList> findPaginatedByCriteria(@RequestBody ProfCriteria criteria) throws Exception {
-        return super.findPaginatedByCriteria(criteria);
+        ResponseEntity<PaginatedList> paginatedByCriteria = super.findPaginatedByCriteria(criteria);
+        return paginatedByCriteria;
     }
 
     @Operation(summary = "Exports profs by criteria")

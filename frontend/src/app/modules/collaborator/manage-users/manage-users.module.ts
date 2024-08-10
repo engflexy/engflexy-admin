@@ -56,6 +56,7 @@ const userRoutes: Route[] = [
         SettingsNotificationsComponent,
         SettingsPlanBillingComponent,
         SettingsSecurityComponent,
+
         SettingsTeamComponent, StudentSettingsComponent, CreateTeacherComponent, TeacherDetailsComponent, TeacherProfileComponent, CreateCollaboratorComponent, CollaboratorDetialsComponent, CollaboratorProfileComponent],
     imports: [
         RouterModule.forChild(userRoutes),

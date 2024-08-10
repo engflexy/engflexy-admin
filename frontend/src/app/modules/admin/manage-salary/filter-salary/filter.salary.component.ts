@@ -21,6 +21,8 @@ import {SalaryCriteria} from "../../../../shared/criteria/salary/SalaryCriteria.
 import {PaginatedList} from "../../../../zynerator/dto/PaginatedList.model";
 import {InscriptionDto} from "../../../../shared/model/grpe/Inscription.model";
 import {SalaryAdminService} from "../../../../shared/service/admin/salary/SalaryAdmin.service";
+import {CollaboratorDto} from "../../../../shared/model/vocab/Collaborator.model";
+import {CollaboratorAdminService} from "../../../../shared/service/admin/vocab/CollaboratorAdmin.service";
 @Component({
     selector: 'app-filter-salary',
     templateUrl: './filter-salary.component.html',
@@ -40,6 +42,7 @@ import {SalaryAdminService} from "../../../../shared/service/admin/salary/Salary
 })
 export class FilterSalaryComponent implements OnInit {
     _profs: ProfDto[];
+    _collaborators: CollaboratorDto[];
     salaries: SalaryDto[];
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
@@ -78,6 +81,7 @@ export class FilterSalaryComponent implements OnInit {
         private serviceSalary: SalaryAdminService ,
 
         private profAdminService: ProfAdminService,
+        private collaboratorAdminService :  CollaboratorAdminService,
         private stringUtilService: StringUtilService,
 
 
@@ -94,6 +98,12 @@ export class FilterSalaryComponent implements OnInit {
 
 
 
+    get collaborators(): Array<CollaboratorDto> {
+        return this.collaboratorAdminService.items;
+    }
+    set collaborators(value: Array<CollaboratorDto>) {
+        this.collaboratorAdminService.items = value;
+    }
     get profs(): Array<ProfDto> {
         return this.profAdminService.items;
     }
@@ -165,6 +175,10 @@ export class FilterSalaryComponent implements OnInit {
             this._profs = res;
             this.profs = [...res];
         });
+        this.collaboratorAdminService.findAllOptimized().subscribe(res => {
+            this._collaborators = res;
+            this.collaborators = [...res];
+        });
     }
 
     filter(value: string, type: string) {
@@ -212,7 +226,18 @@ export class FilterSalaryComponent implements OnInit {
                 this._statuses = this._statuses;
             }
         }
+        if (type === 'Collaborator') {
+            if (value && value.length > 0) {
+                this._collaborators = this.collaborators.filter(s =>
+                    s.libelle?.toLowerCase()?.includes(value)
+                );
+            } else {
+                this._collaborators = this.collaborators;
+            }
+        }
     }
+
+
 
 
 

@@ -7,6 +7,7 @@ import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.collab.CollaboratorDto;
+import ma.zs.alc.ws.dto.collab.TypeCollaboratorDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.util.PaginatedList;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +29,61 @@ import ma.zs.alc.zynerator.dto.FileTempDto;
 @RequestMapping("/api/collaborator/collaborator/")
 public class CollaboratorRestCollaborator  extends AbstractController<Collaborator, CollaboratorDto, CollaboratorCriteria, CollaboratorCollaboratorService, CollaboratorConverter> {
 
-
+    @PutMapping("/change-password")
+    public ResponseEntity<Boolean> changePassword(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String newPassword = request.get("newPassword");
+        if (username == null || newPassword == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.changePassword(username, newPassword);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("update-password-changed/{id}")
+    public ResponseEntity<Boolean> updatePasswordChangedStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean passwordChanged = status.get("passwordChanged");
+        if (passwordChanged == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updatePasswordChangedStatus(id, passwordChanged);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("update-lock-status/{id}")
+    public ResponseEntity<Boolean> updateAccountLockStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean accountNonLocked = status.get("accountNonLocked");
+        if (accountNonLocked == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateAccountLockStatus(id, accountNonLocked);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("update-credentials-non-expired/{id}")
+    public ResponseEntity<Boolean> updateCredentialsNonExpiredStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean credentialsNonExpired = status.get("credentialsNonExpired");
+        if (credentialsNonExpired == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateCredentialsNonExpiredStatus(id, credentialsNonExpired);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("update-status/{id}")
+    public ResponseEntity<Boolean> updateAccountStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean enabled = status.get("enabled");
+        if (enabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateAccountStatus(id, enabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("update-account-non-expired/{id}")
+    public ResponseEntity<Boolean> updateAccountNonExpiredStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean accountNonExpired = status.get("accountNonExpired");
+        if (accountNonExpired == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.updateAccountNonExpiredStatus(id, accountNonExpired);
+        return ResponseEntity.ok(updated);
+    }
 
     @Operation(summary = "upload one collaborator")
     @RequestMapping(value = "upload", method = RequestMethod.POST, consumes = "multipart/form-data")
@@ -44,6 +100,12 @@ public class CollaboratorRestCollaborator  extends AbstractController<Collaborat
     @GetMapping("")
     public ResponseEntity<List<CollaboratorDto>> findAll() throws Exception {
         return super.findAll();
+    }
+
+    @Operation(summary = "Finds an optimized list of all collaborators")
+    @GetMapping("optimized")
+    public ResponseEntity<List<CollaboratorDto>> findAllOptimized() throws Exception {
+        return super.findAllOptimized();
     }
 
 

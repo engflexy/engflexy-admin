@@ -140,6 +140,10 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
         return userService.changePassword(username, newPassword);
     }
 
+    public List<Collaborator> findAllOptimized() {
+        return dao.findAllOptimized();
+    }
+
     public void configure() {
         super.configure(Collaborator.class, CollaboratorSpecification.class);
     }

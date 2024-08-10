@@ -43,6 +43,11 @@ export class CollaboratorAdminService extends AbstractService<CollaboratorDto, C
                 }
             });
     }
+
+    findAllOptimized(): Observable<Array<CollaboratorDto>> {
+        return this.http.get<Array<CollaboratorDto>>(this.API + `optimized`);
+    }
+
     update(user: CollaboratorDto): Observable<CollaboratorDto> {
         return this.http.put<CollaboratorDto>(this.API, user);
     }
