@@ -20,6 +20,8 @@ public interface UserService extends IService<User, UserCriteria>, UserDetailsSe
 
     User findByUsernameWithRoles(String username);
 
+    boolean findByUsernameAndValidationCode(String username, String validationCode);
+
     String cryptPassword(String value);
 
     boolean changePassword(String username, String newPassword);

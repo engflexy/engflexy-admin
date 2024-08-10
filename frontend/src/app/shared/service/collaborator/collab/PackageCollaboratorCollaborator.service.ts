@@ -8,6 +8,9 @@ import {environment} from "../../../../../environments/environment";
 import {PaginatedList} from "../../../../zynerator/dto/PaginatedList.model";
 import {PackageCollaboratorDto} from "../../../model/collab/PackageCollaborator.model";
 import {PackageCollaboratorCriteria} from "../../../criteria/collab/PackageCollaboratorCriteria.model";
+import {InscriptionCollaboratorCriteria} from "../../../criteria/collab/InscriptionCollaboratorCriteria.model";
+import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
+import {InscriptionCollaboratorDto} from "../../../model/collab/InscriptionCollaborator.model";
 
 
 @Injectable({
@@ -32,6 +35,9 @@ export class PackageCollaboratorCollaboratorService {
     private _viewActionIsValid = true;
     private _duplicateActionIsValid = true;
 
+    private _pageable: PaginatedList<PackageCollaboratorDto>;
+
+
 
     private _createAction = 'create';
     private _listAction = 'list';
@@ -48,6 +54,31 @@ export class PackageCollaboratorCollaboratorService {
         this.API_PERMISSION = environment.apiUrl + 'modelPermissionUser/';
     }
 
+    public findByPackageTypeSchool(criteria: PackageCollaboratorCriteria): Observable<PageRequest<PackageCollaboratorDto>> {
+        return this.http.get<PageRequest<PackageCollaboratorDto>>(`${this.API}school`, {
+            params: {
+                'page': criteria.page,
+                'size': criteria.maxResults
+            }
+        });
+    }
+
+    public findByPackageTypeTeacher(criteria: PackageCollaboratorCriteria): Observable<PageRequest<PackageCollaboratorDto>> {
+        return this.http.get<PageRequest<PackageCollaboratorDto>>(`${this.API}teacher`, {
+            params: {
+                'page': criteria.page,
+                'size': criteria.maxResults
+            }
+        });
+    }
+
+    get pageable(): PaginatedList<PackageCollaboratorDto> {
+        return this._pageable;
+    }
+
+    set pageable(value: PaginatedList<PackageCollaboratorDto>) {
+        this._pageable = value;
+    }
 
     public findAll() {
         return this.http.get<Array<PackageCollaboratorDto>>(this.API);
@@ -113,6 +144,9 @@ export class PackageCollaboratorCollaboratorService {
         }
         return myDate;
     }
+
+
+
 
     get API() {
         return environment.apiUrlAlcservice + 'collaborator/packageCollaborator/';

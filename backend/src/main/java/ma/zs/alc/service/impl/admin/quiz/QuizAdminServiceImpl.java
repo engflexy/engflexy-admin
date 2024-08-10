@@ -22,7 +22,6 @@ import java.util.List;
 public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria, QuizDao> implements QuizAdminService {
 
 
-
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Quiz create(Quiz t) {
         if (t != null) {
@@ -35,7 +34,7 @@ public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria
             saved.setRef(t.getRef());
             saved.setSeuilReussite(t.getSeuilReussite());
             saved = dao.save(saved);
-            if (!t.getQuestions().isEmpty()) {
+            if (t.getQuestions() != null && !t.getQuestions().isEmpty()) {
                 Quiz finalSaved = saved;
                 t.getQuestions().forEach(qst -> {
                     qst.setQuiz(finalSaved);

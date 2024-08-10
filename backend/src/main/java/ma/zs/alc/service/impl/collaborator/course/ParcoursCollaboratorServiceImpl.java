@@ -119,9 +119,11 @@ public class ParcoursCollaboratorServiceImpl extends AbstractServiceImpl<Parcour
     }
 
 
+
     private List<Parcours> findByCollaboratorIdAndLibelleLike(Long idCollqborator, String libelle) {
         return dao.findByCollaboratorIdAndLibelleLike(idCollqborator, "%" + libelle + "%");
     }
+
 
     @Override
     public List<Parcours> findByLibelleLikeForEngFlexy(String libelle) {

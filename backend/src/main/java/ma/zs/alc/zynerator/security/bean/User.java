@@ -34,6 +34,7 @@ public class User extends AuditBusinessObject implements UserDetails {
     protected String password;
 
     protected String fullName;
+    protected String validationCode;
     protected String avatar;
     protected String phone;
     protected String country;
@@ -62,6 +63,13 @@ public class User extends AuditBusinessObject implements UserDetails {
         this.email = username;
     }
 
+    public String getValidationCode() {
+        return validationCode;
+    }
+
+    public void setValidationCode(String validationCode) {
+        this.validationCode = validationCode;
+    }
 
     public Langue getLangue() {
         return this.langue;

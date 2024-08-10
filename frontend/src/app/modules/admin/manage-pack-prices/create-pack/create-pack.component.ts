@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {RoleService} from "../../../../zynerator/security/shared/service/Role.service";
 import {Router} from "@angular/router";
 import {StringUtilService} from "../../../../zynerator/util/StringUtil.service";
@@ -14,27 +14,46 @@ import {environment} from "../../../../../environments/environment";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
-import {TranslocoModule} from "@ngneat/transloco";
+import {ParcoursDto} from "../../../../shared/model/course/Parcours.model";
+import {PriceDto} from "../../../../shared/model/price/Price.model";
+import {PackStudentAdminService} from "../../../../shared/service/admin/pack/PackStudentAdmin.service";
+import {ParcoursAdminService} from "../../../../shared/service/admin/course/ParcoursAdmin.service";
+import {PriceAdminService} from "../../../../shared/service/admin/price/PriceAdmin.service";
+import {PackStudentDto} from "../../../../shared/model/pack/PackStudent.model";
+import {PackStudentCriteria} from "../../../../shared/criteria/pack/PackStudentCriteria.model";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {
     PackageCollaboratorAdminService
 } from "../../../../shared/service/admin/collab/PackageCollaboratorAdmin.service";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {TranslocoModule} from "@ngneat/transloco";
+import {MatSelectModule} from "@angular/material/select";
 
 @Component({
-    selector: 'app-edit-pack',
-    templateUrl: './edit-pack.component.html',
-    standalone: true,
+    selector: 'app-create-pack',
+    templateUrl: './create-pack.component.html',
     imports: [
-        MatInputModule,
-        FormsModule,
-        MatDialogModule,
         MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgIf,
+        MatAutocompleteModule,
+        NgForOf,
+        MatIconModule,
+        MatTooltipModule,
         TranslocoModule,
-        MatCheckboxModule
+        FormsModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatDialogModule
     ],
-    styleUrls: ['./edit-pack.component.scss']
+    standalone: true
 })
-export class EditPackComponent implements OnInit{
+export class CreatePackComponent implements OnInit{
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
@@ -51,35 +70,39 @@ export class EditPackComponent implements OnInit{
 
     private _validPackageCollaboratorLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<EditPackComponent>, private alert: FuseAlertService, private service: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public refDialog: MatDialogRef<CreatePackComponent>, private alert: FuseAlertService, private service: PackageCollaboratorCollaboratorService , @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
     ngOnInit(): void {
-        console.log(this.item.school)
+        this.resetForm()
     }
 
 
+    public resetForm(): void {
+        this.item = new PackageCollaboratorDto();
+        this._submitted = false;
+        this._errorMessages = [];
+        this._validPackageCollaboratorLibelle = true;
+    }
 
 
-
-    public edit(): void {
+    public save(): void {
         this.submitted = true;
         this.validateForm();
         if (this.errorMessages.length === 0) {
-            this.editWithShowOption(false);
-
+            this.saveWithShowOption(false);
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
     }
 
-    public editWithShowOption(showList: boolean) {
-        this.service.edit().subscribe(item => {
+    public saveWithShowOption(showList: boolean) {
+        this.service.save().subscribe(item => {
             if (item != null) {
                 this.items.push({...item});
                 this.item = new PackageCollaboratorDto();
-                this.alert.show('info', 'Pack successfully updated!');
+                this.alert.show('info', 'Pack successfully created!');
                 this.refDialog.close()
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
@@ -89,6 +112,7 @@ export class EditPackComponent implements OnInit{
             console.log(error);
         });
     }
+
 
 
 
@@ -106,7 +130,7 @@ export class EditPackComponent implements OnInit{
     }
 
     public validatePackageCollaboratorLibelle(){
-        if (this.item.libelle==""||this.item.libelle==null) {
+        if (this.item.libelle==null || this.item.libelle=="") {
             this.errorMessages.push('Libelle non valide');
             this.validPackageCollaboratorLibelle = false;
         } else {
@@ -204,4 +228,5 @@ export class EditPackComponent implements OnInit{
     set activeTab(value: number) {
         this._activeTab = value;
     }
+
 }

@@ -18,6 +18,8 @@ import ma.zs.alc.zynerator.security.service.facade.RoleService;
 import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
+import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
+import ma.zs.alc.zynerator.transverse.emailling.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -121,7 +123,10 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
 
     @Override
     public Collaborator create(Collaborator t) {
-        if (findByUsername(t.getUsername()) != null || t.getPassword() == null) return null;
+        t.setValidationCode(System.currentTimeMillis() + "");
+        System.out.println("hanaaaaa");
+        if (findByUsername(t.getUsername()) != null || t.getPassword() == null)
+            return null;
         t.setPassword(userService.cryptPassword(t.getPassword()));
         t.setEnabled(true);
         t.setAccountNonExpired(true);
@@ -132,9 +137,11 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.COLLABORATOR);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findOrSave(role);
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
+
+
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
 
         t.getRoleUsers().add(roleUser);
@@ -145,7 +152,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
             t.setTypeCollaborator(type);
         }
 
-        t.setModelPermissionUsers(modelPermissionUserService.initModelPermissionUser());
+        //       t.setModelPermissionUsers(modelPermissionUserService.initModelPermissionUser());
 
         Collaborator mySaved = (Collaborator) userService.create(t);
 
@@ -155,11 +162,17 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
                 parcoursService.create(element);
             });
         }
+        emailService.sendSimpleMessage(new EmailRequest("koko", "awdaaa zeman s3ibbb o ana hi wlyia : " + t.getValidationCode(), t.getEmail()));
         return mySaved;
     }
 
     public Collaborator findByUsername(String username) {
         return dao.findByUsername(username);
+    }
+
+
+    public List<Collaborator> findAllOptimized() {
+        return dao.findAllOptimized();
     }
 
 
@@ -175,6 +188,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
 
     @Autowired
     private ParcoursCollaboratorService parcoursService;
+    @Autowired
+    private EmailService emailService;
     @Autowired
     private TypeCollaboratorCollaboratorService typeCollaboratorService;
 

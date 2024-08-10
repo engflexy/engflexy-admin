@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 public class PackageCollaboratorDto  extends AuditBaseDto {
 
     private String libelle  ;
+    private Boolean school;
     private BigDecimal nbrStudentBase  ;
     private BigDecimal priceBase  ;
     private BigDecimal priceBaseOld  ;
@@ -112,11 +113,11 @@ public class PackageCollaboratorDto  extends AuditBaseDto {
         this.priceBannerAdOld = priceBannerAdOld;
     }
 
+    public Boolean getSchool() {
+        return this.school;
+    }
 
-
-
-
-
-
-
+    public void setSchool(Boolean school) {
+        this.school = school;
+    }
 }

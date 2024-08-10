@@ -33,6 +33,8 @@ export class ProfDto extends UserDto {
         this.password = '';
         this.trancheHoraireProfs = new Array<TrancheHoraireProfDto>();
         this.recommendTeachers = new Array<RecommendTeacherDto>();
+        this.typeTeacher = new TypeTeacherDto();
+        this.collaborator = new CollaboratorDto();
 
     }
 

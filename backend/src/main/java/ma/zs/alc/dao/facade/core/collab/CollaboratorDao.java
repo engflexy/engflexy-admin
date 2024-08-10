@@ -1,6 +1,7 @@
 package ma.zs.alc.dao.facade.core.collab;
 
 import ma.zs.alc.bean.core.collab.Collaborator;
+import ma.zs.alc.bean.core.collab.TypeCollaborator;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.zynerator.repository.AbstractRepository;
 import org.springframework.data.domain.Page;
@@ -26,4 +27,7 @@ public interface CollaboratorDao extends AbstractRepository<Collaborator, Long> 
     @Query("select new ma.zs.alc.dao.facade.core.inscription.UserPageable(coll) " +
             "from Collaborator coll")
     Page<UserPageable> findAllByCriteria(Pageable pageable);
+
+    @Query("SELECT NEW Collaborator(item.id,item.fullName) FROM Collaborator item")
+    List<Collaborator> findAllOptimized();
 }

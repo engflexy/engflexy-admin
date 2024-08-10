@@ -132,6 +132,12 @@ public class CollaboratorRestAdmin extends AbstractController<Collaborator, Coll
         return service.changePassword(dto.getUsername(), dto.getPassword());
     }
 
+    @Operation(summary = "Finds an optimized list of all Collaborators")
+    @GetMapping("optimized")
+    public ResponseEntity<List<CollaboratorDto>> findAllOptimized() throws Exception {
+        return super.findAllOptimized();
+    }
+
     public CollaboratorRestAdmin(CollaboratorAdminService service, CollaboratorConverter converter) {
         super(service, converter);
     }

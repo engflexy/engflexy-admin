@@ -1,4 +1,5 @@
-<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
+<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden" xmlns:align-items="http://www.w3.org/1999/xhtml"
+     xmlns:justify-content="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
 
     <!-- Header & Cards -->
     <div class="relative pt-8 pb-12 sm:pt-20 sm:pb-24 px-6 sm:px-16 overflow-hidden">
@@ -26,12 +27,12 @@
         <div class="flex justify-center mt-10 sm:mt-20">
             <fuse-card class="flex flex-col lg:flex-row max-w-sm lg:max-w-240">
                 <div class="p-6 sm:p-8 lg:p-10">
-                    <div class="text-3xl font-bold">Lifetime Membership</div>
+                <div class="text-3xl font-bold">{{ inscriptionCollaboratorDto?.packageCollaborator?.libelle }}</div>
                     <div class="mt-2 leading-relaxed text-secondary">
-                        Learn from like-minded individuals which are eager to make a living building stuff on the web. Pay once and get lifetime access to the community.
+                        Our Platform offers extensive teaching resources, supports a large number of students, and facilitates both one-on-one and group sessions. Educators can utilize built-in course materials or design their own, with the added benefit of free student access.
                     </div>
                     <div class="flex items-center mt-10">
-                        <div class="font-medium text-secondary">INCLUDED FEATURES</div>
+                        <div class="font-medium text-secondary">WHAT'S AVAILABLE</div>
                         <div class="flex-auto ml-2 border-b-2"></div>
                     </div>
                     <!-- Features -->
@@ -40,40 +41,66 @@
                             <mat-icon
                                 class="icon-size-5 text-primary"
                                 [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
-                            <div class="ml-2">Private forum access</div>
+                            <div class="ml-2">Unlimited lessons</div>
                         </div>
                         <div class="flex items-center">
                             <mat-icon
                                 class="icon-size-5 text-primary"
                                 [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
-                            <div class="ml-2">Access to annual online conference</div>
+                            <div class="ml-2">General English Lessons materials</div>
                         </div>
                         <div class="flex items-center">
                             <mat-icon
                                 class="icon-size-5 text-primary"
                                 [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
-                            <div class="ml-2">Member resources</div>
+                            <div class="ml-2">Adding up to {{inscriptionCollaboratorDto?.packageCollaborator?.nbrStudentBase}} students</div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5 text-primary"
+                                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+                            <div class="ml-2">Conducting Individual or group lessons</div>
                         </div>
                         <div class="flex items-center">
                             <mat-icon
                                 class="icon-size-5 text-primary"
                                 [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
-                            <div class="ml-2">Official member T-Shirt</div>
+                            <div class="ml-2">Creating your own materials</div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5 text-primary"
+                                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+                            <div class="ml-2">The platform is free for students</div>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5 text-primary"
+                                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+                            <div class="ml-2">Teaching with ready-made materials</div>
                         </div>
                     </div>
                 </div>
                 <!-- Price -->
                 <div class="flex flex-col items-center p-8 lg:px-10 lg:py-12 lg:min-w-80 bg-gray-100 dark:bg-black dark:bg-opacity-10">
+                    <div class="mt-2 leading-relaxed text-secondary">
+                        Price per month
+                    </div>
                     <div class="flex items-center whitespace-nowrap">
-                        <div class="text-8xl font-extrabold tracking-tight">$599</div>
-                        <div class="ml-2 text-2xl font-semibold text-secondary">USD</div>
+                        <div class="text-8xl font-extrabold tracking-tight">{{inscriptionCollaboratorDto?.packageCollaborator?.priceBase}}</div>
+                        <div class="ml-2 text-2xl font-semibold text-secondary">MAD</div>
                     </div>
-                    <div class="font-medium text-center text-secondary">
-                        <div>No monthly subscription,</div>
-                        <div>you only pay once.</div>
+                    <div class="counter" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <button mat-button (click)="decrement()" style="min-width: 50px; height: 50px; font-size: 24px;">-</button>
+                        <input matInput type="number" [value]="inscriptionCollaboratorDto?.packageCollaborator?.nbrStudentBase" readonly style="width: 100px; height: 50px; font-size: 24px; text-align: center; margin: 0 10px; border: none; background: none; box-shadow: none;">
+                        <button mat-button (click)="increment()" style="min-width: 50px; height: 50px; font-size: 24px;">+</button>
                     </div>
-                    <button
-                        class="w-full mt-8 lg:mt-auto"
+                    <div class="mt-2 leading-relaxed text-secondary" >
+                        Maximum students in this plan
+                    </div>
+
+                    <button class="w-full mt-8 lg:mt-auto"
                         mat-flat-button
                         [color]="'primary'">
                         Get Started
@@ -85,7 +112,7 @@
 
 
 
-   
+
 
 
 </div>

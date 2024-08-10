@@ -17,6 +17,9 @@ public class Collaborator extends User {
     public Collaborator(String username) {
         super(username);
     }
+    public Collaborator(Long id, String fullName) {
+        super(id, fullName);
+    }
 
     @Column(length = 500)
     private String libelle;
@@ -104,6 +107,7 @@ public class Collaborator extends User {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 
 }
 

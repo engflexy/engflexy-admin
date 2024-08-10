@@ -8,9 +8,9 @@
                             Take control of your productivity
                         </h1>
                     </div>
-                    <button mat-button (click)="create()"
+                   <!-- <button mat-button (click)="create()"
                             mat-stroked-button color="primary">create new inscription
-                    </button>
+                    </button>-->
                 </div>
             </div>
         </header>
@@ -45,7 +45,17 @@
                     </div>
                     <div *ngIf="active_status == 1" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
                 </li>
-
+                <li (click)="changeType(3)"
+                    [ngClass]="active_status == 3 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
+                    <div class="flex items-center mb-3">
+                        <span>
+                            <mat-icon [color]="active_status === 3 ? 'primary':'accent'" class="icon-size-4"
+                                      svgIcon="heroicons_solid:cog-6-tooth"></mat-icon>
+                        </span>
+                        <span class="ml-1 text-lg ubuntu-medium">Config School</span>
+                    </div>
+                    <div *ngIf="active_status == 3" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
+                </li>
                 <li (click)="changeType(2)"
                     [ngClass]="active_status == 2 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
                     <div class="flex items-center mb-3">
@@ -57,17 +67,19 @@
                     </div>
                     <div *ngIf="active_status == 2" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
                 </li>
-                <li (click)="changeType(3)"
-                    [ngClass]="active_status == 3 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
+
+                <li (click)="changeType(4)"
+                    [ngClass]="active_status == 4 ? 'text-sm border-primary-700 pt-3 rounded-t text-primary mr-12' : 'text-sm text-accent-600 py-3 flex items-center mr-12 hover:text-primary-700 cursor-pointer'">
                     <div class="flex items-center mb-3">
                         <span>
-                            <mat-icon [color]="active_status === 3 ? 'primary':'accent'" class="icon-size-4"
+                            <mat-icon [color]="active_status === 4 ? 'primary':'accent'" class="icon-size-4"
                                       svgIcon="heroicons_solid:cog-6-tooth"></mat-icon>
                         </span>
-                        <span class="ml-1 text-lg ubuntu-medium">Config</span>
+                        <span class="ml-1 text-lg ubuntu-medium">Config Teacher</span>
                     </div>
-                    <div *ngIf="active_status == 3" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
+                    <div *ngIf="active_status == 4" class="w-full h-1 bg-primary-700 rounded-t-md"></div>
                 </li>
+
             </ul>
         </div>
 
@@ -77,23 +89,33 @@
             <div class="flex flex-col mt-6">
                 <div class=" overflow-x-auto">
                     <ng-container *ngIf="active_status===1 || active_status===2">
-                    <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
+                        <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
                       flex flex-row justify-center items-center gap-4">
-                        <mat-form-field
-                            class="flex-auto fuse-mat-dense flex-grow">
-                            <input placeholder="search.." matInput>
-                            <mat-icon
-                                class="icon-size-5"
-                                matPrefix
-                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
-                        </mat-form-field>
-                        <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
-                            <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
-                        </button>
-                    </div>
+                            <mat-form-field
+                                class="flex-auto fuse-mat-dense flex-grow">
+                                <input placeholder="search.." matInput>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                            </mat-form-field>
+                            <button (click)="openFilter()" mat-mini-fab class="mb-5" color="primary">
+                                <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
+                            </button>
 
-                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                        </div>
+
+                        <div class="inline-block min-w-full  align-middle md:px-6 lg:px-8">
+                            <div (click)="createInscription()" class="text-xl cursor-pointer border-dotted border-2 flex items-center
+            p-5 bg-gray-100 dark:bg-gray-600
+            rounded-sm content-center flex-grow gap-3 font-semibold leading-tight">
+                                <div class="w-full  group items-center justify-center flex text-hint">
+                                    <span>create new inscription</span>
+                                    <mat-icon class="mr-2 text-hint" svgIcon="heroicons_mini:plus"></mat-icon>
+                                </div>
+                            </div>
+
+                            <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
 
                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead class="bg-gray-50 dark:bg-gray-800">
@@ -228,10 +250,20 @@
                                 </div>
 
 
+                            </div>
                         </div>
-                    </div>
                     </ng-container>
-                    <ng-container *ngIf="active_status==3">
+                    <ng-container *ngIf="active_status==3 || active_status==4">
+                        <div (click)="createPack()" class="text-xl cursor-pointer border-dotted border-2 flex items-center
+            p-5 bg-gray-100 dark:bg-gray-600
+            rounded-sm content-center flex-grow gap-3 font-semibold leading-tight">
+                            <div class="w-full  group items-center justify-center flex text-hint">
+                                <span>create new pack</span>
+                                <mat-icon class="mr-2 text-hint" svgIcon="heroicons_mini:plus"></mat-icon>
+                            </div>
+                        </div>
+
+
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-50 dark:bg-gray-800">
                             <tr>
@@ -248,7 +280,6 @@
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Price Base
                                 </th>
-
 
 
                                 <th scope="col"
@@ -271,7 +302,7 @@
                             </thead>
                             <tbody
                                 class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                            <ng-container *ngFor="let item of itemsPackages">
+                            <ng-container *ngFor="let item of pageablePack.list">
                                 <tr>
                                     <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div class="inline-flex items-center gap-x-3">
@@ -286,12 +317,9 @@
                                                 </div>
 
                                                 <div>
-                                                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                    <h2 class="font-bold text-gray-800 dark:text-white ">
                                                         {{ item?.libelle }}
                                                     </h2>
-                                                    <p>
-                                                        {{ item?.libelle}}
-                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -302,22 +330,24 @@
                                     </td>
 
 
-
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                         {{ item?.priceBannerAd }}
                                     </td>
 
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                        {{ item?.priceColor}}
+                                        {{ item?.priceColor }}
                                     </td>
 
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                        {{ item?.priceLogo}}
+                                        {{ item?.priceLogo }}
                                     </td>
 
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center gap-x-6">
-
+                                            <button (click)="deletePack(item)" class="group">
+                                                <mat-icon class="icon-size-4 group-hover:text-red-500"
+                                                          svgIcon="heroicons_solid:trash"></mat-icon>
+                                            </button>
                                             <button (click)="editPack(item)" class="group">
                                                 <mat-icon class="icon-size-4 group-hover:text-orange-500"
                                                           svgIcon="heroicons_solid:pencil"></mat-icon>
@@ -336,6 +366,7 @@
                             </tbody>
                         </table>
                     </ng-container>
+
                 </div>
 
             </div>

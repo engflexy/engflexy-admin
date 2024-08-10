@@ -31,6 +31,13 @@ public class DateUtil {
     public static final String DATE_FORMAT_PF = "EEE MMM dd HH:mm:ss z yyyy";
     public static final long ONE_HOUR = 60 * 60 * 1000L;
 
+    public static LocalDateTime convert(String dateString,String pattern) {
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateString, formatter);
+        LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+        return localDateTime;
+    }
 
     public static Calendar dateToCalendar(final Date date) {
         if (date != null) {
@@ -60,34 +67,7 @@ public class DateUtil {
         }
     }
 
-/*
-public static LocalDateTime stringEnToDate(final String strDate) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_STANDARD);
-            LocalDateTime parse = LocalDateTime.parse(strDate, formatter);
-            return parse;
-        } catch (DateTimeParseException e) {
-            List<String> dateFormats = Arrays.asList(
-                    DATE_FORMAT_STANDARD,
-                    DATE_FORMAT_ENG_WITHOUT_TIME_ZONE,
-                    DATE_FORMAT_ENG_WITH_TIME_ZONE,
-                    DATE_FORMAT_ENG_WITHOUT_SECOND,
-                    DATE_FORMAT_ALTERNATIVE);
-            for (String format : dateFormats) {
-                System.out.println("format = " + format);
-                try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH);
-                    return LocalDateTime.parse(strDate, formatter);
-                } catch (DateTimeParseException ee) {
-                    // Ignore and try the next format
-                }
-            }
-            // Handle case where none of the formats match
-            throw new DateTimeParseException("Unable to parse date: " + strDate, strDate, 0);
-        }
-    }
 
-*/
 
     public static String getCurrentDate() {
         return dateToString(LocalDate.now());
@@ -170,19 +150,6 @@ public static LocalDateTime stringEnToDate(final String strDate) {
         return "";
     }
 
-    /*
-        public static String dateTimeToString(final LocalDateTime date) {
-            try {
-                if (date != null) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_WITH_HOUR);
-                    return date.format(formatter);
-                }
-            } catch (Exception e) {
-                return null;
-            }
-            return null;
-        }
-    */
     public static String dateTimeToStringForSchedule(final LocalDateTime date) {
         try {
             if (date != null) {

@@ -34,10 +34,13 @@ export class EtudiantDto extends UserDto {
     public inscriptions: Array<InscriptionDto>;
     public groupeEtudiantDetails: Array<GroupeEtudiantDetailDto>;
 
+    public phone:string;
+    public email:string;
 
-    constructor(id?: number) {
+    constructor(id?: number,email?:string,phone?:string) {
         super(id);
-
+        this.phone=phone;
+        this.email=email;
         this.groupOption = null;
         this.subscribe = true;
         this.quizEtudiants = new Array<QuizEtudiantDto>();

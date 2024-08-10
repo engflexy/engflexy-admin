@@ -131,7 +131,7 @@ public class AlcApplication {
                 p.setPriceColorOld(BigDecimal.valueOf(14));
                 p.setPriceLogo(BigDecimal.valueOf(20));
                 packageCollaboratorAdminService.create(p);
-                /*
+
                 ContentType type0 = new ContentType("IMAGE", "Image");
                 ContentType type1 = new ContentType("MULTI_IMAGE", "Multi-Image");
                 ContentType type2 = new ContentType("VIDEO", "Video");
@@ -141,10 +141,9 @@ public class AlcApplication {
                 contentTypeService.create(type1);
                 contentTypeService.create(type2);
                 contentTypeService.create(type3);
-                contentTypeService.create(type4);*/
+                contentTypeService.create(type4);
             }
             if (false) {
-/*
             createContentType();
             createPaiement();
             createStatutSocial();
@@ -217,7 +216,7 @@ public class AlcApplication {
             createGroupeEtudiant();
             createContact();
             createTypeReclamationProf();
-*/
+
                 // ModelPermissions
                 List<ModelPermission> modelPermissions = new ArrayList<>();
                 addPermission(modelPermissions);

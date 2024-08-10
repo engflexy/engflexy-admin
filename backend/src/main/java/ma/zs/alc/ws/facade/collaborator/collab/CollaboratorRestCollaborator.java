@@ -7,6 +7,7 @@ import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.collab.CollaboratorDto;
+import ma.zs.alc.ws.dto.collab.TypeCollaboratorDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.util.PaginatedList;
 
@@ -99,6 +100,12 @@ public class CollaboratorRestCollaborator  extends AbstractController<Collaborat
     @GetMapping("")
     public ResponseEntity<List<CollaboratorDto>> findAll() throws Exception {
         return super.findAll();
+    }
+
+    @Operation(summary = "Finds an optimized list of all collaborators")
+    @GetMapping("optimized")
+    public ResponseEntity<List<CollaboratorDto>> findAllOptimized() throws Exception {
+        return super.findAllOptimized();
     }
 
 

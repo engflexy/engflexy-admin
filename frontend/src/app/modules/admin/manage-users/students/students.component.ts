@@ -46,34 +46,34 @@ export class StudentsComponent implements OnInit {
         this.etudiantService.findByCollaboratorId(this.auth.authenticatedUser?.id, this.pageable)
             .subscribe(res => {
                 this.criteria = res
-               // console.log(this.criteria)
+                // console.log(this.criteria)
             })
     }
 
     findUserByUsername(email: string): void {
         this.etudiantService.findByUserName(email) .subscribe(res => {
-            this.etudiant = res
-            if(res){
-                this.etudiant = res;
-                console.log('Etudiant found:', this.etudiant);
-                //console.log(res)
-                /*this.pageable = {
-                content: [this.etudiant],
-                totalElements: 1,
-                totalPages: 1,
-                size: 1,
-                number: 0,
-                last: true,
-                first: true,
-                numberOfElements: 1,
-                empty: false
-            };*/
-            }else {
-                console.log('No etudiant found with this email');}},
+                this.etudiant = res
+                if(res){
+                    this.etudiant = res;
+                    console.log('Etudiant found:', this.etudiant);
+                    //console.log(res)
+                    /*this.pageable = {
+                    content: [this.etudiant],
+                    totalElements: 1,
+                    totalPages: 1,
+                    size: 1,
+                    number: 0,
+                    last: true,
+                    first: true,
+                    numberOfElements: 1,
+                    empty: false
+                };*/
+                }else {
+                    console.log('No etudiant found with this email');}},
             error => {
 
                 console.error('Error finding etudiant:', error);
-        });
+            });
     }
 
 
