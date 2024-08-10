@@ -99,7 +99,7 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
                 parcoursService.create(element);
             });
         }
-        emailService.sendSimpleMessage(new EmailRequest("koko","awdaaa zeman s3ibbb o ana hi wlyia",t.getEmail()));
+        emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code","Your username is "+t.getUsername()+" your verification code is "+t.getValidationCode(),t.getEmail()));
         return mySaved;
     }
 

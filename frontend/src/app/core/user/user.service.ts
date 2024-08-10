@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {User} from 'app/core/user/user.types';
 import {map, Observable, ReplaySubject, tap} from 'rxjs';
@@ -61,4 +61,5 @@ export class UserService {
             }),
         );
     }
+
 }

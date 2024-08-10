@@ -171,5 +171,11 @@ public class UserRest extends AbstractController<User, UserDto, UserCriteria, Us
 	public UserRest(UserService service, UserConverter converter) {
 		super(service, converter);
 	}
-
+	@GetMapping("/validate")
+	public ResponseEntity<Boolean> validateUser(
+			@RequestParam String username,
+			@RequestParam String validationCode) {
+		boolean isValid = service.findByUsernameAndValidationCode(username, validationCode);
+		return new ResponseEntity<>(isValid, HttpStatus.OK);
+	}
 }

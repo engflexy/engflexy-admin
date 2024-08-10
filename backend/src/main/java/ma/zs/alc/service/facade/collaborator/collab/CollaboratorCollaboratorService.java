@@ -16,6 +16,5 @@ public interface CollaboratorCollaboratorService extends  IService<Collaborator,
     long countByTypeCollaboratorCode(String code);
 
 
-
-
+    boolean findByUsernameAndValidationCode(String username, String validationCode);
 }
