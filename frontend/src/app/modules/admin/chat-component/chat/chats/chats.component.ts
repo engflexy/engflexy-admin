@@ -12,6 +12,7 @@ import {NewChatComponent} from "../new-chat/new-chat.component";
 import {ProfileComponent} from "../profile/profile.component";
 import {Chat, Profile} from "../chat.types";
 import {ChatService} from "../chat.service";
+import { TokenService } from 'app/zynerator/security/shared/service/Token.service';
 
 @Component({
     selector       : 'chat-chats',
@@ -24,7 +25,6 @@ import {ChatService} from "../chat.service";
 })
 export class ChatsComponent implements OnInit, OnDestroy
 {
-    chats: Chat[];
     drawerComponent: 'profile' | 'new-chat';
     drawerOpened: boolean = false;
     filteredChats: Chat[];
@@ -32,12 +32,26 @@ export class ChatsComponent implements OnInit, OnDestroy
     selectedChat: Chat;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    chats: Chat[];
+    currentUserId: number;
+
+
+    staticProfile: Profile = {
+        id: '1',
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        avatar: 'https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png',
+        about: 'Software developer with a passion for creating web applications.',
+    };
+
+
     /**
      * Constructor
      */
     constructor(
         private _chatService: ChatService,
         private _changeDetectorRef: ChangeDetectorRef,
+        private _tokenService: TokenService,
     )
     {
     }
@@ -51,6 +65,12 @@ export class ChatsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+        const tokenDecoded = this._tokenService.decode();
+        this.currentUserId = tokenDecoded?.id;
+
+        this._chatService.subscribeToCurrentUserConversation(this.currentUserId);
+
         // Chats
         this._chatService.chats$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -62,16 +82,7 @@ export class ChatsComponent implements OnInit, OnDestroy
                 this._changeDetectorRef.markForCheck();
             });
 
-        // Profile
-        this._chatService.profile$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((profile: Profile) =>
-            {
-                this.profile = profile;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        this.profile = this.staticProfile;
 
         // Selected chat
         this._chatService.chat$
@@ -83,6 +94,8 @@ export class ChatsComponent implements OnInit, OnDestroy
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
+
+        
     }
 
     /**

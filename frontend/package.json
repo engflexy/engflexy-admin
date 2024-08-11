@@ -34,6 +34,7 @@
         "@fullcalendar/timegrid": "^6.1.8",
         "@kolkov/angular-editor": "^3.0.0-beta.0",
         "@ngneat/transloco": "4.2.7",
+        "@stomp/stompjs": "^7.0.0",
         "apexcharts": "3.40.0",
         "crypto-js": "4.2.0",
         "exceljs": "^4.3.0",
@@ -50,6 +51,7 @@
         "perfect-scrollbar": "1.5.5",
         "quill": "2.0.0-rc.0",
         "rxjs": "7.8.1",
+        "sockjs-client": "^1.6.1",
         "tslib": "2.5.2",
         "zone.js": "0.13.0"
     },

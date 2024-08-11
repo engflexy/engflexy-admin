@@ -7,28 +7,38 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { Subject, takeUntil } from 'rxjs';
-import {ChatService} from "../chat.service";
-import {Chat} from "../chat.types";
-import {ContactInfoComponent} from "../contact-info/contact-info.component";
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { ChatService } from "../chat.service";
+import { Chat } from "../chat.types";
+import { ContactInfoComponent } from "../contact-info/contact-info.component";
+import { UserDto } from 'app/zynerator/security/shared/model/User.model';
+import { MessageResponse } from '../interfaces/message-response';
 
 @Component({
-    selector       : 'chat-conversation',
-    templateUrl    : './conversation.component.html',
-    encapsulation  : ViewEncapsulation.None,
+    selector: 'chat-conversation',
+    templateUrl: './conversation.component.html',
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone     : true,
-    imports        : [NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
+    standalone: true,
+    imports: [NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
 })
-export class ConversationComponent implements OnInit, OnDestroy
-{
+export class ConversationComponent implements OnInit, OnDestroy {
     @ViewChild('messageInput') messageInput: ElementRef;
     chat: Chat;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+    user: UserDto;
+    message: string = '';
+    selectedConversationId: number;
+    selectedConversationReceiverId: number;
+    selectedConversationReceiverName: string;
+    selectedConversation: MessageResponse[] = [];
+    currentUserId: number;
+    private selectedConversationSub: Subscription;
 
     /**
      * Constructor
@@ -38,8 +48,14 @@ export class ConversationComponent implements OnInit, OnDestroy
         private _chatService: ChatService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _ngZone: NgZone,
-    )
-    {
+        private router: Router,
+
+    ) {
+        const navigation = this.router.getCurrentNavigation();
+        if (navigation?.extras?.state) {
+            this.user = navigation.extras.state['user'];
+            this.currentUserId = navigation.extras.state['currentUserId'];
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -53,13 +69,10 @@ export class ConversationComponent implements OnInit, OnDestroy
      */
     @HostListener('input')
     @HostListener('ngModelChange')
-    private _resizeMessageInput(): void
-    {
+    private _resizeMessageInput(): void {
         // This doesn't need to trigger Angular's change detection by itself
-        this._ngZone.runOutsideAngular(() =>
-        {
-            setTimeout(() =>
-            {
+        this._ngZone.runOutsideAngular(() => {
+            setTimeout(() => {
                 // Set the height to 'auto' so we can correctly read the scrollHeight
                 this.messageInput.nativeElement.style.height = 'auto';
 
@@ -82,31 +95,28 @@ export class ConversationComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-        // Chat
-        this._chatService.chat$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chat: Chat) =>
-            {
-                this.chat = chat;
+    ngOnInit(): void {
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        console.log("hello from conversation");
+
+        // Subscribe to selectedConversation observable
+        this.selectedConversationSub = this._chatService.selectedConversation$.subscribe(conversation => {
+            this.selectedConversation = conversation;
+            this.selectedConversationId = this._chatService._selectedConversationId;
+            this.selectedConversationReceiverId = this._chatService._selectedConversationReceiverId;
+            this.selectedConversationReceiverName = this._chatService._selectedConversationReceiverName;
+            this._changeDetectorRef.markForCheck();
+        });
 
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({matchingAliases}) =>
-            {
+            .subscribe(({ matchingAliases }) => {
                 // Set the drawerMode if the given breakpoint is active
-                if ( matchingAliases.includes('lg') )
-                {
+                if (matchingAliases.includes('lg')) {
                     this.drawerMode = 'side';
                 }
-                else
-                {
+                else {
                     this.drawerMode = 'over';
                 }
 
@@ -115,14 +125,27 @@ export class ConversationComponent implements OnInit, OnDestroy
             });
     }
 
+
+    sendMessage(messageInput: HTMLTextAreaElement): void {
+        console.log('Message:', messageInput.value); // Log the message
+        if (messageInput.value.trim() != "") {
+            this._chatService.sendMessage(messageInput.value, this.currentUserId, this.selectedConversationId, this.selectedConversationReceiverId)
+            messageInput.value = ''; // Clear the textarea  
+        }
+    }
+
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+
+        // Unsubscribe from selected conversation observable
+        if (this.selectedConversationSub) {
+            this.selectedConversationSub.unsubscribe();
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -132,8 +155,7 @@ export class ConversationComponent implements OnInit, OnDestroy
     /**
      * Open the contact info
      */
-    openContactInfo(): void
-    {
+    openContactInfo(): void {
         // Open the drawer
         this.drawerOpened = true;
 
@@ -144,8 +166,7 @@ export class ConversationComponent implements OnInit, OnDestroy
     /**
      * Reset the chat
      */
-    resetChat(): void
-    {
+    resetChat(): void {
         this._chatService.resetChat();
 
         // Close the contact info in case it's opened
@@ -158,8 +179,7 @@ export class ConversationComponent implements OnInit, OnDestroy
     /**
      * Toggle mute notifications
      */
-    toggleMuteNotifications(): void
-    {
+    toggleMuteNotifications(): void {
         // Toggle the muted
         this.chat.muted = !this.chat.muted;
 
@@ -173,8 +193,7 @@ export class ConversationComponent implements OnInit, OnDestroy
      * @param index
      * @param item
      */
-    trackByFn(index: number, item: any): any
-    {
+    trackByFn(index: number, item: any): any {
         return item.id || index;
     }
 }
