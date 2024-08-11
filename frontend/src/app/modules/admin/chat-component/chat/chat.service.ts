@@ -18,8 +18,8 @@ export class ChatService {
     private _profile: BehaviorSubject<Profile> = new BehaviorSubject(null);
 
     private _chat: BehaviorSubject<Chat> = new BehaviorSubject(null);
-    private _users: BehaviorSubject<UserDto[]> = new BehaviorSubject<UserDto[]>([]);
-    private _selectedConversationSubject: BehaviorSubject<MessageResponse[]> = new BehaviorSubject<MessageResponse[]>([]);
+    public _users: BehaviorSubject<UserDto[]> = new BehaviorSubject<UserDto[]>([]);
+    public _selectedConversationSubject: BehaviorSubject<MessageResponse[]> = new BehaviorSubject<MessageResponse[]>([]);
     public _selectedConversationReceiverId: number = -1;
     public _selectedConversationReceiverName: string = '';
     public _selectedConversationId: number = -1;
@@ -134,6 +134,7 @@ export class ChatService {
             this.getConversationIdByUser1IdAndUser2Id(receiverId, currentUserId)
                 .subscribe(async (res: number) => {
                     this._selectedConversationId = res;
+                    console.log(res);
                     await this.setConversation();
                     resolve();
                 });
@@ -223,8 +224,33 @@ export class ChatService {
     }
 
     resetChat(): void {
+        // Reset all BehaviorSubjects to their initial state
+        this._chats.next([]);
+        this._contact.next(null);
+        this._contacts.next([]);
+        this._profile.next(null);
         this._chat.next(null);
+        //this._users.next([]);
+        this._selectedConversationSubject.next([]);
+        this._userConversations.next([]);
+    
+        // Reset any other related state variables
+        this._selectedConversationReceiverId = -1;
+        this._selectedConversationReceiverName = '';
+        this._selectedConversationId = -1;
+    
+        // Unsubscribe from any active WebSocket subscriptions
+        if (this.stompConvSub) {
+            this.stompConvSub.unsubscribe();
+            this.stompConvSub = undefined;
+        }
+    
+        // Optionally, clear the current user avatar and other states
+        this.currentUserAvatar = "https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png";
+    
+        console.log('Chat service has been reset');
     }
+    
 
 
 

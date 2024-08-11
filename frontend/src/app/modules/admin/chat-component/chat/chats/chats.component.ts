@@ -6,14 +6,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { BehaviorSubject, firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { NavigationExtras, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BehaviorSubject, firstValueFrom, Subject, Subscription, takeUntil } from 'rxjs';
 import { NewChatComponent } from "../new-chat/new-chat.component";
 import { ProfileComponent } from "../profile/profile.component";
 import { Chat, Profile } from "../chat.types";
 import { ChatService } from "../chat.service";
 import { TokenService } from 'app/zynerator/security/shared/service/Token.service';
 import { ConversationResponse } from '../interfaces/conversation-response';
+import { UserDto } from 'app/zynerator/security/shared/model/User.model';
 
 @Component({
     selector: 'chat-chats',
@@ -32,6 +33,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     userConversations: ConversationResponse[] = [];
     filteredConversations: ConversationResponse[] = [];
+    private selectedConversationSub: Subscription;
+    users: UserDto[] = [];
 
 
 
@@ -55,6 +58,9 @@ export class ChatsComponent implements OnInit, OnDestroy {
         public _chatService: ChatService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _tokenService: TokenService,
+        private cdRef: ChangeDetectorRef,
+        private router: Router
+
     ) {
     }
 
@@ -91,6 +97,47 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
         this.profile = this.staticProfile;
 
+        this._chatService.fetchUsersexceptThisUser(this.currentUserId);
+
+        this._chatService.users$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((users: UserDto[]) => {
+                this.users = users;
+                users.forEach(user => {
+                    user.avatar = "https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png";
+                });
+                this.cdRef.detectChanges(); // Manually trigger change detection
+            });
+
+        // Subscribe to selectedConversation observable
+        this.selectedConversationSub = this._chatService.selectedConversation$.pipe(
+            takeUntil(this._unsubscribeAll)
+        ).subscribe(conversation => {
+            //if (conversation.length > 0) {
+            this.navigateToConversation();
+            //}
+        });
+
+    }
+
+    async onChatClick(conversationResponse: ConversationResponse): Promise<void> {
+        await this._chatService.onUserSelected(conversationResponse.otherUserId, "collaborator", this.currentUserId);
+    }
+
+    private navigateToConversation(): void {
+        const selectedUser = this._chatService._users.value.find(user => user.id === this._chatService._selectedConversationReceiverId);
+
+        if (selectedUser) {
+            console.log(selectedUser)
+            const navigationExtras: NavigationExtras = {
+                state: {
+                    currentUserId: this.currentUserId,
+                    user: selectedUser,
+                }
+            };
+
+            this.router.navigate(['/admin/chat', 'conv'], navigationExtras);
+        }
     }
 
     
@@ -104,6 +151,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
         }
     }
 
+
     /**
      * On destroy
      */
@@ -113,9 +161,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    onChatClick(chat: ConversationResponse) {
-        console.log(chat)
-    }
+    
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
