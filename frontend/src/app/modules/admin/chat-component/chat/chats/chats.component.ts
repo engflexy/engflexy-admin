@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,30 +7,33 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import {NewChatComponent} from "../new-chat/new-chat.component";
-import {ProfileComponent} from "../profile/profile.component";
-import {Chat, Profile} from "../chat.types";
-import {ChatService} from "../chat.service";
+import { BehaviorSubject, firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { NewChatComponent } from "../new-chat/new-chat.component";
+import { ProfileComponent } from "../profile/profile.component";
+import { Chat, Profile } from "../chat.types";
+import { ChatService } from "../chat.service";
 import { TokenService } from 'app/zynerator/security/shared/service/Token.service';
+import { ConversationResponse } from '../interfaces/conversation-response';
 
 @Component({
-    selector       : 'chat-chats',
-    templateUrl    : './chats.component.html',
-    encapsulation  : ViewEncapsulation.None,
+    selector: 'chat-chats',
+    templateUrl: './chats.component.html',
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone     : true,
-    imports        : [MatSidenavModule, NgIf, NewChatComponent, ProfileComponent
-        , MatButtonModule, MatIconModule, MatMenuModule, MatFormFieldModule, MatInputModule, NgFor, NgClass, RouterLink, RouterOutlet],
+    standalone: true,
+    imports: [MatSidenavModule, NgIf, NewChatComponent, ProfileComponent
+        , MatButtonModule, MatIconModule, MatMenuModule, MatFormFieldModule, MatInputModule, NgFor, NgClass, RouterLink, RouterOutlet, CommonModule],
 })
-export class ChatsComponent implements OnInit, OnDestroy
-{
+export class ChatsComponent implements OnInit, OnDestroy {
     drawerComponent: 'profile' | 'new-chat';
     drawerOpened: boolean = false;
-    filteredChats: Chat[];
     profile: Profile;
     selectedChat: Chat;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    userConversations: ConversationResponse[] = [];
+    filteredConversations: ConversationResponse[] = [];
+
+
 
     chats: Chat[];
     currentUserId: number;
@@ -49,11 +52,10 @@ export class ChatsComponent implements OnInit, OnDestroy
      * Constructor
      */
     constructor(
-        private _chatService: ChatService,
+        public _chatService: ChatService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _tokenService: TokenService,
-    )
-    {
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -63,49 +65,56 @@ export class ChatsComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    async ngOnInit(): Promise<void> {
 
         const tokenDecoded = this._tokenService.decode();
         this.currentUserId = tokenDecoded?.id;
 
         this._chatService.subscribeToCurrentUserConversation(this.currentUserId);
+        this.loadUserConversations();
+        this._chatService.fetchUserConversations(this.currentUserId);
 
-        // Chats
-        this._chatService.chats$
+
+        // Subscribe to the conversations observable
+        this._chatService.userConversations$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chats: Chat[]) =>
-            {
-                this.chats = this.filteredChats = chats;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
+            .subscribe(conversations => {
+                this.userConversations = conversations;
+                this._changeDetectorRef.markForCheck(); // Mark for check to update the view
+                this.filteredConversations = conversations; // Initialize filteredConversations with all conversations
             });
+
+        // Fetch initial conversations
+
+
+        //console.log(this.userConversations)
 
         this.profile = this.staticProfile;
 
-        // Selected chat
-        this._chatService.chat$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((chat: Chat) =>
-            {
-                this.selectedChat = chat;
+    }
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+    
 
-        
+    async loadUserConversations(): Promise<void> {
+        try {
+            await this._chatService.fetchUserConversations(this.currentUserId);
+            this.userConversations = await firstValueFrom(this._chatService.userConversations$);
+        } catch (error) {
+            console.error('Error loading user conversations:', error);
+        }
     }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+    }
+
+    onChatClick(chat: ConversationResponse) {
+        console.log(chat)
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -117,23 +126,20 @@ export class ChatsComponent implements OnInit, OnDestroy
      *
      * @param query
      */
-    filterChats(query: string): void
-    {
+    filterChats(query: string): void {
         // Reset the filter
-        if ( !query )
-        {
-            this.filteredChats = this.chats;
+        if (!query) {
+            this.filteredConversations = this.userConversations;
             return;
         }
 
-        this.filteredChats = this.chats.filter(chat => chat.contact.name.toLowerCase().includes(query.toLowerCase()));
+        this.filteredConversations = this.userConversations.filter(chat => chat.otherUserName.toLowerCase().includes(query.toLowerCase()));
     }
 
     /**
      * Open the new chat sidebar
      */
-    openNewChat(): void
-    {
+    openNewChat(): void {
         this.drawerComponent = 'new-chat';
         this.drawerOpened = true;
 
@@ -144,8 +150,7 @@ export class ChatsComponent implements OnInit, OnDestroy
     /**
      * Open the profile sidebar
      */
-    openProfile(): void
-    {
+    openProfile(): void {
         this.drawerComponent = 'profile';
         this.drawerOpened = true;
 
@@ -159,8 +164,7 @@ export class ChatsComponent implements OnInit, OnDestroy
      * @param index
      * @param item
      */
-    trackByFn(index: number, item: any): any
-    {
+    trackByFn(index: number, item: any): any {
         return item.id || index;
     }
 }

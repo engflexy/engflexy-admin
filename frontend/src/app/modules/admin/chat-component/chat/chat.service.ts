@@ -24,7 +24,9 @@ export class ChatService {
     public _selectedConversationReceiverName: string = '';
     public _selectedConversationId: number = -1;
     public stompConvSub: Subscription | undefined;
-    public _userConversations: ConversationResponse[] = [];
+    //public _userConversations: ConversationResponse[] = [];
+    public _userConversations: BehaviorSubject<ConversationResponse[]> = new BehaviorSubject<ConversationResponse[]>([]);
+
     currentUserId: number;
 
     public currentUserAvatar = "https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png";
@@ -52,6 +54,21 @@ export class ChatService {
         this._users.next(users);
     }
 
+    async fetchUserConversations(userId: number): Promise<void> {
+        try {
+            const conversations = await firstValueFrom(
+                this._httpClient.get<ConversationResponse[]>(`http://localhost:8036/api/user/conversations/userId/${userId}`)
+            );
+            this._userConversations.next(conversations);
+        } catch (error) {
+            console.error('Error fetching conversations:', error);
+        }
+    }
+
+    get userConversations$(): Observable<ConversationResponse[]> {
+        return this._userConversations.asObservable();
+    }
+
     async subscribeToCurrentUserConversation(userId: number): Promise<void> {
         console.log("subscribeToCurrentUserConversation");
 
@@ -65,8 +82,9 @@ export class ChatService {
                     const res: WebSocketResponse = payload;
 
                     if (res.type == 'ALL') {
-                        this._userConversations = res.data;
-                        console.log(this._userConversations)
+                        const filteredConversations = res.data.filter((conversation: ConversationResponse) => conversation.lastMessage != null);
+
+                        this._userConversations.next(filteredConversations); 
 
                         /*
                         const currentConversation = this._selectedConversationSubject.value;
@@ -77,13 +95,14 @@ export class ChatService {
                         this.setSelectedConversation(updatedConversation);
 */
 
-
-                        const found = this._userConversations.find(
-                            (item) => item.conversationId === this._selectedConversationId
-                        );
-                        if (found === undefined) {
-                            this.onCloseChat();
-                        }
+                        /*
+                                                const found = this._userConversations.find(
+                                                    (item) => item.conversationId == this._selectedConversationId
+                                                );
+                                                if (found === undefined) {
+                                                    this.onCloseChat();
+                                                }
+                                                    */
                     }
                 }
             );
