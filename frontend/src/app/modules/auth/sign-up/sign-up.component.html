@@ -1,3 +1,4 @@
+
 <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
     <div class="w-full sm:w-auto py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
@@ -6,7 +7,11 @@
             <div class="w-24">
                 <img ngSrc="assets/images/logo/logo-text.svg" height="90" width="90" alt="EngFlexy">
             </div>
+
             </div>
+            <div class="mt-8 text-4xl text-center font-extrabold tracking-tight leading-tight">Sign in</div>
+            <mat-stepper>
+                <mat-step [stepControl]="signUpForm">
             <div class="flex items-baseline mt-4 font-medium">
                 <div>Already have an account?</div>
                 <a
@@ -20,7 +25,7 @@
                 [formGroup]="signUpForm">
 
                 <!-- Name field -->
-                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+              <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>Full name</mat-label>
                     <input
                         id="name"
@@ -51,9 +56,6 @@
                     <mat-select required [formControlName]="'type'">
                         <mat-option value="school">School</mat-option>
                         <mat-option value="teacher">Teacher</mat-option>
-                        <mat-option value="academy">Academy</mat-option>
-                        <mat-option value="center">Language center</mat-option>
-                        <mat-option value="other">other</mat-option>
                     </mat-select>
                     <mat-error *ngIf="signUpForm.get('type').hasError('required')">
                         This field is required
@@ -114,6 +116,27 @@
                 </button>
 
             </form>
+                </mat-step>
+                <mat-step [stepControl]="validationForm">
+            <form class="mt-4 " [formGroup]="validationForm">
+                <div class="font-medium" >Please check your email to verify your account</div>
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Username</mat-label>
+                    <input id="username" matInput name="username" formControlName="username" placeholder="Enter username to validate">
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>Validation Code</mat-label>
+                    <input id="validationCode" matInput name="validationCode" formControlName="validationCode" placeholder="Enter validation code">
+                </mat-form-field>
+
+                <!-- Bouton pour valider l'utilisateur -->
+                <button class="fuse-mat-button-large w-full" mat-flat-button color="primary" (click)="validateUser()">
+                    Validate User
+                </button>
+            </form>
+                </mat-step>
+            </mat-stepper>
         </div>
     </div>
 </div>

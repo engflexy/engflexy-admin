@@ -26,7 +26,7 @@ public class Message {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-    @Column(name = "message")
+    @Column(name = "message", columnDefinition = "TEXT") 
     private String message;
 
     @Column(name = "timestamp")
@@ -78,10 +78,12 @@ public class Message {
         this.receiver = receiver;
     }
 
+    @Column(columnDefinition = "TEXT") 
     public String getMessage() {
         return message;
     }
 
+    @Column(columnDefinition = "TEXT") 
     public void setMessage(String message) {
         this.message = message;
     }

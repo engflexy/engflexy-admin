@@ -3,6 +3,7 @@ package ma.zs.alc.service.impl.collaborator.collab;
 
 import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.collab.TypeCollaborator;
+import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.CollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.CollaboratorSpecification;
@@ -11,6 +12,7 @@ import ma.zs.alc.service.facade.collaborator.collab.TypeCollaboratorCollaborator
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
+import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
@@ -45,7 +47,68 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
             t.setTypeCollaborator(typeCollaboratorService.findOrSave(t.getTypeCollaborator()));
         }
     }
+    @Override
+    public boolean changePassword(String username, String newPassword) {
+        Collaborator collaborator = findByUsername(username);
+        if (collaborator != null) {
+            collaborator.setPassword(newPassword);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updatePasswordChangedStatus(Long id, boolean passwordChanged) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setPasswordChanged(passwordChanged);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setCredentialsNonExpired(credentialsNonExpired);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public boolean updateAccountStatus(Long id, boolean enabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setEnabled(enabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setAccountNonExpired(accountNonExpired);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateAccountLockStatus(Long id, boolean accountNonLocked) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setAccountNonLocked(accountNonLocked);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
     public List<Collaborator> findByTypeCollaboratorId(Long id) {
         return dao.findByTypeCollaboratorId(id);
     }
@@ -56,6 +119,15 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
 
     public long countByTypeCollaboratorCode(String code) {
         return dao.countByTypeCollaboratorCode(code);
+    }
+
+    @Override
+    public boolean findByUsernameAndValidationCode(String username, String validationCode) {
+        if (username == null || validationCode == null) {
+            return false;
+        }
+        User user = dao.findByUsername(username);
+        return user != null && validationCode.equals(user.getValidationCode());
     }
 
 
@@ -100,7 +172,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
                 parcoursService.create(element);
             });
         }
-        emailService.sendSimpleMessage(new EmailRequest("koko", "awdaaa zeman s3ibbb o ana hi wlyia : " + t.getValidationCode(), t.getEmail()));
+        emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code","Your username is "+t.getUsername()+" your verification code is "+t.getValidationCode(),t.getEmail()));
         return mySaved;
     }
 
@@ -108,9 +180,6 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         return dao.findByUsername(username);
     }
 
-    public boolean changePassword(String username, String newPassword) {
-        return userService.changePassword(username, newPassword);
-    }
 
     public List<Collaborator> findAllOptimized() {
         return dao.findAllOptimized();

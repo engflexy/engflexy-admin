@@ -25,6 +25,7 @@
         "@angular/platform-browser-dynamic": "16.0.3",
         "@angular/router": "16.0.3",
         "@auth0/angular-jwt": "^5.2.0",
+        "@ctrl/ngx-emoji-mart": "^9.2.0",
         "@danielmoncada/angular-datetime-picker": "^16.1.0",
         "@fullcalendar/angular": "^6.1.8",
         "@fullcalendar/core": "^6.1.8",
@@ -34,6 +35,7 @@
         "@fullcalendar/timegrid": "^6.1.8",
         "@kolkov/angular-editor": "^3.0.0-beta.0",
         "@ngneat/transloco": "4.2.7",
+        "@stomp/stompjs": "^7.0.0",
         "apexcharts": "3.40.0",
         "crypto-js": "4.2.0",
         "exceljs": "^4.3.0",
@@ -50,6 +52,7 @@
         "perfect-scrollbar": "1.5.5",
         "quill": "2.0.0-rc.0",
         "rxjs": "7.8.1",
+        "sockjs-client": "^1.6.1",
         "tslib": "2.5.2",
         "zone.js": "0.13.0"
     },

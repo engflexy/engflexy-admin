@@ -20,6 +20,7 @@ export class UserDto extends BaseDto {
     public country: string;
     public password: string;
 
+    public validationCode:string;
     public passwordChanged: null | boolean;
 
     public modelPermissionUsers: Array<ModelPermissionUserDto>;
@@ -36,6 +37,7 @@ export class UserDto extends BaseDto {
 
         this.credentialsNonExpired = true;
         this.enabled = true;
+        this.validationCode=null;
         this.email = '';
         this.fullName = '';
         this.accountNonExpired = true;

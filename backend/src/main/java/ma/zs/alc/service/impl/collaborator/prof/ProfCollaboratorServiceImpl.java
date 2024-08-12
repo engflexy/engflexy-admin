@@ -1,6 +1,7 @@
 package ma.zs.alc.service.impl.collaborator.prof;
 
 
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.inscriptionref.Langue;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
@@ -150,7 +151,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
                 recommendTeacherService.create(element);
             });
         }
-        emailService.sendSimpleMessage(new EmailRequest("koko","awdaaa zeman s3ibbb o ana hi wlyia",t.getEmail()));
+        emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code","Your username is "+t.getUsername()+" your verification code is "+t.getValidationCode(),t.getEmail()));
 
         return mySaved;
     }
@@ -180,10 +181,68 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         return dao.findByUsername(username);
     }
 
+    @Override
     public boolean changePassword(String username, String newPassword) {
-        return userService.changePassword(username, newPassword);
+        Prof prof = findByUsername(username);
+        if (prof != null) {
+            prof.setPassword(newPassword);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updatePasswordChangedStatus(Long id, boolean passwordChanged) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setPasswordChanged(passwordChanged);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setCredentialsNonExpired(credentialsNonExpired);
+            dao.save(prof);
+            return true;
+        }
+        return false;
     }
 
+    @Override
+    public boolean updateAccountStatus(Long id, boolean enabled) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setEnabled(enabled);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setAccountNonExpired(accountNonExpired);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateAccountLockStatus(Long id, boolean accountNonLocked) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setAccountNonLocked(accountNonLocked);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
     public void configure() {
         super.configure(Prof.class, ProfSpecification.class);
     }

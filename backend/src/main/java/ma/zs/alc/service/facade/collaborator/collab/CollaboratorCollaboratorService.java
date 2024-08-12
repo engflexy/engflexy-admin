@@ -15,7 +15,12 @@ public interface CollaboratorCollaboratorService extends  IService<Collaborator,
     int deleteByTypeCollaboratorId(Long id);
     long countByTypeCollaboratorCode(String code);
 
+    boolean updateAccountLockStatus(Long id, boolean accountNonLocked);
+    boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired);
+    boolean updateAccountStatus(Long id, boolean enabled);
+    boolean updatePasswordChangedStatus(Long id, boolean passwordChanged);
+    boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired);
 
 
-
+    boolean findByUsernameAndValidationCode(String username, String validationCode);
 }
