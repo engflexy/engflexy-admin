@@ -13,7 +13,7 @@
             <!-- Header -->
             <div class="flex flex-0 items-center h-18 px-4 md:px-6 border-b bg-gray-50 dark:bg-transparent">
                <!-- Back button -->
-               <a class="lg:hidden md:-ml-2" mat-icon-button [routerLink]="['../']" (click)="resetChat()">
+               <a class="md:-ml-2" mat-icon-button [routerLink]="['../']" (click)="resetChat()">
                   <mat-icon [svgIcon]="'heroicons_outline:arrow-long-left'"></mat-icon>
                </a>
 
@@ -40,7 +40,7 @@
             </div>
 
             <!-- Conversation -->
-            <div class="flex overflow-y-auto flex-col-reverse">
+            <div class="flex overflow-y-auto flex-col-reverse" style="height: 80%; display: flex; flex-direction: column;">
                <div class="flex flex-col flex-auto shrink p-6 bg-card dark:bg-transparent">
                   <ng-container
                      *ngFor="let message of selectedConversation; let i = index; let first = first; let last = last; trackBy: trackByFn">
@@ -59,14 +59,14 @@
                      <div class="flex flex-col"
                         [ngClass]="{'items-end': message.senderId == currentUserId, 'items-start': message.senderId != currentUserId}">
                         <div class="relative max-w-3/4 px-3 py-2 rounded-lg"
-                           [ngClass]="{'bg-blue-500 text-white': message.senderId === 1, 'bg-gray-500 text-white': message.senderId !== 1}">
+                           [ngClass]="{'bg-blue-500 text-white': message.senderId != currentUserId, 'bg-gray-500 text-white': message.senderId == currentUserId}">
                            {{ message.message }}
                         </div>
                         <!-- Timestamp -->
                         <ng-container
                            *ngIf="first || last || (selectedConversation[i + 1] && selectedConversation[i + 1].timestamp !== message.timestamp)">
                            <div class="my-0.5 text-sm font-medium text-secondary"
-                              [ngClass]="{'mr-3': message.senderId === 1, 'ml-3': message.senderId !== 1}">
+                              [ngClass]="{'mr-3': message.senderId == currentUserId, 'ml-3': message.senderId != currentUserId}">
                               {{ message.timestamp | date:'HH:mm' }}
                            </div>
                         </ng-container>
@@ -76,20 +76,28 @@
             </div>
 
 
-            <!-- Message field -->
-            <div class="flex items-end p-4 border-t bg-gray-50 dark:bg-transparent">
+            <div class="flex items-end p-4 border-t bg-gray-50 dark:bg-transparent" style="position: absolute; bottom: 0; width: 100%; background-color: white;">
                <div class="flex items-center h-11 my-px">
-                  <button mat-icon-button>
-                     <mat-icon [svgIcon]="'heroicons_outline:face-smile'"></mat-icon>
-                  </button>
+                  <div style="position: relative;">
+                     <button mat-icon-button (click)="toggleEmojiPicker()">
+                       <mat-icon [svgIcon]="'heroicons_outline:face-smile'"></mat-icon>
+                     </button>
+                   
+                     <div *ngIf="showEmojiPicker" style="position: absolute; bottom: 40px; z-index: 1000;">
+                       <emoji-mart (emojiSelect)="addEmoji($event)"></emoji-mart>
+                     </div>
+                   </div>
+                   
                   <button class="ml-0.5" mat-icon-button>
                      <mat-icon [svgIcon]="'heroicons_outline:paper-clip'"></mat-icon>
                   </button>
                </div>
                <mat-form-field class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full ml-4"
                   subscriptSizing="dynamic">
-                  <textarea matInput cdkTextareaAutosize #messageInput
-                     (keydown.enter)="sendMessage(messageInput); $event.preventDefault();"></textarea>
+                  <textarea matInput cdkTextareaAutosize #messageInput cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+                     (keydown.enter)="sendMessage(messageInput); $event.preventDefault();"
+                     style="white-space: pre-wrap; overflow-wrap: break-word;">
+                 </textarea>
                </mat-form-field>
                <div class="flex items-center h-11 my-px ml-4">
                   <button mat-icon-button (click)="sendMessage(messageInput)">
@@ -97,6 +105,7 @@
                   </button>
                </div>
             </div>
+
 
 
 

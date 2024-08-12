@@ -3,6 +3,7 @@ package ma.zs.alc.zynerator.security.ws.facade;
 import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.ws.dto.chat.ApiResponse;
+import ma.zs.alc.ws.dto.chat.ConversationResponse;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.security.bean.User;
@@ -155,26 +156,29 @@ public class UserRest extends AbstractController<User, UserDto, UserCriteria, Us
 		List<User> users = service.findAllUsersExceptThisUserId(id);
 		converter.initList(false);
 		List<UserDto> usersDto = converter.toDto(users);
-		
-		//ApiResponse response = new ApiResponse(200, "Success", "OK", usersDto);
-        //return new ResponseEntity<>(response, HttpStatus.OK);
+
+		// ApiResponse response = new ApiResponse(200, "Success", "OK", usersDto);
+		// return new ResponseEntity<>(response, HttpStatus.OK);
 		return usersDto;
 	}
 
 	@GetMapping("/conversation/user1Id/{user1Id}/user2Id/{user2Id}")
-	public Long findConversationIdByUser1IdAndUser2Id(@PathVariable Long user1Id,
-			@PathVariable Long user2Id) {
+	public Long findConversationIdByUser1IdAndUser2Id(@PathVariable Long user1Id, @PathVariable Long user2Id) {
 		return service.findConversationIdByUser1IdAndUser2Id(user1Id, user2Id);
 	}
-	///////////////////////////////////////////////////
 
+	@GetMapping("/conversations/userId/{userId}")
+	public List<ConversationResponse> findConversationIdByUser1IdAndUser2Id(@PathVariable Long userId) {
+		return service.findConversationsByUserId(userId);
+	}
+
+	///////////////////////////////////////////////////
 	public UserRest(UserService service, UserConverter converter) {
 		super(service, converter);
 	}
+
 	@GetMapping("/validate")
-	public ResponseEntity<Boolean> validateUser(
-			@RequestParam String username,
-			@RequestParam String validationCode) {
+	public ResponseEntity<Boolean> validateUser(@RequestParam String username, @RequestParam String validationCode) {
 		boolean isValid = service.findByUsernameAndValidationCode(username, validationCode);
 		return new ResponseEntity<>(isValid, HttpStatus.OK);
 	}

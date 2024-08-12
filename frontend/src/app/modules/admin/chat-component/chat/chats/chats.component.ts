@@ -40,13 +40,13 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
     chats: Chat[];
     currentUserId: number;
-
+    currentUserEmail: string;
 
     staticProfile: Profile = {
         id: '1',
         name: 'John Doe',
         email: 'john.doe@example.com',
-        avatar: 'https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png',
+        //avatar: 'https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png',
         about: 'Software developer with a passion for creating web applications.',
     };
 
@@ -75,6 +75,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
         const tokenDecoded = this._tokenService.decode();
         this.currentUserId = tokenDecoded?.id;
+        this.currentUserEmail = tokenDecoded?.email;
 
         this._chatService.subscribeToCurrentUserConversation(this.currentUserId);
         this.loadUserConversations();

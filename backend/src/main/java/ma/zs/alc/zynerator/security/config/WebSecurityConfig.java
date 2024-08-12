@@ -1,5 +1,6 @@
 package ma.zs.alc.zynerator.security.config;
 
+import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.jwt.AuthEntryPointJwt;
 import ma.zs.alc.zynerator.security.jwt.AuthTokenFilter;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
@@ -60,16 +61,17 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/**").permitAll()
-//                                .requestMatchers("/actuator/health").permitAll()
-//                                .requestMatchers("/actuator/info").permitAll()
-//                                .requestMatchers("/api/open/**").permitAll()
-//                                .requestMatchers("/api/user/**").permitAll()
-//                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Permit access to Swagger UI and API docs
-//                                .requestMatchers("/api/admin/login").permitAll()
-//                                .requestMatchers("/api/collaborator/login").permitAll()
-//                                .requestMatchers("/api/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-//                                .requestMatchers("/api/collaborator/**").hasAnyAuthority(AuthoritiesConstants.COLLABORATOR)
+ //                               .requestMatchers("/**").permitAll()
+                                .requestMatchers("/actuator/health").permitAll()
+                                .requestMatchers("/stomp-endpoint/**").permitAll()                             
+                                .requestMatchers("/actuator/info").permitAll()
+                                .requestMatchers("/api/open/**").permitAll()
+                                .requestMatchers("/api/user/**").permitAll()
+                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Permit access to Swagger UI and API docs
+                                .requestMatchers("/api/admin/login").permitAll()
+                                .requestMatchers("/api/collaborator/login").permitAll()
+                                .requestMatchers("/api/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                                .requestMatchers("/api/collaborator/**").hasAnyAuthority(AuthoritiesConstants.COLLABORATOR)
                                 .anyRequest().authenticated()
 
                 );

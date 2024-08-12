@@ -15,6 +15,7 @@ import { Chat } from "../chat.types";
 import { ContactInfoComponent } from "../contact-info/contact-info.component";
 import { UserDto } from 'app/zynerator/security/shared/model/User.model';
 import { MessageResponse } from '../interfaces/message-response';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
     selector: 'chat-conversation',
@@ -22,7 +23,7 @@ import { MessageResponse } from '../interfaces/message-response';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
+    imports: [PickerComponent, NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
 })
 export class ConversationComponent implements OnInit, OnDestroy {
     @ViewChild('messageInput') messageInput: ElementRef;
@@ -39,6 +40,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     selectedConversation: MessageResponse[] = [];
     currentUserId: number;
     private selectedConversationSub: Subscription;
+    showEmojiPicker = false;
 
     /**
      * Constructor
@@ -145,6 +147,19 @@ export class ConversationComponent implements OnInit, OnDestroy {
         // Unsubscribe from selected conversation observable
         if (this.selectedConversationSub) {
             this.selectedConversationSub.unsubscribe();
+        }
+    }
+
+
+    toggleEmojiPicker() {
+        this.showEmojiPicker = !this.showEmojiPicker;
+      }
+    
+      addEmoji(event: any) {
+        const { emoji } = event;
+        const textArea = this.messageInput.nativeElement;
+        if (textArea) {
+          textArea.value += emoji.native; // Append the emoji to the text area content
         }
     }
 
