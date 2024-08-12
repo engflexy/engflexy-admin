@@ -15,6 +15,8 @@ import { ChatService } from "../chat.service";
 import { TokenService } from 'app/zynerator/security/shared/service/Token.service';
 import { ConversationResponse } from '../interfaces/conversation-response';
 import { UserDto } from 'app/zynerator/security/shared/model/User.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageResponse } from '../interfaces/message-response';
 
 @Component({
     selector: 'chat-chats',
@@ -83,12 +85,27 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
 
         // Subscribe to the conversations observable
+        let previousConversations: ConversationResponse[] = [];
+
         this._chatService.userConversations$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(conversations => {
+                // Identify changes by comparing with the previous state
+                conversations.forEach((newConv, index) => {
+                    const previousConv = previousConversations[index];
+
+                    if (!previousConv || newConv.lastMessage !== previousConv.lastMessage || newConv.lastMessageTimestamp !== previousConv.lastMessageTimestamp) {
+                        console.log('Conversation changed:', newConv);
+                    }
+                });
+
+                // Update the stored previous conversations
+                previousConversations = [...conversations];
+
+                // Update the component state
                 this.userConversations = conversations;
-                this._changeDetectorRef.markForCheck(); // Mark for check to update the view
-                this.filteredConversations = conversations; // Initialize filteredConversations with all conversations
+                this.filteredConversations = conversations;
+                this._changeDetectorRef.markForCheck();
             });
 
         // Fetch initial conversations
@@ -114,12 +131,17 @@ export class ChatsComponent implements OnInit, OnDestroy {
         this.selectedConversationSub = this._chatService.selectedConversation$.pipe(
             takeUntil(this._unsubscribeAll)
         ).subscribe(conversation => {
-            //if (conversation.length > 0) {
-            this.navigateToConversation();
-            //}
+            // Log the conversation whenever it changes
+            // Optional: Only navigate if the conversation has messages
+            if (conversation.length > 0) {
+                this.navigateToConversation();
+            }
         });
 
+
     }
+
+
 
     async onChatClick(conversationResponse: ConversationResponse): Promise<void> {
         await this._chatService.onUserSelected(conversationResponse.otherUserId, "collaborator", this.currentUserId);
@@ -141,7 +163,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
         }
     }
 
-    
+
 
     async loadUserConversations(): Promise<void> {
         try {
@@ -162,7 +184,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

@@ -16,6 +16,7 @@ import { ContactInfoComponent } from "../contact-info/contact-info.component";
 import { UserDto } from 'app/zynerator/security/shared/model/User.model';
 import { MessageResponse } from '../interfaces/message-response';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
     selector: 'chat-conversation',
@@ -27,6 +28,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 })
 export class ConversationComponent implements OnInit, OnDestroy {
     @ViewChild('messageInput') messageInput: ElementRef;
+    @ViewChild('emojiPicker') emojiPicker: ElementRef;
     chat: Chat;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = false;
@@ -51,7 +53,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _ngZone: NgZone,
         private router: Router,
-
+        private sanitizer: DomSanitizer
     ) {
         const navigation = this.router.getCurrentNavigation();
         if (navigation?.extras?.state) {
@@ -134,6 +136,9 @@ export class ConversationComponent implements OnInit, OnDestroy {
             this._chatService.sendMessage(messageInput.value, this.currentUserId, this.selectedConversationId, this.selectedConversationReceiverId)
             messageInput.value = ''; // Clear the textarea  
         }
+        if(this.showEmojiPicker){
+            this.showEmojiPicker = !this.showEmojiPicker;
+        }
     }
 
     /**
@@ -150,18 +155,44 @@ export class ConversationComponent implements OnInit, OnDestroy {
         }
     }
 
+    sanitizeMessage(message: string): SafeHtml {
+        // This pattern matches http, https, and plain text URLs (like google.com)
+        const urlPattern = /((https?:\/\/)?[\w.-]+\.[a-z]{2,})(\/[^\s]*)?/gi;
+        const sanitizedMessage = message.replace(
+            urlPattern,
+            (url) => {
+                // If the URL doesn't start with http/https, prepend it with https://
+                const href = url.startsWith('http') ? url : `https://${url}`;
+                return `<a href="${href}" target="_blank" style="color: blue; text-decoration: underline;">${url}</a>`;
+            }
+        );
+        return this.sanitizer.bypassSecurityTrustHtml(sanitizedMessage);
+    }
 
-    toggleEmojiPicker() {
+
+
+    // Listen for clicks on the entire document
+    @HostListener('document:click', ['$event'])
+    clickOutside(event: Event) {
+        if (this.showEmojiPicker && this.emojiPicker && !this.emojiPicker.nativeElement.contains(event.target)) {
+            this.showEmojiPicker = false;
+        }
+    }
+
+    toggleEmojiPicker(event: Event) {
+        event.stopPropagation(); // Prevent the click event from propagating to the document listener
         this.showEmojiPicker = !this.showEmojiPicker;
-      }
-    
-      addEmoji(event: any) {
+    }
+
+    addEmoji(event: any) {
         const { emoji } = event;
         const textArea = this.messageInput.nativeElement;
         if (textArea) {
-          textArea.value += emoji.native; // Append the emoji to the text area content
+            textArea.value += emoji.native; // Append the emoji to the text area content
+            textArea.focus(); // Set focus on the text area
         }
     }
+    
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
