@@ -46,9 +46,9 @@ public class CollaboratorRestAdmin extends AbstractController<Collaborator, Coll
 
     @Operation(summary = "Saves the specified  collaborator")
     @PostMapping("")
-    public Collaborator save(@RequestBody Collaborator dto) throws Exception {
-        Collaborator collaborator = service.create(dto);
-        return collaborator;
+    public ResponseEntity<CollaboratorDto> save(@RequestBody CollaboratorDto dto) throws Exception {
+
+        return super.save(dto);
     }
 
     @Operation(summary = "Updates the specified  collaborator")

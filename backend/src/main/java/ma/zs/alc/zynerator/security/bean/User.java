@@ -63,6 +63,7 @@ public class User extends AuditBusinessObject implements UserDetails {
         this.email = username;
     }
 
+
     public String getValidationCode() {
         return validationCode;
     }
