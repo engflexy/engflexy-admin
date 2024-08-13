@@ -60,9 +60,8 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
- //                               .requestMatchers("/**").permitAll()
-                                .requestMatchers("/actuator/health").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/**").permitAll()
+/*                                .requestMatchers("/actuator/health").permitAll()
                                 .requestMatchers("/stomp-endpoint/**").permitAll()                             
                                 .requestMatchers("/actuator/info").permitAll()
                                 .requestMatchers("/api/open/**").permitAll()
@@ -72,7 +71,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/collaborator/login").permitAll()
                                 .requestMatchers("/api/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
                                 .requestMatchers("/api/collaborator/**").hasAnyAuthority(AuthoritiesConstants.COLLABORATOR)
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated()*/
 
                 );
 
