@@ -21,6 +21,7 @@ import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
@@ -110,7 +111,12 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         List<Prof> allOptimized = dao.findAllOptimized();
         return allOptimized;
     }
-
+    public void deleteAssociatedLists(Long id) {
+        trancheHoraireProfService.deleteByProfId(id);
+        recommendTeacherService.deleteByProfId(id);
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserId(id);
+    }
 
     @Override
     public Prof create(Prof t) {
@@ -257,6 +263,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
     private @Autowired ModelPermissionUserService modelPermissionUserService;
 
     @Autowired

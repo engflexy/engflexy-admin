@@ -55,4 +55,7 @@ export class CollaboratorAdminService extends AbstractService<CollaboratorDto, C
     create(user: CollaboratorDto): Observable<CollaboratorDto> {
         return this.http.post<CollaboratorDto>(this.API + 'create', user);
     }
+    deleteById(id: number): Observable<number> {
+        return this.http.delete<number>(`${this.API}id/${id}`);
+    }
 }

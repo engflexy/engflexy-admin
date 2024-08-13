@@ -75,6 +75,10 @@ export class ProfCollaboratorService extends AbstractService<ProfDto, ProfCriter
         return this.http.post<ProfDto>(this.API + 'create', prof);
     }
 
+    deleteById(id: number): Observable<number> {
+        return this.http.delete<number>(`${this.API}id/${id}`);
+    }
+
     get(id: number): Observable<ProfDto> {
         return this.http.get<ProfDto>(`${this.API}id/${id}`).pipe(
             tap((prof) => {
