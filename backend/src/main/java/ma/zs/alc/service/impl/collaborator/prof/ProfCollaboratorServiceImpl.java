@@ -115,6 +115,13 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     @Override
     public Prof create(Prof t) {
         if (findByUsername(t.getUsername()) != null || t.getPassword() == null) return null;
+
+        // Save the associated TypeTeacher if it's not already saved
+        if (t.getTypeTeacher() != null && t.getTypeTeacher().getId() == null) {
+            t.setTypeTeacher(typeTeacherService.create(t.getTypeTeacher()));
+        }
+
+        // Proceed with the rest of the Prof creation logic
         t.setPassword(userService.cryptPassword(t.getPassword()));
         t.setEnabled(true);
         t.setAccountNonExpired(true);
@@ -125,7 +132,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.TEACHER);
         role.setCreatedAt(LocalDateTime.now());
-        Role savedRole = roleService.findOrSave(role);
+        Role savedRole = roleService.findByAuthority(role.getAuthority());
         RoleUser roleUser = new RoleUser();
         roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null)
@@ -155,6 +162,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
 
         return mySaved;
     }
+
 
     @Override
     public Prof update(Prof t) {

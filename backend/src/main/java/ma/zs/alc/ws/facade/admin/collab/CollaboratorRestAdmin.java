@@ -2,6 +2,7 @@ package ma.zs.alc.ws.facade.admin.collab;
 
 import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.collab.Collaborator;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.service.facade.admin.collab.CollaboratorAdminService;
@@ -50,7 +51,10 @@ public class CollaboratorRestAdmin extends AbstractController<Collaborator, Coll
 
         return super.save(dto);
     }
-
+    @PostMapping("create")
+    public Collaborator create(@RequestBody Collaborator dto) throws Exception {
+        return service.create(dto);
+    }
     @Operation(summary = "Updates the specified  collaborator")
     @PutMapping("")
     public CollaboratorDto update(@RequestBody Collaborator dto) throws Exception {

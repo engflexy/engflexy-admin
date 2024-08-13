@@ -50,6 +50,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 			t.setEnabled(true);
 			t.setPasswordChanged(false);
 			t.setCreatedAt(LocalDateTime.now());
+
 			super.create(t);
 			if (t.getModelPermissionUsers() != null) {
 				t.getModelPermissionUsers().forEach(e -> {
