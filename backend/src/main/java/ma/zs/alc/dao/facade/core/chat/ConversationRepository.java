@@ -19,14 +19,14 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
 	@Query(nativeQuery = true, value = """
 			SELECT
 			    C.conversation_id AS conversationId,
-			    U.user_id AS otherUserId,
-			    CONCAT(U.first_name, ' ', U.last_name) AS otherUserName,
+			    U.id AS otherUserId,
+			    U.username AS otherUserName,
 			    M.message AS lastMessage,
 			    M.timestamp AS lastMessageTimestamp
 			FROM conversation AS C
 
 			INNER JOIN user AS U
-			ON (C.user1_id = U.user_id OR C.user2_id = U.user_id) AND U.user_id != ?1
+			ON (C.user1_id = U.id OR C.user2_id = U.id) AND U.id != ?1
 
 			LEFT JOIN (
 			    SELECT
@@ -42,4 +42,5 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
 			ORDER BY M.timestamp DESC;
 			""")
 	List<ConversationResponse> findConversationsByUserId(Long userId);
+
 }

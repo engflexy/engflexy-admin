@@ -1,6 +1,8 @@
 <div class="flex flex-col flex-auto h-full bg-card dark:bg-default">
 
-    <!-- Header -->
+    <p>hello from contact info</p>
+
+    <!-- 
     <div class="flex flex-0 items-center h-18 px-4 border-b bg-gray-50 dark:bg-transparent">
         <button
             mat-icon-button
@@ -11,7 +13,6 @@
     </div>
 
     <div class="overflow-y-auto">
-        <!-- Contact avatar & info -->
         <div class="flex flex-col items-center mt-8">
             <div class="w-40 h-40 rounded-full">
                 <ng-container *ngIf="chat.contact.avatar">
@@ -31,7 +32,6 @@
         </div>
 
         <div class="py-10 px-7">
-            <!-- Media -->
             <div class="text-lg font-medium">Media</div>
             <div class="grid grid-cols-4 gap-1 mt-4">
                 <ng-container *ngFor="let media of chat.contact.attachments.media">
@@ -40,7 +40,6 @@
                         [src]="media"/>
                 </ng-container>
             </div>
-            <!-- Details -->
             <div class="mt-10 space-y-4">
                 <div class="text-lg font-medium mb-3">Details</div>
                 <ng-container *ngIf="chat.contact.details.emails.length">
@@ -82,5 +81,5 @@
             </div>
         </div>
     </div>
-
+-->
 </div>

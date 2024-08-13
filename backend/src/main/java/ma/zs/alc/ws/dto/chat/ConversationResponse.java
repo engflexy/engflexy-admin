@@ -8,9 +8,9 @@ public interface ConversationResponse {
 
 	Long getOtherUserId();
 
-	Long getOtherUserName();
+	String getOtherUserName();
 
-	Long getLastMessage();
+	String getLastMessage();
 
 	Timestamp getLastMessageTimestamp();
 }

@@ -12,6 +12,7 @@ import ma.zs.alc.service.facade.collaborator.collab.TypeCollaboratorCollaborator
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
+import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
@@ -120,6 +121,15 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         return dao.countByTypeCollaboratorCode(code);
     }
 
+    @Override
+    public boolean findByUsernameAndValidationCode(String username, String validationCode) {
+        if (username == null || validationCode == null) {
+            return false;
+        }
+        User user = dao.findByUsername(username);
+        return user != null && validationCode.equals(user.getValidationCode());
+    }
+
 
     @Override
     public Collaborator create(Collaborator t) {
@@ -164,7 +174,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
                 parcoursService.create(element);
             });
         }
-        emailService.sendSimpleMessage(new EmailRequest("koko", "awdaaa zeman s3ibbb o ana hi wlyia : " + t.getValidationCode(), t.getEmail()));
+        emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code","Your username is "+t.getUsername()+" your verification code is "+t.getValidationCode(),t.getEmail()));
         return mySaved;
     }
 

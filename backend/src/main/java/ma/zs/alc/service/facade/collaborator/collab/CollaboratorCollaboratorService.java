@@ -22,6 +22,5 @@ public interface CollaboratorCollaboratorService extends  IService<Collaborator,
     boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired);
 
 
-
-
+    boolean findByUsernameAndValidationCode(String username, String validationCode);
 }
