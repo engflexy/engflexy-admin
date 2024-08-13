@@ -220,7 +220,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.STUDENT);
         role.setCreatedAt(LocalDateTime.now());
-        Role savedRole = roleService.findOrSave(role);
+        Role savedRole = roleService.findByAuthority(role.getAuthority());
         RoleUser roleUser = new RoleUser();
         roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
