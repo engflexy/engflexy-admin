@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.ws.dto.chat.ApiResponse;
 import ma.zs.alc.zynerator.controller.AbstractController;
+import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
@@ -172,10 +173,8 @@ public class UserRest extends AbstractController<User, UserDto, UserCriteria, Us
 		super(service, converter);
 	}
 	@GetMapping("/validate")
-	public ResponseEntity<Boolean> validateUser(
-			@RequestParam String username,
-			@RequestParam String validationCode) {
-		boolean isValid = service.findByUsernameAndValidationCode(username, validationCode);
+	public ResponseEntity<Boolean> validateUser(@RequestBody AccountValidationDto accountValidationDto) {
+		boolean isValid = service.validateUser(accountValidationDto);
 		return new ResponseEntity<>(isValid, HttpStatus.OK);
 	}
 }

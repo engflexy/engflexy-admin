@@ -3,6 +3,7 @@ package ma.zs.alc.zynerator.security.service.impl;
 
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.dao.facade.core.chat.ConversationRepository;
+import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.security.bean.ModelPermissionUser;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.bean.User;
@@ -27,11 +28,21 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, UserDao> implements UserService {
-	
+
     private final ConversationRepository conversationRepository;
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
+    public User register(User t) {
+        return createAndEnable(t, false);
+    }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public User create(User t) {
+        return createAndEnable(t, true);
+    }
+
+    private User createAndEnable(User t, boolean enable) {
         User foundedUserByUsername = findByUsername(t.getUsername());
         User foundedUserByEmail = dao.findByEmail(t.getEmail());
 
@@ -46,7 +57,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
             t.setAccountNonExpired(true);
             t.setAccountNonLocked(true);
             t.setCredentialsNonExpired(true);
-            t.setEnabled(true);
+            t.setEnabled(enable);
             t.setPasswordChanged(false);
             t.setCreatedAt(LocalDateTime.now());
             super.create(t);
@@ -96,7 +107,6 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     }
 
 
-
     public User findByReferenceEntity(User t) {
         return dao.findByEmail(t.getEmail());
     }
@@ -107,14 +117,17 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
             return null;
         return dao.findByUsername(username);
     }
+
     @Override
-    public boolean findByUsernameAndValidationCode(String username,String validationCode){
+    public boolean findByUsernameAndValidationCode(String username, String validationCode) {
         if (username == null || validationCode == null) {
             return false;
         }
         User user = dao.findByUsername(username);
+        user.setEnabled(true);
         return user != null && validationCode.equals(user.getValidationCode());
     }
+
     public List<User> findAllOptimized() {
         return dao.findAllOptimized();
     }
@@ -122,8 +135,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     @Override
     public String cryptPassword(String value) {
-        return value;
-//        return value == null ? null : bCryptPasswordEncoder.encode(value);
+        return value == null ? null : bCryptPasswordEncoder.encode(value);
     }
 
     @Override
@@ -179,7 +191,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     public UserServiceImpl(UserDao dao, ConversationRepository conversationRepository) {
         super(dao);
-    	this.conversationRepository = conversationRepository;
+        this.conversationRepository = conversationRepository;
     }
 
     ////////////////////////////////////////////////
@@ -198,7 +210,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         if (user1.isEmpty() || user2.isEmpty()) {
             //ApiResponse response = new ApiResponse(200, "Failed", "User not found", null);
             //return new ResponseEntity<>(response, HttpStatus.OK);
-        	return 0L;
+            return 0L;
         }
 
         Optional<Conversation> existingConversation = conversationRepository.findConversationByUsers(user1.get(), user2.get());
@@ -215,6 +227,21 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         //return new ResponseEntity<>(response, HttpStatus.OK);
         return conversationId;
 
+    }
+
+    @Override
+    public boolean validateUser(AccountValidationDto accountValidationDto) {
+        String username = accountValidationDto.getUsername();
+        String validationCode = accountValidationDto.getValidationCode();
+        if (username == null || validationCode == null) {
+            return false;
+        }
+        User user = dao.findByUsername(username);
+        if (user != null && validationCode.equals(user.getValidationCode())) {
+            user.setEnabled(true);
+            return true;
+        }
+        return false;
     }
 
     ///////////////////////////////////////
