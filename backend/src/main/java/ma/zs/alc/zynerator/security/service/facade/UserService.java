@@ -5,6 +5,7 @@ import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
 import ma.zs.alc.zynerator.security.ws.dto.UserDto;
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.ws.dto.chat.ApiResponse;
+import ma.zs.alc.ws.dto.chat.ConversationResponse;
 import ma.zs.alc.zynerator.security.bean.User;
 
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,8 @@ public interface UserService extends IService<User, UserCriteria>, UserDetailsSe
     List<User> findAllUsersExceptThisUserId(Long id);
 
     Long findConversationIdByUser1IdAndUser2Id(Long user1Iidd, Long user2Id);
+    
+	List<ConversationResponse> findConversationsByUserId(Long userId);
 
     boolean validateUser(AccountValidationDto accountValidationDto);
 }

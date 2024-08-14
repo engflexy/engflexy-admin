@@ -7,6 +7,7 @@ import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.CollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.CollaboratorSpecification;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.collab.ManagerCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.collab.TypeCollaboratorCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
 import ma.zs.alc.zynerator.dto.AccountValidationDto;
@@ -147,6 +148,12 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         User user = dao.findByUsername(username);
         return user != null && validationCode.equals(user.getValidationCode());
     }
+    public void deleteAssociatedLists(Long id) {
+        parcoursService.deleteByCollaboratorId(id);
+        managerCollaboratorService.deleteByCollaboratorId(id);
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserId(id);
+    }
 
     @Override
     public ResponseEntity<JwtResponse> validateUser(AccountValidationDto accountValidationDto) {
@@ -210,7 +217,9 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.COLLABORATOR);
         role.setCreatedAt(LocalDateTime.now());
-        Role savedRole = roleService.findOrSave(role);
+       /* Role savedRole = roleService.findOrSave(role);*/
+        Role savedRole = roleService.findByAuthority(role.getAuthority());
+
         RoleUser roleUser = new RoleUser();
         roleUser.setRole(savedRole);
 
@@ -270,6 +279,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
     private ParcoursCollaboratorService parcoursService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ManagerCollaboratorService managerCollaboratorService;
     @Autowired
     private TypeCollaboratorCollaboratorService typeCollaboratorService;
 
