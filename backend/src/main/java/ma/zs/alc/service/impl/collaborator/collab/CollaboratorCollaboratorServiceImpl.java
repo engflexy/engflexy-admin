@@ -7,9 +7,12 @@ import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.CollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.CollaboratorSpecification;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.collab.InscriptionCollaboratorCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.collab.ManagerCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.collab.TypeCollaboratorCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.grpe.InscriptionCollaboratorService;
+import ma.zs.alc.service.impl.collaborator.grpe.InscriptionCollaboratorServiceImpl;
 import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
@@ -47,6 +50,9 @@ import java.util.stream.Collectors;
 @Service
 public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Collaborator, CollaboratorCriteria, CollaboratorDao> implements CollaboratorCollaboratorService {
 
+
+    @Autowired
+    private InscriptionCollaboratorServiceImpl inscriptionCollaboratorServiceImpl;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public boolean deleteById(Long id) {
@@ -148,6 +154,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         User user = dao.findByUsername(username);
         return user != null && validationCode.equals(user.getValidationCode());
     }
+
     public void deleteAssociatedLists(Long id) {
         parcoursService.deleteByCollaboratorId(id);
         managerCollaboratorService.deleteByCollaboratorId(id);
@@ -217,7 +224,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.COLLABORATOR);
         role.setCreatedAt(LocalDateTime.now());
-       /* Role savedRole = roleService.findOrSave(role);*/
+        /* Role savedRole = roleService.findOrSave(role);*/
         Role savedRole = roleService.findByAuthority(role.getAuthority());
 
         RoleUser roleUser = new RoleUser();
@@ -245,6 +252,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
             });
         }
         System.out.println("t.getValidationCode() = " + t.getValidationCode());
+        inscriptionCollaboratorService.createFreeTrial(t);
         emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code", "Your username is " + t.getUsername() + " your verification code is " + t.getValidationCode(), t.getEmail()));
         return mySaved;
     }
@@ -283,6 +291,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
     private ManagerCollaboratorService managerCollaboratorService;
     @Autowired
     private TypeCollaboratorCollaboratorService typeCollaboratorService;
+    @Autowired
+    private InscriptionCollaboratorCollaboratorService inscriptionCollaboratorService;
 
     public CollaboratorCollaboratorServiceImpl(CollaboratorDao dao) {
         super(dao);

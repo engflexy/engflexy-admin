@@ -31,6 +31,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {TranslocoModule} from "@ngneat/transloco";
 import {MatSelectModule} from "@angular/material/select";
+import {
+    InscriptionCollaboratorCollaboratorService
+} from "../../../../shared/service/collaborator/collab/InscriptionCollaboratorCollaborator.service";
 
 @Component({
     selector: 'app-create-pack',
@@ -70,12 +73,13 @@ export class CreatePackComponent implements OnInit{
 
     private _validPackageCollaboratorLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<CreatePackComponent>, private alert: FuseAlertService, private service: PackageCollaboratorCollaboratorService , @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public refDialog: MatDialogRef<CreatePackComponent>, private alert: FuseAlertService, private service: PackageCollaboratorCollaboratorService,private serviceInscriptionCollaborator: InscriptionCollaboratorCollaboratorService , @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
     ngOnInit(): void {
         this.resetForm()
+
     }
 
 
@@ -84,6 +88,12 @@ export class CreatePackComponent implements OnInit{
         this._submitted = false;
         this._errorMessages = [];
         this._validPackageCollaboratorLibelle = true;
+        if (this.activeStatus === 3) {
+            this.item.school = true; // Set to true for school
+        } else {
+            this.item.school = false; // Set to false for teacher
+        }
+
     }
 
 
@@ -228,5 +238,7 @@ export class CreatePackComponent implements OnInit{
     set activeTab(value: number) {
         this._activeTab = value;
     }
-
+    get activeStatus(): number {
+        return this.serviceInscriptionCollaborator.active_status ;
+    }
 }

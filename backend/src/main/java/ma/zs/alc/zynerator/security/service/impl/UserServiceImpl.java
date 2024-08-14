@@ -3,6 +3,7 @@ package ma.zs.alc.zynerator.security.service.impl;
 
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.dao.facade.core.chat.ConversationRepository;
+import ma.zs.alc.ws.dto.chat.ConversationResponse;
 import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.security.bean.ModelPermissionUser;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
@@ -227,6 +228,11 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         //return new ResponseEntity<>(response, HttpStatus.OK);
         return conversationId;
 
+    }
+
+    @Override
+    public List<ConversationResponse> findConversationsByUserId(Long userId) {
+        return List.of();
     }
 
     @Override

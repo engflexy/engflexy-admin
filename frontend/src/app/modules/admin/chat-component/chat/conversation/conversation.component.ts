@@ -15,7 +15,6 @@ import { Chat } from "../chat.types";
 import { ContactInfoComponent } from "../contact-info/contact-info.component";
 import { UserDto } from 'app/zynerator/security/shared/model/User.model';
 import { MessageResponse } from '../interfaces/message-response';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -24,7 +23,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [PickerComponent, NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
+    imports: [NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
 })
 export class ConversationComponent implements OnInit, OnDestroy {
     @ViewChild('messageInput') messageInput: ElementRef;
@@ -134,7 +133,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
         console.log('Message:', messageInput.value); // Log the message
         if (messageInput.value.trim() != "") {
             this._chatService.sendMessage(messageInput.value, this.currentUserId, this.selectedConversationId, this.selectedConversationReceiverId)
-            messageInput.value = ''; // Clear the textarea  
+            messageInput.value = ''; // Clear the textarea
         }
         if(this.showEmojiPicker){
             this.showEmojiPicker = !this.showEmojiPicker;
@@ -192,7 +191,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
             textArea.focus(); // Set focus on the text area
         }
     }
-    
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
