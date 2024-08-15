@@ -84,4 +84,17 @@ export class CollaboratorsComponent implements OnInit {
             }
         });
     }
+
+    deleteCollab(id: number) {
+        this.service.deleteById(id).subscribe({
+            next: (response) => {
+                console.log(`Deleted student with id: ${id}`);
+                // Code to update the UI, e.g., remove the deleted item from the list
+            },
+            error: (error) => {
+                console.error('Error deleting student:', error);
+            }
+        });
+    }
+
 }

@@ -63,15 +63,10 @@ public class User extends AuditBusinessObject implements UserDetails {
         this.email = username;
     }
 
-
-
     public User(Long id, String fullName) {
-		super();
-		this.id = id;
-		this.fullName = fullName;
-	}
+    }
 
-	public String getValidationCode() {
+    public String getValidationCode() {
         return validationCode;
     }
 

@@ -58,4 +58,9 @@ public class PackageCollaboratorCollaboratorServiceImpl extends AbstractServiceI
         return findByPackageType(false,pageable);
     }
 
+    @Override
+    public PackageCollaborator findByLibelleAndSchool(String libelle, boolean school) {
+        return dao.findByLibelleAndSchool(libelle,school);
+    }
+
 }

@@ -17,4 +17,5 @@ public interface InscriptionCollaboratorStateDao extends AbstractRepository<Insc
     @Query("SELECT NEW InscriptionCollaboratorState(item.id,item.libelle) FROM InscriptionCollaboratorState item")
     List<InscriptionCollaboratorState> findAllOptimized();
 
+    InscriptionCollaboratorState findByLibelle(String libelle);
 }

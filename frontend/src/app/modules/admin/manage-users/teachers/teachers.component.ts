@@ -64,4 +64,17 @@ export class TeachersComponent implements OnInit {
     findPaginatedByCriteria() {
 
     }
+
+    deleteProf(id: number) {
+        this.profService.deleteById(id).subscribe({
+            next: (response) => {
+                console.log(`Deleted prof with id: ${id}`);
+                // Code to update the UI, e.g., remove the deleted item from the list
+            },
+            error: (error) => {
+                console.error('Error deleting prof:', error);
+            }
+        });
+    }
+
 }

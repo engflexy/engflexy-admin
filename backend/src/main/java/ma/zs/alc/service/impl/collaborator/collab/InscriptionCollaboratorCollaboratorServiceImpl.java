@@ -15,6 +15,8 @@ import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -60,6 +62,20 @@ public class InscriptionCollaboratorCollaboratorServiceImpl extends AbstractServ
         if (inscriptionCollaborators != null && !inscriptionCollaborators.isEmpty())
             return inscriptionCollaborators.get(0);
         return null;
+
+    }
+
+    @Override
+    public void createFreeTrial(Collaborator t) {
+        InscriptionCollaborator inscriptionCollaborator = new InscriptionCollaborator();
+        inscriptionCollaborator.setCollaborator(t);
+        String libelle = t.getTypeCollaborator().getLibelle();
+        boolean school = "school".equals(libelle);
+        inscriptionCollaborator.setPackageCollaborator(packageCollaboratorService.findByLibelleAndSchool("free", school));
+        inscriptionCollaborator.setInscriptionCollaboratorState(inscriptionCollaboratorStateService.findByLibelle("free"));
+        inscriptionCollaborator.setStartDate(LocalDateTime.now());
+        inscriptionCollaborator.setEndDate(inscriptionCollaborator.getStartDate().plusDays(7));
+        dao.save(inscriptionCollaborator);
 
     }
 

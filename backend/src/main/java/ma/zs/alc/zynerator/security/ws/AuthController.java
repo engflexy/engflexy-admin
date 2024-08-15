@@ -33,6 +33,8 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
+  JwtUtils jwtUtils;
+  @Autowired
   UserDao userRepository;
 
   @Autowired
@@ -41,8 +43,7 @@ public class AuthController {
   @Autowired
   PasswordEncoder encoder;
 
-  @Autowired
-  JwtUtils jwtUtils;
+
 
   @PostMapping("login")
   public ResponseEntity<?> authenticateUser( @RequestBody LoginRequest loginRequest) {

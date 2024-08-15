@@ -29,7 +29,7 @@
                     <input required type="number" matInput placeholder="PriceBaseOld"  [(ngModel)]="item.priceBaseOld"  name="priceBaseOld">
                 </mat-form-field>
 
-
+         <ng-container  *ngIf="activeStatus === 3">
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>PriceLogo</mat-label>
                     <input required type="number" matInput placeholder="PriceLogo"  [(ngModel)]="item.priceLogo"  name="priceLogo">
@@ -40,7 +40,10 @@
                     <mat-label>PriceLogoOld</mat-label>
                     <input required type="number" matInput placeholder="PriceLogoOld"  [(ngModel)]="item.priceLogoOld"  name="priceLogoOld">
                 </mat-form-field>
+         </ng-container>
      </div>
+     <ng-container  *ngIf="activeStatus === 3">
+
      <div class="flex gap-4">
 
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
@@ -68,10 +71,11 @@
 
 
      </div>
-     <mat-checkbox class="w-full"  [(ngModel)]="item.school"
+     </ng-container>
+   <!--  <mat-checkbox class="w-full"  [(ngModel)]="item.school"
                    name="color">
          {{ item.school ? 'For school' : 'For teacher' }}
-     </mat-checkbox>
+     </mat-checkbox>-->
             </div>
 
 

@@ -11,12 +11,14 @@ import ma.zs.alc.dao.specification.core.collab.CollaboratorSpecification;
 import ma.zs.alc.service.facade.admin.collab.CollaboratorAdminService;
 import ma.zs.alc.service.facade.admin.collab.TypeCollaboratorAdminService;
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService;
+import ma.zs.alc.service.facade.collaborator.collab.ManagerCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.inscriptionref.LangueCollaboratorService;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
@@ -139,7 +141,12 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
     public boolean changePassword(String username, String newPassword) {
         return userService.changePassword(username, newPassword);
     }
-
+    public void deleteAssociatedLists(Long id) {
+        parcoursService.deleteByCollaboratorId(id);
+        managerCollaboratorService.deleteByCollaboratorId(id);
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserId(id);
+    }
     public List<Collaborator> findAllOptimized() {
         return dao.findAllOptimized();
     }
@@ -150,10 +157,12 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
     private @Autowired ModelPermissionUserService modelPermissionUserService;
     @Autowired
     private LangueCollaboratorService langueService;
-
+    @Autowired
+    private ManagerCollaboratorService managerCollaboratorService;
     @Autowired
     private ParcoursAdminService parcoursService;
     @Autowired

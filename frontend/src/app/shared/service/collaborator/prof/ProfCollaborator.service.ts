@@ -11,6 +11,7 @@ import {Observable, ReplaySubject, tap} from "rxjs";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {UserDto} from "../../../../zynerator/security/shared/model/User.model";
+import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
 
 
 @Injectable({
@@ -70,7 +71,13 @@ export class ProfCollaboratorService extends AbstractService<ProfDto, ProfCriter
         return this.http.patch(`${this.API}update-lock-status/${userId}`, { accountNonLocked });
     }
 
+    create(prof: ProfDto): Observable<ProfDto> {
+        return this.http.post<ProfDto>(this.API + 'create', prof);
+    }
 
+    deleteById(id: number): Observable<number> {
+        return this.http.delete<number>(`${this.API}id/${id}`);
+    }
 
     get(id: number): Observable<ProfDto> {
         return this.http.get<ProfDto>(`${this.API}id/${id}`).pipe(
