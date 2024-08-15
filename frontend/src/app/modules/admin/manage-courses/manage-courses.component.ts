@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 import {ParcoursCriteria} from "../../../shared/criteria/course/ParcoursCriteria.model";
 import {FormsModule} from "@angular/forms";
 import {ParcoursCollaboratorService} from "../../../shared/service/collaborator/course/ParcoursCollaborator.service";
+import {TokenService} from "../../../zynerator/security/shared/service/Token.service";
 
 @Component({
     selector: 'app-manage-courses',
@@ -38,7 +39,8 @@ export class ManageCoursesComponent implements OnInit {
 
     constructor(private parcourService: ParcoursCollaboratorService,
                 private router: Router,
-                private _matDialog: MatDialog,) {
+                private _matDialog: MatDialog,
+                private tokenService :TokenService) {
     }
 
     public findPaginatedByCriteria() {
@@ -83,6 +85,9 @@ export class ManageCoursesComponent implements OnInit {
             this.personalParcours = res;
             console.log(this.personalParcours);
         }, error => console.log(error));
+
+
+
 
         this.parcourService.findByForExgFlexy().subscribe(res => {
             this.catalogParcours = res;

@@ -45,7 +45,7 @@
                         <div class="text-secondary font-medium text-md">{{item.nombreCours}} course includes</div>
                     </div>
 
-                    <div *ngIf ="athenticatedUser.id === item.collaborator.id" class="flex flex-grow  items-center flex-row-reverse">
+                    <div *ngIf ="id === item.collaborator.id" class="flex flex-grow  items-center flex-row-reverse">
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                             <mat-icon>more_vert</mat-icon>
                         </button>
@@ -80,7 +80,7 @@
                                       svgIcon="heroicons_solid:magnifying-glass-circle"></mat-icon>
                         </button>
 
-                        <a *ngIf ="athenticatedUser.id === item.collaborator.id"   class="group cursor-pointer mb-5 relative  inline-block text-sm font-medium text-orange-600 focus:outline-none focus:ring active:text-orange-500"
+                        <a *ngIf ="id === item.collaborator.id"   class="group cursor-pointer mb-5 relative  inline-block text-sm font-medium text-orange-600 focus:outline-none focus:ring active:text-orange-500"
                            (click)="createCourse()">
                             <span
                                 class="absolute inset-0 translate-x-0 translate-y-0 bg-orange-600 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5"></span>
@@ -160,7 +160,7 @@
                                                         {{element?.nombreSectionFinalise}} sections includes
                                                     </td>
                                                     <td   class="px-4 py-4 text-sm whitespace-nowrap">
-                                                        <div  *ngIf ="athenticatedUser.id === item.collaborator.id"  class="flex items-center gap-x-6">
+                                                        <div  *ngIf ="id === item.collaborator.id"  class="flex items-center gap-x-6">
                                                             <button (click)="deleteCourse()"
                                                                 class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"

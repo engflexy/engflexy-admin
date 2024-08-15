@@ -14,6 +14,9 @@ import {generateRandomString} from "../../../../../shared/constant/global-funsct
 import {FuseAlertService} from "../../../../../../@fuse/components/alert";
 import {ImagesService} from "../../../../../shared/service/public/images.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {CollaboratorDto} from "../../../../../shared/model/vocab/Collaborator.model";
+import {ParcoursDto} from "../../../../../shared/model/course/Parcours.model";
+import {TokenService} from "../../../../../zynerator/security/shared/service/Token.service";
 
 @Component({
     selector: 'app-create-course',
@@ -40,7 +43,8 @@ export class CreateCourseComponent {
                 private imageService: ImagesService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private _matDialogRef: MatDialogRef<CreateCourseComponent>,) {
+                private _matDialogRef: MatDialogRef<CreateCourseComponent>,
+                private tokenService: TokenService) {
     }
 
     get courses(): CoursDto[] {
@@ -92,7 +96,7 @@ export class CreateCourseComponent {
 
     save() {
         this.item.code = this.item?.libelle?.at(0)?.toUpperCase()
-
+       // this.item.parcours = new ParcoursDto(this.route.snapshot.params[ Number(this.tokenService.getUserId())])
         this.courseService.save()
             .subscribe(res => {
                 console.log(res)

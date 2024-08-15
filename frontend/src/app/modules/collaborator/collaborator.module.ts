@@ -102,7 +102,7 @@ import { CollaboratorSubscriptionComponent } from './collaborator-subscription/c
         EmptyConversationComponent,
         ConversationComponent,
         ContactInfoComponent,
-        ChatsComponent, SafePipe, CollaboratorSubscriptionComponent,
+        ChatsComponent,  CollaboratorSubscriptionComponent,
 
     ],
     imports: [
@@ -144,7 +144,7 @@ import { CollaboratorSubscriptionComponent } from './collaborator-subscription/c
     ],
     exports: [
         ScheduleComponent,
-        SafePipe
+
     ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
         Location]
