@@ -126,6 +126,9 @@ export class EditComponent implements OnInit{
             this._packageCollaboratorsFilter = this.packageCollaborators
         }
     }
+    get activeStatus(): number {
+        return this.service.active_status ;
+    }
 
     calculatePrice() {
         const timer  = setInterval(s => {

@@ -4,6 +4,8 @@ import ma.zs.alc.zynerator.repository.AbstractRepository;
 import ma.zs.alc.bean.core.collab.InscriptionCollaborator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,4 +34,6 @@ public interface InscriptionCollaboratorDao extends AbstractRepository<Inscripti
 
     Page<InscriptionCollaborator> findByCollaboratorTypeCollaboratorId(Long id, Pageable pageable);
 
+    @Query("SELECT  item FROM  InscriptionCollaborator  item WHERE item.inscriptionCollaboratorState.code != :pending ")
+    List<InscriptionCollaborator> findNotPending(@Param("pending") String pending);
 }
