@@ -126,10 +126,11 @@ public class ParcoursRestCollaborator extends AbstractController<Parcours, Parco
         return listResponseEntity.getBody();
     }
 
+
     @Operation(summary = "find for current collaborator")
-    @GetMapping("current/id/{id}")
-    public List<ParcoursDto> findForCurrentCollaborator(@PathVariable Long id) {
-        List<Parcours> forCurrentCollaborator = service.findForCurrentCollaborator(id);
+    @GetMapping("current/username/{username}")
+    public List<ParcoursDto> findForCurrentCollaborator(@PathVariable String username) {
+        List<Parcours> forCurrentCollaborator = service.findForCurrentCollaborator(username);
         ResponseEntity<List<ParcoursDto>> listResponseEntity = getListResponseEntity(forCurrentCollaborator);
         return listResponseEntity.getBody();
     }

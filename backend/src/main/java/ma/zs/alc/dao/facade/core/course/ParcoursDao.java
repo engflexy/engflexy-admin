@@ -13,6 +13,7 @@ public interface ParcoursDao extends AbstractRepository<Parcours,Long>  {
     Parcours findByCode(String code);
     int deleteByCode(String code);
 
+    List<Parcours> findByCollaboratorUsername(String username);
     List<Parcours> findByCollaboratorId(Long id);
     int deleteByCollaboratorId(Long id);
     long countByCollaboratorId(Long id);

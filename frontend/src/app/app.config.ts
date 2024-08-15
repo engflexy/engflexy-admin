@@ -13,11 +13,13 @@ import {mockApiServices} from 'app/mock-api';
 import {DatePipe} from "@angular/common";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateFormatInterceptor} from "./core/interceptors/DateFormatInterceptor";
+import {SafePipe} from "./shared/utils/safe.pipe";
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideAnimations(),
         DatePipe,
+        SafePipe,
         provideHttpClient(),
         provideRouter(appRoutes,
             withPreloading(PreloadAllModules),
