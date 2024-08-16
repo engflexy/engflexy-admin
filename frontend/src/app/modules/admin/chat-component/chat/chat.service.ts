@@ -26,6 +26,7 @@ export class ChatService {
     public stompConvSub: Subscription | undefined;
     //public _userConversations: ConversationResponse[] = [];
     public _userConversations: BehaviorSubject<ConversationResponse[]> = new BehaviorSubject<ConversationResponse[]>([]);
+    public lastMessage: MessageResponse;
 
     currentUserId: number;
 
@@ -83,8 +84,7 @@ export class ChatService {
 
                     if (res.type == 'ALL') {
                         const filteredConversations = res.data.filter((conversation: ConversationResponse) => conversation.lastMessage != null);
-
-                        this._userConversations.next(filteredConversations); 
+                        this._userConversations.next(filteredConversations);
 
                         /*
                         const currentConversation = this._selectedConversationSubject.value;
@@ -108,7 +108,7 @@ export class ChatService {
             );
 
             await this.stomp.send('user', { userId });
-            console.log("_userConversations" + this._userConversations)
+            //console.log("_userConversations" + this._userConversations)
         } catch (error) {
             console.error('Error subscribing to user conversation:', error);
         }
@@ -134,7 +134,7 @@ export class ChatService {
             this.getConversationIdByUser1IdAndUser2Id(receiverId, currentUserId)
                 .subscribe(async (res: number) => {
                     this._selectedConversationId = res;
-                    console.log(res);
+                    //console.log(res);
                     await this.setConversation();
                     resolve();
                 });
@@ -213,8 +213,9 @@ export class ChatService {
     }
 
     private addMessageToSelectedConversation(message: MessageResponse): void {
+        this.lastMessage = message;
+        console.log("last: " + this.lastMessage.message)
         //message.senderId = this.currentUserId;
-        console.log(message)
         const updatedConversation = [...this._selectedConversationSubject.value, message];
         this.setSelectedConversation(updatedConversation);
     }
@@ -223,6 +224,14 @@ export class ChatService {
         return this._httpClient.get<number>('http://localhost:8036/api/user/conversation/user1Id/' + user1Id + '/user2Id/' + user2Id);
     }
 
+    updateConversationSeenToFalseById(id: number): Observable<boolean> {
+        return this._httpClient.post<boolean>(`http://localhost:8036/api/collaborator/conversation/seen/false/id/${id}`, null);
+    }
+
+    updateConversationSeenToTrueById(id: number): Observable<boolean> {
+        return this._httpClient.post<boolean>(`http://localhost:8036/api/collaborator/conversation/seen/true/id/${id}`, null);
+    }
+    
     resetChat(): void {
         // Reset all BehaviorSubjects to their initial state
         this._chats.next([]);
@@ -233,24 +242,24 @@ export class ChatService {
         //this._users.next([]);
         this._selectedConversationSubject.next([]);
         this._userConversations.next([]);
-    
+
         // Reset any other related state variables
         this._selectedConversationReceiverId = -1;
         this._selectedConversationReceiverName = '';
         this._selectedConversationId = -1;
-    
+
         // Unsubscribe from any active WebSocket subscriptions
         if (this.stompConvSub) {
             this.stompConvSub.unsubscribe();
             this.stompConvSub = undefined;
         }
-    
+
         // Optionally, clear the current user avatar and other states
         this.currentUserAvatar = "https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png";
-    
+
         console.log('Chat service has been reset');
     }
-    
+
 
 
 
