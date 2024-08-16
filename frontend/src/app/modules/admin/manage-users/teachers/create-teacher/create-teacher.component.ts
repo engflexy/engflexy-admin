@@ -60,7 +60,7 @@ export class CreateTeacherComponent {
         // @ts-ignore
         this.prof.collaborator = this.auth.authenticatedUser
         console.log(this.prof)
-        this.profCollaboratorService.save()
+        this.profCollaboratorService.create(this.prof)
             .subscribe(res => {
                 console.log(res)
                 this.form.enable()
@@ -72,4 +72,5 @@ export class CreateTeacherComponent {
                 this.form.enable()
             })
     }
+
 }

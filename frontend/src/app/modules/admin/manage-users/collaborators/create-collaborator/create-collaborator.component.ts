@@ -56,7 +56,7 @@ export class CreateCollaboratorComponent {
         this.item.typeCollaborator.libelle = this.form.get('type').value
         this.item.username = this.item.email
         console.log(this.item)
-        this.service.save()
+        this.service.create(this.item)
             .subscribe(res => {
                 console.log(res)
                 this.form.enable()
@@ -68,4 +68,6 @@ export class CreateCollaboratorComponent {
                 this.form.enable()
             })
     }
+
+
 }

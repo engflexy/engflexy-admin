@@ -18,7 +18,8 @@ public class Collaborator extends User {
         super(username);
     }
     public Collaborator(Long id, String fullName) {
-        super(id, fullName);
+        this.id = id;
+        this.fullName=fullName;
     }
 
     @Column(length = 500)

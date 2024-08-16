@@ -27,7 +27,9 @@ public class CollaboratorDto  extends UserDto {
     private Collection<Role> roles;
     private PackageCollaboratorDto packageCollaborator;
 
-
+    public CollaboratorDto(){
+    super();
+    }
 
     @Log
     public String getLibelle(){

@@ -1,6 +1,7 @@
 package ma.zs.alc.ws.facade.collaborator.prof;
 
 import io.swagger.v3.oas.annotations.Operation;
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
@@ -115,7 +116,10 @@ public class ProfRestCollaborator extends AbstractController<Prof, ProfDto, Prof
     public Prof save(@RequestBody Prof dto) throws Exception {
         return service.create(dto);
     }
-
+    @PostMapping("create")
+    public Prof create(@RequestBody Prof dto) throws Exception {
+        return service.create(dto);
+    }
     @Operation(summary = "Updates the specified  prof")
     @PutMapping("")
     public Prof update(@RequestBody Prof dto) throws Exception {

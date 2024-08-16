@@ -41,7 +41,7 @@
 
 
             </div>
-            <div class="flex gap-4">
+            <div class="flex gap-4" *ngIf="activeStatus === 1">
                 <div>
                     <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.logo" name="logo">
                         {{ item.logo ? 'personal logo' : 'default logo' }}
@@ -65,7 +65,6 @@
                 </div>
 
             </div>
-
             <div class="flex gap-4">
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>Price</mat-label>

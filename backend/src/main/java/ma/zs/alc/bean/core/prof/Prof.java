@@ -112,7 +112,7 @@ public class Prof extends User {
         this.recommendTeachers = recommendTeachers;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "type_teacher")
     public TypeTeacher getTypeTeacher() {
         return this.typeTeacher;

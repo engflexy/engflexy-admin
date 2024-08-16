@@ -19,6 +19,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {ParcoursCollaboratorService} from "../../../../shared/service/collaborator/course/ParcoursCollaborator.service";
 import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
 import {CollaboratorDto} from "../../../../shared/model/vocab/Collaborator.model";
+import {TokenService} from "../../../../zynerator/security/shared/service/Token.service";
 
 @Component({
     selector: 'app-create-material',
@@ -43,11 +44,13 @@ export class CreateMaterialComponent {
     selectedFile: File | null = null;
     showLoader: boolean = false
 
+
     constructor(private parcourService: ParcoursCollaboratorService,
                 private alert: FuseAlertService,
                 private auth: AuthService,
                 public _matDialogRef: MatDialogRef<CreateMaterialComponent>,
-                private imageService: ImagesService) {
+                private imageService: ImagesService,
+                private tokenService: TokenService) {
     }
 
     get item(): ParcoursDto {
@@ -99,7 +102,7 @@ export class CreateMaterialComponent {
 
     save() {
         this.item.code = this.item?.libelle?.at(0)?.toUpperCase()
-        this.item.collaborator =new CollaboratorDto( this.auth.authenticatedUser.id)
+        this.item.collaborator =new CollaboratorDto( Number(this.tokenService.getUserId()))
         this.parcourService.save()
             .subscribe(res => {
                 console.log(res)

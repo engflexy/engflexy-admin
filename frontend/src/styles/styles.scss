@@ -358,6 +358,7 @@
     background-color: rgb(16 185 129 / var(--tw-bg-opacity)) !important;
 }
 
+
 .container-paid {
     background-color: rgb(209 250 229 / 0.6) !important;
 }
@@ -365,4 +366,19 @@
 .text-paid {
     --tw-text-opacity: 1 !important;
     color: rgb(16 185 129 / var(--tw-text-opacity)) !important;
+}
+
+//free status
+.type-free {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(59 130 246 / var(--tw-bg-opacity)) !important;
+}
+
+.container-free {
+    background-color: rgb(219 234 254 / 0.6) !important;
+}
+
+.text-free {
+    --tw-text-opacity: 1 !important;
+    color: rgb(59 130 246 / var(--tw-text-opacity)) !important;
 }

@@ -21,6 +21,7 @@ import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
@@ -110,11 +111,23 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         List<Prof> allOptimized = dao.findAllOptimized();
         return allOptimized;
     }
-
+    public void deleteAssociatedLists(Long id) {
+        trancheHoraireProfService.deleteByProfId(id);
+        recommendTeacherService.deleteByProfId(id);
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserId(id);
+    }
 
     @Override
     public Prof create(Prof t) {
         if (findByUsername(t.getUsername()) != null || t.getPassword() == null) return null;
+
+        // Save the associated TypeTeacher if it's not already saved
+        if (t.getTypeTeacher() != null && t.getTypeTeacher().getId() == null) {
+            t.setTypeTeacher(typeTeacherService.create(t.getTypeTeacher()));
+        }
+
+        // Proceed with the rest of the Prof creation logic
         t.setPassword(userService.cryptPassword(t.getPassword()));
         t.setEnabled(true);
         t.setAccountNonExpired(true);
@@ -125,7 +138,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.TEACHER);
         role.setCreatedAt(LocalDateTime.now());
-        Role savedRole = roleService.findOrSave(role);
+        Role savedRole = roleService.findByAuthority(role.getAuthority());
         RoleUser roleUser = new RoleUser();
         roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null)
@@ -155,6 +168,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
 
         return mySaved;
     }
+
 
     @Override
     public Prof update(Prof t) {
@@ -249,6 +263,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
     private @Autowired ModelPermissionUserService modelPermissionUserService;
 
     @Autowired
