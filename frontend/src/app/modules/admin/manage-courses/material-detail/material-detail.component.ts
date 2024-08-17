@@ -19,6 +19,7 @@ import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {EditCourseComponent} from "./edit-course/edit-course.component";
 import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
 import {UserDto} from "../../../../zynerator/security/shared/model/User.model";
+import {TokenService} from "../../../../zynerator/security/shared/service/Token.service";
 
 @Component({
     selector: 'app-material-detail',
@@ -40,6 +41,7 @@ import {UserDto} from "../../../../zynerator/security/shared/model/User.model";
 export class MaterialDetailComponent implements OnInit {
 
     athenticatedUser: UserDto;
+     id: number;
     constructor(private router: Router,
                 private parcourService: ParcoursCollaboratorService,
                 private courseService: CoursCollaboratorService,
@@ -47,7 +49,8 @@ export class MaterialDetailComponent implements OnInit {
                 private auth : AuthService,
                 private _fuseConfirmation: FuseConfirmationService,
                 private alert: FuseAlertService,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private tokenService: TokenService ) {
     }
 
     get courses(): CoursDto[] {
@@ -75,7 +78,8 @@ export class MaterialDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.athenticatedUser = this.auth.authenticatedUser
+       // this.athenticatedUser = this.auth.authenticatedUser
+         this.id = Number (this.tokenService.getUserId())
         const level = this.route.snapshot.params.level
         if (level) {
             const parcoursDto: ParcoursDto = new ParcoursDto()

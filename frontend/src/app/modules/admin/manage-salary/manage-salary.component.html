@@ -1,5 +1,5 @@
 <div class="w-full overflow-y-auto flex  items-center content-center justify-center">
-    <div class="w-full bg-white dark:bg-gray-700 shadow-md max-w-5xl h-auto min-h-screen">
+    <div class="w-full bg-white dark:bg-gray-700 shadow-md max-w-6xl h-auto min-h-screen">
         <header class="bg-gray-50 dark:bg-gray-600 w-full">
             <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                 <div class="sm:flex sm:items-center sm:justify-between">
@@ -101,6 +101,11 @@
                                     </th>
 
                                     <th scope="col"
+                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Collaborator
+                                </th>
+
+                                    <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         date
                                     </th>
@@ -130,6 +135,8 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 <ng-container *ngFor="let item of criteria?.list">
+
+
                                     <tr>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
@@ -147,6 +154,10 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                            {{ item?.prof?.collaborator?.fullName }}
+                                        </td>
+
 
                                         <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             {{ item?.mois + 1 }}/{{ item?.annee }}

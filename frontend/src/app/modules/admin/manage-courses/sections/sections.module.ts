@@ -75,7 +75,7 @@ import { HomeworkComponent } from './homework/homework.component';
         TrueOrFalseComponent,
         WriteCorrectFormComponent,
         EditAnswersComponent,
-        HomeworkComponent
+        HomeworkComponent,SafePipe
     ],
     imports: [
         SectionsRoutes,
@@ -110,7 +110,7 @@ import { HomeworkComponent } from './homework/homework.component';
 
 
     ],
-    exports: [],
+    exports: [SafePipe],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

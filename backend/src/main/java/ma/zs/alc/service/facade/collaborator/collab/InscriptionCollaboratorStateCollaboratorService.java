@@ -10,7 +10,5 @@ import ma.zs.alc.zynerator.service.IService;
 public interface InscriptionCollaboratorStateCollaboratorService extends  IService<InscriptionCollaboratorState,InscriptionCollaboratorStateCriteria>  {
 
 
-
-
-
+    InscriptionCollaboratorState findByLibelle(String free);
 }

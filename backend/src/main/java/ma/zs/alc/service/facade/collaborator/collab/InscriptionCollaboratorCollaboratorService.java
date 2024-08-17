@@ -1,5 +1,6 @@
 package ma.zs.alc.service.facade.collaborator.collab;
 
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.collab.InscriptionCollaborator;
 import ma.zs.alc.dao.criteria.core.collab.InscriptionCollaboratorCriteria;
 import ma.zs.alc.zynerator.service.IService;
@@ -37,4 +38,6 @@ public interface InscriptionCollaboratorCollaboratorService extends IService<Ins
 
 
     InscriptionCollaborator findForCurrentCollaborator(Long id);
+
+    void createFreeTrial(Collaborator t);
 }

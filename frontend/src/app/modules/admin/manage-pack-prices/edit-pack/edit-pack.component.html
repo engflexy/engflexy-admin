@@ -1,6 +1,9 @@
 <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
 
     <div class="w-full">
+        <h1 class="font-bold  text-center text-gray-800 text-2xl mb-7 ">
+            Edit Pack
+        </h1>
         <div class="flex gap-4">
         <mat-form-field class="flex-auto w-full fuse-mat-dense">
             <mat-label>libelle</mat-label>
@@ -29,6 +32,7 @@
             <input required type="number" matInput placeholder="PriceBaseOld" [(ngModel)]="item.priceBaseOld"
                    name="priceBaseOld">
         </mat-form-field>
+            <ng-container  *ngIf="activeStatus === 3">
 
 
         <mat-form-field class="flex-auto w-full fuse-mat-dense">
@@ -43,8 +47,10 @@
             <input required type="number" matInput placeholder="PriceLogoOld" [(ngModel)]="item.priceLogoOld"
                    name="priceLogoOld">
         </mat-form-field>
+            </ng-container>
 
         </div>
+        <ng-container  *ngIf="activeStatus === 3">
         <div class="flex gap-4">
         <mat-form-field class="flex-auto w-full fuse-mat-dense">
             <mat-label>PriceColor</mat-label>
@@ -74,6 +80,11 @@
         </mat-form-field>
 
         </div>
+        <!--<mat-checkbox class="w-full" [(ngModel)]="item.school" name="school">
+            {{ item.school ? 'For school' : 'For teacher' }}
+        </mat-checkbox>-->
+        </ng-container>
+
     </div>
 
 </mat-dialog-content>

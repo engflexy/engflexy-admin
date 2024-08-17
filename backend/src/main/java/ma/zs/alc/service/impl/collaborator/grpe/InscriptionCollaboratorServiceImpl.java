@@ -3,6 +3,7 @@ package ma.zs.alc.service.impl.collaborator.grpe;
 
 import com.itextpdf.text.log.Logger;
 import com.itextpdf.text.log.LoggerFactory;
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.bean.core.inscriptionref.EtatInscription;
 import ma.zs.alc.dao.criteria.core.grpe.InscriptionCriteria;
@@ -37,6 +38,7 @@ public class InscriptionCollaboratorServiceImpl extends AbstractServiceImpl<Insc
         }
         return null;
     }
+
 
 
 

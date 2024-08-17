@@ -3,7 +3,7 @@ import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {RoleService} from "../../../../zynerator/security/shared/service/Role.service";
 import {Router} from "@angular/router";
 import {StringUtilService} from "../../../../zynerator/util/StringUtil.service";
@@ -63,7 +63,8 @@ import {MatSelectModule} from "@angular/material/select";
         TranslocoModule,
         MatDatepickerModule,
         DatePipe,
-        MatSelectModule
+        MatSelectModule,
+        NgIf
     ],
 })
 export class EditComponent implements OnInit{
@@ -105,6 +106,7 @@ export class EditComponent implements OnInit{
         if (this.item.endDate) {
             this.item.endDate = new Date(this.item.endDate);
         }
+        console.log(this.item)
     }
 
     displayPackageCollaborator(item: PackageCollaboratorDto): string {
@@ -123,6 +125,9 @@ export class EditComponent implements OnInit{
         } else {
             this._packageCollaboratorsFilter = this.packageCollaborators
         }
+    }
+    get activeStatus(): number {
+        return this.service.active_status ;
     }
 
     calculatePrice() {

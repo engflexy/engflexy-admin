@@ -1,6 +1,7 @@
 package ma.zs.alc.service.impl.collaborator.prof;
 
 
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.inscriptionref.Langue;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
@@ -20,8 +21,11 @@ import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
+import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
+import ma.zs.alc.zynerator.transverse.emailling.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -107,11 +111,23 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         List<Prof> allOptimized = dao.findAllOptimized();
         return allOptimized;
     }
-
+    public void deleteAssociatedLists(Long id) {
+        trancheHoraireProfService.deleteByProfId(id);
+        recommendTeacherService.deleteByProfId(id);
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserId(id);
+    }
 
     @Override
     public Prof create(Prof t) {
         if (findByUsername(t.getUsername()) != null || t.getPassword() == null) return null;
+
+        // Save the associated TypeTeacher if it's not already saved
+        if (t.getTypeTeacher() != null && t.getTypeTeacher().getId() == null) {
+            t.setTypeTeacher(typeTeacherService.create(t.getTypeTeacher()));
+        }
+
+        // Proceed with the rest of the Prof creation logic
         t.setPassword(userService.cryptPassword(t.getPassword()));
         t.setEnabled(true);
         t.setAccountNonExpired(true);
@@ -122,7 +138,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.TEACHER);
         role.setCreatedAt(LocalDateTime.now());
-        Role savedRole = roleService.findOrSave(role);
+        Role savedRole = roleService.findByAuthority(role.getAuthority());
         RoleUser roleUser = new RoleUser();
         roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null)
@@ -148,8 +164,11 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
                 recommendTeacherService.create(element);
             });
         }
+        emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code","Your username is "+t.getUsername()+" your verification code is "+t.getValidationCode(),t.getEmail()));
+
         return mySaved;
     }
+
 
     @Override
     public Prof update(Prof t) {
@@ -176,16 +195,75 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         return dao.findByUsername(username);
     }
 
+    @Override
     public boolean changePassword(String username, String newPassword) {
-        return userService.changePassword(username, newPassword);
+        Prof prof = findByUsername(username);
+        if (prof != null) {
+            prof.setPassword(newPassword);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updatePasswordChangedStatus(Long id, boolean passwordChanged) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setPasswordChanged(passwordChanged);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setCredentialsNonExpired(credentialsNonExpired);
+            dao.save(prof);
+            return true;
+        }
+        return false;
     }
 
+    @Override
+    public boolean updateAccountStatus(Long id, boolean enabled) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setEnabled(enabled);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setAccountNonExpired(accountNonExpired);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateAccountLockStatus(Long id, boolean accountNonLocked) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setAccountNonLocked(accountNonLocked);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
     public void configure() {
         super.configure(Prof.class, ProfSpecification.class);
     }
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
     private @Autowired ModelPermissionUserService modelPermissionUserService;
 
     @Autowired
@@ -202,7 +280,8 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     private TrancheHoraireProfCollaboratorService trancheHoraireProfService;
     @Autowired
     private LangueCollaboratorService langueService;
-
+    @Autowired
+    private EmailService emailService;
     public ProfCollaboratorServiceImpl(ProfDao dao) {
         super(dao);
     }

@@ -25,6 +25,7 @@ public class UserDto extends AuditBaseDto {
     protected String phone;
     protected String avatar;
     protected LangueDto langue;
+    protected String validationCode;
 
     protected List<ModelPermissionUserDto> modelPermissionUsers;
     protected List<RoleUserDto> roleUsers;
@@ -163,5 +164,13 @@ public class UserDto extends AuditBaseDto {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getValidationCode() {
+        return validationCode;
+    }
+
+    public void setValidationCode(String validationCode) {
+        this.validationCode = validationCode;
     }
 }

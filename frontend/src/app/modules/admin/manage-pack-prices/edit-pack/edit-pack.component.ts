@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {RoleService} from "../../../../zynerator/security/shared/service/Role.service";
 import {Router} from "@angular/router";
 import {StringUtilService} from "../../../../zynerator/util/StringUtil.service";
@@ -15,6 +15,13 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {TranslocoModule} from "@ngneat/transloco";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {
+    PackageCollaboratorAdminService
+} from "../../../../shared/service/admin/collab/PackageCollaboratorAdmin.service";
+import {
+    InscriptionCollaboratorCollaboratorService
+} from "../../../../shared/service/collaborator/collab/InscriptionCollaboratorCollaborator.service";
 
 @Component({
     selector: 'app-edit-pack',
@@ -25,7 +32,9 @@ import {TranslocoModule} from "@ngneat/transloco";
         FormsModule,
         MatDialogModule,
         MatButtonModule,
-        TranslocoModule
+        TranslocoModule,
+        MatCheckboxModule,
+        NgIf
     ],
     styleUrls: ['./edit-pack.component.scss']
 })
@@ -46,15 +55,22 @@ export class EditPackComponent implements OnInit{
 
     private _validPackageCollaboratorLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<EditPackComponent>, private alert: FuseAlertService, private service: PackageCollaboratorCollaboratorService , @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public refDialog: MatDialogRef<EditPackComponent>,private serviceInscriptionCollaborator: InscriptionCollaboratorCollaboratorService , private alert: FuseAlertService, private service: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 
     ngOnInit(): void {
-        console.log(this.item)
+        console.log(this.item.school)
+        this.load();
     }
 
-
+    public load(){
+        if (this.activeStatus === 3) {
+            this.item.school = true; // Set to true for school
+        } else {
+            this.item.school = false; // Set to false for teacher
+        }
+    }
 
 
 
@@ -85,7 +101,9 @@ export class EditPackComponent implements OnInit{
         });
     }
 
-
+    get activeStatus(): number {
+        return this.serviceInscriptionCollaborator.active_status ;
+    }
 
 
 

@@ -53,4 +53,8 @@ public class InscriptionCollaboratorStateCollaboratorServiceImpl extends Abstrac
         super(dao);
     }
 
+    @Override
+    public InscriptionCollaboratorState findByLibelle(String libelle) {
+        return dao.findByLibelle(libelle);
+    }
 }

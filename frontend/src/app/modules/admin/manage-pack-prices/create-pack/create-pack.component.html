@@ -1,0 +1,91 @@
+<mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
+ <div class="w-full">
+     <h1 class="font-bold  text-center text-gray-800 text-2xl mb-7 ">
+         Create Pack
+     </h1>
+     <div class="flex gap-4">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>libelle</mat-label>
+                    <input required type="text" matInput autocomplete="off" placeholder="Libelle"  [(ngModel)]="item.libelle"  name="libelle">
+                </mat-form-field>
+
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>NbrStudentBase</mat-label>
+                    <input required type="number" matInput placeholder="NbrStudentBase"  [(ngModel)]="item.nbrStudentBase"  name="nbrStudentBase">
+                </mat-form-field>
+
+     </div>
+     <div class="flex gap-4">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceBase</mat-label>
+                    <input required type="number" matInput placeholder="PriceBase"  [(ngModel)]="item.priceBase"  name="priceBase">
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceBaseOld</mat-label>
+                    <input required type="number" matInput placeholder="PriceBaseOld"  [(ngModel)]="item.priceBaseOld"  name="priceBaseOld">
+                </mat-form-field>
+
+         <ng-container  *ngIf="activeStatus === 3">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceLogo</mat-label>
+                    <input required type="number" matInput placeholder="PriceLogo"  [(ngModel)]="item.priceLogo"  name="priceLogo">
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceLogoOld</mat-label>
+                    <input required type="number" matInput placeholder="PriceLogoOld"  [(ngModel)]="item.priceLogoOld"  name="priceLogoOld">
+                </mat-form-field>
+         </ng-container>
+     </div>
+     <ng-container  *ngIf="activeStatus === 3">
+
+     <div class="flex gap-4">
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceColor</mat-label>
+                    <input required type="number" matInput placeholder="PriceColor"  [(ngModel)]="item.priceColor"  name="priceColor">
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceColorOld</mat-label>
+                    <input required type="number" matInput placeholder="PriceColorOld"  [(ngModel)]="item.priceColorOld"  name="priceColorOld">
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceBannerAd</mat-label>
+                    <input required type="number" matInput placeholder="PriceBannerAd"  [(ngModel)]="item.priceBannerAd"  name="priceBannerAd">
+                </mat-form-field>
+
+
+                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                    <mat-label>PriceBannerAdOld</mat-label>
+                    <input required type="number" matInput placeholder="PriceBannerAdOld"  [(ngModel)]="item.priceBannerAdOld"  name="priceBannerAdOld">
+                </mat-form-field>
+
+
+     </div>
+     </ng-container>
+   <!--  <mat-checkbox class="w-full"  [(ngModel)]="item.school"
+                   name="color">
+         {{ item.school ? 'For school' : 'For teacher' }}
+     </mat-checkbox>-->
+            </div>
+
+
+
+
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button (click)="refDialog.close(null)" mat-button>Cancel</button>
+    <button class="px-6 ml-3" (click)="save()" mat-flat-button [color]="'primary'"> Create </button>
+</mat-dialog-actions>

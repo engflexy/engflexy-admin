@@ -2,6 +2,7 @@ package ma.zs.alc.ws.facade.admin.collab;
 
 import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.collab.Collaborator;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.service.facade.admin.collab.CollaboratorAdminService;
@@ -46,11 +47,14 @@ public class CollaboratorRestAdmin extends AbstractController<Collaborator, Coll
 
     @Operation(summary = "Saves the specified  collaborator")
     @PostMapping("")
-    public Collaborator save(@RequestBody Collaborator dto) throws Exception {
-        Collaborator collaborator = service.create(dto);
-        return collaborator;
-    }
+    public ResponseEntity<CollaboratorDto> save(@RequestBody CollaboratorDto dto) throws Exception {
 
+        return super.save(dto);
+    }
+    @PostMapping("create")
+    public Collaborator create(@RequestBody Collaborator dto) throws Exception {
+        return service.create(dto);
+    }
     @Operation(summary = "Updates the specified  collaborator")
     @PutMapping("")
     public CollaboratorDto update(@RequestBody Collaborator dto) throws Exception {
@@ -130,6 +134,12 @@ public class CollaboratorRestAdmin extends AbstractController<Collaborator, Coll
     @PutMapping("changePassword")
     public boolean changePassword(@RequestBody User dto) throws Exception {
         return service.changePassword(dto.getUsername(), dto.getPassword());
+    }
+
+    @Operation(summary = "Finds an optimized list of all Collaborators")
+    @GetMapping("optimized")
+    public ResponseEntity<List<CollaboratorDto>> findAllOptimized() throws Exception {
+        return super.findAllOptimized();
     }
 
     public CollaboratorRestAdmin(CollaboratorAdminService service, CollaboratorConverter converter) {

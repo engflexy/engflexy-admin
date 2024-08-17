@@ -85,7 +85,6 @@ export class AuthService {
         this._authenticatedUser.phone = tokenDecoded?.phone;
         this._authenticatedUser.fullName = tokenDecoded?.firstName;
         this._authenticatedUser.email = tokenDecoded?.email;
-        this._authenticatedUser.id = tokenDecoded?.id;
         roles.forEach(role => {
             const roleUser = new RoleUserDto();
             roleUser.role.authority = role;
