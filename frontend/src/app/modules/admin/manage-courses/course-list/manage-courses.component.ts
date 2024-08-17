@@ -4,17 +4,17 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatButtonModule} from "@angular/material/button";
-import {FuseCardComponent} from "../../../../@fuse/components/card";
-import {ParcoursDto} from "../../../shared/model/course/Parcours.model";
-import {ParcoursAdminService} from "../../../shared/service/admin/course/ParcoursAdmin.service";
-import {colors} from "../../../shared/constant/colors";
+import {FuseCardComponent} from "../../../../../@fuse/components/card";
+import {ParcoursDto} from "../../../../shared/model/course/Parcours.model";
+import {ParcoursAdminService} from "../../../../shared/service/admin/course/ParcoursAdmin.service";
+import {colors} from "../../../../shared/constant/colors";
 import {MatDialog} from "@angular/material/dialog";
-import {CreateMaterialComponent} from "./create-material/create-material.component";
+import {CreateMaterialComponent} from "../create-material/create-material.component";
 import {Router} from "@angular/router";
-import {ParcoursCriteria} from "../../../shared/criteria/course/ParcoursCriteria.model";
+import {ParcoursCriteria} from "../../../../shared/criteria/course/ParcoursCriteria.model";
 import {FormsModule} from "@angular/forms";
-import {ParcoursCollaboratorService} from "../../../shared/service/collaborator/course/ParcoursCollaborator.service";
-import {TokenService} from "../../../zynerator/security/shared/service/Token.service";
+import {ParcoursCollaboratorService} from "../../../../shared/service/collaborator/course/ParcoursCollaborator.service";
+import {TokenService} from "../../../../zynerator/security/shared/service/Token.service";
 
 @Component({
     selector: 'app-manage-courses',
@@ -40,7 +40,7 @@ export class ManageCoursesComponent implements OnInit {
     constructor(private parcourService: ParcoursCollaboratorService,
                 private router: Router,
                 private _matDialog: MatDialog,
-                private tokenService :TokenService) {
+                private tokenService: TokenService) {
     }
 
     public findPaginatedByCriteria() {
@@ -76,22 +76,13 @@ export class ManageCoursesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.parcourService.findAll().subscribe(res => {
-            this.levels = res
-            console.log(this.levels)
-        })
-
         this.parcourService.findForCurrentCollaborator().subscribe(res => {
             this.personalParcours = res;
-            console.log(this.personalParcours);
         }, error => console.log(error));
-
-
 
 
         this.parcourService.findByForExgFlexy().subscribe(res => {
             this.catalogParcours = res;
-            console.log(this.catalogParcours);
         }, error => console.log(error));
     }
 
@@ -115,20 +106,17 @@ export class ManageCoursesComponent implements OnInit {
     }
 
 
-  searchParcoursForEngFlexy(libelle: string) {
-    this.parcourService.findByLibelleLikeForEngFlexy(libelle).subscribe(res => {
-        this.personalParcours = res;
-    }, error => console.log(error));
-}
-
-    searchParcoursForCurrent(libelle: string) {
-    this.parcourService.findByLibelleLikeForCurrent(libelle).subscribe(res => {
-        this.personalParcours = res;
-    }, error => console.log(error));
+    searchParcoursForEngFlexy(libelle: string) {
+        this.parcourService.findByLibelleLikeForEngFlexy(libelle).subscribe(res => {
+            this.personalParcours = res;
+        }, error => console.log(error));
     }
 
-
-
+    searchParcoursForCurrent(libelle: string) {
+        this.parcourService.findByLibelleLikeForCurrent(libelle).subscribe(res => {
+            this.personalParcours = res;
+        }, error => console.log(error));
+    }
 
 
 }
