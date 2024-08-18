@@ -7,10 +7,11 @@ import {EtudiantDto} from '../../../model/inscription/Etudiant.model';
 import {EtudiantCriteria} from '../../../criteria/inscription/EtudiantCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
-import {catchError, Observable, retry, tap, throwError} from "rxjs";
+import {catchError, Observable, ReplaySubject, retry, tap, throwError} from "rxjs";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
+import {ProfDto} from "../../../model/prof/Prof.model";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserC
 })
 export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, EtudiantCriteria> {
     private _students: Array<ManageUserDto> = new Array<ManageUserDto>();
-
+    private _user: ReplaySubject<EtudiantDto> = new ReplaySubject<EtudiantDto>(1);
 
     constructor(private http: HttpClient) {
         super();
@@ -94,6 +95,24 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     updateAccountStatus(userId: number, enabled: boolean): Observable<any> {
         return this.http.patch(`${this.API}update-status/${userId}`, { enabled });
     }
+    onCommunicationEnabled(userId: number, communicationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}communicationEnabled/${userId}`, { communicationEnabled });
+    }
+    onSecurityEnabled(userId: number, securityEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}securityEnabled/${userId}`, { securityEnabled });
+    }
+    onLessonReminderEnabled(userId: number, communicationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}lessonReminderEnabled/${userId}`, { communicationEnabled });
+    }
+    onClassroomEnabled(userId: number, classroomEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}classroomEnabled/${userId}`, { classroomEnabled });
+    }
+    onPasswordChangedNotificationEnabled(userId: number, passwordChangedNotificationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}passwordChangedNotificationEnabled/${userId}`, { passwordChangedNotificationEnabled });
+    }
+    onContactNotificationEnabled(userId: number, contactNotificationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}contactNotificationEnabled/${userId}`, { contactNotificationEnabled });
+    }
     updateAccountLockStatus(userId: number, accountNonLocked: boolean): Observable<any> {
         return this.http.patch(`${this.API}update-lock-status/${userId}`, { accountNonLocked });
     }
@@ -123,5 +142,12 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
                     'size': pageable.size
                 }
             });
+    }
+    get(id: number): Observable<EtudiantDto> {
+        return this.http.get<EtudiantDto>(`${this.API}id/${id}`).pipe(
+            tap((etudiant) => {
+                this._user.next(etudiant);
+            }),
+        );
     }
 }

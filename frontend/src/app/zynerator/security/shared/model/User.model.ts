@@ -5,7 +5,15 @@ import {LangueDto} from "../../../../shared/model/inscriptionref/Langue.model";
 
 export class UserDto extends BaseDto {
 
+    public communicationEnabled: boolean;
+    public securityEnabled: boolean;
+    public lessonReminderEnabled: boolean;
+    public classroomEnabled: boolean;
+    public passwordChangedNotificationEnabled: boolean;
+    public contactNotificationEnabled: boolean;
+
     public credentialsNonExpired: null | boolean;
+
 
     public enabled: null | boolean;
     public email: string;
@@ -34,7 +42,12 @@ export class UserDto extends BaseDto {
 
     constructor(id?: number) {
         super(id);
-
+        this.communicationEnabled = true;
+        this.securityEnabled = true;
+        this.lessonReminderEnabled = true;
+        this.classroomEnabled = false;
+        this.passwordChangedNotificationEnabled = false;
+        this.contactNotificationEnabled = true;
         this.credentialsNonExpired = true;
         this.enabled = true;
         this.validationCode=null;

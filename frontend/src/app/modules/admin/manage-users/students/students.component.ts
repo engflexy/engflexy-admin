@@ -57,7 +57,7 @@ export class StudentsComponent implements OnInit {
                     this.etudiant = res;
                     console.log('Etudiant found:', this.etudiant);
                     //console.log(res)
-                    /*this.pageable = {
+                    /*this.criteria = {
                     content: [this.etudiant],
                     totalElements: 1,
                     totalPages: 1,
@@ -68,6 +68,8 @@ export class StudentsComponent implements OnInit {
                     numberOfElements: 1,
                     empty: false
                 };*/
+
+
                 }else {
                     console.log('No etudiant found with this email');}},
             error => {

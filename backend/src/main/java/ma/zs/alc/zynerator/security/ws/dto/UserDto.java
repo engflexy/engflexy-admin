@@ -10,7 +10,61 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto extends AuditBaseDto {
+    private Boolean communicationEnabled;
+    private Boolean securityEnabled;
 
+    public Boolean getCommunicationEnabled() {
+        return communicationEnabled;
+    }
+
+    public void setCommunicationEnabled(Boolean communicationEnabled) {
+        this.communicationEnabled = communicationEnabled;
+    }
+
+    public Boolean getSecurityEnabled() {
+        return securityEnabled;
+    }
+
+    public void setSecurityEnabled(Boolean securityEnabled) {
+        this.securityEnabled = securityEnabled;
+    }
+
+    public Boolean getLessonReminderEnabled() {
+        return lessonReminderEnabled;
+    }
+
+    public void setLessonReminderEnabled(Boolean lessonReminderEnabled) {
+        this.lessonReminderEnabled = lessonReminderEnabled;
+    }
+
+    public Boolean getClassroomEnabled() {
+        return classroomEnabled;
+    }
+
+    public void setClassroomEnabled(Boolean classroomEnabled) {
+        this.classroomEnabled = classroomEnabled;
+    }
+
+    public Boolean getPasswordChangedNotificationEnabled() {
+        return passwordChangedNotificationEnabled;
+    }
+
+    public void setPasswordChangedNotificationEnabled(Boolean passwordChangedNotificationEnabled) {
+        this.passwordChangedNotificationEnabled = passwordChangedNotificationEnabled;
+    }
+
+    public Boolean getContactNotificationEnabled() {
+        return contactNotificationEnabled;
+    }
+
+    public void setContactNotificationEnabled(Boolean contactNotificationEnabled) {
+        this.contactNotificationEnabled = contactNotificationEnabled;
+    }
+
+    private Boolean lessonReminderEnabled;
+    private Boolean classroomEnabled;
+    private Boolean passwordChangedNotificationEnabled;
+    private Boolean contactNotificationEnabled;
     protected Boolean credentialsNonExpired;
     protected Boolean enabled;
     protected String email;

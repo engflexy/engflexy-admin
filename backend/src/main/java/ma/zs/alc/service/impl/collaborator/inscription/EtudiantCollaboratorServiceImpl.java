@@ -350,6 +350,68 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         return false;
     }
     @Override
+    public boolean onCommunicationEnabled(Long id, boolean communicationEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setCommunicationEnabled(communicationEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onSecurityEnabled(Long id, boolean securityEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setSecurityEnabled(securityEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+@Override
+    public boolean onLessonReminderEnabled(Long id, boolean lessonReminderEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setLessonReminderEnabled(lessonReminderEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onClassroomEnabled(Long id, boolean classroomEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setClassroomEnabled(classroomEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onPasswordChangedNotificationEnabled(Long id, boolean passwordChangedNotificationEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setPasswordChangedNotificationEnabled(passwordChangedNotificationEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onContactNotificationEnabled(Long id, boolean contactNotificationEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setContactNotificationEnabled(contactNotificationEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
     public boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired) {
         Etudiant etudiant = findById(id);
         if (etudiant != null) {
