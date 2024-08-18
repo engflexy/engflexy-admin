@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ExerciceDto} from "../../../../../../shared/model/course/Exercice.model";
+import {SafePipe} from "../../../../../../shared/utils/safe.pipe";
 
 @Component({
     selector: 'app-display-video',
@@ -10,7 +11,7 @@ export class DisplayVideoComponent implements OnChanges, OnInit {
     exercise: ExerciceDto
     video: string
 
-    constructor() {
+    constructor( private safePipe: SafePipe) {
     }
 
     ngOnInit() {
@@ -34,4 +35,8 @@ export class DisplayVideoComponent implements OnChanges, OnInit {
         }
         this.video = video;
     }
+
+
+
+
 }

@@ -19,4 +19,7 @@ public interface PackageCollaboratorDao extends AbstractRepository<PackageCollab
 
     Page<PackageCollaborator> findBySchool(boolean school, Pageable pageable);
 
+    PackageCollaborator findByLibelle(String libelle);
+
+    PackageCollaborator findByLibelleAndSchool(String libelle, boolean school);
 }

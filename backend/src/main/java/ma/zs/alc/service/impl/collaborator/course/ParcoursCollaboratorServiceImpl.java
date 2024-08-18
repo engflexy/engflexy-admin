@@ -111,10 +111,10 @@ public class ParcoursCollaboratorServiceImpl extends AbstractServiceImpl<Parcour
     }
 
     @Override
-    public List<Parcours> findForCurrentCollaborator(Long id) {
-       // User currentUser = getCurrentUser();
+    public List<Parcours> findForCurrentCollaborator(String username) {
+        //User currentUser = getCurrentUser();
         //Collaborator collaborator = collaboratorService.findByUsername(currentUser.getUsername());
-        return dao.findByCollaboratorId(id);
+        return dao.findByCollaboratorUsername(username);
         //return dao.findByCollaboratorId(collaborator.getId());
     }
 

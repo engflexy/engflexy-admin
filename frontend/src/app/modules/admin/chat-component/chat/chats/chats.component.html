@@ -23,8 +23,7 @@
 
             <!-- Chats list *ngIf="chats && chats.length > 0; else noChats" lg:max-w-100 -->
             <ng-container>
-                <div
-                    class="relative flex flex-auto flex-col w-full min-w-0 lg:min-w-100  bg-card dark:bg-transparent">
+                <div class="relative flex flex-auto flex-col w-full min-w-0 lg:min-w-100  bg-card dark:bg-transparent">
 
                     <!-- Header -->
                     <div class="flex flex-col flex-0 py-4 px-8 border-b bg-gray-50 dark:bg-transparent">
@@ -89,12 +88,15 @@
                         </div>
                     </div>
 
-                    <!-- Chats -->
+                    <!-- Chats chat.otherUserId == chat.lastsenderId -->
                     <div class="flex-auto overflow-y-auto">
                         <ng-container *ngIf="filteredConversations.length > 0; else noChats">
                             <ng-container *ngFor="let chat of filteredConversations">
                                 <a class="z-20 flex items-center py-5 px-8 cursor-pointer border-b"
-                                     (click)="onChatClick(chat)">
+                                    (click)="onChatClick(chat)" [ngClass]="{
+                                        'bg-green-100': chat.lastReceiverId == currentUserId && chat.seen == false
+                                    }"> 
+                                    <!-- Apply color -->
                                     <div class="relative flex flex-0 items-center justify-center w-10 h-10">
                                         <ng-container *ngIf="chat.unreadCount > 0">
                                             <div class="absolute bottom-0 right-0 flex-0 w-2 h-2 -ml-0.5 rounded-full ring-2 ring-bg-card dark:ring-gray-900 bg-primary dark:bg-primary-500 text-on-primary"
@@ -132,9 +134,6 @@
                             </ng-container>
                         </ng-container>
                     </div>
-
-
-
 
 
                 </div>

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { ChatService } from "../chat.service";
@@ -15,8 +15,8 @@ import { Chat } from "../chat.types";
 import { ContactInfoComponent } from "../contact-info/contact-info.component";
 import { UserDto } from 'app/zynerator/security/shared/model/User.model';
 import { MessageResponse } from '../interfaces/message-response';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ConversationResponse } from '../interfaces/conversation-response';
 
 @Component({
     selector: 'chat-conversation',
@@ -24,7 +24,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [PickerComponent, NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
+    imports: [NgIf, MatSidenavModule, ContactInfoComponent, MatButtonModule, RouterLink, MatIconModule, MatMenuModule, NgFor, NgClass, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
 })
 export class ConversationComponent implements OnInit, OnDestroy {
     @ViewChild('messageInput') messageInput: ElementRef;
@@ -43,7 +43,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
     currentUserId: number;
     private selectedConversationSub: Subscription;
     showEmojiPicker = false;
-
+    allConversations: ConversationResponse[] = [];
+    foundConversation: ConversationResponse;
     /**
      * Constructor
      */
@@ -53,12 +54,13 @@ export class ConversationComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _ngZone: NgZone,
         private router: Router,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
     ) {
         const navigation = this.router.getCurrentNavigation();
         if (navigation?.extras?.state) {
             this.user = navigation.extras.state['user'];
-            this.currentUserId = navigation.extras.state['currentUserId'];
+            this.currentUserId = navigation.extras.state['currentUserId'];            
+            this.allConversations = navigation.extras.state['conversations']
         }
     }
 
@@ -101,16 +103,19 @@ export class ConversationComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
 
-        console.log("hello from conversation");
-
         // Subscribe to selectedConversation observable
         this.selectedConversationSub = this._chatService.selectedConversation$.subscribe(conversation => {
             this.selectedConversation = conversation;
             this.selectedConversationId = this._chatService._selectedConversationId;
             this.selectedConversationReceiverId = this._chatService._selectedConversationReceiverId;
             this.selectedConversationReceiverName = this._chatService._selectedConversationReceiverName;
+
             this._changeDetectorRef.markForCheck();
         });
+
+
+
+        //console.log(this.selectedConversationId + "    " + this._chatService.updateConversationSeenToFalseById(this.selectedConversationId))
 
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
@@ -127,6 +132,36 @@ export class ConversationComponent implements OnInit, OnDestroy {
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
+
+            this.foundConversation = this.allConversations.find(conversation => conversation.conversationId == this.selectedConversationId);
+
+            if(this.foundConversation.lastReceiverId == this.currentUserId){
+                this.markConversationAsSeen(this.selectedConversationId)
+            }
+
+
+    }
+
+    markConversationAsSeen(conversationId: number): void {
+        this._chatService.updateConversationSeenToTrueById(conversationId).subscribe({
+            next: (result: boolean) => {
+                console.log('Conversation seen status updated:', result);
+            },
+            error: (error) => {
+                console.error('Error updating conversation seen status:', error);
+            }
+        });
+    }
+
+    markConversationAsNotSeen(conversationId: number): void {
+        this._chatService.updateConversationSeenToFalseById(conversationId).subscribe({
+            next: (result: boolean) => {
+                console.log('Conversation seen status updated:', result);
+            },
+            error: (error) => {
+                console.error('Error updating conversation seen status:', error);
+            }
+        });
     }
 
 
@@ -135,10 +170,18 @@ export class ConversationComponent implements OnInit, OnDestroy {
         if (messageInput.value.trim() != "") {
             this._chatService.sendMessage(messageInput.value, this.currentUserId, this.selectedConversationId, this.selectedConversationReceiverId)
             messageInput.value = ''; // Clear the textarea  
+            //this.markConversationAsNotSeen(this.selectedConversationId)
+            messageInput.value = ''; // Clear the textarea
         }
-        if(this.showEmojiPicker){
+        if (this.showEmojiPicker) {
             this.showEmojiPicker = !this.showEmojiPicker;
         }
+
+        //if(this.foundConversation.lastReceiverId == this.currentUserId){
+        //}
+
+        this.markConversationAsNotSeen(this.selectedConversationId)
+
     }
 
     /**
@@ -192,7 +235,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
             textArea.focus(); // Set focus on the text area
         }
     }
-    
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

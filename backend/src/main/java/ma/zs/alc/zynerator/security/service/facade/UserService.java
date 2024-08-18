@@ -1,5 +1,6 @@
 package ma.zs.alc.zynerator.security.service.facade;
 
+import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.security.dao.criteria.core.UserCriteria;
 import ma.zs.alc.zynerator.security.ws.dto.UserDto;
 import ma.zs.alc.bean.core.chat.Conversation;
@@ -14,8 +15,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 import ma.zs.alc.zynerator.service.IService;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserService extends IService<User, UserCriteria>, UserDetailsService {
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
+    User register(User t);
 
     User findByUsername(String username);
 
@@ -39,4 +45,5 @@ public interface UserService extends IService<User, UserCriteria>, UserDetailsSe
     
 	List<ConversationResponse> findConversationsByUserId(Long userId);
 
+    boolean validateUser(AccountValidationDto accountValidationDto);
 }

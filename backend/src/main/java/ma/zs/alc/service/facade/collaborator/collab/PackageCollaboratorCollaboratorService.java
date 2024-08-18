@@ -14,4 +14,7 @@ public interface PackageCollaboratorCollaboratorService extends  IService<Packag
     Page<PackageCollaborator> findBySchool(Pageable pageable);
 
     Page<PackageCollaborator> findByTeacher(PageRequest pageable);
+
+
+    PackageCollaborator findByLibelleAndSchool(String libelle, boolean school);
 }
