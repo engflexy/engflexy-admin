@@ -43,7 +43,8 @@
                     <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
                 </button>
             </div>
-            <div class="flex gap-4 flex-col mt-5">
+
+                <div class="flex gap-4 flex-col mt-5">
                 <ng-container *ngFor="let item of criteria.content">
                     <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
                         <ng-container *ngIf="item?.avatar else noImg">

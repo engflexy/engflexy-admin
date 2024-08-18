@@ -56,12 +56,17 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
             );
     }
 
-    findByCollaboratorId(id: number, pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+    findByCollaboratorId(id: number | undefined, pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+        console.log('Service method called with ID:', id);
+        if (id === undefined) {
+            console.error('Collaborator ID is undefined');
+            return throwError(() => new Error('Collaborator ID is undefined'));
+        }
         return this.http.get<PageRequest<ManageUserDto>>(this.API + `pageable/collaborator/id/${id}`,
             {
                 params: {
-                    'page': pageable.page,
-                    'size': pageable.size
+                    'page': pageable.page.toString(),
+                    'size': pageable.size.toString()
                 }
             });
     }

@@ -95,6 +95,7 @@ const userRoutes: Route[] = [
         CollaboratorProfileComponent,
         ProfSecurityComponent,
         CollaboratorSecurityComponent,
+
     ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
         Location]
