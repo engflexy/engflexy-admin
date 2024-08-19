@@ -19,15 +19,18 @@ public class Conversation {
 	@JoinColumn(name = "user2_id")
 	private User user2;
 
+	private boolean seen;
+
 	// No-argument constructor
 	public Conversation() {
 	}
 
 	// All-argument constructor
-	public Conversation(Long id, User user1, User user2) {
+	public Conversation(Long id, User user1, User user2, boolean seen) {
 		this.id = id;
 		this.user1 = user1;
 		this.user2 = user2;
+		this.seen = seen;
 	}
 
 	// Getters and Setters
@@ -54,4 +57,13 @@ public class Conversation {
 	public void setUser2(User user2) {
 		this.user2 = user2;
 	}
+
+	public boolean getSeen() {
+		return seen;
+	}
+
+	public void setSeen(boolean seen) {
+		this.seen = seen;
+	}
+
 }

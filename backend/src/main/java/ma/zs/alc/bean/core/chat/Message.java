@@ -26,11 +26,12 @@ public class Message {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-    @Column(name = "message", columnDefinition = "TEXT") 
+    @Column(name = "message")
     private String message;
 
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
+    
 
     // No-argument constructor
     public Message() {}
@@ -65,6 +66,10 @@ public class Message {
     public User getSender() {
         return sender;
     }
+    
+    public Long getSenderId() {
+    	return sender.getId();
+    }
 
     public void setSender(User sender) {
         this.sender = sender;
@@ -73,17 +78,19 @@ public class Message {
     public User getReceiver() {
         return receiver;
     }
+    
+    public Long getReceiverId() {
+        return receiver.getId();
+    }
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
     }
 
-    @Column(columnDefinition = "TEXT") 
     public String getMessage() {
         return message;
     }
 
-    @Column(columnDefinition = "TEXT") 
     public void setMessage(String message) {
         this.message = message;
     }
@@ -95,4 +102,8 @@ public class Message {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
+	
+    
+    
 }

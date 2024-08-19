@@ -195,7 +195,10 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
                 Langue langue = langueService.findById(t.getLangue().getId());
                 prof.setLangue(langue);
             }
-            return dao.save(prof);
+            Prof professeur = dao.saveAndFlush(prof);
+            System.out.println("etudiant.getLangue().getLibelle() = " + professeur.getLangue().getLibelle());
+
+            return t;
         }
     }
 

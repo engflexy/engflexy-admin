@@ -38,7 +38,7 @@ public class QuestionCollaboratorServiceImpl extends AbstractServiceImpl<Questio
             saved.setUrlImg(t.getUrlImg());
             saved.setUrlVideo(t.getUrlVideo());
             saved = dao.save(saved);
-            if (!t.getReponses().isEmpty()) {
+            if (t.getReponses()!= null && !t.getReponses().isEmpty()) {
                 Question finalSaved = saved;
                 t.getReponses().forEach(reponse -> {
                     reponse.setQuestion(finalSaved);

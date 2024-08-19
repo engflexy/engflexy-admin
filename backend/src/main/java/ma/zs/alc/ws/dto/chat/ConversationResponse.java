@@ -7,10 +7,17 @@ public interface ConversationResponse {
 	Long getConversationId();
 
 	Long getOtherUserId();
+	
+	Long getLastsenderId();
+	
+	Long getLastReceiverId();
 
 	String getOtherUserName();
 
 	String getLastMessage();
 
-	Timestamp getLastMessageTimestamp();
+	Timestamp getLastMessageTimestamp();	
+	
+	Boolean getSeen();
+
 }

@@ -70,11 +70,26 @@ export class DragAndDropComponent implements OnInit {
 
     drop(ev) {
         const id = ev.target.id
+        // @ts-ignore
+        document.getElementById(id).value = this.value
+        this.dragAndDropAnswer.set(id.toString(), this.value)
+        this.listOfWords.splice(this.listOfWords.indexOf(this.value), 1)
     }
 
 
     check() {
-
+        this.checked = true
+        for (let key of this.values.keys()) {
+            // @ts-ignore
+            const value = document.getElementById(key.toString()).value
+            //answer correct
+            if (value === this.values.get(key)) {
+                document.getElementById(key.toString()).className = ' font-ubuntu text-center mb-2 h-8 border rounded-full mx-2 correct '
+            } else {
+                document.getElementById(key.toString()).className = 'hidden'
+                document.getElementById('tool-tip-' + key.toString()).className = 'drag-and-drop-tooltip'
+            }
+        }
     }
 
 
