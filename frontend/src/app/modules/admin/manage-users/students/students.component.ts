@@ -12,6 +12,7 @@ import {CreateStudentComponent} from "./create-student/create-student.component"
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
+import {FuseConfirmationService} from "../../../../../@fuse/services/confirmation";
 
 @Component({
     selector: 'app-students',
@@ -26,6 +27,7 @@ export class StudentsComponent implements OnInit {
                 private _matDialog: MatDialog,
                 private router: Router,
                 private route: ActivatedRoute,
+                private _fuseConfirmation: FuseConfirmationService,
                 private auth: AuthService) {
     }
 
@@ -57,7 +59,7 @@ export class StudentsComponent implements OnInit {
                     this.etudiant = res;
                     console.log('Etudiant found:', this.etudiant);
                     //console.log(res)
-                    /*this.pageable = {
+                    /*this.criteria = {
                     content: [this.etudiant],
                     totalElements: 1,
                     totalPages: 1,
@@ -68,6 +70,8 @@ export class StudentsComponent implements OnInit {
                     numberOfElements: 1,
                     empty: false
                 };*/
+
+
                 }else {
                     console.log('No etudiant found with this email');}},
             error => {
@@ -99,7 +103,7 @@ export class StudentsComponent implements OnInit {
     navigateToDetail(item: ManageUserDto) {
         this.router.navigate([`student/${item.email}`], {relativeTo: this.route})
     }
-    deleteStudent(id: number): void {
+    /*deleteStudent(id: number): void {
         this.etudiantService.deleteById(id).subscribe({
             next: (response) => {
                 console.log(`Deleted student with id: ${id}`);
@@ -109,7 +113,28 @@ export class StudentsComponent implements OnInit {
                 console.error('Error deleting student:', error);
             }
         });
+    }*/
+    delete(item: ManageUserDto) {
+        const confirmation = this._fuseConfirmation.open({
+            title: 'delete inscription',
+            message: `Are you sure you want to remove  <strong> ${item?.fullName} </strong> ?`,
+            actions: {
+                confirm: {
+                    label: 'REMOVE',
+                },
+            },
+        });
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirmation button pressed...
+            if (result === 'confirmed') {
+                this.etudiantService.deleteById(item.id).subscribe(res => {
+                    alert("Please click OK to continue deleting !")
+                }, error => {
+                })
+            }
+        });
     }
+
     openFilter() {
 
     }

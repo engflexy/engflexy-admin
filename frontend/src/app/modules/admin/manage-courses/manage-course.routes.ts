@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {ManageCoursesComponent} from "./manage-courses.component";
+import {ManageCoursesComponent} from "./course-list/manage-courses.component";
 import {MaterialDetailComponent} from "./material-detail/material-detail.component";
 
 export default [

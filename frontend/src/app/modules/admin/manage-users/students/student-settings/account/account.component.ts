@@ -17,6 +17,8 @@ import { LangueDto } from "../../../../../../shared/model/inscriptionref/Langue.
 import { countries } from "../../../../../../core/countries/data";
 import { ImagesService } from "../../../../../../shared/service/public/images.service";
 import { FuseAlertService } from "../../../../../../../@fuse/components/alert";
+import {PageRequest} from "../../../../../../zynerator/criteria/BaseCriteria.model";
+import {ManageUserDto} from "../../../../../../core/criteria/manage-user-dto";
 
 @Component({
     selector: 'settings-account',

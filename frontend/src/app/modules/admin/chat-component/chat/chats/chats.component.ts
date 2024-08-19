@@ -39,6 +39,9 @@ export class ChatsComponent implements OnInit, OnDestroy {
     users: UserDto[] = [];
 
 
+    changedConversationIds: number[] = [];
+    newConversationIds: number[] = [];
+
 
     chats: Chat[];
     currentUserId: number;
@@ -87,27 +90,32 @@ export class ChatsComponent implements OnInit, OnDestroy {
         // Subscribe to the conversations observable
         let previousConversations: ConversationResponse[] = [];
 
+
         this._chatService.userConversations$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(conversations => {
-                // Identify changes by comparing with the previous state
+                this.changedConversationIds = [];
+                this.newConversationIds = [];
+
                 conversations.forEach((newConv, index) => {
                     const previousConv = previousConversations[index];
 
-                    if (!previousConv || newConv.lastMessage !== previousConv.lastMessage || newConv.lastMessageTimestamp !== previousConv.lastMessageTimestamp) {
-                        console.log('Conversation changed:', newConv);
+                    if (!previousConv) {
+                        this.newConversationIds.push(newConv.conversationId); // Track new conversation
+                    } else if (newConv.lastMessage !== previousConv.lastMessage || newConv.lastMessageTimestamp !== previousConv.lastMessageTimestamp) {
+                        this.changedConversationIds.push(newConv.conversationId); // Track changed conversation
                     }
                 });
 
-                // Update the stored previous conversations
                 previousConversations = [...conversations];
 
-                // Update the component state
                 this.userConversations = conversations;
                 this.filteredConversations = conversations;
+                console.log(this.filteredConversations)                
+                //console.log("this is iiiiit: " + this.userConversations)
+
                 this._changeDetectorRef.markForCheck();
             });
-
         // Fetch initial conversations
 
 
@@ -151,11 +159,11 @@ export class ChatsComponent implements OnInit, OnDestroy {
         const selectedUser = this._chatService._users.value.find(user => user.id === this._chatService._selectedConversationReceiverId);
 
         if (selectedUser) {
-            console.log(selectedUser)
             const navigationExtras: NavigationExtras = {
                 state: {
                     currentUserId: this.currentUserId,
                     user: selectedUser,
+                    conversations: this.userConversations
                 }
             };
 
@@ -173,6 +181,19 @@ export class ChatsComponent implements OnInit, OnDestroy {
             console.error('Error loading user conversations:', error);
         }
     }
+
+    markConversationAsSeen(conversationId: number): void {
+        this._chatService.updateConversationSeenToTrueById(conversationId).subscribe({
+          next: (result: boolean) => {
+            console.log('Conversation seen status updated:', result);
+          },
+          error: (error) => {
+            console.error('Error updating conversation seen status:', error);
+          }
+        });
+      }
+    
+    
 
 
     /**

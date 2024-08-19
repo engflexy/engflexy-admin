@@ -17,6 +17,12 @@ public interface EtudiantCollaboratorService extends IService<Etudiant, Etudiant
     boolean updateAccountLockStatus(Long id, boolean accountNonLocked);
     boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired);
     boolean updateAccountStatus(Long id, boolean enabled);
+    boolean onCommunicationEnabled(Long id, boolean communicationEnabled);
+    boolean onSecurityEnabled(Long id, boolean securityEnabled);
+    boolean onLessonReminderEnabled(Long id, boolean lessonReminderEnabled);
+    boolean onClassroomEnabled(Long id, boolean classroomEnabled);
+    boolean onPasswordChangedNotificationEnabled(Long id, boolean passwordChangedNotificationEnabled);
+    boolean onContactNotificationEnabled(Long id, boolean contactNotificationEnabled);
 
     boolean changePassword(String username, String newPassword);
 

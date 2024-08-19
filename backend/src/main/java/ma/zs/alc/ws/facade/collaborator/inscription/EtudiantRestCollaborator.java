@@ -131,6 +131,63 @@ public class EtudiantRestCollaborator extends AbstractController<Etudiant, Etudi
         boolean updated = service.updateAccountStatus(id, enabled);
         return ResponseEntity.ok(updated);
     }
+    @PatchMapping("communicationEnabled/{id}")
+    public ResponseEntity<Boolean> onCommunicationEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean communicationEnabled = status.get("communicationEnabled");
+        if (communicationEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onCommunicationEnabled(id, communicationEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("securityEnabled/{id}")
+    public ResponseEntity<Boolean> onSecurityEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean securityEnabled = status.get("securityEnabled");
+        if (securityEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onSecurityEnabled(id, securityEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("lessonReminderEnabled/{id}")
+    public ResponseEntity<Boolean> onLessonReminderEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean lessonReminderEnabled = status.get("lessonReminderEnabled");
+        if (lessonReminderEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onLessonReminderEnabled(id, lessonReminderEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("classroomEnabled/{id}")
+    public ResponseEntity<Boolean> onClassroomEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean classroomEnabled = status.get("classroomEnabled");
+        if (classroomEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onClassroomEnabled(id, classroomEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("passwordChangedNotificationEnabled/{id}")
+    public ResponseEntity<Boolean> onPasswordChangedNotificationEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean passwordChangedNotificationEnabled = status.get("passwordChangedNotificationEnabled");
+        if (passwordChangedNotificationEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onPasswordChangedNotificationEnabled(id, passwordChangedNotificationEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("contactNotificationEnabled/{id}")
+    public ResponseEntity<Boolean> onContactNotificationEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean contactNotificationEnabled = status.get("contactNotificationEnabled");
+        if (contactNotificationEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onContactNotificationEnabled(id, contactNotificationEnabled);
+        return ResponseEntity.ok(updated);
+    }
+
+
+
     @Operation(summary = "Delete list of etudiant")
     @PostMapping("multiple")
     public ResponseEntity<List<EtudiantDto>> delete(@RequestBody List<EtudiantDto> listToDelete) throws Exception {

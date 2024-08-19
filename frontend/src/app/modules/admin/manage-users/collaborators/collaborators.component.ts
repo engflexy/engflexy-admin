@@ -78,14 +78,14 @@ export class CollaboratorsComponent implements OnInit {
             // If the confirmation button pressed...
             if (result === 'confirmed') {
                 this.service.deleteById(item.id).subscribe(res => {
-                    alert("awedaaaa deleted hamdolah")
+                    alert("Please click OK to continue deleting !")
                 }, error => {
                 })
             }
         });
     }
 
-    deleteCollab(id: number) {
+   /* deleteCollab(id: number) {
         this.service.deleteById(id).subscribe({
             next: (response) => {
                 console.log(`Deleted student with id: ${id}`);
@@ -95,6 +95,6 @@ export class CollaboratorsComponent implements OnInit {
                 console.error('Error deleting student:', error);
             }
         });
-    }
+    }*/
 
 }

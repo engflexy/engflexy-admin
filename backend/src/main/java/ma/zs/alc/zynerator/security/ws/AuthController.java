@@ -2,6 +2,7 @@ package ma.zs.alc.zynerator.security.ws;
 
 
 import jakarta.validation.Valid;
+import ma.zs.alc.service.facade.collaborator.collab.InscriptionCollaboratorCollaboratorService;
 import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.security.common.SecurityParams;
 import ma.zs.alc.zynerator.security.dao.facade.core.RoleDao;
@@ -42,6 +43,8 @@ public class AuthController {
 
   @Autowired
   PasswordEncoder encoder;
+  @Autowired
+  InscriptionCollaboratorCollaboratorService inscriptionCollaborator;
 
 
 
@@ -50,6 +53,7 @@ public class AuthController {
 
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtUtils.generateJwtToken(authentication);

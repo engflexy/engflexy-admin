@@ -9,13 +9,13 @@ import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.dao.facade.core.prof.ProfDao;
 import ma.zs.alc.dao.specification.core.prof.ProfSpecification;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.inscriptionref.LangueCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.CategorieProfCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.ProfCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.TrancheHoraireProfCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.TypeTeacherCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.prof.*;
 import ma.zs.alc.service.facade.collaborator.recomrecla.RecommendTeacherCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.salary.SalaryCollaboratorService;
+import ma.zs.alc.service.impl.collaborator.grpe.GroupeEtudiantCollaboratorServiceImpl;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
@@ -112,10 +112,18 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         return allOptimized;
     }
     public void deleteAssociatedLists(Long id) {
+
         trancheHoraireProfService.deleteByProfId(id);
+
         recommendTeacherService.deleteByProfId(id);
+
         modelPermissionUserService.deleteByUserId(id);
+
         roleUserService.deleteByUserId(id);
+        groupeEtudiantCollaboratorService.deleteByProfId(id);
+        scheduleProfCollaboratorService.deleteByProfId(id);
+        salaryCollaboratorService.deleteByProfId(id);
+
     }
 
     @Override
@@ -271,6 +279,8 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     @Autowired
     private ParcoursCollaboratorService parcoursService;
     @Autowired
+    private SalaryCollaboratorService salaryCollaboratorService;
+    @Autowired
     private TypeTeacherCollaboratorService typeTeacherService;
     @Autowired
     private RecommendTeacherCollaboratorService recommendTeacherService;
@@ -278,6 +288,10 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     private CategorieProfCollaboratorService categorieProfService;
     @Autowired
     private TrancheHoraireProfCollaboratorService trancheHoraireProfService;
+    @Autowired
+    private GroupeEtudiantCollaboratorService groupeEtudiantCollaboratorService;
+    @Autowired
+    private ScheduleProfCollaboratorService scheduleProfCollaboratorService;
     @Autowired
     private LangueCollaboratorService langueService;
     @Autowired

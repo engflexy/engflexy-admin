@@ -4,5 +4,7 @@ export interface ConversationResponse {
   otherUserName: string;
   lastMessage: string;
   lastMessageTimestamp: string;
-
+  lastReceiverId: number;
+  lastsenderId: number;
+  seen: boolean;
 }
