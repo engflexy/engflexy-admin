@@ -1,5 +1,6 @@
 package ma.zs.alc.service.facade.collaborator.grpe;
 
+import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.grpe.Inscription;
 import ma.zs.alc.dao.criteria.core.grpe.InscriptionCriteria;
 import ma.zs.alc.zynerator.service.IService;

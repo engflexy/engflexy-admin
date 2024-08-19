@@ -140,6 +140,10 @@
                                                           svgIcon="heroicons_solid:pencil-square"></mat-icon>
                                             </span>
                                             <span class="h-px flex-1 bg-gray-300 dark:bg-gray-600"></span>
+                                                 <button mat-icon-button color="warn" (click)="deleteSection(step)">
+                                                    <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
+                                                 </button>
+
                                         </span>
                                         </ng-container>
 
@@ -163,7 +167,9 @@
                                                           (click)="editSection='description'"
                                                           svgIcon="heroicons_solid:pencil-square"></mat-icon>
                                             </div>
+
                                         </ng-container>
+
 
                                         <ng-container *ngIf="editSection === 'description'">
                                             <div class="w-full">
@@ -187,6 +193,9 @@
                                                         <mat-icon class="text-hint icon-size-4 cursor-pointer"
                                                                   (click)="edit(exercise,step)"
                                                                   svgIcon="heroicons_solid:pencil-square"></mat-icon>
+                                                        <mat-icon  class="text-hint icon-size-4 cursor-pointer"
+                                                                  (click)="deleteExercise(exercise)"
+                                                                  svgIcon="heroicons_solid:trash"></mat-icon>
                                                     </div>
 
                                                     <ng-container

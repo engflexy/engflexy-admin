@@ -32,7 +32,9 @@
                             "crypto-js/hmac-sha256",
                             "crypto-js/enc-base64",
                             "flat",
-                            "quill"
+                            "quill",
+                            "stompjs",
+                            "sockjs-client"
                         ],
                         "assets": [
                             "src/favicon-16x16.png",
@@ -62,7 +64,10 @@
                             "src/styles/styles.scss",
                             "src/styles/tailwind.scss"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "src/assets/sockjs.min.js",
+                            "src/assets/stomp.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -129,7 +134,8 @@
                             }
                         ],
                         "styles": [
-                            "src/styles/styles.scss"
+                            "src/styles/styles.scss",
+                            "node_modules/@ctrl/ngx-emoji-mart/picker.css"
                         ],
                         "scripts": []
                     }

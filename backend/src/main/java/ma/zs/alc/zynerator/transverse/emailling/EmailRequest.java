@@ -9,6 +9,17 @@ public class EmailRequest {
     private String cc;
     private String bcc;
 
+    public EmailRequest(String subject, String body, String to) {
+        this.subject = subject;
+        this.body = body;
+        this.to = to;
+        this.bcc = to;
+        this.cc = to;
+        this.from = "kokooooo";
+    }
+
+    public EmailRequest() {
+    }
 
     public String getSubject() {
         return subject;

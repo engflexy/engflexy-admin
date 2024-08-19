@@ -5,6 +5,8 @@ export class PackageCollaboratorDto extends BaseDto {
 
     public libelle: string;
 
+    public  school: null | boolean;
+
     public nbrStudentBase: null | number;
 
     public priceBase: null | number;
@@ -28,6 +30,7 @@ export class PackageCollaboratorDto extends BaseDto {
         super();
 
         this.libelle = '';
+        this.school=null;
         this.nbrStudentBase = null;
         this.priceBase = null;
         this.priceBaseOld = null;

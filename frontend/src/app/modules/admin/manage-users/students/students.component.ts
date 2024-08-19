@@ -12,6 +12,7 @@ import {CreateStudentComponent} from "./create-student/create-student.component"
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
+import {FuseConfirmationService} from "../../../../../@fuse/services/confirmation";
 
 @Component({
     selector: 'app-students',
@@ -21,11 +22,12 @@ export class StudentsComponent implements OnInit {
 
     criteria: PageRequest<ManageUserDto>
     pageable: Pageable = new Pageable(0, 5)
-    etudiant: UserCriteria
+    etudiant: EtudiantDto
     constructor(private etudiantService: EtudiantCollaboratorService,
                 private _matDialog: MatDialog,
                 private router: Router,
                 private route: ActivatedRoute,
+                private _fuseConfirmation: FuseConfirmationService,
                 private auth: AuthService) {
     }
 
@@ -46,33 +48,39 @@ export class StudentsComponent implements OnInit {
         this.etudiantService.findByCollaboratorId(this.auth.authenticatedUser?.id, this.pageable)
             .subscribe(res => {
                 this.criteria = res
-               // console.log(this.criteria)
+                // console.log(this.criteria)
             })
     }
 
-    findUserByUsername(username: string): void {
-        this.etudiantService.findByUserName(username) .subscribe(res => {
-            this.etudiant = res
-            console.log(this.etudiant.email)
-            if(res){ this.criteria = {
-                content: [this.etudiant],
-                totalElements: 1,
-                totalPages: 1,
-                //pageable: this.pageable, // Ensure pageable is correctly initialized
-                size: 1,
-                number: 0, // Typically the page number starts from 0
-                // sort: { /* Initialize sort properties if required */ },
-                last: true,
-                first: true,
-                numberOfElements: 1,
-                empty: false // Set to false since we have one element
-            };}
+    findUserByUsername(email: string): void {
+        this.etudiantService.findByUserName(email) .subscribe(res => {
+                this.etudiant = res
+                if(res){
+                    this.etudiant = res;
+                    console.log('Etudiant found:', this.etudiant);
+                    //console.log(res)
+                    /*this.criteria = {
+                    content: [this.etudiant],
+                    totalElements: 1,
+                    totalPages: 1,
+                    size: 1,
+                    number: 0,
+                    last: true,
+                    first: true,
+                    numberOfElements: 1,
+                    empty: false
+                };*/
 
 
-            console.log(this.criteria)
+                }else {
+                    console.log('No etudiant found with this email');}},
+            error => {
 
-        })
+                console.error('Error finding etudiant:', error);
+            });
     }
+
+
     handle_pageable_change(event: PageEvent) {
         this.pageable = new Pageable(event?.pageIndex, event?.pageSize)
         this.findByCollaboratorId();
@@ -93,10 +101,42 @@ export class StudentsComponent implements OnInit {
     }
 
     navigateToDetail(item: ManageUserDto) {
-        this.router.navigate([`student/${item.id}`], {relativeTo: this.route})
+        this.router.navigate([`student/${item.email}`], {relativeTo: this.route})
+    }
+    /*deleteStudent(id: number): void {
+        this.etudiantService.deleteById(id).subscribe({
+            next: (response) => {
+                console.log(`Deleted student with id: ${id}`);
+                // Code to update the UI, e.g., remove the deleted item from the list
+            },
+            error: (error) => {
+                console.error('Error deleting student:', error);
+            }
+        });
+    }*/
+    delete(item: ManageUserDto) {
+        const confirmation = this._fuseConfirmation.open({
+            title: 'delete inscription',
+            message: `Are you sure you want to remove  <strong> ${item?.fullName} </strong> ?`,
+            actions: {
+                confirm: {
+                    label: 'REMOVE',
+                },
+            },
+        });
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirmation button pressed...
+            if (result === 'confirmed') {
+                this.etudiantService.deleteById(item.id).subscribe(res => {
+                    alert("Please click OK to continue deleting !")
+                }, error => {
+                })
+            }
+        });
     }
 
     openFilter() {
 
     }
+
 }

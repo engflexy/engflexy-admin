@@ -25,6 +25,7 @@ import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.DateUtil;
@@ -33,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,6 +42,15 @@ import java.util.List;
 
 @Service
 public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudiant, EtudiantCriteria, EtudiantDao> implements EtudiantCollaboratorService {
+
+
+   public void deleteAssociatedLists(Long id) {
+        quizEtudiantService.deleteByEtudiantId(id);
+        inscriptionService.deleteByEtudiantId(id);
+        groupeEtudiantDetailService.deleteByEtudiantId(id);
+        modelPermissionUserService.deleteByUserId(id);
+        roleUserService.deleteByUserId(id);
+    }
 
 
     public void findOrSaveAssociatedObject(Etudiant t) {
@@ -66,9 +77,11 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         return dao.deleteByTeacherLocalityId(id);
     }
 
+
     public long countByTeacherLocalityCode(String code) {
         return dao.countByTeacherLocalityCode(code);
     }
+
 
     public List<Etudiant> findByParcoursId(Long id) {
         return dao.findByParcoursId(id);
@@ -109,6 +122,11 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
     public List<Etudiant> findByStatutSocialId(Long id) {
         return dao.findByStatutSocialId(id);
     }
+
+    /*public int delete(Long id) {
+        dao.deleteById(id);
+        return 1;
+    }*/
 
     public int deleteByStatutSocialId(Long id) {
         return dao.deleteByStatutSocialId(id);
@@ -202,17 +220,20 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.STUDENT);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findByAuthority(role.getAuthority());
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
 
         t.getRoleUsers().add(roleUser);
         if (t.getModelPermissionUsers() == null) t.setModelPermissionUsers(new ArrayList<>());
 
         t.setModelPermissionUsers(modelPermissionUserService.initModelPermissionUser());
+        String username = "collaborator";//getCurrentUser().getUsername();
+        Collaborator collaborator = collaboratorService.findByUsername(username);
+        t.setCollaborator(collaborator);
 
-        if (t.getCollaborator() != null) {
+        /*if (t.getCollaborator() != null) {
             System.out.println("COLLABORATOR==> " + t.getCollaborator().getId());
             Collaborator c = collaboratorService.findById(t.getCollaborator().getId());
             if (c == null) {
@@ -220,7 +241,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
             }
             System.out.println("COLLABORATOR==> " + c);
             t.setCollaborator(c);
-        }
+        }*/
 
         Etudiant mySaved = (Etudiant) userService.create(t);
         //create student inscription
@@ -258,6 +279,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
     }
 
     @Override
+    @Transactional
     public Etudiant update(Etudiant t) {
         Etudiant student = this.findById(t.getId());
         if (student == null) {
@@ -270,8 +292,9 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
             student.setCountry(t.getCountry());
             student.setAbout(t.getAbout());
 
+
             if (t.getLangue() != null && t.getLangue().getId() != null) {
-                Langue langue = langueService.findById(t.getLangue().getId());
+                Langue langue = langueService.findByReferenceEntity(t.getLangue());
                 student.setLangue(langue);
             }
 
@@ -311,7 +334,9 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
                 InteretEtudiant interetEtudiant = interetEtudiantService.findById(t.getInteretEtudiant().getId());
                 student.setInteretEtudiant(interetEtudiant);
             }
-            return dao.save(student);
+            Etudiant etudiant = dao.saveAndFlush(student);
+            System.out.println("etudiant.getLangue().getLibelle() = " + etudiant.getLangue().getLibelle());
+            return t;
         }
     }
     @Override
@@ -324,6 +349,68 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         }
         return false;
     }
+    @Override
+    public boolean onCommunicationEnabled(Long id, boolean communicationEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setCommunicationEnabled(communicationEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onSecurityEnabled(Long id, boolean securityEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setSecurityEnabled(securityEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+@Override
+    public boolean onLessonReminderEnabled(Long id, boolean lessonReminderEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setLessonReminderEnabled(lessonReminderEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onClassroomEnabled(Long id, boolean classroomEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setClassroomEnabled(classroomEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onPasswordChangedNotificationEnabled(Long id, boolean passwordChangedNotificationEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setPasswordChangedNotificationEnabled(passwordChangedNotificationEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onContactNotificationEnabled(Long id, boolean contactNotificationEnabled) {
+        Etudiant etudiant = findById(id);
+        if (etudiant != null) {
+            etudiant.setContactNotificationEnabled(contactNotificationEnabled);
+            dao.save(etudiant);
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     public boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired) {
         Etudiant etudiant = findById(id);
@@ -367,8 +454,8 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
         }
         return false;
     }
-    public Etudiant findByUsername(String username) {
-        return dao.findByUsername(username);
+    public Etudiant findByUsername(String email) {
+        return dao.findByUsername(email);
     }
 
     @Override
@@ -394,6 +481,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
     private @Autowired ModelPermissionUserService modelPermissionUserService;
 
     @Autowired

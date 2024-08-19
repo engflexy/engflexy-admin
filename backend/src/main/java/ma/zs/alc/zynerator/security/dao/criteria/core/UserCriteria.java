@@ -19,17 +19,8 @@ public class UserCriteria extends  BaseCriteria  {
     private Boolean passwordChanged;
 
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     private String fullName;
-
-
     private String firstName;
     private String firstNameLike;
     private String lastName;
@@ -65,6 +56,13 @@ public class UserCriteria extends  BaseCriteria  {
     }
     public void setEmailLike(String emailLike){
         this.emailLike = emailLike;
+    }
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Boolean getAccountNonExpired(){

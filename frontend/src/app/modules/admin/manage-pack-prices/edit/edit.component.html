@@ -1,15 +1,17 @@
 <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
     <div class="w-full  items-center justify-center flex flex-col gap-4">
         <div class="w-full">
-
+            <h1 class="font-bold  text-center text-gray-800 text-2xl mb-7 ">
+                Edit Subscription
+            </h1>
             <div class="flex gap-4">
                 <mat-form-field class="w-full">
                     <mat-label>Collaborator</mat-label>
-                    <input type="text" matInput (ngModelChange)="calculatePrice()"  (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="item.collaborator"  name="collaborator">
+                    <input disabled type="text" matInput (ngModelChange)="calculatePrice()"  (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="item.collaborator"  name="collaborator">
 
                     <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator" [compareWith]="compareObjects" >
-                        <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator.username">
-                            {{collaborator.username}}
+                        <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator.fullName">
+                            {{collaborator.fullName}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
@@ -18,7 +20,7 @@
 
                 <mat-form-field class="w-full">
                     <mat-label>Package</mat-label>
-                    <input type="text" matInput (input)="filterPackageCollaborator(packageCollaboratorInput.value)" #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"  [(ngModel)]="item.packageCollaborator"  name="packageCollaborator">
+                    <input disabled type="text"  matInput (input)="filterPackageCollaborator(packageCollaboratorInput.value)" #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"  [(ngModel)]="item.packageCollaborator"  name="packageCollaborator">
 
                     <mat-autocomplete #packageCollaboratorAutocomplete="matAutocomplete" [displayWith]="displayPackageCollaborator" [compareWith]="compareObjects" >
                         <mat-option *ngFor="let packageCollaborator of _packageCollaboratorsFilter" [value]="packageCollaborator">
@@ -30,13 +32,16 @@
 
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>Number of students</mat-label>
-                    <input required type="number" (ngModelChange)="calculatePrice()" matInput [step]="8" [min]="8"
-                           placeholder="NbrStudent" [(ngModel)]="item.nbrStudent"
-                           name="nbrStudent">
+                    <mat-select [(ngModel)]="item.nbrStudent" (selectionChange)="calculatePrice()">
+                        <mat-option *ngFor="let number of studentsForTeacher" [value]="number">
+                            {{number}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
 
+
             </div>
-            <div class="flex gap-4">
+            <div class="flex gap-4" *ngIf="activeStatus === 1">
                 <div>
                     <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.logo" name="logo">
                         {{ item.logo ? 'personal logo' : 'default logo' }}
@@ -60,7 +65,6 @@
                 </div>
 
             </div>
-
             <div class="flex gap-4">
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>Price</mat-label>
@@ -71,7 +75,7 @@
             <div class="flex gap-4">
                 <mat-form-field class="w-full">
                     <mat-label>Start time</mat-label>
-                    <input matInput (ngModelChange)="onStartDateChange()"  [matDatepicker]="startDatePicker" [(ngModel)]="item.startDate" name="startDate">
+                    <input matInput [matDatepicker]="startDatePicker" (dateChange)="onStartDateChange()" [(ngModel)]="item.startDate" name="startDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #startDatePicker></mat-datepicker>
@@ -79,11 +83,12 @@
 
                 <mat-form-field class="w-full">
                     <mat-label>End time</mat-label>
-                    <input disabled matInput  [matDatepicker]="endTimePicker" [(ngModel)]="item.endDate" name="endDate">
+                    <input disabled matInput [matDatepicker]="endTimePicker" [(ngModel)]="item.endDate" name="endDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="endTimePicker"></mat-datepicker-toggle>
                     <mat-datepicker #endTimePicker></mat-datepicker>
                 </mat-form-field>
+
 
 
                 <mat-form-field class="w-full">

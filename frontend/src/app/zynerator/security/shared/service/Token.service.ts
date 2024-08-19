@@ -30,4 +30,10 @@ export class TokenService {
         return tokenDecoded.sub;
     }xx
 
+    public getUserId(): string {
+        const token = this.token(); // replace this with your method to get the token
+        const decodedToken = this.decode();
+        return decodedToken.id; // replace 'id' with the actual key in the payload
+    }
+
 }

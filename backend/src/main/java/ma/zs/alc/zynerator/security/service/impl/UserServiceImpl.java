@@ -1,12 +1,10 @@
 package ma.zs.alc.zynerator.security.service.impl;
 
 
-import jakarta.mail.MessagingException;
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.dao.facade.core.chat.ConversationRepository;
-import ma.zs.alc.emails.MailComponent;
-import ma.zs.alc.emails.MailerService;
-import ma.zs.alc.ws.dto.chat.ApiResponse;
+import ma.zs.alc.ws.dto.chat.ConversationResponse;
+import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.security.bean.ModelPermissionUser;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.bean.User;
@@ -18,8 +16,6 @@ import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,28 +32,24 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     private final ConversationRepository conversationRepository;
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
+    public User register(User t) {
+        return createAndEnable(t, false);
+    }
+
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public User create(User t) {
+        return createAndEnable(t, true);
+    }
+
+    private User createAndEnable(User t, boolean enable) {
         User foundedUserByUsername = findByUsername(t.getUsername());
         User foundedUserByEmail = dao.findByEmail(t.getEmail());
 
         if (foundedUserByUsername != null || foundedUserByEmail != null) {
             throw new RuntimeException("Email already exist.");
         } else {
-            //sent username and password to user
-            MailComponent mail = new MailComponent();
-            mail.setName(t.getFullName());
-            mail.setSubject("Welcome " + t.getFullName());
-            mail.setUsername(t.getUsername());
-            mail.setPassword(t.getPassword());
-            mail.setTo(t.getEmail());
-            mail.setContent("Your password is <strong> " + mail.getPassword() + " </strong>.");
-//            try {
-//                emailSenderService.sent(mail);
-//            } catch (MessagingException e) {
-//                throw new RuntimeException(e);
-//            }
-
             if (t.getPassword() == null || t.getPassword().isEmpty()) {
                 t.setPassword(bCryptPasswordEncoder.encode(t.getUsername()));
             } else {
@@ -66,7 +58,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
             t.setAccountNonExpired(true);
             t.setAccountNonLocked(true);
             t.setCredentialsNonExpired(true);
-            t.setEnabled(true);
+            t.setEnabled(enable);
             t.setPasswordChanged(false);
             t.setCreatedAt(LocalDateTime.now());
             super.create(t);
@@ -127,6 +119,16 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         return dao.findByUsername(username);
     }
 
+    @Override
+    public boolean findByUsernameAndValidationCode(String username, String validationCode) {
+        if (username == null || validationCode == null) {
+            return false;
+        }
+        User user = dao.findByUsername(username);
+        user.setEnabled(true);
+        return user != null && validationCode.equals(user.getValidationCode());
+    }
+
     public List<User> findAllOptimized() {
         return dao.findAllOptimized();
     }
@@ -134,8 +136,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     @Override
     public String cryptPassword(String value) {
-        return value;
-//        return value == null ? null : bCryptPasswordEncoder.encode(value);
+        return value == null ? null : bCryptPasswordEncoder.encode(value);
     }
 
     @Override
@@ -187,8 +188,6 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     @Lazy
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    MailerService emailSenderService;
 
 
     public UserServiceImpl(UserDao dao, ConversationRepository conversationRepository) {
@@ -198,20 +197,21 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     ////////////////////////////////////////////////
     @Override
-    public ResponseEntity<ApiResponse> findAllUsersExceptThisUserId(Long userId) {
+    public List<User> findAllUsersExceptThisUserId(Long userId) {
         List<User> list = dao.findAllUsersExceptThisUserId(userId);
-        ApiResponse response = new ApiResponse(200, "Success", "OK", list);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        //ApiResponse response = new ApiResponse(200, "Success", "OK", list);
+        return list;
     }
 
     @Override
-    public ResponseEntity<ApiResponse> findConversationIdByUser1IdAndUser2Id(Long user1Id, Long user2Id) {
+    public Long findConversationIdByUser1IdAndUser2Id(Long user1Id, Long user2Id) {
         Long conversationId;
         Optional<User> user1 = dao.findById(user1Id);
         Optional<User> user2 = dao.findById(user2Id);
         if (user1.isEmpty() || user2.isEmpty()) {
-            ApiResponse response = new ApiResponse(200, "Failed", "User not found", null);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            //ApiResponse response = new ApiResponse(200, "Failed", "User not found", null);
+            //return new ResponseEntity<>(response, HttpStatus.OK);
+            return 0L;
         }
 
         Optional<Conversation> existingConversation = conversationRepository.findConversationByUsers(user1.get(), user2.get());
@@ -224,8 +224,31 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
             Conversation savedConversation = conversationRepository.save(newConversation);
             conversationId = savedConversation.getId();
         }
-        ApiResponse response = new ApiResponse(200, "Success", "OK", conversationId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        //ApiResponse response = new ApiResponse(200, "Success", "OK", conversationId);
+        //return new ResponseEntity<>(response, HttpStatus.OK);
+        return conversationId;
+
     }
+
+    @Override
+    public List<ConversationResponse> findConversationsByUserId(Long userId) {
+        return List.of();
+    }
+
+    @Override
+    public boolean validateUser(AccountValidationDto accountValidationDto) {
+        String username = accountValidationDto.getUsername();
+        String validationCode = accountValidationDto.getValidationCode();
+        if (username == null || validationCode == null) {
+            return false;
+        }
+        User user = dao.findByUsername(username);
+        if (user != null && validationCode.equals(user.getValidationCode())) {
+            user.setEnabled(true);
+            return true;
+        }
+        return false;
+    }
+
     ///////////////////////////////////////
 }

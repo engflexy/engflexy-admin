@@ -14,6 +14,12 @@ import {FaqCollaboratorService} from "../../../shared/service/collaborator/faq/F
 import {MatDialog} from "@angular/material/dialog";
 import {FaqCreateAdminComponent} from "./create/faq-create-admin.component";
 import {FaqEditAdminComponent} from "./edit/faq-edit-admin.component";
+import {ExerciceDto} from "../../../shared/model/course/Exercice.model";
+import {FuseConfirmationService} from "../../../../@fuse/services/confirmation";
+import {SectionDto} from "../../../shared/model/course/Section.model";
+import {FuseAlertService} from "../../../../@fuse/components/alert";
+import {FaqTypeDto} from "../../../shared/model/faq/FaqType.model";
+import {FaqTypeCollaboratorService} from "../../../shared/service/collaborator/faq/FaqTypeCollaborator.service";
 
 @Component({
     selector: 'app-manage-faq-news',
@@ -37,7 +43,7 @@ export class ManageFaqNewsComponent implements OnInit, OnDestroy {
     groupedFaqs: any;
 
     faqCategories: any[];
-
+    typeFaq: FaqTypeDto
 
     private _unsubscribeAll: Subject<any> = new Subject();
 
@@ -47,6 +53,9 @@ export class ManageFaqNewsComponent implements OnInit, OnDestroy {
     constructor(
         private _helpCenterService: FaqCollaboratorService,
         private _matDialog: MatDialog,
+        private _fuseConfirmation: FuseConfirmationService,
+        private alert: FuseAlertService,
+        private _faqTypeCollaboratorService : FaqTypeCollaboratorService
     ) {
     }
 
@@ -56,6 +65,15 @@ export class ManageFaqNewsComponent implements OnInit, OnDestroy {
 
     set item(value: FaqDto) {
         this._helpCenterService.item = value;
+    }
+
+
+    get faqs(): FaqDto[] {
+        return this._helpCenterService.items
+    }
+
+    set faqs(item: FaqDto[]) {
+        this._helpCenterService.items = item
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -134,7 +152,32 @@ export class ManageFaqNewsComponent implements OnInit, OnDestroy {
             maxWidth: "100%",
             disableClose: true,
             maxHeight: "100%"
-        });
+        }
+        );
 
+    }
+
+    delete(faq: FaqDto) {
+        const confirmation = this._fuseConfirmation.open({
+            title: 'delete faq',
+            message: 'Are you sure you want to remove this faq?',
+            actions: {
+                confirm: {
+                    label: 'REMOVE',
+                },
+            },
+        });
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirmation button pressed...
+            if (result === 'confirmed') {
+                this._helpCenterService.delete(faq).subscribe(res => {
+                    this.alert.show('success', 'faq deleted successfully')
+                    this.fetchData();
+                }, error => {
+                    this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
+                })
+            }
+        });
     }
 }

@@ -203,6 +203,7 @@
                     <mat-select [(ngModel)]="user.teacherLocality" [compareWith]="compareObjects">
                         <mat-option *ngFor="let item of teacherLocality" [value]="item">{{ item?.libelle }}</mat-option>
                     </mat-select>
+
                 </mat-form-field>
             </div>
 

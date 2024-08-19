@@ -28,6 +28,9 @@ public class PackageCollaboratorConverter extends AbstractConverter<PackageColla
         PackageCollaborator item = new PackageCollaborator();
             if(StringUtil.isNotEmpty(dto.getId()))
                 item.setId(dto.getId());
+            if(StringUtil.isNotEmpty(dto.getSchool()))
+                item.setSchool(dto.getSchool());
+
             if(StringUtil.isNotEmpty(dto.getLibelle()))
                 item.setLibelle(dto.getLibelle());
             if(StringUtil.isNotEmpty(dto.getNbrStudentBase()))
@@ -63,6 +66,9 @@ public class PackageCollaboratorConverter extends AbstractConverter<PackageColla
             PackageCollaboratorDto dto = new PackageCollaboratorDto();
             if(StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
+            if(StringUtil.isNotEmpty(item.getSchool()))
+                dto.setSchool(item.getSchool());
+
             if(StringUtil.isNotEmpty(item.getLibelle()))
                 dto.setLibelle(item.getLibelle());
             if(StringUtil.isNotEmpty(item.getNbrStudentBase()))

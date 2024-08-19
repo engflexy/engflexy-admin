@@ -61,11 +61,14 @@ public class ManagerCollaboratorServiceImpl extends AbstractServiceImpl<Manager,
         t.setPasswordChanged(false);
 
         Role role = new Role();
-        role.setAuthority(AuthoritiesConstants.COLLABORATOR);
+        role.setAuthority(AuthoritiesConstants.MANAGER);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findOrSave(role);
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
+
+
+
         if (t.getRoleUsers() == null)
         t.setRoleUsers(new ArrayList<>());
 

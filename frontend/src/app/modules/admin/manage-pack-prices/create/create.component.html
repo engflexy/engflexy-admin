@@ -1,29 +1,27 @@
 <mat-dialog-content class="mat-typography overflow-x-hidden" *transloco="let translate">
-    <div class="w-full  items-center justify-center flex flex-col gap-4">
+    <div class="w-full items-center justify-center flex flex-col gap-4">
         <div class="w-full">
-
+            <h1 class="font-bold text-center text-gray-800 text-2xl mb-7">Create Subscription</h1>
             <div class="flex gap-4">
-                <mat-form-field class="w-full">
+                <mat-form-field class="w-full" required>
                     <mat-label>Collaborator</mat-label>
-                    <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput
-                           [matAutocomplete]="collaboratorAutocomplete" [(ngModel)]="item.collaborator"
-                           name="collaborator">
-
+                    <input type="text" matInput required (input)="filterCollaborator(collaboratorInput.value)"
+                           #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"
+                           [(ngModel)]="item.collaborator" name="collaborator">
                     <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator"
                                       [compareWith]="compareObjects">
                         <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
-                            {{ collaborator.username }}
+                            {{ collaborator.fullName }}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
 
-
-                <mat-form-field class="w-full">
+                <mat-form-field class="w-full" required>
                     <mat-label>Package</mat-label>
-                    <input type="text" matInput (ngModelChange)="calculatePrice()"  (input)="filterPackageCollaborator(packageCollaboratorInput.value)"
+                    <input type="text" matInput required (ngModelChange)="onPackageChagne()"
+                           (input)="filterPackageCollaborator(packageCollaboratorInput.value)"
                            #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"
                            [(ngModel)]="item.packageCollaborator" name="packageCollaborator">
-
                     <mat-autocomplete #packageCollaboratorAutocomplete="matAutocomplete"
                                       [displayWith]="displayPackageCollaborator" [compareWith]="compareObjects">
                         <mat-option *ngFor="let packageCollaborator of _packageCollaboratorsFilter"
@@ -33,73 +31,67 @@
                     </mat-autocomplete>
                 </mat-form-field>
 
-
-                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense" required>
                     <mat-label>Number of students</mat-label>
-                    <input required type="number" (ngModelChange)="calculatePrice()" matInput [step]="8" [min]="8"
-                           placeholder="NbrStudent" [(ngModel)]="item.nbrStudent"
-                           name="nbrStudent">
+                    <mat-select required [(ngModel)]="item.nbrStudent" (selectionChange)="calculatePrice()">
+                        <mat-option *ngFor="let number of studentsForTeacher" [value]="number">
+                            {{ number }}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
-
             </div>
-            <div class="flex gap-4">
-                <div>
-                    <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.logo" name="logo">
+
+            <ng-container *ngIf="activeStatus === 1">
+                <div class="flex gap-4">
+                    <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.logo"
+                                  name="logo">
                         {{ item.logo ? 'personal logo' : 'default logo' }}
                     </mat-checkbox>
-                </div>
-
-
-                <div>
                     <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.color"
                                   name="color">
                         {{ item.color ? 'personal color' : 'default color' }}
                     </mat-checkbox>
-                </div>
-
-
-                <div>
                     <mat-checkbox class="w-full" (ngModelChange)="calculatePrice()" [(ngModel)]="item.bannerAd"
                                   name="bannerAd">
                         {{ item.bannerAd ? 'personal banner' : 'default banner' }}
                     </mat-checkbox>
                 </div>
-
-            </div>
+            </ng-container>
 
             <div class="flex gap-4">
-                <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-form-field class="flex-auto w-full fuse-mat-dense" required>
                     <mat-label>Price</mat-label>
                     <input disabled required type="number" matInput placeholder="Price" [(ngModel)]="item.price"
                            name="price">
                 </mat-form-field>
             </div>
+
             <div class="flex gap-4">
-                <mat-form-field class="w-full">
+                <mat-form-field class="w-full" required>
                     <mat-label>Start time</mat-label>
-                    <input matInput (ngModelChange)="onStartDateChange()"  [matDatepicker]="startTimePicker" [(ngModel)]="item.startDate" name="startDate">
+                    <input matInput required (ngModelChange)="onStartDateChange()" [matDatepicker]="startTimePicker"
+                           [(ngModel)]="item.startDate" name="startDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="startTimePicker"></mat-datepicker-toggle>
                     <mat-datepicker #startTimePicker></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field class="w-full">
+                <mat-form-field class="w-full" required>
                     <mat-label>End time</mat-label>
-                    <input disabled matInput  [matDatepicker]="EndTimePicker" [(ngModel)]="item.endDate" name="endDate">
+                    <input disabled matInput required [matDatepicker]="EndTimePicker" [(ngModel)]="item.endDate"
+                           name="endDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="EndTimePicker"></mat-datepicker-toggle>
                     <mat-datepicker #EndTimePicker></mat-datepicker>
                 </mat-form-field>
 
-
-                <mat-form-field class="w-full">
+                <mat-form-field class="w-full" required>
                     <mat-label>Inscription State</mat-label>
-                    <input type="text" matInput
+                    <input type="text" matInput required
                            (input)="filterInscriptionCollaboratorState(inscriptionCollaboratorStateInput.value)"
                            #inscriptionCollaboratorStateInput
                            [matAutocomplete]="inscriptionCollaboratorStateAutocomplete"
                            [(ngModel)]="item.inscriptionCollaboratorState" name="inscriptionCollaboratorState">
-
                     <mat-autocomplete #inscriptionCollaboratorStateAutocomplete="matAutocomplete"
                                       [displayWith]="displayInscriptionCollaboratorState"
                                       [compareWith]="compareObjects">
@@ -111,12 +103,10 @@
                 </mat-form-field>
             </div>
         </div>
-
     </div>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
     <button (click)="refDialog.close(null)" mat-button>Cancel</button>
-    <button class="px-6 ml-3" (click)="save()" mat-flat-button [color]="'primary'"> Create</button>
+    <button class="px-6 ml-3" (click)="save()" mat-flat-button [color]="'primary'">Create</button>
 </mat-dialog-actions>

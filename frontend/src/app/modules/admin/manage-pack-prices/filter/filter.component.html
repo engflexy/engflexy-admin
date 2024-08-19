@@ -4,7 +4,7 @@
             <div class="flex gap-4">
                 <mat-form-field class="w-full">
                     <mat-label>Collaborator</mat-label>
-                    <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="item.collaborator"  name="collaborator">
+                    <input type="text" matInput (input)="filterCollaborator(collaboratorInput.value)" #collaboratorInput [matAutocomplete]="collaboratorAutocomplete"  [(ngModel)]="pageable.collaborator"  name="collaborator">
 
                     <mat-autocomplete #collaboratorAutocomplete="matAutocomplete" [displayWith]="displayCollaborator" [compareWith]="compareObjects" >
                         <mat-option *ngFor="let collaborator of _collaboratorsFilter" [value]="collaborator">
@@ -14,7 +14,7 @@
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label>PackageCollaborator</mat-label>
-                    <input type="text" matInput (input)="filterPackageCollaborator(packageCollaboratorInput.value)" #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"  [(ngModel)]="item.packageCollaborator"  name="packageCollaborator">
+                    <input type="text" matInput (input)="filterPackageCollaborator(packageCollaboratorInput.value)" #packageCollaboratorInput [matAutocomplete]="packageCollaboratorAutocomplete"  [(ngModel)]="pageable.packageCollaborator"  name="packageCollaborator">
 
                     <mat-autocomplete #packageCollaboratorAutocomplete="matAutocomplete" [displayWith]="displayPackageCollaborator" [compareWith]="compareObjects" >
                         <mat-option *ngFor="let packageCollaborator of _packageCollaboratorsFilter" [value]="packageCollaborator">
@@ -24,27 +24,27 @@
                 </mat-form-field>
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>NbrStudent</mat-label>
-                    <input required type="number" matInput placeholder="NbrStudent"  [(ngModel)]="item.nbrStudent"  name="nbrStudent">
+                    <input required type="number" matInput placeholder="NbrStudent"  [(ngModel)]="pageable.nbrStudent"  name="nbrStudent">
                 </mat-form-field>
 
 
             </div>
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>Price</mat-label>
-                <input required type="number" matInput placeholder="Price"  [(ngModel)]="item.price"  name="price">
+                <input required type="number" matInput placeholder="Price"  [(ngModel)]="pageable.price"  name="price">
             </mat-form-field>
 
 
             <div class="flex gap-4">
                 <div>
-                    <mat-checkbox class="w-full"  [(ngModel)]="item.logo" name="logo">
+                    <mat-checkbox class="w-full"  [(ngModel)]="pageable.logo" name="logo">
                         {{ item.logo ? 'personal logo' : 'default logo' }}
                     </mat-checkbox>
                 </div>
 
 
                 <div>
-                    <mat-checkbox class="w-full" [(ngModel)]="item.color"
+                    <mat-checkbox class="w-full" [(ngModel)]="pageable.color"
                                   name="color">
                         {{ item.color ? 'personal color' : 'default color' }}
                     </mat-checkbox>
@@ -52,7 +52,7 @@
 
 
                 <div>
-                    <mat-checkbox class="w-full" [(ngModel)]="item.bannerAd"
+                    <mat-checkbox class="w-full" [(ngModel)]="pageable.bannerAd"
                                   name="bannerAd">
                         {{ item.bannerAd ? 'personal banner' : 'default banner' }}
                     </mat-checkbox>
@@ -64,21 +64,21 @@
 
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>startDate</mat-label>
-                    <input required type="date" matInput placeholder="StartDate" [(ngModel)]="item.startDate" name="startDate">
+                    <input required type="date" matInput placeholder="StartDate" [(ngModel)]="pageable.startDate" name="startDate">
                 </mat-form-field>
 
 
 
                 <mat-form-field class="flex-auto w-full fuse-mat-dense">
                     <mat-label>endDate</mat-label>
-                    <input required type="date" matInput placeholder="EndDate" [(ngModel)]="item.endDate" name="endDate">
+                    <input required type="date" matInput placeholder="EndDate" [(ngModel)]="pageable.endDate" name="endDate">
                 </mat-form-field>
 
 
 
                 <mat-form-field class="w-full">
                     <mat-label>InscriptionCollaboratorState</mat-label>
-                    <input type="text" matInput (input)="filterInscriptionCollaboratorState(inscriptionCollaboratorStateInput.value)" #inscriptionCollaboratorStateInput [matAutocomplete]="inscriptionCollaboratorStateAutocomplete"  [(ngModel)]="item.inscriptionCollaboratorState"  name="inscriptionCollaboratorState">
+                    <input type="text" matInput (input)="filterInscriptionCollaboratorState(inscriptionCollaboratorStateInput.value)" #inscriptionCollaboratorStateInput [matAutocomplete]="inscriptionCollaboratorStateAutocomplete"  [(ngModel)]="pageable.inscriptionCollaboratorState"  name="inscriptionCollaboratorState">
 
                     <mat-autocomplete #inscriptionCollaboratorStateAutocomplete="matAutocomplete" [displayWith]="displayInscriptionCollaboratorState" [compareWith]="compareObjects" >
                         <mat-option *ngFor="let inscriptionCollaboratorState of _inscriptionCollaboratorStatesFilter" [value]="inscriptionCollaboratorState">

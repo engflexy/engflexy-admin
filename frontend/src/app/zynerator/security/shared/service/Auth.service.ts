@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 
 
-import {BehaviorSubject, Observable, of, switchMap} from 'rxjs';
+import {BehaviorSubject, Observable, of, switchMap, throwError} from 'rxjs';
 
 
 import {TokenService} from './Token.service';
@@ -70,22 +70,29 @@ export class AuthService {
                     this.error = null;
                     const jwt = 'Bearer ' + resp.body.accessToken;
                     jwt != null ? this.tokenService.saveToken(jwt) : false;
-                    this.loadInfos();
-                    console.log('you are logged in successfully');
-                    return of(resp);
+                    return this.loadInfos().pipe(
+                        switchMap(() => {
+                            if (!this._authenticatedUser.id) {
+                                console.error('User ID not set after login');
+                                return throwError('User ID not set');
+                            }
+                            console.log('you are logged in successfully');
+                            return of(resp);
+                        })
+                    );
                 })
             );
     }
 
     public loadInfos(): Observable<boolean> {
         const tokenDecoded = this.tokenService.decode();
+        this._authenticatedUser.id = tokenDecoded?.id; // Assuming the token contains the user ID
         this._authenticatedUser.username = tokenDecoded?.sub;
         const roles = tokenDecoded?.roles;
         this._authenticatedUser.passwordChanged = tokenDecoded?.passwordChanged;
         this._authenticatedUser.phone = tokenDecoded?.phone;
         this._authenticatedUser.fullName = tokenDecoded?.firstName;
         this._authenticatedUser.email = tokenDecoded?.email;
-        this._authenticatedUser.id = tokenDecoded?.id;
         roles.forEach(role => {
             const roleUser = new RoleUserDto();
             roleUser.role.authority = role;

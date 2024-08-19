@@ -11,6 +11,7 @@ import {Observable} from "rxjs";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ProfDto} from "../../../model/prof/Prof.model";
+import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
 
 
 @Injectable({
@@ -43,7 +44,18 @@ export class CollaboratorAdminService extends AbstractService<CollaboratorDto, C
                 }
             });
     }
+
+    findAllOptimized(): Observable<Array<CollaboratorDto>> {
+        return this.http.get<Array<CollaboratorDto>>(this.API + `optimized`);
+    }
+
     update(user: CollaboratorDto): Observable<CollaboratorDto> {
         return this.http.put<CollaboratorDto>(this.API, user);
+    }
+    create(user: CollaboratorDto): Observable<CollaboratorDto> {
+        return this.http.post<CollaboratorDto>(this.API + 'create', user);
+    }
+    deleteById(id: number): Observable<number> {
+        return this.http.delete<number>(`${this.API}id/${id}`);
     }
 }

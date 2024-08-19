@@ -1,4 +1,3 @@
-import * as moment from 'moment/moment';
 import {Observable, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {ScheduleDto} from '../dto/ScheduleDto.model';
@@ -7,6 +6,7 @@ import {BaseCriteria} from "../criteria/BaseCriteria.model";
 import {FileTempDto} from "../dto/FileTempDto.model";
 import {environment} from "../../../environments/environment";
 import {PaginatedList} from "../dto/PaginatedList.model";
+import moment from "moment";
 
 
 export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends BaseCriteria> {
@@ -43,6 +43,7 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
     private _entityName: string;
 
     protected API_PERMISSION: string;
+    private _pageable: PaginatedList<DTO>;
 
 
     constructor() {
@@ -115,6 +116,10 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
 
     public delete(dto: DTO) {
         return this.httpClient.delete<number>(this.API + 'id/' + dto.id);
+    }
+
+    public deleteById(id: number) {
+        return this.httpClient.delete<number>(this.API + 'id/' + id);
     }
 
 
@@ -402,5 +407,13 @@ export abstract class AbstractService<DTO extends BaseDto, CRITERIA extends Base
 
     set entityName(value: string) {
         this._entityName = value;
+    }
+
+    get pageable(): PaginatedList<DTO> {
+        return this._pageable;
+    }
+
+    set pageable(value: PaginatedList<DTO>) {
+        this._pageable = value;
     }
 }

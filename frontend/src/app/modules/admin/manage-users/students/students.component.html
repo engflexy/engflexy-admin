@@ -26,13 +26,13 @@
             </div>
         </div>
 
-        <ng-container *ngIf="!criteria?.empty">
+        <ng-container *ngIf="!criteria?.empty" >
 
             <app-divider class="my-6" color="white" text=" "></app-divider>
-            <div class=" min-w-full py-2 align-middle md:px-6 lg:px-8
+
+            <div   class=" min-w-full py-2 align-middle md:px-6 lg:px-8
                       flex flex-row justify-center items-center gap-4">
-                <mat-form-field
-                    class="flex-auto fuse-mat-dense flex-grow">
+                <mat-form-field class="flex-auto fuse-mat-dense flex-grow">
                     <input #usernameInput placeholder="search.." matInput (keyup.enter)="findUserByUsername(usernameInput.value)">
                     <mat-icon
                         class="icon-size-5"
@@ -43,8 +43,9 @@
                     <mat-icon svgIcon="heroicons_solid:funnel"></mat-icon>
                 </button>
             </div>
-            <div class="flex gap-4 flex-col mt-5">
-                <ng-container *ngFor="let item of criteria?.content">
+
+                <div class="flex gap-4 flex-col mt-5">
+                <ng-container *ngFor="let item of criteria.content">
                     <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
                         <ng-container *ngIf="item?.avatar else noImg">
                             <img
@@ -99,9 +100,8 @@
                                           svgIcon="heroicons_mini:arrow-uturn-right"></mat-icon>
                             </button>
 
-                            <button mat-icon-button color="warn">
-                                <mat-icon class="icon-size-4"
-                                          svgIcon="heroicons_solid:trash"></mat-icon>
+                            <button (click)="delete(item)" mat-icon-button color="warn">
+                                <mat-icon class="icon-size-4" svgIcon="heroicons_solid:trash"></mat-icon>
                             </button>
 
                         </div>

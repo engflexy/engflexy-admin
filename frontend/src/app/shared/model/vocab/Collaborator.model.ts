@@ -10,6 +10,7 @@ export class CollaboratorDto extends UserDto {
     public parcourss: Array<ParcoursDto>;
 
 
+
     constructor(id?:number) {
         super(id);
         this.libelle = '';
@@ -18,5 +19,6 @@ export class CollaboratorDto extends UserDto {
         this.parcourss = new Array<ParcoursDto>();
 
     }
+
 
 }

@@ -6,13 +6,16 @@ import {environment} from '../../../../../environments/environment';
 import {ParcoursDto} from '../../../model/course/Parcours.model';
 import {ParcoursCriteria} from '../../../criteria/course/ParcoursCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
+import {Observable} from "rxjs";
+import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
+import {TokenService} from "../../../../zynerator/security/shared/service/Token.service";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class ParcoursCollaboratorService extends AbstractService<ParcoursDto, ParcoursCriteria> {
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private auth:AuthService,private tokenService: TokenService) {
         super();
         this.setHttp(http);
     }
@@ -25,7 +28,24 @@ export class ParcoursCollaboratorService extends AbstractService<ParcoursDto, Pa
         return new ParcoursDto();
     }
 
-    public constrcutCriteria(): ParcoursCriteria {
+    public findForCurrentCollaborator(): Observable<ParcoursDto[]> {
+        return this.http.get<ParcoursDto[]>(`${this.API}current/username/${this.tokenService.getUsername()}`);
+    }
+
+    public findByForExgFlexy(): Observable<ParcoursDto[]> {
+        return this.http.get<ParcoursDto[]>(`${this.API}exgflexy`);
+    }
+
+    constrcutCriteria(): ParcoursCriteria {
         return new ParcoursCriteria();
     }
+
+
+    findByLibelleLikeForEngFlexy(libelle: string): Observable<ParcoursDto[]> {
+    return this.http.get<ParcoursDto[]>(`${this.API}engflexy/libelle/${libelle}`);
+}
+
+    findByLibelleLikeForCurrent(libelle: string): Observable<ParcoursDto[]> {
+    return this.http.get<ParcoursDto[]>(`${this.API}current/libelle/${libelle}`);
+}
 }

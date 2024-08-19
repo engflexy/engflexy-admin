@@ -17,6 +17,9 @@ import {EditMaterialComponent} from "../edit-material/edit-material.component";
 import {FuseConfirmationService} from "../../../../../@fuse/services/confirmation";
 import {FuseAlertService} from "../../../../../@fuse/components/alert";
 import {EditCourseComponent} from "./edit-course/edit-course.component";
+import {AuthService} from "../../../../zynerator/security/shared/service/Auth.service";
+import {UserDto} from "../../../../zynerator/security/shared/model/User.model";
+import {TokenService} from "../../../../zynerator/security/shared/service/Token.service";
 
 @Component({
     selector: 'app-material-detail',
@@ -37,13 +40,17 @@ import {EditCourseComponent} from "./edit-course/edit-course.component";
 })
 export class MaterialDetailComponent implements OnInit {
 
+    athenticatedUser: UserDto;
+     id: number;
     constructor(private router: Router,
                 private parcourService: ParcoursCollaboratorService,
                 private courseService: CoursCollaboratorService,
                 private _matDialog: MatDialog,
+                private auth : AuthService,
                 private _fuseConfirmation: FuseConfirmationService,
                 private alert: FuseAlertService,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private tokenService: TokenService ) {
     }
 
     get courses(): CoursDto[] {
@@ -71,6 +78,8 @@ export class MaterialDetailComponent implements OnInit {
     }
 
     ngOnInit() {
+       // this.athenticatedUser = this.auth.authenticatedUser
+         this.id = Number (this.tokenService.getUserId())
         const level = this.route.snapshot.params.level
         if (level) {
             const parcoursDto: ParcoursDto = new ParcoursDto()
@@ -136,7 +145,7 @@ export class MaterialDetailComponent implements OnInit {
                 if (result === 'confirmed') {
                     this.parcourService.delete(item).subscribe(res => {
                         this.alert.show('success', 'course deleted successfully.')
-                        this.router.navigate(['courses'])
+                        this.router.navigate(['/admin/manage-courses'])
                     }, error => {
                         this.alert.show('info', error?.error?.message || 'something went wrong!, please try again.')
                     })

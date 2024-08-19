@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatButtonModule} from "@angular/material/button";
@@ -8,7 +8,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {TranslocoModule} from "@ngneat/transloco";
 import {PackStudentDto} from "../../../../shared/model/pack/PackStudent.model";
 import {PackStudentCriteria} from "../../../../shared/criteria/pack/PackStudentCriteria.model";
@@ -59,6 +59,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     selector: 'app-create',
     templateUrl: './create.component.html',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         FormsModule,
         MatAutocompleteModule,
@@ -72,10 +73,12 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         NgForOf,
         TranslocoModule,
         MatCheckboxModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        NgIf
     ],
 })
 export class CreateComponent implements OnInit {
+    studentsForTeacher: number[] = [2, 7, 15, 20, 30, 50];
     protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
@@ -95,18 +98,34 @@ export class CreateComponent implements OnInit {
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<CreateComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService, private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
+    constructor(public refDialog: MatDialogRef<CreateComponent>,private changeDetector:ChangeDetectorRef, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService, private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId?) {
 
     }
 
     ngOnInit(): void {
         this.packageCollaboratorService.findAll().subscribe((data) => {
             this.packageCollaborators = data;
-            this._packageCollaboratorsFilter = [...this.packageCollaborators]
+
+            if (this.activeStatus == 1) {
+                let filtred = this.packageCollaborators.filter(e=>e.school ==true)
+                this._packageCollaboratorsFilter = [...filtred]
+            }else if (this.activeStatus == 2) {
+                let filtred = this.packageCollaborators.filter(e=>e.school ==false)
+                this._packageCollaboratorsFilter = [...filtred]
+            }
         });
+
         this.collaboratorService.findAll().subscribe((data) => {
             this.collaborators = data;
-            this._collaboratorsFilter = [...this.collaborators]
+            if (this.activeStatus == 1) {
+                let filtred = this.collaborators.filter(e=>e.typeCollaborator.libelle =="school")
+                this._collaboratorsFilter = [...filtred]
+                console.log(filtred)
+            }else if (this.activeStatus == 2) {
+                let filtred = this.collaborators.filter(e=>e.typeCollaborator.libelle =="teacher")
+                this._collaboratorsFilter = [...filtred]
+                console.log(filtred)
+            }
         });
         this.inscriptionCollaboratorStateService.findAll().subscribe((data) => {
             this.inscriptionCollaboratorStates = data;
@@ -150,6 +169,15 @@ export class CreateComponent implements OnInit {
         return item && item.libelle ? item.libelle : "";
 
     }
+    onPackageChagne(){
+        this.item.nbrStudent = null;
+        this.item.logo = false;
+        this.item.color = false;
+        this.item.bannerAd = false;
+        this.item.price = null;
+        this.changeDetector.detectChanges();
+
+    }
 
     onStartDateChange(): void {
         const timer = setInterval(s => {
@@ -183,7 +211,8 @@ export class CreateComponent implements OnInit {
         this.validateForm();
         if (this.errorMessages.length === 0) {
             this.saveWithShowOption(false);
-            this.refDialog.close();
+            this.changeDetector.detectChanges();
+
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
@@ -194,6 +223,10 @@ export class CreateComponent implements OnInit {
             if (item != null) {
                 this.items.push({...item});
                 this.item = new InscriptionCollaboratorDto();
+                this.changeDetector.detectChanges();
+
+                this.alert.show('info', 'Inscription successfully created!');
+                this.refDialog.close()
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }
@@ -419,6 +452,13 @@ export class CreateComponent implements OnInit {
 
     protected readonly compareObjects = compareObjects;
 
+    isCreateSchool(){
+        console.log("haaaa status ",this.service.active_status)
+        return this.service.active_status == 1
+    }
+
+
+
 
     calculatePrice() {
         const timer = setInterval(s => {
@@ -452,7 +492,13 @@ export class CreateComponent implements OnInit {
                 // Update the item price
                 this.item.price = totalPrice;
                 console.log(this.item.price)
+                this.changeDetector.detectChanges();
+
             }
         }, 100)
+    }
+
+    get activeStatus(): number {
+        return this.service.active_status ;
     }
 }

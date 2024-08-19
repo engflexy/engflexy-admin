@@ -9,6 +9,7 @@ public class PackageCollaboratorCriteria extends  BaseCriteria  {
 
     private String libelle;
     private String libelleLike;
+    private Boolean school;
     private String nbrStudentBase;
     private String nbrStudentBaseMin;
     private String nbrStudentBaseMax;
@@ -53,6 +54,10 @@ public class PackageCollaboratorCriteria extends  BaseCriteria  {
     public void setLibelleLike(String libelleLike){
         this.libelleLike = libelleLike;
     }
+
+    public Boolean getSchool() {return this.school;}
+
+    public void setSchool(Boolean school) {this.school = school;}
 
     public String getNbrStudentBase(){
         return this.nbrStudentBase;

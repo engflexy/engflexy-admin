@@ -67,13 +67,11 @@ export class FilterComponent implements OnInit{
     _inscriptionCollaboratorStatesFilter:  InscriptionCollaboratorStateDto[];
 
 
-
-
     private _validPackageCollaboratorLibelle = true;
     private _validInscriptionCollaboratorStateCode = true;
     private _validInscriptionCollaboratorStateLibelle = true;
 
-    constructor(public refDialog: MatDialogRef<CreateComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
+    constructor(public refDialog: MatDialogRef<FilterComponent>, private alert: FuseAlertService, private service: InscriptionCollaboratorCollaboratorService , private collaboratorService: CollaboratorCollaboratorService, private inscriptionCollaboratorStateService: InscriptionCollaboratorStateCollaboratorService, private packageCollaboratorService: PackageCollaboratorCollaboratorService, @Inject(PLATFORM_ID) private platformId? ) {
 
     }
 

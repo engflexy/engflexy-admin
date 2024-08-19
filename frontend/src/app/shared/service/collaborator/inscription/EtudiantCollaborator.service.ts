@@ -7,10 +7,11 @@ import {EtudiantDto} from '../../../model/inscription/Etudiant.model';
 import {EtudiantCriteria} from '../../../criteria/inscription/EtudiantCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
-import {Observable, tap} from "rxjs";
+import {catchError, Observable, ReplaySubject, retry, tap, throwError} from "rxjs";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserCriteria.model";
+import {ProfDto} from "../../../model/prof/Prof.model";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ import {UserCriteria} from "../../../../zynerator/security/shared/criteria/UserC
 })
 export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, EtudiantCriteria> {
     private _students: Array<ManageUserDto> = new Array<ManageUserDto>();
-
+    private _user: ReplaySubject<EtudiantDto> = new ReplaySubject<EtudiantDto>(1);
 
     constructor(private http: HttpClient) {
         super();
@@ -55,30 +56,67 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
             );
     }
 
-    findByCollaboratorId(id: number, pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+    findByCollaboratorId(id: number | undefined, pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+        console.log('Service method called with ID:', id);
+        if (id === undefined) {
+            console.error('Collaborator ID is undefined');
+            return throwError(() => new Error('Collaborator ID is undefined'));
+        }
         return this.http.get<PageRequest<ManageUserDto>>(this.API + `pageable/collaborator/id/${id}`,
             {
                 params: {
-                    'page': pageable.page,
-                    'size': pageable.size
+                    'page': pageable.page.toString(),
+                    'size': pageable.size.toString()
                 }
             });
     }
-    findByUserName(username: string): Observable<UserCriteria> {
-
-        return this.http.get<UserCriteria>(this.API + `username/${username}`)
-
+    findByUserName(email: string): Observable<EtudiantDto> {
+        return this.http.get<EtudiantDto>(`${this.API}username/${email}`).pipe(
+            catchError(error => {
+                console.error('Error fetching etudiant:', error);
+                return throwError(error);
+            })
+        );
     }
-
     create(student: EtudiantDto): Observable<EtudiantDto> {
         return this.http.post<EtudiantDto>(this.API + 'create', student);
     }
 
-    update(user: EtudiantDto): Observable<EtudiantDto> {
-        return this.http.put<EtudiantDto>(this.API, user);
+    update(user: EtudiantDto) {
+        return this.http.put<EtudiantDto>(`${this.API}`, user)
+            .pipe(
+                retry(3), // Retry up to 3 times
+                catchError(error => {
+                    console.error('Error in update service:', error);
+                    return throwError('Failed to update student profile');
+                })
+            );
     }
+
+    deleteById(id: number): Observable<number> {
+        return this.http.delete<number>(`${this.API}id/${id}`);
+    }
+
     updateAccountStatus(userId: number, enabled: boolean): Observable<any> {
         return this.http.patch(`${this.API}update-status/${userId}`, { enabled });
+    }
+    onCommunicationEnabled(userId: number, communicationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}communicationEnabled/${userId}`, { communicationEnabled });
+    }
+    onSecurityEnabled(userId: number, securityEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}securityEnabled/${userId}`, { securityEnabled });
+    }
+    onLessonReminderEnabled(userId: number, communicationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}lessonReminderEnabled/${userId}`, { communicationEnabled });
+    }
+    onClassroomEnabled(userId: number, classroomEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}classroomEnabled/${userId}`, { classroomEnabled });
+    }
+    onPasswordChangedNotificationEnabled(userId: number, passwordChangedNotificationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}passwordChangedNotificationEnabled/${userId}`, { passwordChangedNotificationEnabled });
+    }
+    onContactNotificationEnabled(userId: number, contactNotificationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}contactNotificationEnabled/${userId}`, { contactNotificationEnabled });
     }
     updateAccountLockStatus(userId: number, accountNonLocked: boolean): Observable<any> {
         return this.http.patch(`${this.API}update-lock-status/${userId}`, { accountNonLocked });
@@ -100,5 +138,21 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
 
     changePassword(username: string, newPassword: string): Observable<any> {
         return this.http.put(`${this.API}change-password`, { username, newPassword });
+    }
+    findAllByCriteria(pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
+        return this.http.get<PageRequest<ManageUserDto>>(this.API + `pageable`,
+            {
+                params: {
+                    'page': pageable.page,
+                    'size': pageable.size
+                }
+            });
+    }
+    get(id: number): Observable<EtudiantDto> {
+        return this.http.get<EtudiantDto>(`${this.API}id/${id}`).pipe(
+            tap((etudiant) => {
+                this._user.next(etudiant);
+            }),
+        );
     }
 }

@@ -30,10 +30,67 @@ public class User extends AuditBusinessObject implements UserDetails {
     protected boolean accountNonLocked = true;
     protected boolean passwordChanged = false;
     protected boolean credentialsNonExpired = true;
+
+    protected boolean communicationEnabled = true;
+    protected boolean securityEnabled = true;
+    protected boolean lessonReminderEnabled = true;
+    protected boolean classroomEnabled = true;
+
+    public boolean isCommunicationEnabled() {
+        return communicationEnabled;
+    }
+
+    public void setCommunicationEnabled(boolean communicationEnabled) {
+        this.communicationEnabled = communicationEnabled;
+    }
+
+    public boolean isSecurityEnabled() {
+        return securityEnabled;
+    }
+
+    public void setSecurityEnabled(boolean securityEnabled) {
+        this.securityEnabled = securityEnabled;
+    }
+
+    public boolean isLessonReminderEnabled() {
+        return lessonReminderEnabled;
+    }
+
+    public void setLessonReminderEnabled(boolean lessonReminderEnabled) {
+        this.lessonReminderEnabled = lessonReminderEnabled;
+    }
+
+    public boolean isClassroomEnabled() {
+        return classroomEnabled;
+    }
+
+    public void setClassroomEnabled(boolean classroomEnabled) {
+        this.classroomEnabled = classroomEnabled;
+    }
+
+    public boolean isPasswordChangedNotificationEnabled() {
+        return passwordChangedNotificationEnabled;
+    }
+
+    public void setPasswordChangedNotificationEnabled(boolean passwordChangedNotificationEnabled) {
+        this.passwordChangedNotificationEnabled = passwordChangedNotificationEnabled;
+    }
+
+    public boolean isContactNotificationEnabled() {
+        return contactNotificationEnabled;
+    }
+
+    public void setContactNotificationEnabled(boolean contactNotificationEnabled) {
+        this.contactNotificationEnabled = contactNotificationEnabled;
+    }
+
+    protected boolean passwordChangedNotificationEnabled = true;
+    protected boolean contactNotificationEnabled = true;
     protected String username;
     protected String password;
 
     protected String fullName;
+    protected String validationCode;
     protected String avatar;
     protected String phone;
     protected String country;
@@ -62,6 +119,16 @@ public class User extends AuditBusinessObject implements UserDetails {
         this.email = username;
     }
 
+    public User(Long id, String fullName) {
+    }
+
+    public String getValidationCode() {
+        return validationCode;
+    }
+
+    public void setValidationCode(String validationCode) {
+        this.validationCode = validationCode;
+    }
 
     public Langue getLangue() {
         return this.langue;

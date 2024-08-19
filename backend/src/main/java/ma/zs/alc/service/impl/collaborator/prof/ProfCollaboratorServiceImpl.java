@@ -1,6 +1,7 @@
 package ma.zs.alc.service.impl.collaborator.prof;
 
 
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.inscriptionref.Langue;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
@@ -8,20 +9,23 @@ import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.dao.facade.core.prof.ProfDao;
 import ma.zs.alc.dao.specification.core.prof.ProfSpecification;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.inscriptionref.LangueCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.CategorieProfCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.ProfCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.TrancheHoraireProfCollaboratorService;
-import ma.zs.alc.service.facade.collaborator.prof.TypeTeacherCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.prof.*;
 import ma.zs.alc.service.facade.collaborator.recomrecla.RecommendTeacherCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.salary.SalaryCollaboratorService;
+import ma.zs.alc.service.impl.collaborator.grpe.GroupeEtudiantCollaboratorServiceImpl;
 import ma.zs.alc.zynerator.security.bean.Role;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.common.AuthoritiesConstants;
 import ma.zs.alc.zynerator.security.service.facade.ModelPermissionUserService;
 import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
+import ma.zs.alc.zynerator.transverse.emailling.EmailRequest;
+import ma.zs.alc.zynerator.transverse.emailling.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +49,7 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
             t.setCategorieProf(categorieProfService.findOrSave(t.getCategorieProf()));
             t.setTypeTeacher(typeTeacherService.findOrSave(t.getTypeTeacher()));
             t.setCollaborator(collaboratorService.findOrSave(t.getCollaborator()));
+
         }
     }
 
@@ -106,11 +111,31 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         List<Prof> allOptimized = dao.findAllOptimized();
         return allOptimized;
     }
+    public void deleteAssociatedLists(Long id) {
 
+        trancheHoraireProfService.deleteByProfId(id);
+
+        recommendTeacherService.deleteByProfId(id);
+
+        modelPermissionUserService.deleteByUserId(id);
+
+        roleUserService.deleteByUserId(id);
+        groupeEtudiantCollaboratorService.deleteByProfId(id);
+        scheduleProfCollaboratorService.deleteByProfId(id);
+        salaryCollaboratorService.deleteByProfId(id);
+
+    }
 
     @Override
     public Prof create(Prof t) {
         if (findByUsername(t.getUsername()) != null || t.getPassword() == null) return null;
+
+        // Save the associated TypeTeacher if it's not already saved
+        if (t.getTypeTeacher() != null && t.getTypeTeacher().getId() == null) {
+            t.setTypeTeacher(typeTeacherService.create(t.getTypeTeacher()));
+        }
+
+        // Proceed with the rest of the Prof creation logic
         t.setPassword(userService.cryptPassword(t.getPassword()));
         t.setEnabled(true);
         t.setAccountNonExpired(true);
@@ -121,9 +146,9 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         Role role = new Role();
         role.setAuthority(AuthoritiesConstants.TEACHER);
         role.setCreatedAt(LocalDateTime.now());
-        roleService.create(role);
+        Role savedRole = roleService.findByAuthority(role.getAuthority());
         RoleUser roleUser = new RoleUser();
-        roleUser.setRole(role);
+        roleUser.setRole(savedRole);
         if (t.getRoleUsers() == null)
             t.setRoleUsers(new ArrayList<>());
 
@@ -147,8 +172,11 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
                 recommendTeacherService.create(element);
             });
         }
+        emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code","Your username is "+t.getUsername()+" your verification code is "+t.getValidationCode(),t.getEmail()));
+
         return mySaved;
     }
+
 
     @Override
     public Prof update(Prof t) {
@@ -167,7 +195,10 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
                 Langue langue = langueService.findById(t.getLangue().getId());
                 prof.setLangue(langue);
             }
-            return dao.save(prof);
+            Prof professeur = dao.saveAndFlush(prof);
+            System.out.println("etudiant.getLangue().getLibelle() = " + professeur.getLangue().getLibelle());
+
+            return t;
         }
     }
 
@@ -175,22 +206,83 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         return dao.findByUsername(username);
     }
 
+    @Override
     public boolean changePassword(String username, String newPassword) {
-        return userService.changePassword(username, newPassword);
+        Prof prof = findByUsername(username);
+        if (prof != null) {
+            prof.setPassword(newPassword);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updatePasswordChangedStatus(Long id, boolean passwordChanged) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setPasswordChanged(passwordChanged);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setCredentialsNonExpired(credentialsNonExpired);
+            dao.save(prof);
+            return true;
+        }
+        return false;
     }
 
+    @Override
+    public boolean updateAccountStatus(Long id, boolean enabled) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setEnabled(enabled);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean updateAccountNonExpiredStatus(Long id, boolean accountNonExpired) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setAccountNonExpired(accountNonExpired);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateAccountLockStatus(Long id, boolean accountNonLocked) {
+        Prof prof = findById(id);
+        if (prof != null) {
+            prof.setAccountNonLocked(accountNonLocked);
+            dao.save(prof);
+            return true;
+        }
+        return false;
+    }
     public void configure() {
         super.configure(Prof.class, ProfSpecification.class);
     }
 
     private @Autowired UserService userService;
     private @Autowired RoleService roleService;
+    private @Autowired RoleUserService roleUserService;
     private @Autowired ModelPermissionUserService modelPermissionUserService;
 
     @Autowired
     private CollaboratorCollaboratorService collaboratorService;
     @Autowired
     private ParcoursCollaboratorService parcoursService;
+    @Autowired
+    private SalaryCollaboratorService salaryCollaboratorService;
     @Autowired
     private TypeTeacherCollaboratorService typeTeacherService;
     @Autowired
@@ -200,8 +292,13 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     @Autowired
     private TrancheHoraireProfCollaboratorService trancheHoraireProfService;
     @Autowired
+    private GroupeEtudiantCollaboratorService groupeEtudiantCollaboratorService;
+    @Autowired
+    private ScheduleProfCollaboratorService scheduleProfCollaboratorService;
+    @Autowired
     private LangueCollaboratorService langueService;
-
+    @Autowired
+    private EmailService emailService;
     public ProfCollaboratorServiceImpl(ProfDao dao) {
         super(dao);
     }

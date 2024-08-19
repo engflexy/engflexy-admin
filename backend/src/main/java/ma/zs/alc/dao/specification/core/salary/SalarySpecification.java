@@ -24,6 +24,7 @@ public class SalarySpecification extends  AbstractSpecification<SalaryCriteria, 
         addPredicateFk("prof","fullName", criteria.getProf()==null?null:criteria.getProf().getFullName());
         addPredicateFk("prof","fullName", criteria.getProfs());
         addPredicateFk("prof","ref", criteria.getProf()==null?null:criteria.getProf().getRef());
+        addPredicateFk("prof","collaborator","id", criteria.getProf()==null ||criteria.getProf().getCollaborator()==null  ?null:criteria.getProf().getCollaborator().getId());
     }
 
     public SalarySpecification(SalaryCriteria criteria) {

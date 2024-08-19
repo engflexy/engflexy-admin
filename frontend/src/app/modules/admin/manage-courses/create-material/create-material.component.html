@@ -75,7 +75,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-dialog-close mat-button>
+    <button mat-dialog-close (click)="_matDialogRef.close(null)" mat-button>
         Cancel
     </button>
     <button

@@ -13,11 +13,19 @@ public interface ParcoursDao extends AbstractRepository<Parcours,Long>  {
     Parcours findByCode(String code);
     int deleteByCode(String code);
 
+    List<Parcours> findByCollaboratorUsername(String username);
     List<Parcours> findByCollaboratorId(Long id);
     int deleteByCollaboratorId(Long id);
     long countByCollaboratorId(Long id);
 
     @Query("SELECT NEW Parcours(item.id,item.libelle) FROM Parcours item")
     List<Parcours> findAllOptimized();
+
+
+
+    List<Parcours> findByCollaboratorIdAndLibelleLike(Long idCollqborator,String libelle);
+
+
+
 
 }

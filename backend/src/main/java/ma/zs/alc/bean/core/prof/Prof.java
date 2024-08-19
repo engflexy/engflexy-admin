@@ -63,13 +63,13 @@ public class Prof extends User {
         this.ref = ref;
     }
 
-    public String getAbout() {
+   /* public String getAbout() {
         return this.about;
     }
 
     public void setAbout(String about) {
         this.about = about;
-    }
+    }*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parcours")
@@ -112,7 +112,7 @@ public class Prof extends User {
         this.recommendTeachers = recommendTeachers;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "type_teacher")
     public TypeTeacher getTypeTeacher() {
         return this.typeTeacher;

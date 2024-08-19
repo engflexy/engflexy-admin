@@ -53,6 +53,7 @@ import {AdminModule} from './module/admin/admin.module';
 import {AdminRoutingModule} from './module/admin/admin-routing.module';
 import {CollaboratorModule} from './module/collaborator/collaborator.module';
 import {CollaboratorRoutingModule} from './module/collaborator/collaborator-routing.module';
+import {ProfCollaboratorService} from "./shared/service/collaborator/prof/ProfCollaborator.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -120,7 +121,8 @@ providers: [
     RoleService,
     MessageService,
     ConfirmationService,
-    DatePipe
+    DatePipe,
+    ProfCollaboratorService
 ],
 bootstrap: [AppComponent],
   exports: [

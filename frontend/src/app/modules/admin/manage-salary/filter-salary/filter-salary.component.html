@@ -2,9 +2,31 @@
     <div class="w-full items-center justify-center flex flex-col gap-4">
         <div class="w-full flex max-w-4xl md:w-[70vw] flex-col gap-4 items-center justify-start content-center p-1 md:p-4 bg-gray-100 dark:bg-gray-600 rounded-md">
 
+
+            <mat-form-field class="flex-auto w-full fuse-mat-dense">
+                <mat-label>choose a collaborator</mat-label>
+                <input  #collaborator type="text"
+                       placeholder="choose a collaborator"
+                       (input)="filter(collaborator.value, 'Collaborator')"
+                       [(ngModel)]="pageable.prof.collaborator"
+                       name="collaborator"
+                       matInput
+                       [matAutocomplete]="autoCollaborator">
+                <mat-autocomplete #autoCollaborator="matAutocomplete" [displayWith]="displayFnName">
+                    <mat-option *ngFor="let item of _collaborators" class="border-b border-solid" [value]="item">
+                        <div class="flex cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 p-2 items-center">
+                            <div class="flex flex-grow flex-col min-w-0">
+                                <div class="font-medium leading-none">
+                                    {{ item?.fullName }}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>choose a teacher</mat-label>
-                <input required #teacher type="text"
+                <input  #teacher type="text"
                        placeholder="choose a teacher"
                        (input)="filter(teacher.value, 'PROF')"
                        [(ngModel)]="pageable.prof"
@@ -34,7 +56,7 @@
 
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>choose a year</mat-label>
-                <input required #year type="text"
+                <input  #year type="text"
                        placeholder="choose a year"
                        (input)="filter(year.value, 'YEAR')"
                        [(ngModel)]="pageable.annee"
@@ -52,7 +74,7 @@
 
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>choose a month</mat-label>
-                <input required #month type="text"
+                <input  #month type="text"
                        placeholder="choose a month"
                        (input)="filter(month.value, 'MONTH')"
                        [(ngModel)]="pageable.mois"
@@ -71,7 +93,7 @@
 
             <mat-form-field class="flex-auto w-full fuse-mat-dense">
                 <mat-label>choose a status</mat-label>
-                <input required  type="text"
+                <input   type="text"
                        placeholder="choose a C"
                        [(ngModel)]="pageable.payer"
                        name="status"
