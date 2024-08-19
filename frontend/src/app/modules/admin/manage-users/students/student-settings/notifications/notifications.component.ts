@@ -50,21 +50,26 @@ export class SettingsNotificationsComponent implements OnInit {
             lesson: [true],
             inquiry: [true],
         });*/
-        if (this.user && this.user.id) {
-            this.etudiantService.get(this.user.id)
-                .subscribe(
-                    res => {
-                        this.user = res;
-                        console.log('User fetched:', this.user);
-                        this.ref.markForCheck();
-                    },
-                    error => {
-                        console.error('Error fetching user:', error);
-                    }
-                );
+        if (this.user) {
+            if (this.user.id) {
+                this.etudiantService.get(this.user.id)
+                    .subscribe(
+                        res => {
+                            this.user = res;
+                            console.log('User fetched:', this.user);
+                            this.ref.markForCheck();
+                        },
+                        error => {
+                            console.error('Error fetching user:', error);
+                        }
+                    );
+            } else {
+                console.error('User ID is undefined or null');
+            }
         } else {
-            console.error('User ID is undefined or null');
+            console.error('User is undefined or null');
         }
+
     }
 
 
