@@ -63,13 +63,13 @@ public class Prof extends User {
         this.ref = ref;
     }
 
-    public String getAbout() {
+   /* public String getAbout() {
         return this.about;
     }
 
     public void setAbout(String about) {
         this.about = about;
-    }
+    }*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parcours")
