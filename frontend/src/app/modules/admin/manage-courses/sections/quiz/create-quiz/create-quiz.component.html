@@ -20,7 +20,7 @@
                 <mat-label>Type of exercise</mat-label>
                 <mat-select disabled [(ngModel)]="question.typeDeQuestion" [compareWith]="compareObjects">
                     <mat-option *ngFor="let item of types" [value]="item">
-                        {{item.lib}}
+                        {{ item.lib }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -117,7 +117,7 @@
                                             <tr *ngFor="let qst of quiz.questions; index as i">
                                                 <td class="px-4 py-4 ubuntu-regular whitespace-nowrap">
                                                     <ng-container *ngIf="editQstField!==i">
-                                                        {{qst?.numero}}
+                                                        {{ qst?.numero }}
                                                     </ng-container>
                                                     <ng-container *ngIf="editQstField===i">
                                                         <mat-form-field
@@ -133,7 +133,7 @@
 
                                                 <td class="px-12 py-4 text-sm font-medium ubuntu-medium whitespace-nowrap">
                                                     <ng-container *ngIf="editQstField!==i">
-                                                        {{qst?.libelle}}
+                                                        {{ qst?.libelle }}
                                                     </ng-container>
                                                     <ng-container *ngIf="editQstField===i">
                                                         <mat-form-field
@@ -149,7 +149,7 @@
 
                                                 <td class="px-4 py-4 text-sm ubuntu-medium whitespace-nowrap">
                                                     <ng-container *ngIf="editQstField!==i">
-                                                        {{qst?.reponses?.at(0)?.lib}}
+                                                        {{ qst?.reponses?.at(0)?.lib }}
                                                     </ng-container>
                                                     <ng-container *ngIf="editQstField === i">
                                                         <mat-form-field class="flex-auto  fuse-mat-dense">
@@ -232,7 +232,7 @@
                         [(ngModel)]="question.libelle"
                         name="libelle"
                         cdkTextareaAutosize></textarea>
-                    <mat-hint>{{getPlaceHolder()}}</mat-hint>
+                    <mat-hint>{{ getPlaceHolder() }}</mat-hint>
                 </mat-form-field>
 
                 <div class="col-span-3">
@@ -250,11 +250,12 @@
                         cdkTextareaAutosize></textarea>
                 </mat-form-field>
 
-                <div    class="flex flex-row flex-wrap gap-1 justify-between items-center">
+                <div class="flex flex-row flex-wrap gap-1 justify-between items-center">
                     <label class="relative cursor-pointer">
-                        <input  [(ngModel)]="answer.etatReponse" type="checkbox" class="sr-only peer"/>
-                        <div *ngIf="question?.typeDeQuestion?.ref !== 'WRITE_THE_CORRECT_FORM' && question?.typeDeQuestion?.ref !== 'CORRECT_THE_MISTAKE'"
-                        class="w-[53px] h-7 flex items-center bg-red-300 peer-checked:bg-green-300 rounded-full text-[9px]
+                        <input [(ngModel)]="answer.etatReponse" type="checkbox" class="sr-only peer"/>
+                        <div
+                            *ngIf="question?.typeDeQuestion?.ref !== 'WRITE_THE_CORRECT_FORM' && question?.typeDeQuestion?.ref !== 'CORRECT_THE_MISTAKE'"
+                            class="w-[53px] h-7 flex items-center bg-red-300 peer-checked:bg-green-300 rounded-full text-[9px]
                         peer-checked:text-[#007bff] text-gray-300 font-extrabold after:flex
                         after:items-center after:justify-center peer after:content-['False']
                          peer-checked:after:content-['True'] peer-checked:after:translate-x-full
@@ -310,23 +311,23 @@
                                                     class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                                 <tr *ngFor="let rps of question.reponses; index as i">
                                                     <td class="px-4 py-4 ubuntu-regular whitespace-nowrap">
-                                                        {{rps.numero}}
+                                                        {{ rps.numero }}
                                                     </td>
 
                                                     <td class="px-12 py-4 text-sm font-medium ubuntu-medium whitespace-nowrap">
-                                                        {{rps?.lib}}
+                                                        {{ rps?.lib }}
                                                     </td>
                                                     <td class="px-4 py-4 text-sm  whitespace-nowrap">
 
                                                         <div *ngIf="rps?.etatReponse"
                                                              class="inline px-3 py-1 text-sm font-normal rounded-full
                                                         text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                            {{rps.etatReponse}}
+                                                            {{ rps.etatReponse }}
                                                         </div>
                                                         <div *ngIf="!rps?.etatReponse"
                                                              class="inline px-3 py-1 text-sm font-normal rounded-full
                                                         text-red-500 gap-x-2 bg-red-100/60">
-                                                            {{rps.etatReponse}}
+                                                            {{ rps.etatReponse }}
                                                         </div>
                                                     </td>
 
@@ -383,13 +384,13 @@
                                 class="bg-white p-2 border-b border-b-gray-100 dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="p-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{question?.numero}}
+                                    {{ question?.numero }}
                                 </th>
                                 <th scope="row"
                                     class="p-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 
                                     <ng-container *ngIf="editField !== i">
-                                        {{question?.libelle}}
+                                        {{ question?.libelle }}
                                     </ng-container>
 
                                     <ng-container *ngIf="editField === i">
@@ -427,12 +428,12 @@
                          class="md:hidden mt-8 mb-4 flex flex-col justify-start items-start gap-2">
                         <div class="w-full border-b py-3">
                             <span class="mr-4">N° :</span>
-                            <span> {{question?.numero}}</span>
+                            <span> {{ question?.numero }}</span>
                         </div>
 
                         <div class="w-full border-b py-3">
                             <span class="mr-4">question :</span>
-                            <span>{{question?.libelle}}</span>
+                            <span>{{ question?.libelle }}</span>
                         </div>
 
                         <div class="w-full border-b py-3">
@@ -460,6 +461,141 @@
         </ng-container>
 
 
+        <ng-container *ngIf="question?.typeDeQuestion?.ref === TYPE_QUESTION.DRAG_AND_DROP ||
+                        question?.typeDeQuestion?.ref === TYPE_QUESTION.PUT_IN_ORDER">
+
+            <div
+                class="grid w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-md  grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+                <mat-form-field class="flex-auto cursor-pointer w-full flex-grow fuse-mat-dense">
+                    <mat-label>Title</mat-label>
+                    <input
+                        matInput
+                        [placeholder]="'title'"
+                        [(ngModel)]="question.ref"
+                        name="ref">
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto cursor-pointer w-full flex-grow fuse-mat-dense">
+                    <mat-label>Image</mat-label>
+                    <input
+                        matInput
+                        [placeholder]="'put image url here'"
+                        [(ngModel)]="question.urlImg"
+                        name="urlImg">
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto cursor-pointer w-full flex-grow fuse-mat-dense">
+                    <mat-label>video</mat-label>
+                    <input
+                        matInput
+                        [placeholder]="'Ex: https://www.youtube.com/watch?v=gA4RCQhQeCo'"
+                        [(ngModel)]="question.urlVideo"
+                        name="urlVideo">
+                </mat-form-field>
+
+                <div class="col-span-3 flex flex-col gap-2 ">
+                    <angular-editor [(ngModel)]="question.libelle" name="libelle"
+                                    [placeholder]="getPlaceHolder()"
+                                    [config]="editorConfig"></angular-editor>
+                    <strong class="text-hint">{{ getPlaceHolder() }}</strong>
+                </div>
+
+
+                <ng-container *ngIf="quiz?.questions?.length > 0">
+
+                    <div
+                        class="p-4 col-span-3 border-grayMain w-full rounded-md shadow-sm dark:bg-gray-800 bg-gray-100">
+                        <div class="md:block hidden relative overflow-x-auto mt-8">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 border-b uppercase dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="py-3">
+                                        N°
+                                    </th>
+                                    <th scope="col" class="py-3">
+                                        question
+                                    </th>
+
+                                    <th scope="col" class="py-3">
+
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let question of quiz.questions; index as i "
+                                    class="bg-white p-2 border-b border-b-gray-100 dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row"
+                                        class="p-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ question?.numero }}
+                                    </th>
+                                    <th scope="row"
+                                        class="p-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                                        <ng-container *ngIf="editField !== i">
+                                           <div [innerHTML]="question?.libelle"></div>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="editField === i">
+                                            <mat-form-field class="flex-auto w-full col-span-2 flex-grow fuse-mat-dense">
+                                            <textarea
+                                                matInput
+                                                (focusout)="editField=-1"
+                                                [(ngModel)]="question.libelle"
+                                                name="libelle"
+                                                cdkTextareaAutosize></textarea>
+                                            </mat-form-field>
+                                        </ng-container>
+                                    </th>
+                                    <th scope="row"
+                                        class="p-4 flex flex-row items-center gap-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <button (click)="editField=i"
+                                                mat-icon-button color="primary">
+                                            <mat-icon class="icon-size-4"
+                                                      svgIcon="heroicons_solid:pencil"></mat-icon>
+                                        </button>
+                                        <button (click)="deleteQst(i,question)" mat-icon-button color="warn">
+                                            <mat-icon class="icon-size-4"
+                                                      svgIcon="heroicons_solid:trash"></mat-icon>
+                                        </button>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngFor="let question of quiz.questions; index as i "
+                             class="md:hidden mt-8 mb-4 flex flex-col justify-start items-start gap-2">
+                            <div class="w-full border-b py-3">
+                                <span class="mr-4">N° :</span>
+                                <span> {{ question?.numero }}</span>
+                            </div>
+
+                            <div class="w-full border-b py-3">
+                                <span class="mr-4">question :</span>
+                                <span [innerHTML]="question?.libelle"></span>
+                            </div>
+
+                            <div class="w-full border-b py-3">
+                                <span class="mr-4"> answers :</span>
+                                <span class="flex flex-row flex-wrap gap-1">
+                                 <button mat-icon-button color="primary">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:pencil"></mat-icon>
+                                    </button>
+                                    <button (click)="deleteQst(i,question)" mat-icon-button color="warn">
+                                        <mat-icon class="icon-size-4"
+                                                  svgIcon="heroicons_solid:trash"></mat-icon>
+                                    </button>
+                            </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </ng-container>
+
+
+            </div>
+        </ng-container>
     </ng-container>
 
 

@@ -28,6 +28,7 @@ import {
 import {
     QuestionCollaboratorService
 } from "../../../../../../shared/service/collaborator/quiz/QuestionCollaborator.service";
+import {AngularEditorConfig} from "@kolkov/angular-editor";
 
 @Component({
     selector: 'app-create-quiz',
@@ -48,6 +49,46 @@ export class CreateQuizComponent implements OnInit {
     editQstField: number = -1;
     editing: boolean = false
     selectedQuestion: QuestionDto
+    editorConfig: AngularEditorConfig = {
+        editable: true,
+        spellcheck: true,
+        height: 'auto',
+        minHeight: '100px',
+        maxHeight: 'auto',
+        width: 'auto',
+        minWidth: '0',
+        translate: 'yes',
+        enableToolbar: true,
+        showToolbar: true,
+        placeholder: 'Enter text here...',
+        defaultParagraphSeparator: '',
+        defaultFontName: '',
+        defaultFontSize: '',
+        fonts: [
+            {class: 'arial', name: 'Arial'},
+            {class: 'times-new-roman', name: 'Times New Roman'},
+            {class: 'calibri', name: 'Calibri'},
+            {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+        ],
+        customClasses: [
+            {
+                name: 'quote',
+                class: 'quote',
+            },
+            {
+                name: 'redText',
+                class: 'redText'
+            },
+            {
+                name: 'titleText',
+                class: 'titleText',
+                tag: 'h1',
+            },
+        ],
+        uploadWithCredentials: false,
+        sanitize: true,
+        toolbarPosition: 'top'
+    };
 
     constructor(
         private imageService: ImagesService,
@@ -145,7 +186,9 @@ export class CreateQuizComponent implements OnInit {
 
     protected readonly compareObjects = compareObjects;
 
+
     saveQuestion() {
+
         //set answer to the question
         if (this.type === TYPE_QUESTION.TRUE_OR_FALSE) {
 
@@ -182,8 +225,18 @@ export class CreateQuizComponent implements OnInit {
         } else if (this.question.typeDeQuestion.ref === this.TYPE_QUESTION.WRITE_THE_CORRECT_FORM) {
             return 'Example: He @to want@ all of them. ' +
                 ' (Put the verb between two "@")';
+        } else if (this.question.typeDeQuestion.ref === this.TYPE_QUESTION.DRAG_AND_DROP) {
+            return " Example: Lucas goes to @school@ every day of the week. He has many subjects to @go@ to each school day: English, art, science, mathematics, gym, and history.\n" +
+                "His @mother@ packs a big backpack full of @books@ and lunch for Lucas.";
+        } else if (this.question.typeDeQuestion.ref === this.TYPE_QUESTION.PUT_IN_ORDER) {
+            return "Example:\n" +
+                "1 sentence number 1.\n" +
+                "2 sentence number 2.\n" +
+                "3 sentence number 3.\n" +
+                "4 sentence number 4.\n" +
+                "5 sentence number 5."
         } else {
-            return ' ';
+            return ''
         }
     }
 
