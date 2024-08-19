@@ -9,6 +9,10 @@ import { RouterLink } from '@angular/router';
 import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
 import { Notification } from 'app/layout/common/notifications/notifications.types';
 import { Subject, takeUntil } from 'rxjs';
+import {
+    NotificationActeurCollaboratorService
+} from "../../../shared/service/collaborator/notif/NotificationActeurCollaborator.service";
+import {NotificationActeurDto} from "../../../shared/model/notif/NotificationActeur.model";
 
 @Component({
     selector       : 'notifications',
@@ -24,7 +28,7 @@ export class NotificationsComponent implements OnInit, OnDestroy
     @ViewChild('notificationsOrigin') private _notificationsOrigin: MatButton;
     @ViewChild('notificationsPanel') private _notificationsPanel: TemplateRef<any>;
 
-    notifications: Notification[];
+    notifications: NotificationActeurDto[];
     unreadCount: number = 0;
     private _overlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -35,6 +39,8 @@ export class NotificationsComponent implements OnInit, OnDestroy
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _notificationsService: NotificationsService,
+        private notificationActeurCollaboratorService: NotificationActeurCollaboratorService,
+
         private _overlay: Overlay,
         private _viewContainerRef: ViewContainerRef,
     )
@@ -51,11 +57,11 @@ export class NotificationsComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to notification changes
-        this._notificationsService.notifications$
+        this.notificationActeurCollaboratorService.findAll()
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((notifications: Notification[]) =>
+            .subscribe((notifications: NotificationActeurDto[]) =>
             {
-                // Load the notifications
+                // Assign the result to this.notifications
                 this.notifications = notifications;
 
                 // Calculate the unread count
