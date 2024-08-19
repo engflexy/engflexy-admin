@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, UserDao> implements UserService {
@@ -230,9 +231,14 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
 
     }
 
-    @Override
     public List<ConversationResponse> findConversationsByUserId(Long userId) {
-        return List.of();
+        List<ConversationResponse> conversations = conversationRepository.findConversationsByUserId(userId);
+        
+        List<ConversationResponse> filteredConversations = conversations.stream()
+            .filter(conversation -> conversation.getLastMessage() != null)
+            .collect(Collectors.toList());
+        
+        return filteredConversations;
     }
 
     @Override
