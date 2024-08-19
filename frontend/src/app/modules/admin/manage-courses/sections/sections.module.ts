@@ -56,13 +56,14 @@ import {TrueOrFalseComponent} from "./quiz/quiz/true-or-false/true-or-false.comp
 import {WriteCorrectFormComponent} from "./quiz/quiz/write-correct-form/write-correct-form.component";
 import {DividerComponent} from "../../../landing/divider/divider.component";
 import {MatExpansionModule} from "@angular/material/expansion";
-import { EditAnswersComponent } from './quiz/create-quiz/edit-answers/edit-answers.component';
-import { HomeworkComponent } from './homework/homework.component';
+import {EditAnswersComponent} from './quiz/create-quiz/edit-answers/edit-answers.component';
+import {HomeworkComponent} from './homework/homework.component';
 import {CollaboratorModule} from "../../../collaborator/collaborator.module";
+import {SafePipe} from "../../../../shared/utils/safe.pipe";
 
 
 @NgModule({
-    declarations: [ ClassroomComponent,
+    declarations: [ClassroomComponent,
         TypeExercisesComponent, CreateExerciseComponent,
         DisplayMultiImagesComponent, DisplayVideoComponent
         , CreateQuizComponent, TypesQuestionComponent,
@@ -75,7 +76,7 @@ import {CollaboratorModule} from "../../../collaborator/collaborator.module";
         TrueOrFalseComponent,
         WriteCorrectFormComponent,
         EditAnswersComponent,
-        HomeworkComponent,SafePipe
+        HomeworkComponent, SafePipe
     ],
     imports: [
         SectionsRoutes,
