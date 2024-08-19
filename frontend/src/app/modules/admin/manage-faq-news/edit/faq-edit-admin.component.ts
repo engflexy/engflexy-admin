@@ -33,7 +33,6 @@ import {FormsModule} from "@angular/forms";
 import {TranslocoModule} from "@ngneat/transloco";
 
 
-
 import {FaqAdminService} from '../../../../shared/service/admin/faq/FaqAdmin.service';
 import {FaqDto} from '../../../../shared/model/faq/Faq.model';
 import {FaqCriteria} from '../../../../shared/criteria/faq/FaqCriteria.model';
@@ -43,9 +42,9 @@ import {FaqCollaboratorService} from "../../../../shared/service/collaborator/fa
 import {StringUtilService} from "../../../../zynerator/util/StringUtil.service";
 
 @Component({
-  selector: 'app-faq-edit-admin',
-  templateUrl: './faq-edit-admin.component.html',
-  imports: [
+    selector: 'app-faq-edit-admin',
+    templateUrl: './faq-edit-admin.component.html',
+    imports: [
         MatButtonModule,
         MatDialogModule,
         MatFormFieldModule,
@@ -63,9 +62,9 @@ import {StringUtilService} from "../../../../zynerator/util/StringUtil.service";
     ],
     standalone: true
 })
-export class FaqEditAdminComponent  implements OnInit {
+export class FaqEditAdminComponent implements OnInit {
 
-	protected _submitted = false;
+    protected _submitted = false;
     protected _errorMessages = new Array<string>();
 
     protected datePipe: DatePipe;
@@ -74,40 +73,39 @@ export class FaqEditAdminComponent  implements OnInit {
     protected router: Router;
     private _activeTab = 0;
 
-  _faqTypesFilter:  FaqTypeDto[];
+    _faqTypesFilter: FaqTypeDto[];
 
 
-
-
-   private _validFaqLibelle = true;
+    private _validFaqLibelle = true;
     private _validFaqTypeLibelle = true;
 
-	constructor(public refDialog: MatDialogRef<FaqEditAdminComponent>, private alert: FuseAlertService, private service: FaqCollaboratorService , private faqTypeService: FaqTypeAdminService, @Inject(PLATFORM_ID) private platformId? ,
-) {
+    constructor(public refDialog: MatDialogRef<FaqEditAdminComponent>, private alert: FuseAlertService, private service: FaqCollaboratorService, private faqTypeService: FaqTypeAdminService, @Inject(PLATFORM_ID) private platformId?,
+    ) {
 
     }
 
     ngOnInit(): void {
-        this.faqTypeService.findAll().subscribe((data) => {this.faqTypes = data; this._faqTypesFilter = [...this.faqTypes]});
+        this.faqTypeService.findAll().subscribe((data) => {
+            this.faqTypes = data;
+            this._faqTypesFilter = [...this.faqTypes]
+        });
     }
 
-  displayFaqType(item: FaqTypeDto): string {
-	return item && item.libelle ? item.libelle : "";
+    displayFaqType(item: FaqTypeDto): string {
+        return item && item.libelle ? item.libelle : "";
 
-  }
+    }
 
-  filterFaqType(value: string){
-  	value = value.toLowerCase();
-	if (value && value.length > 0) {
-		this._faqTypesFilter = this.faqTypes.filter(s =>
-			s.libelle?.toLowerCase()?.includes(value)
-		)
-	} else {
-		this._faqTypesFilter = this.faqTypes
-	}
- }
-
-
+    filterFaqType(value: string) {
+        value = value.toLowerCase();
+        if (value && value.length > 0) {
+            this._faqTypesFilter = this.faqTypes.filter(s =>
+                s.libelle?.toLowerCase()?.includes(value)
+            )
+        } else {
+            this._faqTypesFilter = this.faqTypes
+        }
+    }
 
 
     public edit(): void {
@@ -118,72 +116,83 @@ export class FaqEditAdminComponent  implements OnInit {
         } else {
             this.alert.show('info', 'something went wrong!, please try again.');
         }
+
     }
 
     public editWithShowOption(showList: boolean) {
-        this.service.edit().subscribe(item => {
-            if (item != null) {
-                this.items.push({...item});
+        this.service.edit().subscribe(res => {
+            if (res != null) {
+                console.log(this.item);
+                console.log(this.items);
+                let myIndex = -1
+                for (let i = 0; i < this.items.length; i++) {
+                    let elment = this.items[i];
+                    if (elment.id === this.item.id) {
+                        myIndex = i;
+                        break;
+                    }
+                }
+                console.log(myIndex);
+                this.items[myIndex] = this.item;
                 this.item = new FaqDto();
-                this.refDialog.close(item)
+                this.refDialog.close(this.item)
             } else {
                 this.alert.show('info', 'something went wrong!, please try again.');
             }
-
         }, error => {
             console.log(error);
         });
     }
 
 
-
-
-
-    public  setValidation(value: boolean){
+    public setValidation(value: boolean) {
         this.validFaqLibelle = value;
     }
 
 
-
-    public  validateForm(): void{
+    public validateForm(): void {
         this.errorMessages = new Array<string>();
         this.validateFaqLibelle();
     }
 
-    public validateFaqLibelle(){
+    public validateFaqLibelle() {
         return true;
     }
 
 
     public async openCreateFaqType(faqType: string) {
-    const isPermistted = await this.roleService.isPermitted('FaqType', 'add');
-    if(isPermistted) {
-         this.faqType = new FaqTypeDto();
-         this.createFaqTypeDialog = true;
-    }else{
-        this.alert.show('info', 'something went wrong!, please try again.');
-     }
+        const isPermistted = await this.roleService.isPermitted('FaqType', 'add');
+        if (isPermistted) {
+            this.faqType = new FaqTypeDto();
+            this.createFaqTypeDialog = true;
+        } else {
+            this.alert.show('info', 'something went wrong!, please try again.');
+        }
     }
 
     get faqType(): FaqTypeDto {
         return this.faqTypeService.item;
     }
+
     set faqType(value: FaqTypeDto) {
         this.faqTypeService.item = value;
     }
+
     get faqTypes(): Array<FaqTypeDto> {
         return this.faqTypeService.items;
     }
+
     set faqTypes(value: Array<FaqTypeDto>) {
         this.faqTypeService.items = value;
     }
+
     get createFaqTypeDialog(): boolean {
         return this.faqTypeService.createDialog;
     }
-    set createFaqTypeDialog(value: boolean) {
-        this.faqTypeService.createDialog= value;
-    }
 
+    set createFaqTypeDialog(value: boolean) {
+        this.faqTypeService.createDialog = value;
+    }
 
 
     get validFaqLibelle(): boolean {
@@ -191,12 +200,13 @@ export class FaqEditAdminComponent  implements OnInit {
     }
 
     set validFaqLibelle(value: boolean) {
-         this._validFaqLibelle = value;
+        this._validFaqLibelle = value;
     }
 
     get validFaqTypeLibelle(): boolean {
         return this._validFaqTypeLibelle;
     }
+
     set validFaqTypeLibelle(value: boolean) {
         this._validFaqTypeLibelle = value;
     }
@@ -277,7 +287,6 @@ export class FaqEditAdminComponent  implements OnInit {
     set activeTab(value: number) {
         this._activeTab = value;
     }
-
 
 
 }

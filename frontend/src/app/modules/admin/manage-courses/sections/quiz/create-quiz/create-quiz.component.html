@@ -250,11 +250,11 @@
                         cdkTextareaAutosize></textarea>
                 </mat-form-field>
 
-                <div class="flex flex-row flex-wrap gap-1 justify-between items-center">
+                <div    class="flex flex-row flex-wrap gap-1 justify-between items-center">
                     <label class="relative cursor-pointer">
-                        <input [(ngModel)]="answer.etatReponse" type="checkbox" class="sr-only peer"/>
-                        <div
-                            class="w-[53px] h-7 flex items-center bg-red-300 peer-checked:bg-green-300 rounded-full text-[9px]
+                        <input  [(ngModel)]="answer.etatReponse" type="checkbox" class="sr-only peer"/>
+                        <div *ngIf="question?.typeDeQuestion?.ref !== 'WRITE_THE_CORRECT_FORM' && question?.typeDeQuestion?.ref !== 'CORRECT_THE_MISTAKE'"
+                        class="w-[53px] h-7 flex items-center bg-red-300 peer-checked:bg-green-300 rounded-full text-[9px]
                         peer-checked:text-[#007bff] text-gray-300 font-extrabold after:flex
                         after:items-center after:justify-center peer after:content-['False']
                          peer-checked:after:content-['True'] peer-checked:after:translate-x-full
@@ -263,7 +263,9 @@
                           after:text-red-700 peer-checked:after:text-green-700 after:border
                            after:border-red-500 peer-checked:after:border-green-500 after:rounded-full
                           after:h-8 after:w-8 after:transition-all">
+
                         </div>
+
                     </label>
 
                     <button mat-stroked-button (click)="addAnswer()" color="primary">add</button>

@@ -66,6 +66,9 @@ public class FaqConverter extends AbstractConverter<Faq, FaqDto> {
         super.copy(dto, t);
         if (t.getFaqType() == null && dto.getFaqType() != null) {
             t.setFaqType(new FaqType());
+        } else if (t.getFaqType() != null && dto.getFaqType() != null) {
+            t.setFaqType(null);
+            t.setFaqType(new FaqType());
         }
         if (dto.getFaqType() != null)
             faqTypeConverter.copy(dto.getFaqType(), t.getFaqType());
