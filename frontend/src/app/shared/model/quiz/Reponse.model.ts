@@ -4,6 +4,7 @@ import {QuestionDto} from './Question.model';
 
 export class ReponseDto extends BaseDto {
 
+    public value: string;
     public ref: string;
 
     public lib: string;
@@ -20,7 +21,7 @@ export class ReponseDto extends BaseDto {
 
         this.ref = '';
         this.lib = '';
-        this.etatReponse = false;
+        this.etatReponse = true;
         this.numero = 0;
 
     }

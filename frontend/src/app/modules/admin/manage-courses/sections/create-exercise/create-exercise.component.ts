@@ -72,7 +72,8 @@ export class CreateExerciseComponent implements OnInit {
                 private quizService: QuizCollaboratorService,
                 private sectionService: SectionCollaboratorService,
                 private exerciseService: ExerciceCollaboratorService,
-                private refDialog: MatDialogRef<CreateExerciseComponent>,) {
+                private refDialog: MatDialogRef<CreateExerciseComponent>,
+                ) {
     }
 
     get quiz(): QuizDto {

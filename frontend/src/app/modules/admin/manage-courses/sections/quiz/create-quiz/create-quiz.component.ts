@@ -95,6 +95,7 @@ export class CreateQuizComponent implements OnInit {
             this.question.numero = this.quiz.questions?.length + 1
             this.ref.markForCheck()
         })
+
     }
 
 
@@ -163,6 +164,8 @@ export class CreateQuizComponent implements OnInit {
                 return
             }
         }
+
+
         this.question.numero = this.quiz.questions.length + 1
         this.quiz.questions.push({...this.question})
         this.question = new QuestionDto()
