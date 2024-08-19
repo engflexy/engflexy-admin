@@ -1,53 +1,43 @@
 package ma.zs.alc.emails;
 
-import com.google.gson.Gson;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import jakarta.mail.internet.MimeMessage;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
 import ma.zs.alc.bean.core.prof.ScheduleProf;
 import ma.zs.alc.zynerator.util.DateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.messaging.MessagingException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import java.io.IOException;
 import java.util.*;
 
 @Service
 public class EmailSenderService {
-    @Autowired
-    private Configuration configuration;
+    private final Configuration configuration;
     List<String> to;
-    Gson gson = new Gson();
+    private final JavaMailSender mailSender;
+
+    public EmailSenderService(Configuration configuration, JavaMailSender mailSender) {
+        this.configuration = configuration;
+        this.mailSender = mailSender;
+    }
 
     @Async
-    public void sentJavaMail(MailComponent mailComponent, String templateName) throws MessagingException, TemplateException, IOException {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.titan.email");
-        mailSender.setPort(465);
-        mailSender.setUsername("noreply@engflexy.com");
-        mailSender.setPassword("noreply@27021985");
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-        props.put("mail.smtp.ssl.enable", true);
-        mailSender.setJavaMailProperties(props);
-        try {
-            send(mailSender, mailComponent, templateName);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+    public void sentJavaMail(MailComponent mailComponent, String templateName) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("noreply@engflexy.com");
+        message.setTo(mailComponent.getTo());
+        message.setSubject(mailComponent.getSubject());
+        message.setText(mailComponent.getContent());
+        mailSender.send(message);
     }
+
 
     @Async
     public void sent(MailComponent mailComponent) throws MessagingException, IOException, TemplateException {
@@ -66,55 +56,49 @@ public class EmailSenderService {
         mailSender.setJavaMailProperties(props);
 
         try {
-            send(mailSender, mailComponent, null);
+//            send(mailSender, mailComponent, null);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }
 
-    private void send(JavaMailSenderImpl mailSender, MailComponent mailComponent, String templateName) throws Exception {
-        to = new ArrayList<>();
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "utf-8");
-        message.setFrom(String.valueOf(new InternetAddress("EngFlexy <noreply@engflexy.com>")));
-        message.setSubject(mailComponent.getSubject());
-        if (templateName != null) {
-            Template template = null;
-            try {
-                template = getTemplateByName(templateName);
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
-            String emailContent;
-            emailContent = fillMailContent(mailComponent, template);
-            message.setText(emailContent, true);
-        } else {
-            message.setText(mailComponent.getContent(), true);
-        }
-
-        if (mailComponent.getTo() != null) {
-            to.add(mailComponent.getTo());
-            message.setTo(mailComponent.getTo());
-
-        }
-        if (mailComponent.getToAddresses() != null && mailComponent.getToAddresses().length > 0) {
-            to.addAll(Arrays.asList(mailComponent.getToAddresses()));
-            message.setTo(mailComponent.getToAddresses());
-
-        }
-        System.out.println("I AM IN SEND NOW ===> " + to);
-        try {
-            mailSender.send(mimeMessage);
-        } catch (Exception e) {
-            System.out.println("e.getMessage() = " + e.getMessage());
-        }
-
-        // create object in database
-//        Email email = new Email(mailComponent.getSubject(), mailComponent.getContent(), DateUtil.get_date_now(), mailComponent.getFrom(), gson.toJson(to));
-//        emailDao.save(email);
-    }
+//    private void send(JavaMailSenderImpl mailSender, MailComponent mailComponent, String templateName) throws Exception {
+//        to = new ArrayList<>();
+//        MimeMessage message = mailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+//
+//        helper.setFrom("EngFlexy <noreply@engflexy.com>");
+//        helper.setSubject(mailComponent.getSubject());
+//        if (templateName != null) {
+//            Template template = null;
+//            try {
+//                template = getTemplateByName(templateName);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//            String emailContent;
+//            emailContent = fillMailContent(mailComponent, template);
+//            helper.setText(emailContent);
+//        } else {
+//            helper.setText(mailComponent.getContent());
+//        }
+//
+//        if (mailComponent.getTo() != null) {
+//            to.add(mailComponent.getTo());
+//            helper.setTo(mailComponent.getTo());
+//        }
+//        if (mailComponent.getToAddresses() != null && mailComponent.getToAddresses().length > 0) {
+//            to.addAll(Arrays.asList(mailComponent.getToAddresses()));
+//            helper.setTo(mailComponent.getToAddresses());
+//        }
+//        System.out.println("I AM IN SEND NOW ===> " + to);
+//        try {
+//            mailSender.send(message);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public Template getTemplateByName(String templateName) throws IOException {
         return configuration.getTemplate(templateName);
@@ -268,11 +252,6 @@ public class EmailSenderService {
         }
         mailComponent.setSubject(" تذكير لإعلامك بأن درسك سيبدأ يوم " + lessonDate + " - EngFlexy");
         System.out.println("SUBJECT ====>   " + mailComponent.getSubject());
-        try {
-            sentJavaMail(mailComponent, ConstantFileNames.STUDENT_DAILY_REMINDER_TEMPLATE);
-        } catch (MessagingException | TemplateException | IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+        sentJavaMail(mailComponent, ConstantFileNames.STUDENT_DAILY_REMINDER_TEMPLATE);
     }
 }

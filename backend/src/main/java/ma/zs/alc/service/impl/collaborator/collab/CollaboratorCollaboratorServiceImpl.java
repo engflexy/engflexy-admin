@@ -82,6 +82,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
                 parcoursService.create(element);
             });
         }
+
         return mySaved;
     }
 

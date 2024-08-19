@@ -1,10 +1,12 @@
 package ma.zs.alc.zynerator.security.service.impl;
 
 
+import jakarta.mail.MessagingException;
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.dao.facade.core.chat.ConversationRepository;
+import ma.zs.alc.emails.MailComponent;
+import ma.zs.alc.emails.MailerService;
 import ma.zs.alc.ws.dto.chat.ApiResponse;
-import ma.zs.alc.ws.dto.inscription.EtudiantDto;
 import ma.zs.alc.zynerator.security.bean.ModelPermissionUser;
 import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.bean.User;
@@ -16,6 +18,7 @@ import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,13 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Observable;
-import org.springframework.http.HttpStatus;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, UserDao> implements UserService {
-	
+
     private final ConversationRepository conversationRepository;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
@@ -43,6 +44,20 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
         if (foundedUserByUsername != null || foundedUserByEmail != null) {
             throw new RuntimeException("Email already exist.");
         } else {
+            //sent username and password to user
+            MailComponent mail = new MailComponent();
+            mail.setName(t.getFullName());
+            mail.setSubject("Welcome " + t.getFullName());
+            mail.setUsername(t.getUsername());
+            mail.setPassword(t.getPassword());
+            mail.setTo(t.getEmail());
+            mail.setContent("Your password is <strong> " + mail.getPassword() + " </strong>.");
+//            try {
+//                emailSenderService.sent(mail);
+//            } catch (MessagingException e) {
+//                throw new RuntimeException(e);
+//            }
+
             if (t.getPassword() == null || t.getPassword().isEmpty()) {
                 t.setPassword(bCryptPasswordEncoder.encode(t.getUsername()));
             } else {
@@ -172,11 +187,13 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     @Lazy
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    MailerService emailSenderService;
 
 
     public UserServiceImpl(UserDao dao, ConversationRepository conversationRepository) {
         super(dao);
-    	this.conversationRepository = conversationRepository;
+        this.conversationRepository = conversationRepository;
     }
 
     ////////////////////////////////////////////////
