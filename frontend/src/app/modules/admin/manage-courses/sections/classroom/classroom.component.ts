@@ -134,10 +134,10 @@ export class ClassroomComponent implements OnInit {
 
         //extract content of the section
         this.selectedSection = this.sections.at(step)
-        this.selectedSection.exercices = this.sections.at(step).exercices.sort((a, b) => a.numero - b.numero)
-
+        if (this.selectedSection.exercices) {
+            this.selectedSection.exercices = this.sections.at(step).exercices.sort((a, b) => a.numero - b.numero)
+        }
         console.log(this.selectedSection)
-
         // Mark for check
         this._changeDetectorRef.markForCheck();
     }

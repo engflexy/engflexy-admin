@@ -1,22 +1,19 @@
 package ma.zs.alc.bean.core.common;
 
-import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
 import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
-import jakarta.persistence.*;
-
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 @Entity
 @Table(name = "class_average_bonus")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class ClassAverageBonus   extends AuditBusinessObject     {
+public class ClassAverageBonus extends AuditBusinessObject {
 
     private Long id;
 
@@ -25,61 +22,69 @@ public class ClassAverageBonus   extends AuditBusinessObject     {
     private Integer nombreSession = 0;
     private BigDecimal prix = BigDecimal.ZERO;
 
-    private Collaborator collaborator ;
+    private Collaborator collaborator;
 
 
-    public ClassAverageBonus(){
+    public ClassAverageBonus() {
         super();
     }
 
-    public ClassAverageBonus(Long id){
+    public ClassAverageBonus(Long id) {
         this.id = id;
     }
 
-    public ClassAverageBonus(Long id,String code){
+    public ClassAverageBonus(Long id, String code) {
         this.id = id;
-        this.code = code ;
-    }
-    public ClassAverageBonus(String code){
-        this.code = code ;
+        this.code = code;
     }
 
-
+    public ClassAverageBonus(String code) {
+        this.code = code;
+    }
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    public Long getId(){
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
         return this.id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getCode(){
+
+    public String getCode() {
         return this.code;
     }
-    public void setCode(String code){
+
+    public void setCode(String code) {
         this.code = code;
     }
-    public Integer getNombreSession(){
+
+    public Integer getNombreSession() {
         return this.nombreSession;
     }
-    public void setNombreSession(Integer nombreSession){
+
+    public void setNombreSession(Integer nombreSession) {
         this.nombreSession = nombreSession;
     }
-    public BigDecimal getPrix(){
+
+    public BigDecimal getPrix() {
         return this.prix;
     }
-    public void setPrix(BigDecimal prix){
+
+    public void setPrix(BigDecimal prix) {
         this.prix = prix;
     }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collaborator")
-    public Collaborator getCollaborator(){
+    public Collaborator getCollaborator() {
         return this.collaborator;
     }
-    public void setCollaborator(Collaborator collaborator){
+
+    public void setCollaborator(Collaborator collaborator) {
         this.collaborator = collaborator;
     }
 

@@ -4,8 +4,8 @@
          [class.incorrect-put-in-order]="checked && (i +1).toString() !== dragAndDropAnswer.get(sentence)"
          [matTooltip]="dragAndDropAnswer.get(sentence)"
          *ngFor="let sentence of listOfWords; let i = index" cdkDrag>
-        {{sentence}}
-        <span *ngIf="checked" class="rounded-full p-3 font-bold text-lg">{{dragAndDropAnswer.get(sentence)}}</span>
+        <p [innerHTML]="sentence"></p>
+        <span *ngIf="checked" class="rounded-full p-3 font-bold text-lg">{{ dragAndDropAnswer.get(sentence) }}</span>
     </div>
 </div>
 <div *ngIf="!showError"

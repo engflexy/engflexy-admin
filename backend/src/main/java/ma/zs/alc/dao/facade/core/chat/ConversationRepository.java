@@ -17,10 +17,13 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
 	Optional<Conversation> findConversationByUsers(@Param("user1") User user1, @Param("user2") User user2);
 
 	@Query(nativeQuery = true, value = """
-			SELECT
+						SELECT
 			    C.conversation_id AS conversationId,
+			    C.seen AS seen,
 			    U.id AS otherUserId,
 			    U.username AS otherUserName,
+			    M.sender_id AS LastsenderId,
+			    M.receiver_id AS LastReceiverId,
 			    M.message AS lastMessage,
 			    M.timestamp AS lastMessageTimestamp
 			FROM conversation AS C
@@ -30,17 +33,25 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
 
 			LEFT JOIN (
 			    SELECT
-			        conversation_id,
-			        (SELECT message FROM message M2 WHERE M2.conversation_id = M.conversation_id ORDER BY M2.timestamp DESC LIMIT 1) AS message,
-			        MAX(timestamp) AS timestamp
-			    FROM message M
-			    GROUP BY conversation_id
+			        M1.conversation_id,
+			        M1.sender_id,
+			        M1.receiver_id,
+			        M1.message,
+			        M1.timestamp
+			    FROM message M1
+			    WHERE M1.timestamp = (
+			        SELECT MAX(M2.timestamp)
+			        FROM message M2
+			        WHERE M2.conversation_id = M1.conversation_id
+			    )
 			) AS M
 			ON C.conversation_id = M.conversation_id
 
 			WHERE C.user1_id = ?1 OR C.user2_id = ?1
 			ORDER BY M.timestamp DESC;
-			""")
+						""")
 	List<ConversationResponse> findConversationsByUserId(Long userId);
+
+	void save(Optional<Conversation> conv);
 
 }

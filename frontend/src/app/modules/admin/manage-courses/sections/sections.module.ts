@@ -41,7 +41,6 @@ import {CreateExerciseComponent} from './create-exercise/create-exercise.compone
 import {NgImageSliderModule} from "ng-image-slider";
 import {DisplayMultiImagesComponent} from './classroom/display-multi-images/display-multi-images.component';
 import {DisplayVideoComponent} from './classroom/display-video/display-video.component';
-import {SafePipe} from "../../../../shared/utils/safe.pipe";
 import {AngularEditorModule} from "@kolkov/angular-editor";
 import {CreateQuizComponent} from './quiz/create-quiz/create-quiz.component';
 import {TypesQuestionComponent} from './quiz/types-question/types-question.component';
@@ -57,12 +56,14 @@ import {TrueOrFalseComponent} from "./quiz/quiz/true-or-false/true-or-false.comp
 import {WriteCorrectFormComponent} from "./quiz/quiz/write-correct-form/write-correct-form.component";
 import {DividerComponent} from "../../../landing/divider/divider.component";
 import {MatExpansionModule} from "@angular/material/expansion";
-import { EditAnswersComponent } from './quiz/create-quiz/edit-answers/edit-answers.component';
-import { HomeworkComponent } from './homework/homework.component';
+import {EditAnswersComponent} from './quiz/create-quiz/edit-answers/edit-answers.component';
+import {HomeworkComponent} from './homework/homework.component';
+import {CollaboratorModule} from "../../../collaborator/collaborator.module";
+import {SafePipe} from "../../../../shared/utils/safe.pipe";
 
 
 @NgModule({
-    declarations: [ ClassroomComponent,
+    declarations: [ClassroomComponent,
         TypeExercisesComponent, CreateExerciseComponent,
         DisplayMultiImagesComponent, DisplayVideoComponent
         , CreateQuizComponent, TypesQuestionComponent,
@@ -75,7 +76,7 @@ import { HomeworkComponent } from './homework/homework.component';
         TrueOrFalseComponent,
         WriteCorrectFormComponent,
         EditAnswersComponent,
-        HomeworkComponent,SafePipe
+        HomeworkComponent, SafePipe
     ],
     imports: [
         SectionsRoutes,
@@ -106,7 +107,7 @@ import { HomeworkComponent } from './homework/homework.component';
         MatTooltipModule,
         MatAutocompleteModule, MatDialogModule, MatPaginatorModule,
         MatButtonToggleModule, NgApexchartsModule, MatMenuModule, MatBadgeModule, MatDividerModule,
-        NgImageSliderModule, AngularEditorModule, DividerComponent, MatExpansionModule,
+        NgImageSliderModule, AngularEditorModule, DividerComponent, MatExpansionModule, CollaboratorModule,
 
 
     ],

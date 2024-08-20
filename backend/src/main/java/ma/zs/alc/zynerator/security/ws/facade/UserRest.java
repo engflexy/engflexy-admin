@@ -3,6 +3,7 @@ package ma.zs.alc.zynerator.security.ws.facade;
 import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.chat.Conversation;
 import ma.zs.alc.ws.dto.chat.ApiResponse;
+import ma.zs.alc.ws.dto.chat.ConversationResponse;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.dto.FileTempDto;
@@ -166,6 +167,12 @@ public class UserRest extends AbstractController<User, UserDto, UserCriteria, Us
 	public Long findConversationIdByUser1IdAndUser2Id(@PathVariable Long user1Id,
 			@PathVariable Long user2Id) {
 		return service.findConversationIdByUser1IdAndUser2Id(user1Id, user2Id);
+	}
+	
+	
+	@GetMapping("/conversations/userId/{userId}")
+	public List<ConversationResponse> findConversationIdByUser1IdAndUser2Id(@PathVariable Long userId) {
+		return service.findConversationsByUserId(userId);
 	}
 	///////////////////////////////////////////////////
 

@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {QuestionDto} from "../../../../../../../shared/model/quiz/Question.model";
 
 @Component({
@@ -55,12 +55,12 @@ export class PutInOrderComponent implements OnInit {
         this.ref.detectChanges();
     }
 
-    drop(event: CdkDragDrop<string[]>) {
-
+    drop(data: CdkDragDrop<string[]>) {
+        moveItemInArray(this.listOfWords, data.previousIndex, data.currentIndex);
     }
 
 
     check() {
-
+        this.checked = true
     }
 }
