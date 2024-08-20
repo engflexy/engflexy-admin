@@ -72,6 +72,7 @@ export class AuthService {
                     jwt != null ? this.tokenService.saveToken(jwt) : false;
                     return this.loadInfos().pipe(
                         switchMap(() => {
+                            console.log("connected user",this._authenticatedUser);
                             if (!this._authenticatedUser.id) {
                                 console.error('User ID not set after login');
                                 return throwError('User ID not set');
