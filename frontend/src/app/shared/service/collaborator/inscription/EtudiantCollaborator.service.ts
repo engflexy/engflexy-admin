@@ -106,8 +106,8 @@ export class EtudiantCollaboratorService extends AbstractService<EtudiantDto, Et
     onSecurityEnabled(userId: number, securityEnabled: boolean): Observable<any> {
         return this.http.patch(`${this.API}securityEnabled/${userId}`, { securityEnabled });
     }
-    onLessonReminderEnabled(userId: number, communicationEnabled: boolean): Observable<any> {
-        return this.http.patch(`${this.API}lessonReminderEnabled/${userId}`, { communicationEnabled });
+    onLessonReminderEnabled(userId: number, lessonReminderEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}lessonReminderEnabled/${userId}`, { lessonReminderEnabled });
     }
     onClassroomEnabled(userId: number, classroomEnabled: boolean): Observable<any> {
         return this.http.patch(`${this.API}classroomEnabled/${userId}`, { classroomEnabled });
