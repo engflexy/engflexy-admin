@@ -18,14 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 
-
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.util.List;
 
 import static ma.zs.alc.zynerator.util.ListUtil.isEmpty;
 import static ma.zs.alc.zynerator.util.ListUtil.isNotEmpty;
@@ -64,7 +59,25 @@ public class NotificationActeurCollaboratorServiceImpl implements NotificationAc
     public List<NotificationActeur> findAll() {
         return dao.findAll();
     }
+   /* @Override
+    public List<NotificationActeur> findByConnectedUser() {
+        // Get the currently authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof User)) {
+            throw new RuntimeException("No authenticated user found.");
+        }
 
+        // Get the connected user
+        User connectedUser = (User) authentication.getPrincipal();
+
+        // Fetch notifications for the connected user
+        return dao.findByUser(connectedUser); // Adjust this line if you store username directly
+    }*/
+    public List<NotificationActeur> findByUserUsername(String username) {
+
+        /*String username="samantha@gmail.com";*/
+        return dao.findByUserUsername(username);
+    }
     public List<NotificationActeur> findByCriteria(NotificationActeurCriteria criteria) {
         List<NotificationActeur> content = null;
         if (criteria != null) {

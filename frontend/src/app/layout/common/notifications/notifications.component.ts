@@ -13,6 +13,7 @@ import {
     NotificationActeurCollaboratorService
 } from "../../../shared/service/collaborator/notif/NotificationActeurCollaborator.service";
 import {NotificationActeurDto} from "../../../shared/model/notif/NotificationActeur.model";
+import {AuthService} from "../../../zynerator/security/shared/service/Auth.service";
 
 @Component({
     selector       : 'notifications',
@@ -40,6 +41,7 @@ export class NotificationsComponent implements OnInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _notificationsService: NotificationsService,
         private notificationActeurCollaboratorService: NotificationActeurCollaboratorService,
+        private authService: AuthService,
 
         private _overlay: Overlay,
         private _viewContainerRef: ViewContainerRef,
@@ -56,8 +58,10 @@ export class NotificationsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        let authenticatedUser = this.authService.authenticatedUser
+        console.log("haaa username: ",authenticatedUser.username);
         // Subscribe to notification changes
-        this.notificationActeurCollaboratorService.findAll()
+        this.notificationActeurCollaboratorService.findByUserUsername(authenticatedUser.username)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: NotificationActeurDto[]) =>
             {

@@ -1,4 +1,5 @@
 import {BaseDto} from "../../../zynerator/dto/BaseDto.model";
+import {UserDto} from "../../../zynerator/security/shared/model/User.model";
 
 
 export class NotificationActeurDto extends BaseDto {
@@ -28,6 +29,7 @@ export class NotificationActeurDto extends BaseDto {
     public passwordChangedNotificationEnabled: null | boolean;
 
     public contactNotificationEnabled: null | boolean;
+    public user: UserDto;
 
 
     constructor() {
@@ -46,6 +48,7 @@ export class NotificationActeurDto extends BaseDto {
         this.classroomEnabled = null;
         this.passwordChangedNotificationEnabled = null;
         this.contactNotificationEnabled = null;
+        this.user = new UserDto(); // Initialize UserDto
 
     }
 

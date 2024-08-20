@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ma.zs.alc.zynerator.audit.AuditBusinessObject;
 import jakarta.persistence.*;
+import ma.zs.alc.zynerator.security.bean.User;
+
 import java.util.Objects;
 
 @Entity
@@ -55,8 +57,7 @@ public class NotificationActeur  extends AuditBusinessObject {
 
     private Boolean contactNotificationEnabled = false;
 
-
-
+    private User user;
     public NotificationActeur(){
         super();
     }
@@ -87,6 +88,18 @@ public class NotificationActeur  extends AuditBusinessObject {
     public void setId(Long id){
         this.id = id;
     }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user")
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getIcon(){
         return this.icon;
     }

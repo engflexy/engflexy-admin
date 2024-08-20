@@ -51,6 +51,11 @@ public class NotificationActeurRestCollaborator {
         res = new ResponseEntity<>(dtos, status);
         return res;
     }
+    @GetMapping("currentUser/username/{username}")
+    public List<NotificationActeur> findByUserUsername(@PathVariable String username) {
+        return service.findByUserUsername(username);
+    }
+
 
     @Operation(summary = "Finds an optimized list of all notificationActeurs")
     @GetMapping("optimized")

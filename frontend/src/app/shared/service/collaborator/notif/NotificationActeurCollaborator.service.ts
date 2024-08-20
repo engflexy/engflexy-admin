@@ -8,6 +8,7 @@ import { NotificationActeurDto } from 'app/shared/model/notif/NotificationActeur
 import { environment } from 'environments/environment';
 import {NotificationActeurCriteria} from "../../../criteria/notif/NotificationActeurCriteria.model";
 import { PaginatedList } from 'app/zynerator/dto/PaginatedList.model';
+import {UserDto} from "../../../../zynerator/security/shared/model/User.model";
 
 
 
@@ -53,6 +54,9 @@ export class NotificationActeurCollaboratorService {
 
     public findAll() {
         return this.http.get<Array<NotificationActeurDto>>(this.API);
+    }
+    public findByUserUsername(username: string) {
+        return this.http.get<Array<NotificationActeurDto>>(this.API + 'currentUser/username/' + username );
     }
 
     public findAllOptimized() {

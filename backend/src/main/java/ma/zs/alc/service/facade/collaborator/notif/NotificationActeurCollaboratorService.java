@@ -2,6 +2,7 @@ package ma.zs.alc.service.facade.collaborator.notif;
 
 import ma.zs.alc.bean.core.notif.NotificationActeur;
 import ma.zs.alc.dao.criteria.core.notif.NotificationActeurCriteria;
+import ma.zs.alc.zynerator.security.bean.User;
 
 import java.util.List;
 
@@ -33,6 +34,12 @@ public interface NotificationActeurCollaboratorService {
     List<NotificationActeur> findAllOptimized();
 
     List<NotificationActeur> findAll();
+/*
+    List<NotificationActeur> findByConnectedUser();
+*/
+
+
+    List<NotificationActeur> findByUserUsername(String username);
 
     List<NotificationActeur> findByCriteria(NotificationActeurCriteria criteria);
 

@@ -2,6 +2,7 @@ package ma.zs.alc.ws.converter.notif;
 
 import ma.zs.alc.bean.core.notif.NotificationActeur;
 import ma.zs.alc.ws.dto.notif.NotificationActeurDto;
+import ma.zs.alc.zynerator.security.ws.converter.UserConverter;
 import ma.zs.alc.zynerator.util.DateUtil;
 import ma.zs.alc.zynerator.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import java.util.List;
 @Component
 public class NotificationActeurConverter {
 
-
+    @Autowired
+    private UserConverter userConverter;
 
     public NotificationActeur toItem(NotificationActeurDto dto) {
         if (dto == null) {

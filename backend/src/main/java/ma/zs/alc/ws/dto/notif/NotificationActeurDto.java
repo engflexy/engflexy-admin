@@ -8,6 +8,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ma.zs.alc.zynerator.dto.AuditBaseDto;
+import ma.zs.alc.zynerator.security.ws.dto.UserDto;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -28,7 +29,7 @@ public class NotificationActeurDto  extends AuditBaseDto {
     private Boolean contactNotificationEnabled  ;
 
 
-
+    private UserDto user;
 
     public NotificationActeurDto(){
         super();
@@ -92,7 +93,13 @@ public class NotificationActeurDto  extends AuditBaseDto {
     public void setUseRouter(Boolean useRouter){
         this.useRouter = useRouter;
     }
+    public UserDto getUser() {
+        return this.user;
+    }
 
+    public void setUser(UserDto user) {
+        this.user = user;
+    }
 
     public Boolean getCommunicationEnabled(){
         return this.communicationEnabled;
