@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
-import {environment} from 'src/environments/environment';
-import {PaginatedList} from 'src/app/zynerator/dto/PaginatedList.model';
-import * as moment from 'moment/moment';
 
-import {NotificationActeurDto} from 'src/app/shared/model/notif/NotificationActeur.model';
-import {NotificationActeurCriteria} from 'src/app/shared/criteria/notif/NotificationActeurCriteria.model';
+import * as moment from 'moment/moment';
+import { NotificationActeurDto } from 'app/shared/model/notif/NotificationActeur.model';
+import { NotificationActeurCriteria } from 'app/shared/criteria/notif/NotificationActeurCriteria.model';
+import { environment } from 'environments/environment';
+import {PaginatedList} from "../../../../zynerator/dto/PaginatedList.model";
+
+
 
 
 @Injectable({
@@ -116,7 +118,7 @@ export class NotificationActeurOpenService {
     }
 
     get API() {
-        return environment.apiUrlZyn1724069435646Ms1 + 'open/notificationActeur/';
+        return environment.apiUrlAlcservice + 'open/notificationActeur/';
     }
 
     public get items(): Array<NotificationActeurDto> {
