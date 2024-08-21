@@ -125,9 +125,8 @@ export class AuthSignUpComponent implements OnInit {
         this.service.validateUser(accountValidation).subscribe(
             () => {
                 this.alert.show('success', 'User validated successfully.');
-                const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
 
-                this._router.navigateByUrl(redirectURL);
+                this._router.navigate(["/collaborator/dashboard"])
 
             },
             (error) => {

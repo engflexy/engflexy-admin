@@ -85,9 +85,18 @@ export class AuthSignInComponent implements OnInit {
                     // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
                     // to the correct page after a successful sign in. This way, that url can be set via
                     // routing file and we don't have to touch here.
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+                    //const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+                    //this._router.navigateByUrl(redirectURL);
 
-                    // Navigate to the redirect url
+                    let roleUsers = this._authService.authenticatedUser.roleUsers;
+                    let authority = roleUsers[0].role.authority;
+                    let redirectURL = ""
+                    if (authority === "ROLE_COLLABORATOR") {
+                        redirectURL = "/collaborator/dashboard"
+                    } else if (authority === "ROLE_ADMIN") {
+                        redirectURL = "/admin/dashboard"
+                    }
+
                     this._router.navigateByUrl(redirectURL);
 
                 },

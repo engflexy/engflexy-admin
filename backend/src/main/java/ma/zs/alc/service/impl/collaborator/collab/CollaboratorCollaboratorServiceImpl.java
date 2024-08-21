@@ -231,9 +231,11 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         roleUser.setRole(savedRole);
 
 
+
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
 
         t.getRoleUsers().add(roleUser);
+
         if (t.getModelPermissionUsers() == null) t.setModelPermissionUsers(new ArrayList<>());
 
         if (t.getTypeCollaborator() != null) {
@@ -244,6 +246,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         //       t.setModelPermissionUsers(modelPermissionUserService.initModelPermissionUser());
 
         Collaborator mySaved = (Collaborator) dao.save(t);
+        roleUser.setUser(mySaved);
+        roleUserService.create(roleUser);
 
         if (t.getParcourss() != null) {
             t.getParcourss().forEach(element -> {
@@ -251,6 +255,7 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
                 parcoursService.create(element);
             });
         }
+
         System.out.println("t.getValidationCode() = " + t.getValidationCode());
         inscriptionCollaboratorService.createFreeTrial(t);
         emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code", "Your username is " + t.getUsername() + " your verification code is " + t.getValidationCode(), t.getEmail()));
