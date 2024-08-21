@@ -84,10 +84,10 @@ public class MigratorService {
 
     }
 
-    private List<Section> constructSections(SectionDto[] sectionDtos) {
+    private List<Section> constructSections(SectionMigration[] sectionDtos) {
         List<Section> sections = new ArrayList<>();
         if (sectionDtos != null) {
-            for (SectionDto sectionDto : sectionDtos) {
+            for (SectionMigration sectionDto : sectionDtos) {
                 Section section = new Section();
                 BeanUtils.copyProperties(sectionDto, section);
                 if (sectionDto.getCours() != null) {
