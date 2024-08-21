@@ -35,6 +35,9 @@ public class CoursMigration {
     private int nombreLinkFinalise;
     private int numeroOrder;
 
+    public CoursMigration() {
+    }
+
     public Long getId() {
         return id;
     }
