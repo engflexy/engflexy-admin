@@ -53,7 +53,8 @@ public class NotificationActeurRestCollaborator {
     }
     @GetMapping("currentUser/username/{username}")
     public List<NotificationActeur> findByUserUsername(@PathVariable String username) {
-        return service.findByUserUsername(username);
+        List<NotificationActeur> byUserUsername = service.findByUserUsername(username);
+        return byUserUsername;
     }
 
 
