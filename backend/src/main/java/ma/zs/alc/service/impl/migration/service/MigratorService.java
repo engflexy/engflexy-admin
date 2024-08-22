@@ -10,6 +10,7 @@ import ma.zs.alc.dao.facade.core.courseref.ContentTypeDao;
 import ma.zs.alc.service.facade.admin.course.CoursAdminService;
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService;
 import ma.zs.alc.service.facade.admin.course.SectionAdminService;
+import ma.zs.alc.service.impl.migration.dto.CategorieSectionMigration;
 import ma.zs.alc.service.impl.migration.dto.CoursMigration;
 import ma.zs.alc.service.impl.migration.dto.ParcoursMigration;
 import ma.zs.alc.service.impl.migration.dto.SectionMigration;
@@ -31,42 +32,71 @@ public class MigratorService {
 
     String baseUrl = "http://localhost:8036/api/";
 
-    public int lunch() {
+    public int lunchSection() {
 
-        String url = baseUrl + "section";
+        String url = baseUrl + "teacher/sections/";
         SectionMigration[] sectionMigrations = restTemplate.getForObject(url, SectionMigration[].class);
-
+        int count = 0;
         List<Section> sections = constructSections(sectionMigrations);
         if (sectionMigrations != null) {
             for (int i = 0; i < sectionMigrations.length; i++) {
                 Section section = sections.get(i);
                 SectionMigration sectionMigration = sectionMigrations[i];
-                List<Exercice> exercices = constructExercices(sectionMigration);
-                section.setExercices(exercices);
-                sectionService.create(section);
+                Section byReferenceEntity = sectionService.findByReferenceEntity(section);
+                if (byReferenceEntity == null) {
+                    List<Exercice> exercices = constructExercices(sectionMigration);
+                    section.setExercices(exercices);
+                    sectionService.create(section);
+                    count++;
+                }
             }
         }
-        return 1;
+        return count;
     }
 
     public int lunchParcours() {
         String url = baseUrl + "parcours/";
-        try{
+        int count = 0;
+        try {
             ParcoursMigration[] parcoursMigrations = restTemplate.getForObject(url, ParcoursMigration[].class);
             if (parcoursMigrations != null) {
                 List<Parcours> parcoursList = constructParcours(parcoursMigrations);
 
                 for (int i = 0; i < parcoursMigrations.length; i++) {
                     Parcours parcours = parcoursList.get(i);
-                    Parcours savedParcours = parcoursService.create(parcours);
+                    Parcours byReferenceEntity = parcoursService.findByReferenceEntity(parcours);
+                    if (byReferenceEntity == null) {
+                        parcoursService.create(parcours);
+                        count++;
+                    }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return 1;
+        return count;
     }
+
+    public int lunchCours() {
+        String url = baseUrl + "student/course/";
+        int count = 0;
+        CoursMigration[] coursMigrations = restTemplate.getForObject(url, CoursMigration[].class);
+        if (coursMigrations != null) {
+            List<Cours> coursList = constructCours(coursMigrations);
+
+            for (int i = 0; i < coursMigrations.length; i++) {
+                Cours cours = coursList.get(i);
+                Cours byReferenceEntity = coursService.findByReferenceEntity(cours);
+                if (byReferenceEntity == null) {
+                    Cours savedCours = coursService.create(cours);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
 
     private List<Parcours> constructParcours(ParcoursMigration[] parcoursMigrations) {
         List<Parcours> parcoursList = new ArrayList<>();
@@ -81,19 +111,6 @@ public class MigratorService {
         return parcoursList;
     }
 
-    public int lunchCours() {
-        String url = baseUrl + "cours";
-        CoursMigration[] coursMigrations = restTemplate.getForObject(url, CoursMigration[].class);
-        if (coursMigrations != null) {
-            List<Cours> coursList = constructCours(coursMigrations);
-
-            for (int i = 0; i < coursMigrations.length; i++) {
-                Cours cours = coursList.get(i);
-                Cours savedCours = coursService.create(cours);
-            }
-        }
-        return 1;
-    }
 
     private List<Cours> constructCours(CoursMigration[] coursMigrations) {
         List<Cours> coursList = new ArrayList<>();
@@ -102,6 +119,10 @@ public class MigratorService {
             for (CoursMigration coursMigration : coursMigrations) {
                 Cours cours = new Cours();
                 BeanUtils.copyProperties(coursMigration, cours);
+                String codeParcours = coursMigration.getParcours().getCode();
+                Parcours loadedParcours = parcoursService.findByCode(codeParcours);
+                cours.setParcours(loadedParcours);
+
                 coursList.add(cours);
             }
         }
@@ -147,19 +168,30 @@ public class MigratorService {
 
     }
 
-    private List<Section> constructSections(SectionMigration[] sectionDtos) {
+    private List<Section> constructSections(SectionMigration[] sectionMigrations) {
         List<Section> sections = new ArrayList<>();
-        if (sectionDtos != null) {
-            for (SectionMigration sectionDto : sectionDtos) {
+        if (sectionMigrations != null) {
+            for (SectionMigration sectionMigration : sectionMigrations) {
                 Section section = new Section();
-                BeanUtils.copyProperties(sectionDto, section);
-                if (sectionDto.getCours() != null) {
-                    BeanUtils.copyProperties(sectionDto.getCours(), section.getCours());
-                }
+                BeanUtils.copyProperties(sectionMigration, section);
+
+                CoursMigration coursMigration = sectionMigration.getCours();
+                adaptCoursForSection(coursMigration, section);
                 sections.add(section);
             }
         }
         return sections;
+    }
+
+
+    private void adaptCoursForSection(CoursMigration coursMigration, Section section) {
+        if (coursMigration != null) {
+            if (coursMigration.getCode() != null) {
+                section.setCours(coursService.findByCode(coursMigration.getCode()));
+            }else{
+                section.setCours(null);
+            }
+        }
     }
 
     @Autowired

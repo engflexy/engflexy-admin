@@ -6,23 +6,12 @@ public class CoursMigration {
    
     
     private Long id;
-    
-    
     private String description;
-    
-    
     private String image;
-    
-    
     private String libelle;
     private String code;
     private String etatCours;
-
-   
     private ParcoursMigration parcoursMigration;
-
-    
-    
     private List<SectionMigration> sectionMigrations;
 
     

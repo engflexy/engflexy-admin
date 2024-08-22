@@ -18,9 +18,17 @@ public class ParcoursMigration {
     private String libelle;
     private String code;
     
-   // private List<CoursMigration> cours;
+   private List<CoursMigration> cours;
     private int numeroOrder;
     private int nombreCours;
+
+    public List<CoursMigration> getCours() {
+        return cours;
+    }
+
+    public void setCours(List<CoursMigration> cours) {
+        this.cours = cours;
+    }
 
     public ParcoursMigration() {
     }

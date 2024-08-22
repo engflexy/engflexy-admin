@@ -12,14 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/migrator")
+@RequestMapping("/api/migrator/")
 public class MigrationWs {
     @Autowired
     private MigratorService migratorService;
 
-    @GetMapping("/parcours/")
+    @GetMapping("parcours")
     public int lunchParcours() {
         int result = migratorService.lunchParcours();
+        return result;
+    }
+    @GetMapping("course")
+    public int lunchCours() {
+        int result = migratorService.lunchCours();
+        return result;
+    }
+    @GetMapping("section")
+    public int lunchSection() {
+        int result = migratorService.lunchSection();
         return result;
     }
 }
