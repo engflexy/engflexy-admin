@@ -9,19 +9,21 @@ public class ParcoursMigration {
     
     private Long id;
     
-    private Date datePublication;
+    private String datePublication;
     
-    private Date dateCreation;
+    private String dateCreation;
     
     
     private String description;
     private String libelle;
     private String code;
     
-    private List<CoursMigration> cours;
+   // private List<CoursMigration> cours;
     private int numeroOrder;
     private int nombreCours;
-    
+
+    public ParcoursMigration() {
+    }
 
     public ParcoursMigration(Long id, String libelle) {
         this.id = id;
@@ -36,19 +38,19 @@ public class ParcoursMigration {
         this.id = id;
     }
 
-    public Date getDatePublication() {
+    public String getDatePublication() {
         return datePublication;
     }
 
-    public void setDatePublication(Date datePublication) {
+    public void setDatePublication(String datePublication) {
         this.datePublication = datePublication;
     }
 
-    public Date getDateCreation() {
+    public String getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(String dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -76,6 +78,13 @@ public class ParcoursMigration {
         this.code = code;
     }
 
+  /*  public List<CoursMigration> getCours() {
+        return cours;
+    }
+
+    public void setCours(List<CoursMigration> cours) {
+        this.cours = cours;
+    }*/
 
     public int getNumeroOrder() {
         return numeroOrder;

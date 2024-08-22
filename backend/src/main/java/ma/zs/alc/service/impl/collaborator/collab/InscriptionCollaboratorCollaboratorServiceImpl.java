@@ -44,7 +44,7 @@ public class InscriptionCollaboratorCollaboratorServiceImpl extends AbstractServ
     }
 
     @Transactional
-    @Scheduled(fixedRate = 60000)
+    //@Scheduled(fixedRate = 60000)
     public void updatePaidAndFreeWhereEndDateIsGreaterThanNow() {
         List<InscriptionCollaborator> inscriptions = dao.findNotPending(PENDING);
         InscriptionCollaboratorState pendingState = inscriptionCollaboratorStateService.findByLibelle(PENDING);
