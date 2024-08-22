@@ -136,8 +136,10 @@
                                 [innerHTML]="notification.description"></div>
                         </ng-container>
                         <div class="mt-2 text-sm leading-none text-secondary">
-                            {{ "2024-08-19T12:50:00" | date:'short' }}
+                            {{ notification.time | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}
                         </div>
+
+
 
                     </div>
                 </ng-template>

@@ -47,12 +47,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         const authenticatedUser = this.authService.authenticatedUser;
+        console.log("haaa username: ", authenticatedUser.username);
+
         this.notificationActeurCollaboratorService.findByUserUsername(authenticatedUser.username)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: NotificationActeurDto[]) => {
                 this.notifications = notifications.map(notification => {
-                  /*  console.log('Haaaaaaaa time:', notification.time);
-                    console.log('Is Date:', notification.time instanceof Date);*/
+                    console.log('Notification time:', notification.time);
                     return notification;
                 });
 
