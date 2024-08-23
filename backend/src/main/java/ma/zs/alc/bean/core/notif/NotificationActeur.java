@@ -34,7 +34,7 @@ public class NotificationActeur  extends AuditBusinessObject {
 
     @Column(length = 500)
     private String description;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime time ;
 
 

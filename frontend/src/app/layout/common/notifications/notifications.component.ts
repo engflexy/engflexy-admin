@@ -51,7 +51,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: NotificationActeurDto[]) => {
                 this.notifications = notifications.map(notification => {
-                  /*  console.log('Haaaaaaaa time:', notification.time);
+                 /*  console.log('Haaaaaaaa time:', notification.time);
                     console.log('Is Date:', notification.time instanceof Date);*/
                     return notification;
                 });

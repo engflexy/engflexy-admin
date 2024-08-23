@@ -7,6 +7,7 @@ import {
     EtudiantCollaboratorService
 } from "../../../../../../shared/service/collaborator/inscription/EtudiantCollaborator.service";
 import {ActivatedRoute} from "@angular/router";
+import {AuthService} from "../../../../../../zynerator/security/shared/service/Auth.service";
 
 @Component({
     selector: 'settings-notifications',
