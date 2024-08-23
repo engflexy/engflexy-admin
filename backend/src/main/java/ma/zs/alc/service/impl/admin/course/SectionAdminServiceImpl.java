@@ -54,6 +54,10 @@ public class SectionAdminServiceImpl extends AbstractServiceImpl<Section, Sectio
         return result;
     }
 
+   public Section findByReferenceEntity(Section section) {
+        return section == null ? null : dao.findByCode(section.getCode());
+    }
+
     @Transactional
     public void deleteAssociatedLists(Long id) {
         quizService.deleteBySectionId(id);

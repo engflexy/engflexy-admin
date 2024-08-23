@@ -168,11 +168,15 @@ public class DateUtil {
         try {
             if (date != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_WITH_HOUR, Locale.ENGLISH);
-                OffsetDateTime off = OffsetDateTime.of(date, ZoneOffset.UTC);
+                // Convert LocalDateTime to OffsetDateTime with UTC offset
+                OffsetDateTime off = date.atOffset(ZoneOffset.UTC);
+                // Adjust to the desired time zone (UTC+1 in this case)
                 ZonedDateTime zoned = off.atZoneSameInstant(ZoneId.of("UTC+1"));
-                return zoned.toLocalDateTime().format(formatter);
+                // Return the formatted date string
+                return zoned.format(formatter);
             }
         } catch (Exception e) {
+            e.printStackTrace(); // Log the error for debugging purposes
             return null;
         }
         return null;

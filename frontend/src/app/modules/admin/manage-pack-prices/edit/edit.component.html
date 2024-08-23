@@ -83,7 +83,7 @@
 
                 <mat-form-field class="w-full">
                     <mat-label>End time</mat-label>
-                    <input disabled matInput [matDatepicker]="endTimePicker" [(ngModel)]="item.endDate" name="endDate">
+                    <input matInput [matDatepicker]="endTimePicker" [(ngModel)]="item.endDate" name="endDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="endTimePicker"></mat-datepicker-toggle>
                     <mat-datepicker #endTimePicker></mat-datepicker>
