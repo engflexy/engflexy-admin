@@ -32,4 +32,9 @@ public class MigrationWs {
         int result = migratorService.lunchSection();
         return result;
     }
+    @GetMapping("quiz")
+    public int lunchQuiz() {
+        int result=migratorService.lunchExerciceFromQuiz();
+        return result;
+    }
 }

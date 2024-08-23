@@ -22,6 +22,19 @@ import java.util.List;
 public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria, QuizDao> implements QuizAdminService {
 
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
+    public Quiz save(Quiz t) {
+        Quiz saved = dao.save(t);
+        if (t.getQuestions() != null && !t.getQuestions().isEmpty()) {
+            t.getQuestions().forEach(qst -> {
+                qst.setQuiz(saved);
+                questionService.create(qst);
+            });
+        }
+        return saved;
+    }
+
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Quiz create(Quiz t) {
         if (t != null) {
@@ -72,7 +85,7 @@ public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria
 
 
     public Quiz findByReferenceEntity(Quiz t) {
-        return (t != null && t.getId() != null) ? dao.findById(t.getId()).orElse(null) : null;
+        return t.getRef() == null ? null : dao.findByRef(t.getRef());
     }
 
     public void findOrSaveAssociatedObject(Quiz t) {
