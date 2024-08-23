@@ -10,6 +10,8 @@ import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { Subject, takeUntil } from 'rxjs';
 import {UserDto} from "../../../zynerator/security/shared/model/User.model";
+import {AuthService} from "../../../zynerator/security/shared/service/Auth.service";
+import {user} from "../../../mock-api/common/user/data";
 
 @Component({
     selector       : 'user',
@@ -27,7 +29,7 @@ export class UserComponent implements OnInit, OnDestroy
     /* eslint-enable @typescript-eslint/naming-convention */
 
     @Input() showAvatar: boolean = true;
-    user: UserDto;
+    private _user: UserDto;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -38,6 +40,7 @@ export class UserComponent implements OnInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
         private _userService: UserService,
+        private  authService: AuthService
     )
     {
     }
@@ -51,16 +54,13 @@ export class UserComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Subscribe to user changes
-        this._userService.user$
+        /*this._userService.user$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: UserDto) =>
             {
                 this.user = user;
-
-                // Mark for check
                 this._changeDetectorRef.markForCheck();
-            });
+            });*/
     }
 
     /**
@@ -100,4 +100,11 @@ export class UserComponent implements OnInit, OnDestroy
     {
         this._router.navigate(['/sign-out']);
     }
+
+
+    get user(): UserDto {
+        return this.authService.authenticatedUser;
+    }
+
+
 }

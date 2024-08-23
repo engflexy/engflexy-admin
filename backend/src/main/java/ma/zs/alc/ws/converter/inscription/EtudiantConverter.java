@@ -182,8 +182,14 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
                 dto.setAvatar(item.getAvatar());
             if (StringUtil.isNotEmpty(item.getFullName()))
                 dto.setFullName(item.getFullName());
+            if (StringUtil.isNotEmpty(item.getEmail()))
+                dto.setEmail(item.getEmail());
             if (StringUtil.isNotEmpty(item.getAbout()))
                 dto.setAbout(item.getAbout());
+            if (StringUtil.isNotEmpty(dto.getCountry()))
+                item.setCountry(dto.getCountry());
+            if (StringUtil.isNotEmpty(dto.getPhone()))
+                item.setPhone(dto.getPhone());
             if (this.teacherLocality && item.getTeacherLocality() != null) {
                 dto.setTeacherLocality(teacherLocalityConverter.toDto(item.getTeacherLocality()));
 
