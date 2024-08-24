@@ -47,6 +47,12 @@ export class NotificationsComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         const authenticatedUser = this.authService.authenticatedUser;
+        console.log('communicationEnabled : ',authenticatedUser.communicationEnabled);
+        console.log('classroomEnabled :',authenticatedUser.classroomEnabled);
+        console.log('contactNotificationEnabled: ', authenticatedUser.contactNotificationEnabled);
+        console.log('lessonReminderEnabled : ',authenticatedUser.lessonReminderEnabled);
+        console.log('passwordChangedNotificationEnabled : ',authenticatedUser.passwordChangedNotificationEnabled);
+        console.log('securityEnabled : ',authenticatedUser.securityEnabled);
         this.notificationActeurCollaboratorService.findByUserUsername(authenticatedUser.username)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: NotificationActeurDto[]) => {

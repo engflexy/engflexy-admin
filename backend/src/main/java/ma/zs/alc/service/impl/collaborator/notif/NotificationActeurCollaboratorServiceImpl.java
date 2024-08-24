@@ -9,7 +9,10 @@ import ma.zs.alc.dao.facade.core.notif.NotificationActeurDao;
 import ma.zs.alc.dao.specification.core.notif.NotificationActeurSpecification;
 import ma.zs.alc.service.facade.collaborator.notif.NotificationActeurCollaboratorService;
 import ma.zs.alc.zynerator.exception.EntityNotFoundException;
+import ma.zs.alc.zynerator.security.bean.User;
+import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.util.RefelexivityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
@@ -73,10 +76,40 @@ public class NotificationActeurCollaboratorServiceImpl implements NotificationAc
         // Fetch notifications for the connected user
         return dao.findByUser(connectedUser); // Adjust this line if you store username directly
     }*/
-    public List<NotificationActeur> findByUserUsername(String username) {
+   @Autowired
+   private UserService userService;
 
-        /*String username="samantha@gmail.com";*/
-        return dao.findByUserUsername(username);
+    public List<NotificationActeur> findByUserUsername(String username) {
+        User user = userService.findByUsername(username);
+        List<NotificationActeur> result = new ArrayList<>();
+        List<NotificationActeur> notifications = dao.findByUserUsername(username);
+        if (notifications != null) {
+            for (NotificationActeur notification : notifications) {
+                if (notification.getClassroomEnabled()!=null && notification.getClassroomEnabled().equals(user.isClassroomEnabled())) {
+                    result.add(notification);
+                }else   if (notification.getCommunicationEnabled()!=null && notification.getCommunicationEnabled().equals(user.isCommunicationEnabled())) {
+                    result.add(notification);
+                }else   if (notification.getSecurityEnabled()!=null && notification.getSecurityEnabled().equals(user.isSecurityEnabled())) {
+                    result.add(notification);
+                }else   if (notification.getPasswordChangedNotificationEnabled()!=null && notification.getPasswordChangedNotificationEnabled().equals(user.isPasswordChangedNotificationEnabled())) {
+                    result.add(notification);
+                }else   if (notification.getContactNotificationEnabled()!=null && notification.getContactNotificationEnabled().equals(user.isContactNotificationEnabled())) {
+                    result.add(notification);
+                }else   if (notification.getLessonReminderEnabled()!=null && notification.getLessonReminderEnabled().equals(user.isLessonReminderEnabled())) {
+                    result.add(notification);
+                }
+            }
+        }
+       /* List<NotificationActeur> result = dao.findByUserUsernameAndClassroomEnabledAndCommunicationEnabledAndContactNotificationEnabledAndPasswordChangedNotificationEnabledAndLessonReminderEnabledAndSecurityEnabled(
+                username,
+                user.isClassroomEnabled(),
+                user.isCommunicationEnabled(),
+                user.isContactNotificationEnabled(),
+                user.isPasswordChangedNotificationEnabled(),
+                user.isLessonReminderEnabled(),
+                user.isSecurityEnabled()
+        );*/
+        return result;
     }
     public List<NotificationActeur> findByCriteria(NotificationActeurCriteria criteria) {
         List<NotificationActeur> content = null;
