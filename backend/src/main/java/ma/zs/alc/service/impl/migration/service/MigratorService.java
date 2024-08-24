@@ -6,15 +6,18 @@ import ma.zs.alc.bean.core.course.Exercice;
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.bean.core.courseref.ContentType;
+import ma.zs.alc.bean.core.quiz.Question;
+import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.dao.facade.core.courseref.ContentTypeDao;
 import ma.zs.alc.service.facade.admin.course.CoursAdminService;
+import ma.zs.alc.service.facade.admin.course.ExerciceAdminService;
 import ma.zs.alc.service.facade.admin.course.ParcoursAdminService;
 import ma.zs.alc.service.facade.admin.course.SectionAdminService;
-import ma.zs.alc.service.impl.migration.dto.CategorieSectionMigration;
-import ma.zs.alc.service.impl.migration.dto.CoursMigration;
-import ma.zs.alc.service.impl.migration.dto.ParcoursMigration;
-import ma.zs.alc.service.impl.migration.dto.SectionMigration;
+import ma.zs.alc.service.facade.admin.quiz.QuestionAdminService;
+import ma.zs.alc.service.facade.admin.quiz.QuizAdminService;
+import ma.zs.alc.service.impl.migration.dto.*;
 import ma.zs.alc.ws.dto.course.SectionDto;
+import ma.zs.alc.zynerator.util.RefelexivityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +36,6 @@ public class MigratorService {
     String baseUrl = "http://localhost:8036/api/";
 
     public int lunchSection() {
-
         String url = baseUrl + "teacher/sections/";
         SectionMigration[] sectionMigrations = restTemplate.getForObject(url, SectionMigration[].class);
         int count = 0;
@@ -54,13 +56,79 @@ public class MigratorService {
         return count;
     }
 
+    public int lunchExerciceFromQuiz() {
+        String url = baseUrl + "teacher/quiz/";
+        QuizMigration[] quizMigrations = restTemplate.getForObject(url, QuizMigration[].class);
+        int count = 0;
+
+        if (quizMigrations != null) {
+            List<Quiz> quizzes = construct(quizMigrations, Quiz.class);
+            for (int i = 0; i < quizzes.size(); i++) {
+                Quiz quiz = quizzes.get(i);
+                QuizMigration quizMigration = quizMigrations[i];
+                List<QuestionMigration> questions = quizMigration.getQuestions();
+
+                Quiz loadedQuiz = quizService.findByReferenceEntity(quiz);
+                if (loadedQuiz == null) {
+                    quizService.create(quiz);
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+
+    /* public int lunchExerciceFromQuiz() {
+        String url = baseUrl + "teacher/quiz/";
+        QuizMigration[] quizMigrations = restTemplate.getForObject(url, QuizMigration[].class);
+        int count = 0;
+        ContentType contentType = contentTypeDao.findByCode("QUIZ");
+        List<Quiz> quizzes = constructQuiz(quizMigrations);
+
+        if (quizMigrations != null) {
+            for (int i = 0; i < quizMigrations.length; i++) {
+                Quiz quiz = quizzes.get(i);
+                Exercice exercice = transform(quiz,Exercice.class);
+                exercice.setContent(quiz.getLib());
+                exercice.setContentType(contentType);
+                exerciceService.create(exercice);
+                List<Question> questions = quiz.getQuestions();
+                if (questions != null) {
+                    for (Question question : questions) {
+                        question.setQuiz(quiz);
+                        questionService.create(question);
+                    }
+                }
+
+                count++;
+
+            }
+        }
+        return count;
+    }
+*/
+    private List<Quiz> constructQuiz(QuizMigration[] quizMigrations) {
+        List<Quiz> quizzes = construct(quizMigrations, Quiz.class);
+        for (int i = 0; i < quizzes.size(); i++) {
+            Quiz quiz = quizzes.get(i);
+            QuizMigration quizMigration = quizMigrations[i];
+            List<Question> questions = construct(quizMigration.getQuestions().toArray(), Question.class);
+            quiz.setQuestions(questions);
+        }
+        return quizzes;
+    }
+
+
     public int lunchParcours() {
         String url = baseUrl + "parcours/";
         int count = 0;
         try {
             ParcoursMigration[] parcoursMigrations = restTemplate.getForObject(url, ParcoursMigration[].class);
             if (parcoursMigrations != null) {
-                List<Parcours> parcoursList = constructParcours(parcoursMigrations);
+                // List<Parcours> parcoursList = constructParcours(parcoursMigrations);
+                List<Parcours> parcoursList = construct(parcoursMigrations, Parcours.class);
 
                 for (int i = 0; i < parcoursMigrations.length; i++) {
                     Parcours parcours = parcoursList.get(i);
@@ -97,7 +165,6 @@ public class MigratorService {
     }
 
 
-
     private List<Parcours> constructParcours(ParcoursMigration[] parcoursMigrations) {
         List<Parcours> parcoursList = new ArrayList<>();
 
@@ -109,6 +176,28 @@ public class MigratorService {
             }
         }
         return parcoursList;
+    }
+
+    private <T, K> K transform(T t, Class<K> targetClass) {
+        K output = RefelexivityUtil.constructObjectUsingDefaultConstr(targetClass);
+        if (t != null) {
+            BeanUtils.copyProperties(t, output);
+        }
+        return output;
+
+    }
+
+    private <T, K> List<T> construct(K[] inputs, Class<T> targetClass) {
+        List<T> result = new ArrayList<>();
+
+        if (inputs != null) {
+            for (K input : inputs) {
+                T elment = RefelexivityUtil.constructObjectUsingDefaultConstr(targetClass);
+                BeanUtils.copyProperties(input, elment);
+                result.add(elment);
+            }
+        }
+        return result;
     }
 
 
@@ -188,7 +277,7 @@ public class MigratorService {
         if (coursMigration != null) {
             if (coursMigration.getCode() != null) {
                 section.setCours(coursService.findByCode(coursMigration.getCode()));
-            }else{
+            } else {
                 section.setCours(null);
             }
         }
@@ -200,4 +289,10 @@ public class MigratorService {
     private ParcoursAdminService parcoursService;
     @Autowired
     private CoursAdminService coursService;
+    @Autowired
+    private QuizAdminService quizService;
+    @Autowired
+    private ExerciceAdminService exerciceService;
+    @Autowired
+    private QuestionAdminService questionService;
 }

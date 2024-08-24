@@ -25,11 +25,9 @@ public class Section extends AuditBusinessObject {
     private Long numero;
     private Cours cours;
     private List<Exercice> exercices;
-
     public Section() {
         super();
     }
-
     public Section(Long id) {
         this.id = id;
     }
