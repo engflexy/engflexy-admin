@@ -3,6 +3,7 @@ package ma.zs.alc.service.impl.collaborator.collab;
 
 import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.collab.TypeCollaborator;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.CollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.CollaboratorSpecification;
@@ -128,6 +129,66 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         Collaborator collaborator = findById(id);
         if (collaborator != null) {
             collaborator.setAccountNonLocked(accountNonLocked);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onCommunicationEnabled(Long id, boolean communicationEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setCommunicationEnabled(communicationEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onSecurityEnabled(Long id, boolean securityEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setSecurityEnabled(securityEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onLessonReminderEnabled(Long id, boolean lessonReminderEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setLessonReminderEnabled(lessonReminderEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onClassroomEnabled(Long id, boolean classroomEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setClassroomEnabled(classroomEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onPasswordChangedNotificationEnabled(Long id, boolean passwordChangedNotificationEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setPasswordChangedNotificationEnabled(passwordChangedNotificationEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onContactNotificationEnabled(Long id, boolean contactNotificationEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setContactNotificationEnabled(contactNotificationEnabled);
             dao.save(collaborator);
             return true;
         }
@@ -262,8 +323,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         return mySaved;
     }
 
-    public Collaborator findByUsername(String username) {
-        return dao.findByUsername(username);
+    public Collaborator findByUsername(String email) {
+        return dao.findByUsername(email);
     }
 
 

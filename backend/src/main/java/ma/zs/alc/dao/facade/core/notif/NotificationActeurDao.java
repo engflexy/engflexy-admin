@@ -16,6 +16,7 @@ public interface NotificationActeurDao extends AbstractRepository<NotificationAc
 
     @Query("SELECT NEW NotificationActeur(item.id,item.title) FROM NotificationActeur item")
     List<NotificationActeur> findAllOptimized();
-    List<NotificationActeur> findByUserUsername(String username);
-
+    /*List<NotificationActeur> findByUserUsernameAndClassroomEnabledAndCommunicationEnabledAndContactNotificationEnabledAndPasswordChangedNotificationEnabledAndLessonReminderEnabledAndSecurityEnabled(String username,boolean classroomEnabled, boolean communicationEnabled,boolean contactNotificationEnabled
+    , boolean passwordChangedNotificationEnabled , boolean lessonReminderEnabled, boolean securityEnabled);*/
+List<NotificationActeur> findByUserUsername(String username);
 }

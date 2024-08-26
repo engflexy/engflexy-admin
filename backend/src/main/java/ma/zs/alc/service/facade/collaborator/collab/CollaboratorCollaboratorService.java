@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 public interface CollaboratorCollaboratorService extends  IService<Collaborator,CollaboratorCriteria>  {
     Collaborator register(Collaborator t);
 
-    Collaborator findByUsername(String username);
+    Collaborator findByUsername(String email);
     boolean changePassword(String username, String newPassword);
 
     List<Collaborator> findByTypeCollaboratorId(Long id);
@@ -24,7 +24,12 @@ public interface CollaboratorCollaboratorService extends  IService<Collaborator,
     boolean updateAccountStatus(Long id, boolean enabled);
     boolean updatePasswordChangedStatus(Long id, boolean passwordChanged);
     boolean updateCredentialsNonExpiredStatus(Long id, boolean credentialsNonExpired);
-
+    boolean onCommunicationEnabled(Long id, boolean communicationEnabled);
+    boolean onSecurityEnabled(Long id, boolean securityEnabled);
+    boolean onLessonReminderEnabled(Long id, boolean lessonReminderEnabled);
+    boolean onClassroomEnabled(Long id, boolean classroomEnabled);
+    boolean onPasswordChangedNotificationEnabled(Long id, boolean passwordChangedNotificationEnabled);
+    boolean onContactNotificationEnabled(Long id, boolean contactNotificationEnabled);
 
     boolean findByUsernameAndValidationCode(String username, String validationCode);
 

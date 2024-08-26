@@ -21,7 +21,7 @@ public interface CollaboratorDao extends AbstractRepository<Collaborator, Long> 
 
     long countByTypeCollaboratorCode(String code);
 
-    Collaborator findByUsername(String username);
+    Collaborator findByUsername(String email);
 
 
     @Query("select new ma.zs.alc.dao.facade.core.inscription.UserPageable(coll) " +
