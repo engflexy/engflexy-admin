@@ -56,7 +56,7 @@ public class MigratorService {
         return count;
     }
 
-    public int lunchExerciceFromQuiz() {
+   /* public int lunchExerciceFromQuiz() {
         String url = baseUrl + "teacher/quiz/";
         QuizMigration[] quizMigrations = restTemplate.getForObject(url, QuizMigration[].class);
         int count = 0;
@@ -75,12 +75,11 @@ public class MigratorService {
                 }
             }
         }
-
         return count;
-    }
+    }*/
 
 
-    /* public int lunchExerciceFromQuiz() {
+    public int lunchExerciceFromQuiz() {
         String url = baseUrl + "teacher/quiz/";
         QuizMigration[] quizMigrations = restTemplate.getForObject(url, QuizMigration[].class);
         int count = 0;
@@ -90,25 +89,20 @@ public class MigratorService {
         if (quizMigrations != null) {
             for (int i = 0; i < quizMigrations.length; i++) {
                 Quiz quiz = quizzes.get(i);
+                QuizMigration quizMigration = quizMigrations[i];
                 Exercice exercice = transform(quiz,Exercice.class);
+                exercice.setSection(sectionService.findByCode(quizMigration.getSection().getCode()));
                 exercice.setContent(quiz.getLib());
                 exercice.setContentType(contentType);
+                quizService.save(quiz);
+                exercice.setQuiz(quizService.findByReferenceEntity(quiz));
                 exerciceService.create(exercice);
-                List<Question> questions = quiz.getQuestions();
-                if (questions != null) {
-                    for (Question question : questions) {
-                        question.setQuiz(quiz);
-                        questionService.create(question);
-                    }
-                }
-
                 count++;
 
             }
         }
         return count;
     }
-*/
     private List<Quiz> constructQuiz(QuizMigration[] quizMigrations) {
         List<Quiz> quizzes = construct(quizMigrations, Quiz.class);
         for (int i = 0; i < quizzes.size(); i++) {

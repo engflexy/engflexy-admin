@@ -15,5 +15,5 @@ public interface SectionAdminService extends  IService<Section,SectionCriteria> 
     public Section updateField(Section section);
 
 
-
+    Section findByCode(String code);
 }

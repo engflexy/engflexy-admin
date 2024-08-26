@@ -2,6 +2,7 @@ package ma.zs.alc.service.facade.admin.course;
 
 import java.util.List;
 import ma.zs.alc.bean.core.course.Exercice;
+import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.dao.criteria.core.course.ExerciceCriteria;
 import ma.zs.alc.zynerator.service.IService;
 
@@ -17,6 +18,6 @@ public interface ExerciceAdminService extends  IService<Exercice,ExerciceCriteri
     long countBySectionCode(String code);
 
 
-
+    Exercice findByNumero(Long numero);
 
 }

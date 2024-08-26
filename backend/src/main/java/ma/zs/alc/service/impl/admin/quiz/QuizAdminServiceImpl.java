@@ -16,23 +16,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria, QuizDao> implements QuizAdminService {
 
 
+    @Autowired
+    private QuizDao quizDao;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Quiz save(Quiz t) {
-        Quiz saved = dao.save(t);
-        if (t.getQuestions() != null && !t.getQuestions().isEmpty()) {
-            t.getQuestions().forEach(qst -> {
-                qst.setQuiz(saved);
-                questionService.create(qst);
-            });
+        if (t != null) {
+            Quiz saved = dao.save(t);
+            if (t.getQuestions() != null && !t.getQuestions().isEmpty()) {
+                List<Question> questions = t.getQuestions();
+                for (Question question : questions) {
+                    question.setQuiz(quizService.findByReferenceEntity(saved));
+                    questionService.create(question);
+                }
+            }
         }
-        return saved;
+        return null;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
@@ -114,7 +121,8 @@ public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria
     public void configure() {
         super.configure(Quiz.class, QuizSpecification.class);
     }
-
+    @Autowired
+    private QuizAdminService quizService;
     @Autowired
     private QuestionAdminService questionService;
     @Autowired

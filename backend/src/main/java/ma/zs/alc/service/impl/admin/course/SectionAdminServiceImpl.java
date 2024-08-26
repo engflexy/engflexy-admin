@@ -46,6 +46,11 @@ public class SectionAdminServiceImpl extends AbstractServiceImpl<Section, Sectio
         return section;
     }
 
+    @Override
+    public Section findByCode(String code) {
+        return dao.findByCode(code);
+    }
+
     public Section findWithAssociatedLists(Long id) {
         Section result = dao.findById(id).orElse(null);
         if (result != null && result.getId() != null) {
