@@ -23,7 +23,6 @@ import java.util.List;
 public class QuestionAdminServiceImpl extends AbstractServiceImpl<Question, QuestionCriteria, QuestionDao> implements QuestionAdminService {
 
 
-
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Question create(Question t) {
         if (t != null) {

@@ -4,6 +4,7 @@ package ma.zs.alc.service.impl.admin.course;
 import ma.zs.alc.bean.core.course.Exercice;
 import ma.zs.alc.bean.core.course.Section;
 import ma.zs.alc.bean.core.courseref.ContentType;
+import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.dao.criteria.core.course.ExerciceCriteria;
 import ma.zs.alc.dao.facade.core.course.ExerciceDao;
 import ma.zs.alc.dao.facade.core.quiz.QuizDao;
@@ -68,6 +69,12 @@ public class ExerciceAdminServiceImpl extends AbstractServiceImpl<Exercice, Exer
     public long countBySectionCode(String code) {
         return dao.countBySectionCode(code);
     }
+
+    @Override
+    public Exercice findByNumero(Long numero) {
+        return dao.findByNumero(numero);
+    }
+
 
     public List<Exercice> findAllOptimized() {
         return dao.findAllOptimized();
