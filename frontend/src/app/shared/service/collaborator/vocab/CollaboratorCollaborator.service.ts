@@ -6,8 +6,9 @@ import {environment} from '../../../../../environments/environment';
 import {CollaboratorDto} from '../../../model/vocab/Collaborator.model';
 import {CollaboratorCriteria} from '../../../criteria/vocab/CollaboratorCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
-import {Observable, ReplaySubject, tap} from "rxjs";
+import {catchError, Observable, ReplaySubject, tap, throwError} from "rxjs";
 import {ProfDto} from "../../../model/prof/Prof.model";
+import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
 
 
 @Injectable({
@@ -62,4 +63,30 @@ export class CollaboratorCollaboratorService extends AbstractService<Collaborato
         return this.http.patch(`${this.API}update-lock-status/${userId}`, { accountNonLocked });
     }
 
+    findByUserName(email: string): Observable<CollaboratorDto> {
+        return this.http.get<CollaboratorDto>(`${this.API}username/${email}`).pipe(
+            catchError(error => {
+                console.error('Error fetching collab:', error);
+                return throwError(error);
+            })
+        );
+    }
+    onCommunicationEnabled(userId: number, communicationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}communicationEnabled/${userId}`, { communicationEnabled });
+    }
+    onSecurityEnabled(userId: number, securityEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}securityEnabled/${userId}`, { securityEnabled });
+    }
+    onLessonReminderEnabled(userId: number, lessonReminderEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}lessonReminderEnabled/${userId}`, { lessonReminderEnabled });
+    }
+    onClassroomEnabled(userId: number, classroomEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}classroomEnabled/${userId}`, { classroomEnabled });
+    }
+    onPasswordChangedNotificationEnabled(userId: number, passwordChangedNotificationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}passwordChangedNotificationEnabled/${userId}`, { passwordChangedNotificationEnabled });
+    }
+    onContactNotificationEnabled(userId: number, contactNotificationEnabled: boolean): Observable<any> {
+        return this.http.patch(`${this.API}contactNotificationEnabled/${userId}`, { contactNotificationEnabled });
+    }
 }

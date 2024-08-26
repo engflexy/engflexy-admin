@@ -3,17 +3,20 @@ package ma.zs.alc.ws.facade.collaborator.collab;
 import io.swagger.v3.oas.annotations.Operation;
 
 import ma.zs.alc.bean.core.collab.Collaborator;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.service.facade.collaborator.collab.CollaboratorCollaboratorService;
 import ma.zs.alc.ws.converter.collab.CollaboratorConverter;
 import ma.zs.alc.ws.dto.collab.CollaboratorDto;
 import ma.zs.alc.ws.dto.collab.TypeCollaboratorDto;
+import ma.zs.alc.ws.dto.inscription.EtudiantDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.util.PaginatedList;
 
 
 import ma.zs.alc.zynerator.security.bean.User;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,6 +87,61 @@ public class CollaboratorRestCollaborator  extends AbstractController<Collaborat
         boolean updated = service.updateAccountNonExpiredStatus(id, accountNonExpired);
         return ResponseEntity.ok(updated);
     }
+    @PatchMapping("communicationEnabled/{id}")
+    public ResponseEntity<Boolean> onCommunicationEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean communicationEnabled = status.get("communicationEnabled");
+        if (communicationEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onCommunicationEnabled(id, communicationEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("securityEnabled/{id}")
+    public ResponseEntity<Boolean> onSecurityEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean securityEnabled = status.get("securityEnabled");
+        if (securityEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onSecurityEnabled(id, securityEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("lessonReminderEnabled/{id}")
+    public ResponseEntity<Boolean> onLessonReminderEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean lessonReminderEnabled = status.get("lessonReminderEnabled");
+        if (lessonReminderEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onLessonReminderEnabled(id, lessonReminderEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("classroomEnabled/{id}")
+    public ResponseEntity<Boolean> onClassroomEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean classroomEnabled = status.get("classroomEnabled");
+        if (classroomEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onClassroomEnabled(id, classroomEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("passwordChangedNotificationEnabled/{id}")
+    public ResponseEntity<Boolean> onPasswordChangedNotificationEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean passwordChangedNotificationEnabled = status.get("passwordChangedNotificationEnabled");
+        if (passwordChangedNotificationEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onPasswordChangedNotificationEnabled(id, passwordChangedNotificationEnabled);
+        return ResponseEntity.ok(updated);
+    }
+    @PatchMapping("contactNotificationEnabled/{id}")
+    public ResponseEntity<Boolean> onContactNotificationEnabled(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        Boolean contactNotificationEnabled = status.get("contactNotificationEnabled");
+        if (contactNotificationEnabled == null) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        boolean updated = service.onContactNotificationEnabled(id, contactNotificationEnabled);
+        return ResponseEntity.ok(updated);
+    }
+
 
     @Operation(summary = "upload one collaborator")
     @RequestMapping(value = "upload", method = RequestMethod.POST, consumes = "multipart/form-data")
@@ -161,6 +219,21 @@ public class CollaboratorRestCollaborator  extends AbstractController<Collaborat
     public ResponseEntity<CollaboratorDto> findById(@PathVariable Long id) {
         return super.findWithAssociatedLists(id);
     }
+    @Operation(summary = "Finds a collab and associated list by id")
+    @GetMapping("/username/{email}")
+    public ResponseEntity<CollaboratorDto> findByUsername(@PathVariable String email) {
+        Collaborator t = service.findByUsername(email);
+        if (t != null) {
+            converter.initObject(true);
+            converter.initList(false);
+            CollaboratorDto dto = converter.toDto(t);
+
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @Operation(summary = "Finds collaborators by criteria")
     @PostMapping("find-by-criteria")
