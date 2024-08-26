@@ -58,6 +58,7 @@ export class CollaboratorsComponent implements OnInit {
     }
 
     navigateToDetail(item: ManageUserDto) {
+        //this.auth.
         this.router.navigate([`collaborator/${item.email}`], {relativeTo: this.route})
     }
 

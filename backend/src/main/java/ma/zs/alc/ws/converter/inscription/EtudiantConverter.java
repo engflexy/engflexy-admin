@@ -166,6 +166,18 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
             if (StringUtil.isNotEmpty(item.getGroupOption()))
                 dto.setGroupOption(item.getGroupOption());
             dto.setSubscribe(item.getSubscribe());
+            if (StringUtil.isNotEmpty(item.isClassroomEnabled()))
+                dto.setClassroomEnabled(item.isClassroomEnabled());
+            if (StringUtil.isNotEmpty(item.isCommunicationEnabled()))
+                dto.setCommunicationEnabled(item.isCommunicationEnabled());
+            if (StringUtil.isNotEmpty(item.isContactNotificationEnabled()))
+                dto.setContactNotificationEnabled(item.isContactNotificationEnabled());
+            if (StringUtil.isNotEmpty(item.isPasswordChangedNotificationEnabled()))
+                dto.setPasswordChangedNotificationEnabled(item.isPasswordChangedNotificationEnabled());
+            if (StringUtil.isNotEmpty(item.isSecurityEnabled()))
+                dto.setSecurityEnabled(item.isSecurityEnabled());
+            if (StringUtil.isNotEmpty(item.isLessonReminderEnabled()))
+                dto.setLessonReminderEnabled(item.isLessonReminderEnabled());
             if (StringUtil.isNotEmpty(item.getCredentialsNonExpired()))
                 dto.setCredentialsNonExpired(item.getCredentialsNonExpired());
             if (StringUtil.isNotEmpty(item.getEnabled()))

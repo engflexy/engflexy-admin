@@ -8,6 +8,7 @@ import {CollaboratorDto} from "../../../../../../shared/model/vocab/Collaborator
 import {
     CollaboratorCollaboratorService
 } from "../../../../../../shared/service/collaborator/vocab/CollaboratorCollaborator.service";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -18,35 +19,40 @@ import {
 })
 export class CollaboratorSecurityComponent implements OnInit {
     securityForm: UntypedFormGroup;
+/*
    @Input() collaborator: CollaboratorDto = new CollaboratorDto(); // Default value to prevent undefined
-    @Input() user: UserDto = new UserDto(); // Default value to prevent undefined
+*/
+    @Input() user: CollaboratorDto = new CollaboratorDto(); // Default value to prevent undefined
     newPassword: string;
     hidePassword: boolean = true;
-  //  prof: ProfDto;
+
 
     constructor(private userService: UserService,
         private ref: ChangeDetectorRef,
         private collaboratorService: CollaboratorCollaboratorService,
+                private route: ActivatedRoute,
+
     ) {}
 
     ngOnInit(): void {
-        console.log('User before fetch:', this.user); // Check initial state
-        if (this.user && this.user.id) {
-            this.collaboratorService.get(this.user.id)
+        const email = this.route.snapshot.params.email;
+        if ( email) {
+            this.collaboratorService.findByUserName(email)
                 .subscribe(
                     res => {
                         this.user = res;
-                        console.log('Prof fetched:', this.user); // Verify fetched data
+                        console.log('User fetched:', this.user);
                         this.ref.markForCheck();
                     },
                     error => {
-                        console.error('Error fetching prof:', error);
+                        console.error('Error fetching user:', error);
                     }
                 );
         } else {
-            console.error('Prof ID is undefined or null');
+            console.error('User ID is undefined or null');
         }
     }
+
 
     onEnabledToggle(): void {
         if (this.user && this.user.id) {

@@ -120,6 +120,18 @@ public class CollaboratorConverter extends AbstractConverter<Collaborator, Colla
                 dto.setAccountNonLocked(item.getAccountNonLocked());
             if (StringUtil.isNotEmpty(item.getPasswordChanged()))
                 dto.setPasswordChanged(item.getPasswordChanged());
+            if (StringUtil.isNotEmpty(item.isClassroomEnabled()))
+                dto.setClassroomEnabled(item.isClassroomEnabled());
+            if (StringUtil.isNotEmpty(item.isCommunicationEnabled()))
+                dto.setCommunicationEnabled(item.isCommunicationEnabled());
+            if (StringUtil.isNotEmpty(item.isContactNotificationEnabled()))
+                dto.setContactNotificationEnabled(item.isContactNotificationEnabled());
+            if (StringUtil.isNotEmpty(item.isPasswordChangedNotificationEnabled()))
+                dto.setPasswordChangedNotificationEnabled(item.isPasswordChangedNotificationEnabled());
+            if (StringUtil.isNotEmpty(item.isSecurityEnabled()))
+                dto.setSecurityEnabled(item.isSecurityEnabled());
+            if (StringUtil.isNotEmpty(item.isLessonReminderEnabled()))
+                dto.setLessonReminderEnabled(item.isLessonReminderEnabled());
             if (StringUtil.isNotEmpty(item.getUsername()))
                 dto.setUsername(item.getUsername());
             if (StringUtil.isNotEmpty(item.getAvatar()))
