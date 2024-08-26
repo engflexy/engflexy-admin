@@ -105,7 +105,7 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
         return mySaved;
     }
 
-    @Override
+   /* @Override
     public Collaborator update(Collaborator t) {
         Collaborator collaborator = this.findById(t.getId());
         if (collaborator == null) {
@@ -132,7 +132,7 @@ public class CollaboratorAdminServiceImpl extends AbstractServiceImpl<Collaborat
 
             return dao.save(collaborator);
         }
-    }
+    }*/
 
     public Collaborator findByUsername(String username) {
         return dao.findByUsername(username);

@@ -9,6 +9,9 @@ import {CollaboratorDto} from "../../../../../../shared/model/vocab/Collaborator
 import {CollaboratorAdminService} from "../../../../../../shared/service/admin/vocab/CollaboratorAdmin.service";
 import {TypeCollaboratorDto} from "../../../../../../shared/model/prof/TypeCollaborator.model";
 import {TypeCollaboratorAdminService} from "../../../../../../shared/service/admin/prof/TypeCollaboratorAdmin.service";
+import {
+    CollaboratorCollaboratorService
+} from "../../../../../../shared/service/collaborator/vocab/CollaboratorCollaborator.service";
 
 @Component({
     selector: 'app-collaborator-profile',
@@ -29,7 +32,7 @@ export class CollaboratorProfileComponent implements OnInit {
         private alert: FuseAlertService,
         private ref: ChangeDetectorRef,
         private typeService: TypeCollaboratorAdminService,
-        private service: CollaboratorAdminService,
+        private service: CollaboratorCollaboratorService,
         private imageService: ImagesService,
         private route: ActivatedRoute,
     ) {
@@ -40,19 +43,33 @@ export class CollaboratorProfileComponent implements OnInit {
     // -----------------------------------------------------------------------------------------------------
 
     ngOnInit(): void {
-        const id = this.route.snapshot.params.id
-        if (id) {
-            this.service.findByIdWithAssociatedList(new CollaboratorDto(id))
+        const email = this.route.snapshot.params.email;
+        if (email) {
+            this.service.findByUserName(email)
                 .subscribe(res => {
-                    this.user = res
-                    this.ref.markForCheck()
-                })
+                    this.user = res;
+                    this.ref.markForCheck();
+                });
         }
-        this.imageService.findOptimized('languages')
-            .subscribe(response => {
-                this.langues = response;
-            })
-        this.typeService.findAll().subscribe(res => this.types = res)
+
+        this.loadData();
+    }
+    loadData(): void {
+
+
+        this.imageService.findOptimized('countries').subscribe(response => {
+            this.countries = response;
+        });
+
+
+        this.imageService.findOptimized('languages').subscribe(response => {
+            this.langues = response;
+        });
+
+        this.imageService.findOptimized('types').subscribe(response => {
+            this.types = response;
+        });
+
     }
 
     onFileSelected(event: any): void {

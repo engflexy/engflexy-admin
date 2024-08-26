@@ -6,7 +6,7 @@ import {environment} from '../../../../../environments/environment';
 import {CollaboratorDto} from '../../../model/vocab/Collaborator.model';
 import {CollaboratorCriteria} from '../../../criteria/vocab/CollaboratorCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
-import {catchError, Observable, ReplaySubject, tap, throwError} from "rxjs";
+import {catchError, Observable, ReplaySubject, retry, tap, throwError} from "rxjs";
 import {ProfDto} from "../../../model/prof/Prof.model";
 import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
 
@@ -34,8 +34,8 @@ export class CollaboratorCollaboratorService extends AbstractService<Collaborato
         return new CollaboratorCriteria();
     }
 
-    get(id: number): Observable<CollaboratorDto> {
-        return this.http.get<CollaboratorDto>(`${this.API}id/${id}`).pipe(
+    get(email: string): Observable<CollaboratorDto> {
+        return this.http.get<CollaboratorDto>(`${this.API}username/${email}`).pipe(
             tap((collaborator) => {
                 this._user.next(collaborator);
             }),
@@ -88,5 +88,15 @@ export class CollaboratorCollaboratorService extends AbstractService<Collaborato
     }
     onContactNotificationEnabled(userId: number, contactNotificationEnabled: boolean): Observable<any> {
         return this.http.patch(`${this.API}contactNotificationEnabled/${userId}`, { contactNotificationEnabled });
+    }
+    update(user: CollaboratorDto) {
+        return this.http.put<CollaboratorDto>(`${this.API}`, user)
+            .pipe(
+                retry(3), // Retry up to 3 times
+                catchError(error => {
+                    console.error('Error in update service:', error);
+                    return throwError('Failed to update student profile');
+                })
+            );
     }
 }
