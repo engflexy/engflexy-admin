@@ -32,7 +32,7 @@ export class SettingsSecurityComponent implements OnInit {
      */
     ngOnInit(): void {
         console.log(this.user)
-        this.userService.get(this.user.id)
+        this.userService.get(this.user.email)
             .subscribe(res => {
                 console.log(res)
                 this.user = res

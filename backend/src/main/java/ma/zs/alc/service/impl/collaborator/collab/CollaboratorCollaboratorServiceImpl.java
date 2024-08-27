@@ -3,6 +3,8 @@ package ma.zs.alc.service.impl.collaborator.collab;
 
 import ma.zs.alc.bean.core.collab.Collaborator;
 import ma.zs.alc.bean.core.collab.TypeCollaborator;
+import ma.zs.alc.bean.core.inscription.Etudiant;
+import ma.zs.alc.bean.core.inscriptionref.Langue;
 import ma.zs.alc.dao.criteria.core.collab.CollaboratorCriteria;
 import ma.zs.alc.dao.facade.core.collab.CollaboratorDao;
 import ma.zs.alc.dao.specification.core.collab.CollaboratorSpecification;
@@ -12,6 +14,7 @@ import ma.zs.alc.service.facade.collaborator.collab.ManagerCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.collab.TypeCollaboratorCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.grpe.InscriptionCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.inscriptionref.LangueCollaboratorService;
 import ma.zs.alc.service.impl.collaborator.grpe.InscriptionCollaboratorServiceImpl;
 import ma.zs.alc.zynerator.dto.AccountValidationDto;
 import ma.zs.alc.zynerator.security.bean.Role;
@@ -133,6 +136,66 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         }
         return false;
     }
+    @Override
+    public boolean onCommunicationEnabled(Long id, boolean communicationEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setCommunicationEnabled(communicationEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onSecurityEnabled(Long id, boolean securityEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setSecurityEnabled(securityEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onLessonReminderEnabled(Long id, boolean lessonReminderEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setLessonReminderEnabled(lessonReminderEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onClassroomEnabled(Long id, boolean classroomEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setClassroomEnabled(classroomEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onPasswordChangedNotificationEnabled(Long id, boolean passwordChangedNotificationEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setPasswordChangedNotificationEnabled(passwordChangedNotificationEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean onContactNotificationEnabled(Long id, boolean contactNotificationEnabled) {
+        Collaborator collaborator = findById(id);
+        if (collaborator != null) {
+            collaborator.setContactNotificationEnabled(contactNotificationEnabled);
+            dao.save(collaborator);
+            return true;
+        }
+        return false;
+    }
 
     public List<Collaborator> findByTypeCollaboratorId(Long id) {
         return dao.findByTypeCollaboratorId(id);
@@ -231,9 +294,11 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         roleUser.setRole(savedRole);
 
 
+
         if (t.getRoleUsers() == null) t.setRoleUsers(new ArrayList<>());
 
         t.getRoleUsers().add(roleUser);
+
         if (t.getModelPermissionUsers() == null) t.setModelPermissionUsers(new ArrayList<>());
 
         if (t.getTypeCollaborator() != null) {
@@ -244,6 +309,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
         //       t.setModelPermissionUsers(modelPermissionUserService.initModelPermissionUser());
 
         Collaborator mySaved = (Collaborator) dao.save(t);
+        roleUser.setUser(mySaved);
+        roleUserService.create(roleUser);
 
         if (t.getParcourss() != null) {
             t.getParcourss().forEach(element -> {
@@ -251,16 +318,44 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
                 parcoursService.create(element);
             });
         }
+
         System.out.println("t.getValidationCode() = " + t.getValidationCode());
         inscriptionCollaboratorService.createFreeTrial(t);
         emailService.sendSimpleMessage(new EmailRequest("Engflexy Verficiation Code", "Your username is " + t.getUsername() + " your verification code is " + t.getValidationCode(), t.getEmail()));
         return mySaved;
     }
 
-    public Collaborator findByUsername(String username) {
-        return dao.findByUsername(username);
+    public Collaborator findByUsername(String email) {
+        return dao.findByUsername(email);
     }
+    @Override
+    public Collaborator update(Collaborator t) {
+        Collaborator collaborator = this.findById(t.getId());
+        if (collaborator == null) {
+            throw new RuntimeException("Account not found.");
+        } else {
+            collaborator.setFullName(t.getFullName());
+            collaborator.setAvatar(t.getAvatar());
+            collaborator.setEmail(t.getEmail());
+            collaborator.setPhone(t.getPhone());
+            collaborator.setCountry(t.getCountry());
+            collaborator.setAbout(t.getAbout());
+            collaborator.setLibelle(t.getLibelle());
+            collaborator.setDescription(t.getDescription());
 
+            if (t.getLangue() != null && t.getLangue().getId() != null) {
+                Langue langue = langueService.findById(t.getLangue().getId());
+                collaborator.setLangue(langue);
+            }
+
+            if (t.getTypeCollaborator() != null && t.getTypeCollaborator().getId() != null) {
+                TypeCollaborator type = typeCollaboratorService.findById(t.getTypeCollaborator().getId());
+                collaborator.setTypeCollaborator(type);
+            }
+
+            return dao.save(collaborator);
+        }
+    }
 
     public List<Collaborator> findAllOptimized() {
         return dao.findAllOptimized();
@@ -287,6 +382,8 @@ public class CollaboratorCollaboratorServiceImpl extends AbstractServiceImpl<Col
     private ParcoursCollaboratorService parcoursService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private LangueCollaboratorService langueService;
     @Autowired
     private ManagerCollaboratorService managerCollaboratorService;
     @Autowired

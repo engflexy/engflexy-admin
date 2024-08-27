@@ -1,0 +1,158 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+<!--
+    <form [formGroup]="notificationsForm">
+-->
+
+        <!-- Section -->
+        <div class="w-full text-xl">Alerts</div>
+        <div class="grid grid-cols-1 gap-6 w-full mt-8">
+            <!-- Communication -->
+            <div class="flex items-center justify-between">
+                <div
+                    class="flex-auto cursor-pointer"
+                    (click)="communicationEnabled.toggle()">
+                    <div class="leading-6 font-medium">Communication</div>
+                    <div class="text-md text-secondary">news, announcements, and product updates.</div>
+                </div>
+                <mat-slide-toggle
+                    class="ml-2"
+                    [color]="'primary'"
+                    name="communicationEnabled"
+                    [(ngModel)]="user.communicationEnabled"
+                    (change)="onCommunicationEnabledToggle()"
+                    #communicationEnabled>
+                </mat-slide-toggle>
+
+            </div>
+
+            <!-- Security -->
+            <div class="flex items-center justify-between">
+                <div
+                    class="flex-auto cursor-pointer"
+                    (click)="securityEnabled.toggle()">
+                    <div class="leading-6 font-medium">Security</div>
+                    <div class="text-md text-secondary">
+                        Get important notifications about students account security.
+                    </div>
+                </div>
+                <mat-slide-toggle
+                    class="ml-2"
+                    [color]="'primary'"
+                    name="securityEnabled"
+                    [(ngModel)]="user.securityEnabled"
+                    (change)="onSecurityEnabled()"
+                    #securityEnabled>
+                </mat-slide-toggle>
+
+            </div>
+
+            <!-- lesson reminder -->
+            <div class="flex items-center justify-between">
+                <div
+                    class="flex-auto cursor-pointer"
+                    (click)="lessonReminderEnabled.toggle()">
+                    <div class="leading-6 font-medium">Lesson Reminder</div>
+                    <div class="text-md text-secondary">
+                        Notifies the student when their lesson is about to begin to ensure they are prepared and on
+                        time.
+                    </div>
+                </div>
+                <mat-slide-toggle
+                    class="ml-2"
+                    [color]="'primary'"
+                    name="lessonReminderEnabled"
+                    [(ngModel)]="user.lessonReminderEnabled"
+                    (change)="onLessonReminderEnabled()"
+                    #lessonReminderEnabled>
+                </mat-slide-toggle>
+
+            </div>
+
+            <!-- Meetups -->
+            <div class="flex items-center justify-between">
+                <div
+                    class="flex-auto cursor-pointer"
+                    (click)="classroomEnabled.toggle()">
+                    <div class="leading-6 font-medium">classroom</div>
+                    <div class="text-md text-secondary">
+                        Notifies the student when a new lesson created, homework corrected or new dictionary word added.
+                    </div>
+                </div>
+                <mat-slide-toggle
+                    class="ml-2"
+                    [color]="'primary'"
+                    name="classroomEnabled"
+                    [(ngModel)]="user.classroomEnabled"
+                    (change)="onClassroomEnabled()"
+                    #classroomEnabled>
+                </mat-slide-toggle>
+            </div>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+
+        <!-- Section -->
+        <div class="w-full text-xl">Account Activity</div>
+        <div class="w-full mt-8 font-medium">Email student when:</div>
+        <div class="grid grid-cols-1 gap-4 w-full mt-4">
+            <!-- Comments -->
+            <div class="flex items-center justify-between">
+                <div
+                    class="flex-auto leading-6 cursor-pointer"
+                    (click)="passwordChangedNotificationEnabled.toggle()">
+                    password changed
+                </div>
+                <mat-slide-toggle
+                    class="ml-2"
+                    [color]="'primary'"
+                    name="passwordChangedNotificationEnabled"
+                    [(ngModel)]="user.passwordChangedNotificationEnabled"
+                    (change)="onPasswordChangedNotificationEnabled()"
+                    #passwordChangedNotificationEnabled>
+                </mat-slide-toggle>
+            </div>
+            <!-- Mention -->
+            <div class="flex items-center justify-between">
+                <div
+                    class="flex-auto leading-6 cursor-pointer"
+                    (click)="contactNotificationEnabled.toggle()">
+                    someone contacts a student
+                </div>
+                <mat-slide-toggle
+                    class="ml-2"
+                    [color]="'primary'"
+                    name="contactNotificationEnabled"
+                    [(ngModel)]="user.contactNotificationEnabled"
+                    (change)="onContactNotificationEnabled()"
+                    #contactNotificationEnabled>
+                </mat-slide-toggle>
+            </div>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <button
+                mat-stroked-button
+                type="button">
+                Cancel
+            </button>
+            <button
+                class="ml-4"
+                mat-flat-button
+                type="button"
+                [color]="'primary'">Save
+            </button>
+        </div>
+<!--
+    </form>
+-->
+
+</div>

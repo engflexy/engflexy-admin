@@ -22,6 +22,30 @@ public class User extends AuditBusinessObject implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    protected boolean passwordChangedNotificationEnabled = true;
+    protected boolean contactNotificationEnabled = true;
+    protected String username;
+    protected String password;
+
+    protected String fullName;
+    protected String validationCode;
+    protected String avatar;
+    protected String phone;
+    protected String country;
+    protected String about;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "langue")
+    protected Langue langue;
+
+    @Transient
+    protected Collection<GrantedAuthority> authorities;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    protected List<ModelPermissionUser> modelPermissionUsers;
+    @OneToMany(mappedBy = "user")
+    protected List<RoleUser> roleUsers;
+
+
     protected boolean enabled = true;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
@@ -83,29 +107,6 @@ public class User extends AuditBusinessObject implements UserDetails {
     public void setContactNotificationEnabled(boolean contactNotificationEnabled) {
         this.contactNotificationEnabled = contactNotificationEnabled;
     }
-
-    protected boolean passwordChangedNotificationEnabled = true;
-    protected boolean contactNotificationEnabled = true;
-    protected String username;
-    protected String password;
-
-    protected String fullName;
-    protected String validationCode;
-    protected String avatar;
-    protected String phone;
-    protected String country;
-    protected String about;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "langue")
-    protected Langue langue;
-
-    @Transient
-    protected Collection<GrantedAuthority> authorities;
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    protected List<ModelPermissionUser> modelPermissionUsers;
-    @OneToMany(mappedBy = "user")
-    protected List<RoleUser> roleUsers;
 
 
 

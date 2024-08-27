@@ -58,7 +58,8 @@ export class CollaboratorsComponent implements OnInit {
     }
 
     navigateToDetail(item: ManageUserDto) {
-        this.router.navigate([`collaborator/${item.id}`], {relativeTo: this.route})
+        //this.auth.
+        this.router.navigate([`collaborator/${item.email}`], {relativeTo: this.route})
     }
 
     protected readonly alert = alert;

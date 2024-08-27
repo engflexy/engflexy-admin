@@ -135,6 +135,7 @@ export class SettingsAccountComponent implements OnInit {
 
     update(): void {
         console.log('Sending data:', this.user); // For debugging
+
         this.etudiantService.update(this.user).subscribe(
             response => {
                 console.log('Update successful:', response);

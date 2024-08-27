@@ -83,8 +83,13 @@ public class CoursAdminServiceImpl extends AbstractServiceImpl<Cours, CoursCrite
 
 
     public Cours findByReferenceEntity(Cours t){
-        return t.getId() == null ? null : findById(t.getId());
+        return t.getCode() == null ? null : findByCode(t.getCode());
     }
+
+    public Cours findByCode(String code) {
+        return dao.findByCode(code);
+    }
+
     public void findOrSaveAssociatedObject(Cours t){
         if( t != null) {
             t.setParcours(parcoursService.findOrSave(t.getParcours()));

@@ -42,13 +42,14 @@ import {TranslocoModule} from "@ngneat/transloco";
 import {ScheduleModule} from "../schedule/schedule.module";
 import {ProfSecurityComponent} from "./teachers/teacher-details/security/security.component";
 import {CollaboratorSecurityComponent} from "./collaborators/collaborator-detials/security/security.component";
+import {CollabNotificationsComponent} from "./collaborators/collaborator-detials/notifications/notifications.component";
 
 
 const userRoutes: Route[] = [
     {path: '', component: ManageUsersComponent},
     {path: 'student/:email', component: StudentSettingsComponent},
     {path: 'teacher/:id', component: TeacherDetailsComponent},
-    {path: 'collaborator/:id', component: CollaboratorDetialsComponent},
+    {path: 'collaborator/:email', component: CollaboratorDetialsComponent},
 ]
 
 @NgModule({
@@ -56,6 +57,7 @@ const userRoutes: Route[] = [
         AdminsComponent, CollaboratorsComponent, CreateStudentComponent,
         SettingsAccountComponent,
         SettingsNotificationsComponent,
+        CollabNotificationsComponent,
         SettingsPlanBillingComponent,
         SettingsSecurityComponent,
         ProfSecurityComponent,CollaboratorSecurityComponent,
@@ -95,7 +97,7 @@ const userRoutes: Route[] = [
         CollaboratorProfileComponent,
         ProfSecurityComponent,
         CollaboratorSecurityComponent,
-
+CollabNotificationsComponent,
     ],
     providers: [{provide: LocationStrategy, useClass: PathLocationStrategy},
         Location]

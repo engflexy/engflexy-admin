@@ -37,20 +37,30 @@ export class TeacherProfileComponent
     // -----------------------------------------------------------------------------------------------------
 
     ngOnInit(): void {
-        const id = this.route.snapshot.params.id
-        if (id) {
-            this.service.findByIdWithAssociatedList(new ProfDto(id))
+        const email = this.route.snapshot.params.email;
+        if (email) {
+            this.service.findByUserName(email)
                 .subscribe(res => {
-                    this.user = res
-                    this.ref.markForCheck()
-                })
+                    this.user = res;
+                    this.ref.markForCheck();
+                });
         }
-        this.imageService.findOptimized('languages')
-            .subscribe(response => {
-                this.langues = response;
-            })
-    }
 
+        this.loadData();
+    }
+    loadData(): void {
+
+
+        this.imageService.findOptimized('countries').subscribe(response => {
+            this.countries = response;
+        });
+
+
+        this.imageService.findOptimized('languages').subscribe(response => {
+            this.langues = response;
+        });
+
+    }
     onFileSelected(event: any): void {
         var file = event.target.files[0];
         if (!this.isImageFile(file)) {

@@ -1,6 +1,7 @@
 package ma.zs.alc.dao.facade.core.course;
 
 import ma.zs.alc.bean.core.course.Exercice;
+import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.zynerator.repository.AbstractRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,8 @@ public interface ExerciceDao extends AbstractRepository<Exercice, Long> {
 
     @Query("SELECT NEW Exercice(item.id,item.libelle) FROM Exercice item")
     List<Exercice> findAllOptimized();
+
+    Exercice findByNumero(Long numero);
+
 
 }

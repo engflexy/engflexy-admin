@@ -2,6 +2,7 @@ package ma.zs.alc.ws.facade.collaborator.prof;
 
 import io.swagger.v3.oas.annotations.Operation;
 import ma.zs.alc.bean.core.collab.Collaborator;
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
@@ -15,6 +16,7 @@ import ma.zs.alc.zynerator.util.PaginatedList;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -122,10 +124,18 @@ public class ProfRestCollaborator extends AbstractController<Prof, ProfDto, Prof
     }
     @Operation(summary = "Updates the specified  prof")
     @PutMapping("")
-    public Prof update(@RequestBody Prof dto) throws Exception {
-        return service.update(dto);
-    }
+    public ResponseEntity<Prof> update(@RequestBody Prof dto) throws Exception {
 
+        try {
+            Prof updatedProf = service.update(dto);
+            return ResponseEntity.ok(updatedProf);
+        } catch (Exception e) {
+            // Log the exception and return a meaningful error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
+    }
     @Operation(summary = "Delete list of prof")
     @PostMapping("multiple")
     public ResponseEntity<List<ProfDto>> delete(@RequestBody List<ProfDto> listToDelete) throws Exception {

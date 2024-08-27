@@ -16,9 +16,10 @@ export class ProfDto extends UserDto {
     public collaborator: CollaboratorDto;
     public trancheHoraireProfs: Array<TrancheHoraireProfDto>;
     public recommendTeachers: Array<RecommendTeacherDto>;
+    public phone:string;
+    public email:string;
 
-
-    constructor(id?: number, fullName?: string) {
+    constructor(id?: number,email?:string,phone?:string, fullName?: string) {
         super(id);
 
         this.ref = '';
@@ -35,7 +36,8 @@ export class ProfDto extends UserDto {
         this.recommendTeachers = new Array<RecommendTeacherDto>();
         this.typeTeacher = new TypeTeacherDto();
         this.collaborator = new CollaboratorDto();
-
+        this.phone=phone;
+        this.email=email;
     }
 
 }

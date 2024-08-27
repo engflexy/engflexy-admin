@@ -166,6 +166,18 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
             if (StringUtil.isNotEmpty(item.getGroupOption()))
                 dto.setGroupOption(item.getGroupOption());
             dto.setSubscribe(item.getSubscribe());
+            if (StringUtil.isNotEmpty(item.isClassroomEnabled()))
+                dto.setClassroomEnabled(item.isClassroomEnabled());
+            if (StringUtil.isNotEmpty(item.isCommunicationEnabled()))
+                dto.setCommunicationEnabled(item.isCommunicationEnabled());
+            if (StringUtil.isNotEmpty(item.isContactNotificationEnabled()))
+                dto.setContactNotificationEnabled(item.isContactNotificationEnabled());
+            if (StringUtil.isNotEmpty(item.isPasswordChangedNotificationEnabled()))
+                dto.setPasswordChangedNotificationEnabled(item.isPasswordChangedNotificationEnabled());
+            if (StringUtil.isNotEmpty(item.isSecurityEnabled()))
+                dto.setSecurityEnabled(item.isSecurityEnabled());
+            if (StringUtil.isNotEmpty(item.isLessonReminderEnabled()))
+                dto.setLessonReminderEnabled(item.isLessonReminderEnabled());
             if (StringUtil.isNotEmpty(item.getCredentialsNonExpired()))
                 dto.setCredentialsNonExpired(item.getCredentialsNonExpired());
             if (StringUtil.isNotEmpty(item.getEnabled()))
@@ -182,8 +194,14 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
                 dto.setAvatar(item.getAvatar());
             if (StringUtil.isNotEmpty(item.getFullName()))
                 dto.setFullName(item.getFullName());
+            if (StringUtil.isNotEmpty(item.getEmail()))
+                dto.setEmail(item.getEmail());
             if (StringUtil.isNotEmpty(item.getAbout()))
                 dto.setAbout(item.getAbout());
+            if (StringUtil.isNotEmpty(dto.getCountry()))
+                item.setCountry(dto.getCountry());
+            if (StringUtil.isNotEmpty(dto.getPhone()))
+                item.setPhone(dto.getPhone());
             if (this.teacherLocality && item.getTeacherLocality() != null) {
                 dto.setTeacherLocality(teacherLocalityConverter.toDto(item.getTeacherLocality()));
 

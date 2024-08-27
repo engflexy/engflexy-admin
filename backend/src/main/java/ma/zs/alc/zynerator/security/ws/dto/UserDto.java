@@ -13,6 +13,50 @@ public class UserDto extends AuditBaseDto {
     private Boolean communicationEnabled;
     private Boolean securityEnabled;
 
+
+    private Boolean lessonReminderEnabled;
+    private Boolean classroomEnabled;
+    private Boolean passwordChangedNotificationEnabled;
+    private Boolean contactNotificationEnabled;
+    protected Boolean credentialsNonExpired;
+    protected Boolean enabled;
+    protected String email;
+    protected Boolean accountNonExpired;
+    protected Boolean accountNonLocked;
+    protected String username;
+    protected String password;
+    protected Boolean passwordChanged;
+    protected String about;
+    protected String country;
+    protected String fullName;
+    protected String phone;
+    protected String avatar;
+    protected LangueDto langue;
+    protected String validationCode;
+
+    protected List<ModelPermissionUserDto> modelPermissionUsers;
+    protected List<RoleUserDto> roleUsers;
+
+    public UserDto() {
+        super();
+    }
+
+    public Boolean getCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+
+    public Boolean getEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
     public Boolean getCommunicationEnabled() {
         return communicationEnabled;
     }
@@ -59,50 +103,6 @@ public class UserDto extends AuditBaseDto {
 
     public void setContactNotificationEnabled(Boolean contactNotificationEnabled) {
         this.contactNotificationEnabled = contactNotificationEnabled;
-    }
-
-    private Boolean lessonReminderEnabled;
-    private Boolean classroomEnabled;
-    private Boolean passwordChangedNotificationEnabled;
-    private Boolean contactNotificationEnabled;
-    protected Boolean credentialsNonExpired;
-    protected Boolean enabled;
-    protected String email;
-    protected Boolean accountNonExpired;
-    protected Boolean accountNonLocked;
-    protected String username;
-    protected String password;
-    protected Boolean passwordChanged;
-    protected String about;
-    protected String country;
-    protected String fullName;
-    protected String phone;
-    protected String avatar;
-    protected LangueDto langue;
-    protected String validationCode;
-
-    protected List<ModelPermissionUserDto> modelPermissionUsers;
-    protected List<RoleUserDto> roleUsers;
-
-    public UserDto() {
-        super();
-    }
-
-    public Boolean getCredentialsNonExpired() {
-        return this.credentialsNonExpired;
-    }
-
-    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-
-    public Boolean getEnabled() {
-        return this.enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
     }
 
 

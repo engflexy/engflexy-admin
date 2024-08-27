@@ -6,6 +6,8 @@ import {UserService} from "../../../../../../core/user/user.service";
 import {
     EtudiantCollaboratorService
 } from "../../../../../../shared/service/collaborator/inscription/EtudiantCollaborator.service";
+import {ActivatedRoute} from "@angular/router";
+import {AuthService} from "../../../../../../zynerator/security/shared/service/Auth.service";
 
 @Component({
     selector: 'settings-notifications',
@@ -28,7 +30,9 @@ export class SettingsNotificationsComponent implements OnInit {
 */
         private userService: UserService,
         private ref: ChangeDetectorRef,
-        private etudiantService: EtudiantCollaboratorService,
+private route: ActivatedRoute,
+
+private etudiantService: EtudiantCollaboratorService,
     ) {
     }
 
@@ -50,9 +54,10 @@ export class SettingsNotificationsComponent implements OnInit {
             lesson: [true],
             inquiry: [true],
         });*/
-        if (this.user) {
+       /* if (this.user) {
+            console.log(this.user);
             if (this.user.id) {
-                this.etudiantService.get(this.user.id)
+                this.userService.get(this.user.id)
                     .subscribe(
                         res => {
                             this.user = res;
@@ -66,8 +71,17 @@ export class SettingsNotificationsComponent implements OnInit {
             } else {
                 console.error('User ID is undefined or null');
             }
-        } else {
-            console.error('User is undefined or null');
+        }
+*/
+        const email = this.route.snapshot.params.email;
+        if (email) {
+            this.etudiantService.findByUserName(email)
+                .subscribe(res => {
+                    this.user = res;
+                    console.log(res)
+
+                    this.ref.markForCheck();
+                });
         }
 
     }

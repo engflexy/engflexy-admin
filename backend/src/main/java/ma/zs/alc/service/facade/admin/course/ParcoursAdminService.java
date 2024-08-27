@@ -14,6 +14,5 @@ public interface ParcoursAdminService extends  IService<Parcours,ParcoursCriteri
     long countByCollaboratorId(Long id);
 
 
-
-
+    Parcours findByCode(String codeParcours);
 }

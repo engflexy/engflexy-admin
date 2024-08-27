@@ -16,11 +16,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria, QuizDao> implements QuizAdminService {
 
+
+    @Autowired
+    private QuizDao quizDao;
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
+    public Quiz save(Quiz t) {
+        if (t != null) {
+            Quiz saved = dao.save(t);
+            if (t.getQuestions() != null && !t.getQuestions().isEmpty()) {
+                List<Question> questions = t.getQuestions();
+                for (Question question : questions) {
+                    question.setQuiz(quizService.findByReferenceEntity(saved));
+                    questionService.create(question);
+                }
+            }
+        }
+        return null;
+    }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Quiz create(Quiz t) {
@@ -72,7 +92,7 @@ public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria
 
 
     public Quiz findByReferenceEntity(Quiz t) {
-        return (t != null && t.getId() != null) ? dao.findById(t.getId()).orElse(null) : null;
+        return t.getRef() == null ? null : dao.findByRef(t.getRef());
     }
 
     public void findOrSaveAssociatedObject(Quiz t) {
@@ -101,7 +121,8 @@ public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria
     public void configure() {
         super.configure(Quiz.class, QuizSpecification.class);
     }
-
+    @Autowired
+    private QuizAdminService quizService;
     @Autowired
     private QuestionAdminService questionService;
     @Autowired

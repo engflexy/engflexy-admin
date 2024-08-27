@@ -14,6 +14,5 @@ public interface CoursAdminService extends  IService<Cours,CoursCriteria>  {
     long countByParcoursCode(String code);
 
 
-
-
+    Cours findByCode(String code);
 }
