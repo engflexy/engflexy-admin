@@ -8172,7 +8172,7 @@ CREATE TABLE `question` (
   `createdon` datetime(6) DEFAULT NULL,
   `updatedby` varchar(255) DEFAULT NULL,
   `updatedon` datetime(6) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `libelle` TEXT DEFAULT NULL,
   `numero` bigint(20) DEFAULT NULL,
   `point_reponse_juste` decimal(38,2) DEFAULT NULL,
   `point_reponsefausse` decimal(38,2) DEFAULT NULL,

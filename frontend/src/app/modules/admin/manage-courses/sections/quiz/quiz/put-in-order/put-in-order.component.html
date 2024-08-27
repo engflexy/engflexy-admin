@@ -1,28 +1,35 @@
-<div *ngIf="!showError" class="drop-list" cdkDropList (cdkDropListDropped)="drop($event)">
-    <div class="drag-element font-ubuntu"
-         [class.correct-put-in-order]="checked && (i +1).toString() === dragAndDropAnswer.get(sentence)"
-         [class.incorrect-put-in-order]="checked && (i +1).toString() !== dragAndDropAnswer.get(sentence)"
-         [matTooltip]="dragAndDropAnswer.get(sentence)"
-         *ngFor="let sentence of listOfWords; let i = index" cdkDrag>
-        <p [innerHTML]="sentence"></p>
+<div *ngIf="!showError" class="drop-list"
+     cdkDropList
+     (cdkDropListDropped)="onDrop($event)"
+     [cdkDropListDisabled]="checked">
+    <div *ngFor="let sentence of listOfWords; let i = index"
+         cdkDrag
+         class="drag-element font-ubuntu"
+         [ngStyle]="{
+             'background-color': getBackgroundColor(sentence, i),
+             'padding': '8px',
+             'margin-bottom': '4px',
+             'cursor': checked ? 'default' : 'move'
+         }"
+         [matTooltip]="getTooltipText(sentence, i)">
+        <p>{{ sentence }}</p>
         <span *ngIf="checked" class="rounded-full p-3 font-bold text-lg">{{ dragAndDropAnswer.get(sentence) }}</span>
     </div>
 </div>
-<div *ngIf="!showError"
-     [class.opacity-50]="checked"
-     [class.pointer-events-none]="checked"
-     class="flex flex-row-reverse flex-wrap items-center p-4">
-    <!-------show button after user drag all elements ------>
-    <button
-        mat-flat-button
-        (click)="check()"
-        class="ml-2"
-        color="primary">
-        check
-    </button>
 
+<div *ngIf="!showError"
+     [ngStyle]="{
+         'opacity': checked ? '0.5' : '1',
+         'pointer-events': checked ? 'none' : 'auto',
+         'display': 'flex',
+         'flex-direction': 'row-reverse',
+         'flex-wrap': 'wrap',
+         'align-items': 'center',
+         'padding': '16px'
+     }">
+    <button mat-flat-button (click)="check()" color="primary">Check</button>
 </div>
 
-<div *ngIf="showError" class="w-full  text-center flex-col items-center p-4">
-    can't load question!
+<div *ngIf="showError" class="w-full text-center flex-col items-center p-4">
+    Can't load question!
 </div>
