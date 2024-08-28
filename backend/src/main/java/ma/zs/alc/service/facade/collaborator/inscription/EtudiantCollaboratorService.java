@@ -1,6 +1,7 @@
 package ma.zs.alc.service.facade.collaborator.inscription;
 
 import ma.zs.alc.bean.core.inscription.Etudiant;
+import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.inscription.EtudiantCriteria;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.zynerator.service.IService;
@@ -27,6 +28,8 @@ public interface EtudiantCollaboratorService extends IService<Etudiant, Etudiant
     boolean changePassword(String username, String newPassword);
 
     List<Etudiant> findByTeacherLocalityId(Long id);
+    List<Etudiant> findAll();
+
 
     int deleteByTeacherLocalityId(Long id);
 

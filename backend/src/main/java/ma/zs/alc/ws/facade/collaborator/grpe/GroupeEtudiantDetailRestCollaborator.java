@@ -13,6 +13,7 @@ import ma.zs.alc.ws.converter.grpe.GroupeEtudiantConverter;
 import ma.zs.alc.ws.converter.grpe.GroupeEtudiantDetailConverter;
 import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
 import ma.zs.alc.ws.dto.grpe.GroupeEtudiantDetailDto;
+import ma.zs.alc.ws.dto.inscription.EtudiantDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.converter.AbstractConverter;
 import ma.zs.alc.zynerator.dto.AuditEntityDto;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import ma.zs.alc.zynerator.process.Result;
 
@@ -101,6 +104,23 @@ public class GroupeEtudiantDetailRestCollaborator  extends AbstractController<Gr
         myConverter.setEtudiant(true);
         myConverter.setGroupeEtudiant(false);
         return findDtos(service.findByGroupeEtudiantId(id));
+    }
+    @Operation(summary = "find by groupeEtudiant prof username")
+    @GetMapping("username/{email}")
+    public List<EtudiantDto> findByGroupeEtudiantProfUsername(@PathVariable String email) {
+        System.out.println("Received email: " + email);
+
+        GroupeEtudiantDetailConverter myConverter = (GroupeEtudiantDetailConverter) this.converter;
+        etudiantConverter.init(false);
+        myConverter.setEtudiant(true);  // Focus on converting etudiant
+        myConverter.setGroupeEtudiant(false);  // Ignore groupeEtudiant conversion
+
+        List<GroupeEtudiantDetailDto> groupeEtudiantDetails = findDtos(service.findByGroupeEtudiantProfUsername(email));
+
+        // Extract the etudiant part from each GroupeEtudiantDetailDto
+        return groupeEtudiantDetails.stream()
+                .map(GroupeEtudiantDetailDto::getEtudiant)
+                .collect(Collectors.toList());
     }
     @Operation(summary = "delete by groupeEtudiant id")
     @DeleteMapping("groupeEtudiant/id/{id}")

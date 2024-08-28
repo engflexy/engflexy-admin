@@ -7,6 +7,7 @@ import {GroupeEtudiantDetailDto} from '../../../model/grpe/GroupeEtudiantDetail.
 import {GroupeEtudiantDetailCriteria} from '../../../criteria/grpe/GroupeEtudiantDetailCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Observable} from "rxjs";
+import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
 
 
 @Injectable({
@@ -31,5 +32,9 @@ export class GroupeEtudiantDetailCollaboratorService extends AbstractService<Gro
     }
     public getGroupesByEtudiantId(Id: number): Observable<GroupeEtudiantDetailDto[]> {
         return this.http.get<GroupeEtudiantDetailDto[]>(`${this.API}etudiant/id/${Id}`);
+    }
+    findByGroupeEtudiantProfUsername(email: string): Observable<EtudiantDto[]> {
+        const url = `${this.API}username/${email}`;
+        return this.http.get<EtudiantDto[]>(url);
     }
 }

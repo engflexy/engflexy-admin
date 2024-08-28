@@ -20,6 +20,8 @@ import {CollaboratorDto} from "../../../model/vocab/Collaborator.model";
 })
 export class ProfCollaboratorService extends AbstractService<ProfDto, ProfCriteria> {
     private _user: ReplaySubject<ProfDto> = new ReplaySubject<ProfDto>(1);
+    private _students: Array<ManageUserDto> = new Array<ManageUserDto>();
+
     constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
@@ -44,6 +46,15 @@ export class ProfCollaboratorService extends AbstractService<ProfDto, ProfCriter
             })
         );
     }
+    findAssociatedEtudiant(email: string): Observable<Array<ManageUserDto>> {
+        return this.http.get<Array<ManageUserDto>>(`${this.API}username/${email}`)
+            .pipe(
+                tap((response) => {
+                    this._students = response
+                }),
+            );
+    }
+
     findByCollaboratorId(id: number, pageable: Pageable): Observable<PageRequest<ManageUserDto>> {
         return this.http.get<PageRequest<ManageUserDto>>(this.API + `pageable/collaborator/id/${id}`,
             {

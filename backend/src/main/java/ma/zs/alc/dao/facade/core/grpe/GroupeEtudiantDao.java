@@ -1,5 +1,6 @@
 package ma.zs.alc.dao.facade.core.grpe;
 
+import ma.zs.alc.bean.core.grpe.GroupeEtudiantDetail;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.zynerator.repository.AbstractRepository;
 import ma.zs.alc.bean.core.grpe.GroupeEtudiant;
@@ -23,6 +24,7 @@ public interface GroupeEtudiantDao extends AbstractRepository<GroupeEtudiant,Lon
     int deleteByParcoursId(Long id);
     long countByParcoursCode(String code);
     List<GroupeEtudiant> findByProfId(Long id);
+
     int deleteByProfId(Long id);
     long countByProfRef(String ref);
 

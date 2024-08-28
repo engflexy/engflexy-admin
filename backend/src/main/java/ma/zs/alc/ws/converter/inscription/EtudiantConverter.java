@@ -104,6 +104,8 @@ public class EtudiantConverter extends AbstractConverter<Etudiant, EtudiantDto> 
                 item.setFullName(dto.getFullName());
             if (StringUtil.isNotEmpty(dto.getAbout()))
                 item.setAbout(dto.getAbout());
+            if (StringUtil.isNotEmpty(dto.getPhone()))
+                item.setPhone(dto.getPhone());
             if (this.teacherLocality && dto.getTeacherLocality() != null)
                 item.setTeacherLocality(teacherLocalityConverter.toItem(dto.getTeacherLocality()));
 

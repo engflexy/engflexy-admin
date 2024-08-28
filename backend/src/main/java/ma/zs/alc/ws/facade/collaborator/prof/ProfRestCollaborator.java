@@ -7,12 +7,15 @@ import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
 import ma.zs.alc.service.facade.collaborator.prof.ProfCollaboratorService;
+import ma.zs.alc.ws.converter.inscription.EtudiantConverter;
 import ma.zs.alc.ws.converter.prof.ProfConverter;
+import ma.zs.alc.ws.dto.inscription.EtudiantDto;
 import ma.zs.alc.ws.dto.prof.ProfDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
 import ma.zs.alc.zynerator.dto.FileTempDto;
 import ma.zs.alc.zynerator.security.bean.User;
 import ma.zs.alc.zynerator.util.PaginatedList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -207,6 +210,14 @@ public class ProfRestCollaborator extends AbstractController<Prof, ProfDto, Prof
     public Page<UserPageable> findByCollaboratorId(@PathVariable Long id, @RequestParam("page") int page, @RequestParam("size") int size) {
         return service.findByCollaboratorId(id, PageRequest.of(page, size));
     }
+    @GetMapping("username/{email}")
+    public List<EtudiantDto> findAssociatedEtudiant(@PathVariable String email) {
+        List<Etudiant> associatedEtudiant = service.findAssociatedEtudiant(email);
+        etudiantConverter.init(false);
+
+        List<EtudiantDto> dto = etudiantConverter.toDto(associatedEtudiant);
+        return dto;
+    }
 
     @Operation(summary = "delete by collaborator id")
     @DeleteMapping("collaborator/id/{id}")
@@ -244,6 +255,8 @@ public class ProfRestCollaborator extends AbstractController<Prof, ProfDto, Prof
         return super.getDataSize(criteria);
     }
 
+    @Autowired
+    EtudiantConverter etudiantConverter;
 
 
     public ProfRestCollaborator(ProfCollaboratorService service, ProfConverter converter) {

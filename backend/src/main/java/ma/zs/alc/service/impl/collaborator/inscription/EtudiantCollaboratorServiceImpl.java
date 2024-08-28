@@ -175,6 +175,9 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
     public List<Etudiant> findByFonctionId(Long id) {
         return dao.findByFonctionId(id);
     }
+    public List<Etudiant> findAll() {
+        return dao.findAll();
+    }
 
     public int deleteByFonctionId(Long id) {
         return dao.deleteByFonctionId(id);
@@ -457,6 +460,7 @@ public class EtudiantCollaboratorServiceImpl extends AbstractServiceImpl<Etudian
     public Etudiant findByUsername(String email) {
         return dao.findByUsername(email);
     }
+
 
     @Override
     public boolean changePassword(String username, String newPassword) {

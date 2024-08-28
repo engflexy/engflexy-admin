@@ -52,6 +52,7 @@ export class UserDto extends BaseDto {
         this.enabled = true;
         this.validationCode=null;
         this.email = '';
+        this.phone = '';
         this.fullName = '';
         this.accountNonExpired = true;
         this.accountNonLocked = true;

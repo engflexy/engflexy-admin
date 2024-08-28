@@ -17,6 +17,7 @@ public interface GroupeEtudiantDetailDao extends AbstractRepository<GroupeEtudia
     long countByGroupeEtudiantId(Long id);
 
     List<GroupeEtudiantDetail> findByEtudiantId(Long id);
+    List<GroupeEtudiantDetail> findByGroupeEtudiantProfUsername(String email);
 
     int deleteByEtudiantId(Long id);
 
