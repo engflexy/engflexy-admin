@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface QuizAdminService extends  IService<Quiz,QuizCriteria>  {
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     Quiz save(Quiz t);
 
     List<Quiz> findBySectionId(Long id);

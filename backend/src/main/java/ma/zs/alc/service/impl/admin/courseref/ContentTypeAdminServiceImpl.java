@@ -14,6 +14,21 @@ import java.util.List;
 @Service
 public class ContentTypeAdminServiceImpl extends AbstractServiceImpl<ContentType, ContentTypeCriteria, ContentTypeDao> implements ContentTypeAdminService {
 
+    @Override
+    public ContentType findByCode(String code) {
+        return dao.findByCode(code);
+    }
+
+
+    @Override
+    public ContentType findOrSave(ContentType contentType) {
+        ContentType loadedContentType = dao.findByCode(contentType.getCode());
+        if (loadedContentType != null) {
+            return loadedContentType;
+        }
+        return dao.save(contentType);
+    }
+
 
     public ContentType findByReferenceEntity(ContentType t) {
         return (t != null && t.getCode() != null) ? dao.findByCode(t.getCode()) : null;

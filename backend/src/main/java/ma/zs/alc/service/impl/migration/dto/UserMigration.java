@@ -1,0 +1,242 @@
+package ma.zs.alc.service.impl.migration.dto;
+
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
+public class UserMigration implements UserDetails {
+
+    protected Long id;
+    protected boolean credentialsNonExpired = true;
+    protected boolean enabled = true;
+    protected boolean verified = true;
+    protected Date createdAt;
+    protected Date updatedAt;
+    protected int age;
+    protected String email;
+    protected boolean accountNonExpired = true;
+    protected boolean accountNonLocked = true;
+    protected String username;
+    protected String password;
+    protected String nom;
+    protected String addresse;
+    protected String country;
+    protected String ville;
+    protected Date birthday;
+    protected String numero;
+    protected String image;
+    protected LangueMigration langue;
+    protected String role;
+    protected Collection<RoleMigration> roles = new ArrayList<>();
+
+    protected Collection<RoleMigration> authorities;
+
+    //private List<Coupon> coupons;
+    //private List<Notification> notifications;
+
+
+    public UserMigration() {
+        super();
+    }
+
+    public UserMigration(String username) {
+        this.username = username;
+        this.password = username;
+        this.nom = username;
+        this.email = username;
+    }
+
+
+    public Collection<RoleMigration> getAuthorities() {
+        if (this.authorities == null) this.authorities = this.roles;
+        return authorities;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getAddresse() {
+        return addresse;
+    }
+
+    public void setAddresse(String addresse) {
+        this.addresse = addresse;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public LangueMigration getLangue() {
+        return langue;
+    }
+
+    public void setLangue(LangueMigration langue) {
+        this.langue = langue;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Collection<RoleMigration> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<RoleMigration> roles) {
+        this.roles = roles;
+    }
+
+    public void setAuthorities(Collection<RoleMigration> authorities) {
+        this.authorities = authorities;
+    }
+}

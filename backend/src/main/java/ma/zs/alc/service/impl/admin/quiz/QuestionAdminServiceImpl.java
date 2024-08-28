@@ -27,7 +27,7 @@ public class QuestionAdminServiceImpl extends AbstractServiceImpl<Question, Ques
     public Question create(Question t) {
         if (t != null) {
             Question saved = new Question();
-            if (t.getId() != null) saved = findById(t.getId());
+            //if (t.getId() != null) saved = findById(t.getId());
             saved.setQuiz(t.getQuiz());
             saved.setLibelle(t.getLibelle());
             saved.setNumero(t.getNumero());

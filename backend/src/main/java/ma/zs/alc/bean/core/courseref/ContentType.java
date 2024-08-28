@@ -29,10 +29,6 @@ public class ContentType   extends AuditBusinessObject     {
     @Column(length = 500)
     private String libelle;
 
-    public ContentType(String code, String libelle) {
-        this.code = code;
-        this.libelle = libelle;
-    }
 
     public ContentType(){
         super();
@@ -48,6 +44,7 @@ public class ContentType   extends AuditBusinessObject     {
     }
     public ContentType(String libelle){
         this.libelle = libelle ;
+        this.code = libelle;
     }
 
 

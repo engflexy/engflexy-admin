@@ -12,10 +12,19 @@ public class QuestionMigration {
     private Long numero;
     private double pointReponseJuste = 1;
     private double pointReponsefausse = 0;
+    private QuizMigration quiz;
 
     private TypeDeQuestionMigration typeDeQuestion;
 
     private List<ReponseMigration> reponses;
+
+    public QuizMigration getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(QuizMigration quiz) {
+        this.quiz = quiz;
+    }
 
     public QuestionMigration() {
     }
