@@ -29,6 +29,9 @@ import {
     QuestionCollaboratorService
 } from "../../../../../../shared/service/collaborator/quiz/QuestionCollaborator.service";
 import {AngularEditorConfig} from "@kolkov/angular-editor";
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+
 
 @Component({
     selector: 'app-create-quiz',
@@ -36,6 +39,7 @@ import {AngularEditorConfig} from "@kolkov/angular-editor";
 })
 export class CreateQuizComponent implements OnInit {
     protected readonly TYPE_QUESTION = TYPE_QUESTION;
+    safeHtml: SafeHtml;
     @Input()
     type: string
     types: Array<TypeDeQuestionDto> = new Array<TypeDeQuestionDto>()
@@ -100,7 +104,8 @@ export class CreateQuizComponent implements OnInit {
         private questionService: QuestionCollaboratorService,
         private typeQuestion: TypeDeQuestionCollaboratorService,
         private sectionService: SectionCollaboratorService,
-        private exerciseService: ExerciceCollaboratorService,) {
+        private exerciseService: ExerciceCollaboratorService,
+        private sanitizer: DomSanitizer ) {
     }
 
 
@@ -128,6 +133,10 @@ export class CreateQuizComponent implements OnInit {
     set selectedSection(item: SectionDto) {
         this.sectionService.item = item
     }
+
+   sanitizeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+}
 
     ngOnInit() {
         this.typeQuestion.findAll().subscribe(res => {
@@ -208,9 +217,21 @@ export class CreateQuizComponent implements OnInit {
             }
         }
 
+        // Check if the question already exists in the quiz.questions array
+        const existingQuestionIndex = this.quiz.questions.findIndex(q => q.id === this.question.id);
 
-        this.question.numero = this.quiz.questions.length + 1
-        this.quiz.questions.push({...this.question})
+        if (existingQuestionIndex !== -1) {
+            // If the question already exists, update it
+            this.quiz.questions[existingQuestionIndex] = {...this.question};
+        } else {
+            // If the question does not exist, add it
+            this.question.numero = this.quiz.questions.length + 1;
+            this.quiz.questions.push({...this.question});
+        }
+
+       // this.question.numero = this.quiz.questions.length + 1
+        this.sanitizeHtml(this.question.libelle);
+       // this.quiz.questions.push({...this.question})
         this.question = new QuestionDto()
         this.question.typeDeQuestion = this.types.find(s => s.ref === this.type)
         this.question.numero = this.quiz.questions.length + 1
@@ -279,6 +300,7 @@ export class CreateQuizComponent implements OnInit {
     }
 
     edit(answer: ReponseDto) {
+        this.sanitizeHtml(this.question.libelle);
         this.answer = answer
         this.editing = true
     }
@@ -300,5 +322,11 @@ export class CreateQuizComponent implements OnInit {
                 question.reponses = result
             }
         })
+    }
+
+    chnangeQuestionIndex(i: number) {
+        this.editField=i
+        this.question = this.quiz.questions[i]
+
     }
 }
