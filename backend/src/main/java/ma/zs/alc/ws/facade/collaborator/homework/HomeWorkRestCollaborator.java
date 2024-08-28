@@ -1,10 +1,6 @@
-package  ma.zs.alc.ws.facade.collaborator.homework;
+package ma.zs.alc.ws.facade.collaborator.homework;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import ma.zs.alc.bean.core.homework.HomeWork;
 import ma.zs.alc.dao.criteria.core.homework.HomeWorkCriteria;
@@ -12,7 +8,6 @@ import ma.zs.alc.service.facade.collaborator.homework.HomeWorkCollaboratorServic
 import ma.zs.alc.ws.converter.homework.HomeWorkConverter;
 import ma.zs.alc.ws.dto.homework.HomeWorkDto;
 import ma.zs.alc.zynerator.controller.AbstractController;
-import ma.zs.alc.zynerator.dto.AuditEntityDto;
 import ma.zs.alc.zynerator.util.PaginatedList;
 
 
@@ -22,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.zs.alc.zynerator.process.Result;
 
 
 import org.springframework.web.multipart.MultipartFile;
@@ -31,8 +24,7 @@ import ma.zs.alc.zynerator.dto.FileTempDto;
 
 @RestController
 @RequestMapping("/api/collaborator/homeWork/")
-public class HomeWorkRestCollaborator  extends AbstractController<HomeWork, HomeWorkDto, HomeWorkCriteria, HomeWorkCollaboratorService, HomeWorkConverter> {
-
+public class HomeWorkRestCollaborator extends AbstractController<HomeWork, HomeWorkDto, HomeWorkCriteria, HomeWorkCollaboratorService, HomeWorkConverter> {
 
 
     @Operation(summary = "upload one homeWork")
@@ -40,6 +32,7 @@ public class HomeWorkRestCollaborator  extends AbstractController<HomeWork, Home
     public ResponseEntity<FileTempDto> uploadFileAndGetChecksum(@RequestBody MultipartFile file) throws Exception {
         return super.uploadFileAndGetChecksum(file);
     }
+
     @Operation(summary = "upload multiple homeWorks")
     @RequestMapping(value = "upload-multiple", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<List<FileTempDto>> uploadMultipleFileAndGetChecksum(@RequestBody MultipartFile[] files) throws Exception {
@@ -81,10 +74,11 @@ public class HomeWorkRestCollaborator  extends AbstractController<HomeWork, Home
     public ResponseEntity<List<HomeWorkDto>> delete(@RequestBody List<HomeWorkDto> listToDelete) throws Exception {
         return super.delete(listToDelete);
     }
+
     @Operation(summary = "Delete the specified homeWork")
     @DeleteMapping("")
     public ResponseEntity<HomeWorkDto> delete(@RequestBody HomeWorkDto dto) throws Exception {
-            return super.delete(dto);
+        return super.delete(dto);
     }
 
     @Operation(summary = "Delete the specified homeWork")
@@ -92,31 +86,35 @@ public class HomeWorkRestCollaborator  extends AbstractController<HomeWork, Home
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+
     @Operation(summary = "Delete multiple homeWorks by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {
-            return super.deleteByIdIn(ids);
-     }
+        return super.deleteByIdIn(ids);
+    }
 
 
     @Operation(summary = "find by cours id")
     @GetMapping("cours/id/{id}")
-    public List<HomeWorkDto> findByCoursId(@PathVariable Long id){
+    public List<HomeWorkDto> findByCoursId(@PathVariable Long id) {
         return findDtos(service.findByCoursId(id));
     }
+
     @Operation(summary = "delete by cours id")
     @DeleteMapping("cours/id/{id}")
-    public int deleteByCoursId(@PathVariable Long id){
+    public int deleteByCoursId(@PathVariable Long id) {
         return service.deleteByCoursId(id);
     }
+
     @Operation(summary = "find by typeHomeWork id")
     @GetMapping("typeHomeWork/id/{id}")
-    public List<HomeWorkDto> findByTypeHomeWorkId(@PathVariable Long id){
+    public List<HomeWorkDto> findByTypeHomeWorkId(@PathVariable Long id) {
         return findDtos(service.findByTypeHomeWorkId(id));
     }
+
     @Operation(summary = "delete by typeHomeWork id")
     @DeleteMapping("typeHomeWork/id/{id}")
-    public int deleteByTypeHomeWorkId(@PathVariable Long id){
+    public int deleteByTypeHomeWorkId(@PathVariable Long id) {
         return service.deleteByTypeHomeWorkId(id);
     }
 
@@ -151,12 +149,19 @@ public class HomeWorkRestCollaborator  extends AbstractController<HomeWork, Home
     }
 
 
-
-    public HomeWorkRestCollaborator (HomeWorkCollaboratorService service, HomeWorkConverter converter) {
+    public HomeWorkRestCollaborator(HomeWorkCollaboratorService service, HomeWorkConverter converter) {
         super(service, converter);
     }
 
-
+    @Operation(summary = "Updates the specified homeWork")
+    @PutMapping("/fields")
+    public HomeWorkDto updateField(@RequestBody HomeWorkDto dto) {
+        converter.init(false);
+        HomeWork item = converter.toItem(dto);
+        HomeWork homeWork = service.updateField(item);
+        HomeWorkDto result = converter.toDto(homeWork);
+        return result;
+    }
 
 
 }

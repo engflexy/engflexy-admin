@@ -7,6 +7,8 @@ import {CoursDto} from '../course/Cours.model';
 export class HomeWorkDto extends BaseDto{
 
     public libelle: string;
+    public numero: number;
+
 
     public urlImage: string;
 

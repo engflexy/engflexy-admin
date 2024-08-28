@@ -6,14 +6,11 @@ import ma.zs.alc.dao.criteria.core.homework.HomeWorkCriteria;
 import ma.zs.alc.dao.facade.core.homework.HomeWorkDao;
 import ma.zs.alc.dao.specification.core.homework.HomeWorkSpecification;
 import ma.zs.alc.service.facade.collaborator.homework.HomeWorkCollaboratorService;
+import ma.zs.alc.ws.dto.homework.HomeWorkDto;
 import ma.zs.alc.zynerator.service.AbstractServiceImpl;
 import ma.zs.alc.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
-
-
-
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 import ma.zs.alc.service.facade.collaborator.homework.HomeWorkQuestionCollaboratorService ;
 import ma.zs.alc.bean.core.homework.HomeWorkQuestion ;
 import ma.zs.alc.service.facade.collaborator.homework.TypeHomeWorkCollaboratorService ;
-import ma.zs.alc.bean.core.homework.TypeHomeWork ;
 import ma.zs.alc.service.facade.collaborator.course.CoursCollaboratorService ;
-import ma.zs.alc.bean.core.course.Cours ;
 
-import java.util.List;
 @Service
 public class HomeWorkCollaboratorServiceImpl extends AbstractServiceImpl<HomeWork, HomeWorkCriteria, HomeWorkDao> implements HomeWorkCollaboratorService {
 
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public HomeWork create(HomeWork t) {
+        findOrSaveAssociatedObject(t);
         HomeWork saved= super.create(t);
         if (saved != null && t.getHomeWorkQuestions() != null) {
                 t.getHomeWorkQuestions().forEach(element-> {
@@ -96,6 +91,8 @@ public class HomeWorkCollaboratorServiceImpl extends AbstractServiceImpl<HomeWor
         return dao.countByTypeHomeWorkCode(code);
     }
 
+
+
     public List<HomeWork> findAllOptimized() {
         return dao.findAllOptimized();
     }
@@ -119,5 +116,16 @@ public class HomeWorkCollaboratorServiceImpl extends AbstractServiceImpl<HomeWor
     public HomeWorkCollaboratorServiceImpl(HomeWorkDao dao) {
         super(dao);
     }
+
+    @Override
+    public HomeWork updateField(HomeWork homeWork) {
+        if (homeWork.getId() != null) {
+            HomeWork saved = findById(homeWork.getId());
+            saved.setLibelle(homeWork.getLibelle());
+            homeWork = dao.save(saved);
+        }
+        return homeWork;
+    }
+
 
 }

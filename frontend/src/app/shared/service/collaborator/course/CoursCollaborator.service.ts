@@ -33,4 +33,5 @@ export class CoursCollaboratorService extends AbstractService<CoursDto, CoursCri
     findByParcoursId(id: number):Observable<CoursDto[]> {
         return this.http.get<CoursDto[]>(this.API+'parcours/id/'+id);
     }
+
 }

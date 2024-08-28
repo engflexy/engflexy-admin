@@ -13,7 +13,7 @@ import ma.zs.alc.ws.dto.course.CoursDto;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HomeWorkDto  extends AuditBaseDto {
-
+    private Long numero  ;
     private String libelle  ;
     private String urlImage  ;
     private String urlVideo  ;
@@ -54,6 +54,13 @@ public class HomeWorkDto  extends AuditBaseDto {
         this.urlVideo = urlVideo;
     }
 
+    public Long getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Long numero) {
+        this.numero = numero;
+    }
 
     public CoursDto getCours(){
         return this.cours;
