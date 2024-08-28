@@ -3,6 +3,8 @@ import { UntypedFormGroup } from '@angular/forms';
 import { UserService } from "../../../../../../core/user/user.service";
 import { UserDto } from "../../../../../../zynerator/security/shared/model/User.model";
 import { EtudiantCollaboratorService } from "../../../../../../shared/service/collaborator/inscription/EtudiantCollaborator.service";
+import {ActivatedRoute} from "@angular/router";
+import {EtudiantDto} from "../../../../../../shared/model/inscription/Etudiant.model";
 
 @Component({
     selector: 'settings-security',
@@ -12,7 +14,7 @@ import { EtudiantCollaboratorService } from "../../../../../../shared/service/co
 })
 export class SettingsSecurityComponent implements OnInit {
     securityForm: UntypedFormGroup;
-    @Input() user: UserDto = new UserDto(); // Default value to prevent undefined
+    @Input() user: EtudiantDto = new EtudiantDto(); // Default value to prevent undefined
     newPassword: string;
     hidePassword: boolean = true;
 
@@ -20,11 +22,14 @@ export class SettingsSecurityComponent implements OnInit {
         private userService: UserService,
         private ref: ChangeDetectorRef,
         private etudiantService: EtudiantCollaboratorService,
+        private route: ActivatedRoute,
+
     ) {}
 
     ngOnInit(): void {
-        if (this.user && this.user.id) {
-            this.userService.get(this.user.id)
+        const email = this.route.snapshot.params.email;
+        if ( email) {
+            this.etudiantService.findByUserName(email)
                 .subscribe(
                     res => {
                         this.user = res;

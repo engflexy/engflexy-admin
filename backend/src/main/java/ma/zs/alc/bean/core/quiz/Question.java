@@ -20,7 +20,7 @@ public class Question extends AuditBusinessObject {
 
     @Column(length = 500)
     private String ref;
-    @Column(length = 500)
+
     private String libelle;
     @Column(length = 500)
     private String urlImg;
@@ -72,6 +72,7 @@ public class Question extends AuditBusinessObject {
         this.ref = ref;
     }
 
+    @Column(columnDefinition = "TEXT")
     public String getLibelle() {
         return this.libelle;
     }

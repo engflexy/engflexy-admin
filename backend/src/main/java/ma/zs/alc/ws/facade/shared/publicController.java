@@ -1,10 +1,12 @@
 package ma.zs.alc.ws.facade.shared;
 
+import ma.zs.alc.bean.core.collab.TypeCollaborator;
 import ma.zs.alc.bean.core.course.Parcours;
 import ma.zs.alc.bean.core.grpe.GroupeEtude;
 import ma.zs.alc.bean.core.inscriptionref.*;
 import ma.zs.alc.bean.core.pack.PackStudent;
 import ma.zs.alc.bean.core.prof.TypeTeacher;
+import ma.zs.alc.dao.facade.core.collab.TypeCollaboratorDao;
 import ma.zs.alc.dao.facade.core.course.ParcoursDao;
 import ma.zs.alc.dao.facade.core.grpe.GroupeEtudeDao;
 import ma.zs.alc.dao.facade.core.inscriptionref.*;
@@ -96,6 +98,11 @@ public class publicController {
     public List<Langue> findAllLanguages() {
         return langueDao.findAllOptimized();
     }
+    @GetMapping("optimized/types")
+    public List<TypeCollaborator> findAllTypes() {
+        return typeCollaboratorDao.findAllOptimized();
+    }
+
 
     @Autowired
     private ParcoursDao parcoursDao;
@@ -126,6 +133,8 @@ public class publicController {
 
     @Autowired
     private LangueDao langueDao;
+    @Autowired
+    private TypeCollaboratorDao typeCollaboratorDao;
 
     @Autowired
     private TeacherLocalityDao teacherLocalityDao;

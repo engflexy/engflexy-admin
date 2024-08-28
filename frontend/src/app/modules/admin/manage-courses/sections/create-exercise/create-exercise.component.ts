@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, SecurityContext} from '@angular/core';
 import {ContentType} from "../../../../../shared/utils/enums";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ExerciceDto} from "../../../../../shared/model/course/Exercice.model";
@@ -16,7 +16,6 @@ import {
 import {AngularEditorConfig} from "@kolkov/angular-editor";
 import {QuizDto} from "../../../../../shared/model/quiz/Quiz.model";
 import {QuizCollaboratorService} from "../../../../../shared/service/collaborator/quiz/QuizCollaborator.service";
-
 @Component({
     selector: 'app-create-exercise',
     templateUrl: './create-exercise.component.html',
@@ -100,6 +99,9 @@ export class CreateExerciseComponent implements OnInit {
     set selectedSection(item: SectionDto) {
         this.sectionService.item = item
     }
+
+
+
 
     ngOnInit() {
         console.log(this.exercise)

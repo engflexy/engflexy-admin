@@ -176,8 +176,15 @@ public class CollaboratorRestCollaborator  extends AbstractController<Collaborat
 
     @Operation(summary = "Updates the specified  collaborator")
     @PutMapping("")
-    public ResponseEntity<CollaboratorDto> update(@RequestBody CollaboratorDto dto) throws Exception {
-        return super.update(dto);
+    public ResponseEntity<Collaborator> update(@RequestBody Collaborator dto) {
+        try {
+            Collaborator updatedCollaborator = service.update(dto);
+            return ResponseEntity.ok(updatedCollaborator);
+        } catch (Exception e) {
+            // Log the exception and return a meaningful error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
 
     @Operation(summary = "Delete list of collaborator")

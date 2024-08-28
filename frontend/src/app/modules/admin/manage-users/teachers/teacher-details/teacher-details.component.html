@@ -94,7 +94,9 @@
                         <ng-container *ngSwitchCase="'notifications'">
                             <prof-notifications></prof-notifications>
                         </ng-container>
-
+                        <ng-container *ngSwitchCase="'team'">
+                            <teacher-statistics [user]="prof"></teacher-statistics>
+                        </ng-container>
                     </ng-container>
                 </div>
 

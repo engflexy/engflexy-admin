@@ -7,11 +7,12 @@ import {ProfDto} from '../../../model/prof/Prof.model';
 import {ProfCriteria} from '../../../criteria/prof/ProfCriteria.model';
 import {AbstractService} from "../../../../zynerator/service/AbstractService";
 import {Pageable} from "../../../utils/Pageable";
-import {Observable, ReplaySubject, tap} from "rxjs";
+import {catchError, Observable, ReplaySubject, tap, throwError} from "rxjs";
 import {PageRequest} from "../../../../zynerator/criteria/BaseCriteria.model";
 import {ManageUserDto} from "../../../../core/criteria/manage-user-dto";
 import {UserDto} from "../../../../zynerator/security/shared/model/User.model";
 import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
+import {CollaboratorDto} from "../../../model/vocab/Collaborator.model";
 
 
 @Injectable({
@@ -19,6 +20,8 @@ import {EtudiantDto} from "../../../model/inscription/Etudiant.model";
 })
 export class ProfCollaboratorService extends AbstractService<ProfDto, ProfCriteria> {
     private _user: ReplaySubject<ProfDto> = new ReplaySubject<ProfDto>(1);
+    private _students: Array<ManageUserDto> = new Array<ManageUserDto>();
+
     constructor(private http: HttpClient) {
         super();
         this.setHttp(http);
@@ -34,6 +37,22 @@ export class ProfCollaboratorService extends AbstractService<ProfDto, ProfCriter
 
     public constrcutCriteria(): ProfCriteria {
         return new ProfCriteria();
+    }
+    findByUserName(email: string): Observable<ProfDto> {
+        return this.http.get<ProfDto>(`${this.API}username/${email}`).pipe(
+            catchError(error => {
+                console.error('Error fetching collab:', error);
+                return throwError(error);
+            })
+        );
+    }
+    findAssociatedEtudiant(email: string): Observable<Array<ManageUserDto>> {
+        return this.http.get<Array<ManageUserDto>>(`${this.API}username/${email}`)
+            .pipe(
+                tap((response) => {
+                    this._students = response
+                }),
+            );
     }
 
     findByCollaboratorId(id: number, pageable: Pageable): Observable<PageRequest<ManageUserDto>> {

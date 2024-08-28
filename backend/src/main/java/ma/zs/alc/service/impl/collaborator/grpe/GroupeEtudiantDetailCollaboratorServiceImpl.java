@@ -28,6 +28,9 @@ public class GroupeEtudiantDetailCollaboratorServiceImpl extends AbstractService
     public List<GroupeEtudiantDetail> findByGroupeEtudiantId(Long id) {
         return dao.findByGroupeEtudiantId(id);
     }
+    public List<GroupeEtudiantDetail> findByGroupeEtudiantProfUsername(String email) {
+        return dao.findByGroupeEtudiantProfUsername(email);
+    }
 
     public int deleteByGroupeEtudiantId(Long id) {
         return dao.deleteByGroupeEtudiantId(id);
