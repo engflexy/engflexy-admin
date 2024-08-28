@@ -22,10 +22,18 @@ public class SectionItemMigration {
     
     
     private String explanation;
-    
+    private SectionMigration section;
     
     private String example;
     private List<String> synonyms;
+
+    public SectionMigration getSection() {
+        return section;
+    }
+
+    public void setSection(SectionMigration section) {
+        this.section = section;
+    }
 
     public Long getId() {
         return id;

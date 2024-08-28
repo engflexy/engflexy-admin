@@ -22,6 +22,7 @@ public interface GroupeEtudiantCollaboratorService extends  IService<GroupeEtudi
     int deleteByGroupeEtatId(Long id);
     long countByGroupeEtatCode(String code);
     List<GroupeEtudiant> findByParcoursId(Long id);
+
     int deleteByParcoursId(Long id);
     long countByParcoursCode(String code);
     List<GroupeEtudiant> findByProfId(Long id);

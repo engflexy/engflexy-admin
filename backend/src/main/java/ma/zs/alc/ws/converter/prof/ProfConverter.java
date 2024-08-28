@@ -123,6 +123,8 @@ public class ProfConverter extends AbstractConverter<Prof, ProfDto> {
             ProfDto dto = new ProfDto();
             if(StringUtil.isNotEmpty(item.getId()))
                 dto.setId(item.getId());
+            if(StringUtil.isNotEmpty(item.getEmail()))
+                dto.setEmail(item.getEmail());
             if(StringUtil.isNotEmpty(item.getRef()))
                 dto.setRef(item.getRef());
             if(StringUtil.isNotEmpty(item.getAbout()))

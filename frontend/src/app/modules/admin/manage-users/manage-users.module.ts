@@ -43,6 +43,7 @@ import {ScheduleModule} from "../schedule/schedule.module";
 import {ProfSecurityComponent} from "./teachers/teacher-details/security/security.component";
 import {CollaboratorSecurityComponent} from "./collaborators/collaborator-detials/security/security.component";
 import {CollabNotificationsComponent} from "./collaborators/collaborator-detials/notifications/notifications.component";
+import {TeacherStatisticsComponent} from "./teachers/teacher-details/team/statistics.component";
 
 
 const userRoutes: Route[] = [
@@ -61,7 +62,7 @@ const userRoutes: Route[] = [
         SettingsPlanBillingComponent,
         SettingsSecurityComponent,
         ProfSecurityComponent,CollaboratorSecurityComponent,
-        SettingsTeamComponent, StudentSettingsComponent, CreateTeacherComponent, TeacherDetailsComponent, TeacherProfileComponent, CreateCollaboratorComponent, CollaboratorDetialsComponent, CollaboratorProfileComponent],
+        SettingsTeamComponent,TeacherStatisticsComponent, StudentSettingsComponent, CreateTeacherComponent, TeacherDetailsComponent, TeacherProfileComponent, CreateCollaboratorComponent, CollaboratorDetialsComponent, CollaboratorProfileComponent],
     imports: [
         RouterModule.forChild(userRoutes),
         CommonModule,

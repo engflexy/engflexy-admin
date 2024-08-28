@@ -38,4 +38,5 @@ export class GroupeEtudiantCollaboratorService extends AbstractService<GroupeEtu
     calculateStat(idEtudiant: number): Observable<StatisticEtudiant> {
         return this.http.get<StatisticEtudiant>(`${this.API}etudiant/id/${idEtudiant}`);
     }
+
 }

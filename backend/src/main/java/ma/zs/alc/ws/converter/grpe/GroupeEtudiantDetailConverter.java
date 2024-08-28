@@ -1,5 +1,6 @@
 package  ma.zs.alc.ws.converter.grpe;
 
+import ma.zs.alc.ws.converter.prof.ProfConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,10 @@ public class GroupeEtudiantDetailConverter extends AbstractConverter<GroupeEtudi
     private EtudiantConverter etudiantConverter ;
     @Autowired
     private GroupeEtudiantConverter groupeEtudiantConverter ;
+    @Autowired
+    private ProfConverter profConverter ;
     private boolean groupeEtudiant;
+    private boolean prof;
     private boolean etudiant;
 
     public  GroupeEtudiantDetailConverter() {
@@ -72,6 +76,7 @@ public class GroupeEtudiantDetailConverter extends AbstractConverter<GroupeEtudi
                 dto.setGroupeEtudiant(groupeEtudiantConverter.toDto(item.getGroupeEtudiant())) ;
 
             }
+
             if(this.etudiant && item.getEtudiant()!=null) {
                 dto.setEtudiant(etudiantConverter.toDto(item.getEtudiant())) ;
 

@@ -29,17 +29,25 @@ public class QuizAdminServiceImpl extends AbstractServiceImpl<Quiz, QuizCriteria
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public Quiz save(Quiz t) {
+        Quiz saved = new Quiz();
         if (t != null) {
-            Quiz saved = dao.save(t);
-            if (t.getQuestions() != null && !t.getQuestions().isEmpty()) {
+            if (t.getId() != null) {
+                saved = findById(t.getId());
+            }
+            saved.setNumero(t.getNumero());
+            saved.setLib(t.getLib());
+            saved.setRef(t.getRef());
+            saved.setSeuilReussite(t.getSeuilReussite());
+            saved = dao.save(saved);
+           /*if (t.getQuestions() != null && !t.getQuestions().isEmpty()) {
                 List<Question> questions = t.getQuestions();
                 for (Question question : questions) {
                     question.setQuiz(quizService.findByReferenceEntity(saved));
                     questionService.create(question);
                 }
-            }
+            }*/
         }
-        return null;
+        return saved;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)

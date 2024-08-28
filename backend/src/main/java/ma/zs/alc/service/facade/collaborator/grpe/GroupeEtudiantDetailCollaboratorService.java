@@ -13,6 +13,7 @@ public interface GroupeEtudiantDetailCollaboratorService extends  IService<Group
     int deleteByGroupeEtudiantId(Long id);
     long countByGroupeEtudiantId(Long id);
     List<GroupeEtudiantDetail> findByEtudiantId(Long id);
+    List<GroupeEtudiantDetail> findByGroupeEtudiantProfUsername(String email);
     int deleteByEtudiantId(Long id);
     long countByEtudiantId(Long id);
 

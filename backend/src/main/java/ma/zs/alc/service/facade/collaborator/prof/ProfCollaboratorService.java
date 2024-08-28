@@ -1,6 +1,8 @@
 package ma.zs.alc.service.facade.collaborator.prof;
 
 import java.util.List;
+
+import ma.zs.alc.bean.core.inscription.Etudiant;
 import ma.zs.alc.bean.core.prof.Prof;
 import ma.zs.alc.dao.criteria.core.prof.ProfCriteria;
 import ma.zs.alc.dao.facade.core.inscription.UserPageable;
@@ -14,6 +16,7 @@ public interface ProfCollaboratorService extends  IService<Prof,ProfCriteria>  {
     boolean changePassword(String username, String newPassword);
 
     List<Prof> findByParcoursId(Long id);
+    List<Etudiant> findAssociatedEtudiant(String email);
     int deleteByParcoursId(Long id);
     long countByParcoursCode(String code);
     List<Prof> findByCategorieProfId(Long id);

@@ -10,6 +10,7 @@ import ma.zs.alc.dao.facade.core.prof.ProfDao;
 import ma.zs.alc.dao.specification.core.prof.ProfSpecification;
 import ma.zs.alc.service.facade.collaborator.course.ParcoursCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.grpe.GroupeEtudiantCollaboratorService;
+import ma.zs.alc.service.facade.collaborator.inscription.EtudiantCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.inscriptionref.LangueCollaboratorService;
 import ma.zs.alc.service.facade.collaborator.prof.*;
 import ma.zs.alc.service.facade.collaborator.recomrecla.RecommendTeacherCollaboratorService;
@@ -98,7 +99,9 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
         return dao.findByCollaboratorId(id, pageable);
     }
 
-
+    public List<Etudiant> findAssociatedEtudiant(String email){
+        return etudiantCollaboratorService.findAll();
+    }
     public int deleteByCollaboratorId(Long id) {
         return dao.deleteByCollaboratorId(id);
     }
@@ -299,6 +302,8 @@ public class ProfCollaboratorServiceImpl extends AbstractServiceImpl<Prof, ProfC
     private LangueCollaboratorService langueService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private EtudiantCollaboratorService etudiantCollaboratorService;
     public ProfCollaboratorServiceImpl(ProfDao dao) {
         super(dao);
     }

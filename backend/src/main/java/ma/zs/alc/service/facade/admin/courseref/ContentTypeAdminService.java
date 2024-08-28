@@ -10,7 +10,5 @@ import ma.zs.alc.zynerator.service.IService;
 public interface ContentTypeAdminService extends  IService<ContentType,ContentTypeCriteria>  {
 
 
-
-
-
+    ContentType findByCode(String code);
 }

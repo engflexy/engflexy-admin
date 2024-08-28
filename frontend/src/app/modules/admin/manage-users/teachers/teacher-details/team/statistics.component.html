@@ -1,0 +1,128 @@
+<div>
+    <div *ngIf="!isLoading" class="flex space-x-4">
+        <!-- Summary divs for Completed, Upcoming, and Total Courses -->
+        <!--<div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">Completed</div>
+            </div>
+            <div class="flex flex-col items-center mt-2">
+                <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
+                    {{ statisticEtudiant?.nreCoursesCompleted }}
+                </div>
+                <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Completed Courses</div>
+            </div>
+        </div>
+
+        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">Upcoming</div>
+            </div>
+            <div class="flex flex-col items-center mt-2">
+                <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-red-500">
+                    {{ statisticEtudiant?.nreCoursesComing }}
+                </div>
+                <div class="text-lg font-medium text-red-600 dark:text-red-500">Upcoming Courses</div>
+            </div>
+        </div>
+
+        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+            <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">All courses</div>
+            </div>
+            <div class="flex flex-col items-center mt-2">
+                <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-green-500">
+                    {{ statisticEtudiant?.nreCourses }}
+                </div>
+                <div class="text-lg font-medium text-green-600 dark:text-green-500">Total Courses</div>
+            </div>
+        </div>
+    </div>
+-->
+    <section class="container my-2 px-4 mx-auto">
+        <header class="bg-gray-50 dark:bg-gray-600 w-full">
+            <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <div class="text-center sm:text-left">
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-50 sm:text-3xl">
+                            Prof students
+                        </h1>
+                    </div>
+                    <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+                        Prof of {{ etudiants?.length }} student{{ etudiants?.length !== 1 ? 's' : '' }}
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-col mt-6">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                    <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-800">
+                            <tr>
+                                <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <span>Email</span>
+                                </th>
+                                <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <span>Name</span>
+                                </th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Phone
+                                </th>
+                              <!--  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Material
+                                </th>-->
+                               <!-- <th scope="col" class="relative py-3.5 px-4">
+                                    <span class="sr-only">Actions</span>
+                                </th>-->
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                            <tr *ngFor="let item of etudiants; index as i">
+                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    {{ item.email || '➖' }}
+                                </td>
+                                <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    {{ item.fullName || '➖' }}
+                                </td>
+                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    {{ item.phone|| '➖' }}
+                                </td>
+                               <!-- <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                    {{ item.groupeEtudiant?.parcours?.libelle || '➖' }}
+                                </td>-->
+                                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                    <div class="flex items-center gap-x-6">
+                                        <button (click)="deleteStudent(item, i)" class="group">
+                                            <mat-icon class="icon-size-4 group-hover:text-red-500" svgIcon="heroicons_solid:trash"></mat-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <!--  <div class="mt-6 mb-6">
+            <select [(ngModel)]="selectedGroup" (ngModelChange)="onGroupSelect($event)">
+                <option [ngValue]="null">Select a group</option>
+              &lt;!&ndash;  <option *ngFor="let group of groupes" [ngValue]="group">
+                    {{ group.groupeEtudiant?.libelle }}
+                </option>&ndash;&gt;
+            </select>
+        </div>
+        &lt;!&ndash; SUBSCRIPTION &ndash;&gt;
+        <div class="w-full my-6">
+            <app-calendar [group]="selectedGroup"></app-calendar>
+        </div>-->
+    </section>
+</div>
+
+<div *ngIf="user?.email?.length > 0" class="grid grid-cols-12 gap-x-1 mt-12">
+    <!--<div class="mt-16">
+    </div>-->
+</div></div>
