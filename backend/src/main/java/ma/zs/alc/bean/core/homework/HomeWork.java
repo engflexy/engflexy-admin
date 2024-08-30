@@ -36,6 +36,7 @@ public class HomeWork   extends AuditBusinessObject     {
     private String urlImage;
     @Column(length = 500)
     private String urlVideo;
+    private Long numero;
 
     private Cours cours ;
     private TypeHomeWork typeHomeWork ;
@@ -117,6 +118,14 @@ public class HomeWork   extends AuditBusinessObject     {
     public String getLabel() {
         label = libelle;
         return label;
+    }
+
+    public Long getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Long numero) {
+        this.numero = numero;
     }
 
     @Override

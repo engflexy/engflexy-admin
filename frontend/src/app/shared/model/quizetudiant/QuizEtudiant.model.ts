@@ -3,6 +3,8 @@ import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 import {QuizDto} from '../quiz/Quiz.model';
 import {EtudiantDto} from '../inscription/Etudiant.model';
 import {ReponseEtudiantDto} from './ReponseEtudiant.model';
+import {QuestionDto} from "../quiz/Question.model";
+import {HomeWorkQuestionDto} from "../homework/HomeWorkQuestion.model";
 
 export class QuizEtudiantDto extends BaseDto{
 
@@ -13,6 +15,8 @@ export class QuizEtudiantDto extends BaseDto{
     public resultat: string;
 
     public questionCurrent: null | number;
+    public questions: Array<HomeWorkQuestionDto>;
+
 
     public etudiant: EtudiantDto ;
     public quiz: QuizDto ;

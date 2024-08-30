@@ -3,6 +3,7 @@ import {BaseDto} from '../../../zynerator/dto/BaseDto.model';
 import {HoweWorkQSTReponseDto} from './HoweWorkQSTReponse.model';
 import {TypeDeQuestionDto} from '../quizref/TypeDeQuestion.model';
 import {HomeWorkDto} from './HomeWork.model';
+import {TypeHomeWorkDto} from "./TypeHomeWork.model";
 
 export class HomeWorkQuestionDto extends BaseDto{
 
@@ -16,7 +17,9 @@ export class HomeWorkQuestionDto extends BaseDto{
 
     public pointReponsefausse: null | number;
 
-    public typeDeQuestion: TypeDeQuestionDto ;
+    //public typeDeQuestion: TypeDeQuestionDto ;
+    public typeHomeWork: TypeHomeWorkDto ;
+
     public homeWork: HomeWorkDto ;
      public howeWorkQSTReponses: Array<HoweWorkQSTReponseDto>;
 
