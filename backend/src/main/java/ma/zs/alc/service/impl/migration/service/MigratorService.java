@@ -38,6 +38,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class MigratorService {
@@ -66,13 +68,13 @@ public class MigratorService {
             if (processResultCours.getErrors().isEmpty()) {
                 processResultSection = lunchSection();
                 if (processResultCours.getErrors().isEmpty()) {
-                    processResultExercice=lunchExerciceFromQuiz();
+                    processResultExercice = lunchExerciceFromQuiz();
                 }
             }
 
         }
 
-        return List.of(processResultParcours, processResultCours, processResultSection,processResultExercice);
+        return List.of(processResultParcours, processResultCours, processResultSection, processResultExercice);
     }
 
     @Transactional
@@ -117,10 +119,15 @@ public class MigratorService {
         }
     }
 
-
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
     public ProcessResult lunchUsers() {
-        String url = baseUrl+"users/";
+        String url = baseUrl + "users/";
         ProcessResult processResult = new ProcessResult();
         UserMigration[] userMigrations = restTemplate.getForObject(url, UserMigration[].class);
         int count = 0;
@@ -133,29 +140,32 @@ public class MigratorService {
                 UserMigration userMigration = userMigrations[i];
                 User byId = userService.findById(user.getId());
 
-                if (byId == null ) {
+                if (byId == null) {
                     user.setId(null);
-                    langue=langueService.findOrSave(user.getLangue());
+                    langue = langueService.findOrSave(user.getLangue());
+                    if (userMigration.getEmail() == null && userMigration.getUsername() != null) {
+                        user.setEmail(userMigration.getUsername());
+                    }
+                    if (!isValidEmail(user.getEmail())) {
+                        continue;
+                    }
+                    User byReferenceEntity = userService.findByReferenceEntity(user);
+                    if (byReferenceEntity != null) {
+                        continue;
+                    }
                     user.setLangue(langue);
                     userService.save(user);
-                    String loadedRole=userMigration.getRole();
-                    if(loadedRole.equals("STUDENT")){
-                        loadedRole="ROLE_STUDENT";
-                    } else if (loadedRole.equals("TEACHER")) {
-                        loadedRole = "ROLE_TEACHER";
-                    }else if (loadedRole.isEmpty()) {
-                        loadedRole = "ROLE_ANONYMOUS";
-                    } else if (loadedRole.equals("ADMIN")) {
-                        loadedRole="ROLE_ADMIN";
-                    } else if (loadedRole.equals("ADVERTISER")) {
-                        loadedRole="ROLE_ADVERTISER";
+                    String loadedRole = userMigration.getRole();
+                    if (loadedRole != null) {
+                        if (!loadedRole.startsWith("ROLE")) {
+                            loadedRole = "ROLE_" + loadedRole;
+                        }
+                        role = roleService.findOrSave(new Role(loadedRole));
+                        roleUserService.create(new RoleUser(role, user));
+                        processResult.getInfos().add(user.getId().toString());
+                        count++;
                     }
-                    role=roleService.findOrSave(new Role(loadedRole));
-                    roleUserService.create(new RoleUser(role,user));
-                    processResult.getInfos().add(user.getId().toString());
-                    count++;
-                }
-                else {
+                } else {
                     processResult.getErrors().add(user.getId().toString());
                 }
 
@@ -180,7 +190,7 @@ public class MigratorService {
                 quiz.setId(null);
                 QuizMigration quizMigration = quizMigrations[i];
                 Exercice exercice = transform(quiz, Exercice.class);
-                exercice.setSection(sectionService.findByCode("SECTION-"+quizMigration.getSection().getId()));
+                exercice.setSection(sectionService.findByCode("SECTION-" + quizMigration.getSection().getId()));
                 exercice.setContent(quiz.getLib());
                 exercice.setContentType(contentType);
                 quizService.save(quiz);
@@ -226,16 +236,16 @@ public class MigratorService {
 
                 if (byReferenceEntity == null) {
                     List<Exercice> exercices = constructExercices(sectionMigration);
-                    cours=coursService.findByCode("COURS-"+sectionMigration.getCours().getId());
+                    cours = coursService.findByCode("COURS-" + sectionMigration.getCours().getId());
                     section.setCours(cours);
                     section.setExercices(exercices);
                     sectionService.create(section);
 
-                    SectionItemMigration[] sectionItemMigrations = restTemplate.getForObject(urlSectionItem+section.getId(), SectionItemMigration[].class);
-                    List<SectionItem> sectionItems=construct(sectionItemMigrations, SectionItem.class);
+                    SectionItemMigration[] sectionItemMigrations = restTemplate.getForObject(urlSectionItem + section.getId(), SectionItemMigration[].class);
+                    List<SectionItem> sectionItems = construct(sectionItemMigrations, SectionItem.class);
                     if (sectionItemMigrations != null) {
                         for (int j = 0; j < sectionItemMigrations.length; j++) {
-                            SectionItem sectionItem=sectionItems.get(j);
+                            SectionItem sectionItem = sectionItems.get(j);
                             sectionItem.setSection(sectionService.findByReferenceEntity(section));
                             sectionItemService.create(sectionItem);
                         }
@@ -287,10 +297,11 @@ public class MigratorService {
 
         return processResult;
     }
+
     public ProcessResult lunchCours() {
         String url = baseUrl + "student/course/";
         ProcessResult processResult = new ProcessResult();
-        Parcours parcours ;
+        Parcours parcours;
         int count = 0;
         CoursMigration[] coursMigrations = restTemplate.getForObject(url, CoursMigration[].class);
         if (coursMigrations != null) {
@@ -302,7 +313,7 @@ public class MigratorService {
                 cours.setCode("COURS-" + coursMigration.getId());
                 Cours byReferenceEntity = coursService.findByReferenceEntity(cours);
                 if (byReferenceEntity == null) {
-                    parcours=parcoursService.findByCode("PARCOURS-"+coursMigration.getParcours().getId());
+                    parcours = parcoursService.findByCode("PARCOURS-" + coursMigration.getParcours().getId());
                     cours.setParcours(parcours);
                     coursService.create(cours);
                     processResult.getInfos().add(cours.getCode());

@@ -9098,7 +9098,7 @@ CREATE TABLE `section_item`
     `updatedby`     varchar(255) DEFAULT NULL,
     `updatedon`     datetime(6) DEFAULT NULL,
     `example`       varchar(255) DEFAULT NULL,
-    `explanation`   varchar(255) DEFAULT NULL,
+    `explanation`   varchar(10000000) DEFAULT NULL,
     `image_url`     varchar(255) DEFAULT NULL,
     `response`      varchar(255) DEFAULT NULL,
     `synonyms`      varchar(255) DEFAULT NULL,
