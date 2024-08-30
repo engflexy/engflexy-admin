@@ -8,6 +8,7 @@ import ma.zs.alc.bean.core.quiz.Question;
 import ma.zs.alc.bean.core.quiz.Quiz;
 import ma.zs.alc.bean.core.quizref.TypeDeQuestion;
 import ma.zs.alc.dao.facade.core.course.*;
+import ma.zs.alc.dao.facade.core.inscriptionref.LangueDao;
 import ma.zs.alc.dao.facade.core.quiz.QuestionDao;
 import ma.zs.alc.dao.facade.core.quiz.QuizDao;
 import ma.zs.alc.dao.facade.core.quizref.TypeDeQuestionDao;
@@ -18,7 +19,14 @@ import ma.zs.alc.service.facade.admin.quiz.QuestionAdminService;
 import ma.zs.alc.service.facade.admin.quiz.QuizAdminService;
 import ma.zs.alc.service.facade.admin.quizref.TypeDeQuestionAdminService;
 import ma.zs.alc.service.impl.migration.dto.*;
+import ma.zs.alc.zynerator.security.bean.Role;
+import ma.zs.alc.zynerator.security.bean.RoleUser;
 import ma.zs.alc.zynerator.security.bean.User;
+import ma.zs.alc.zynerator.security.dao.facade.core.RoleDao;
+import ma.zs.alc.zynerator.security.dao.facade.core.RoleUserDao;
+import ma.zs.alc.zynerator.security.dao.facade.core.UserDao;
+import ma.zs.alc.zynerator.security.service.facade.RoleService;
+import ma.zs.alc.zynerator.security.service.facade.RoleUserService;
 import ma.zs.alc.zynerator.security.service.facade.UserService;
 import ma.zs.alc.zynerator.util.RefelexivityUtil;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +47,14 @@ public class MigratorService {
     private ContentTypeAdminService contentTypeService;
 
     String baseUrl = "http://localhost:8036/api/";
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private LangueDao langueDao;
+    @Autowired
+    private RoleUserDao roleUserDao;
+    @Autowired
+    private RoleDao roleDao;
 
     public List<ProcessResult> lunchAll() {
         ProcessResult processResultParcours = lunchParcours();
@@ -69,6 +85,10 @@ public class MigratorService {
         sectionDao.deleteAll();
         coursDao.deleteAll();
         parcoursDao.deleteAll();
+        langueDao.deleteAll();
+        roleUserDao.deleteAll();
+        userDao.deleteAll();
+        roleDao.deleteAll();
 
     }
 
@@ -97,29 +117,53 @@ public class MigratorService {
         }
     }
 
-    public int lunchUsers() {
-        String url = "http://localhost:8036/app/user/";
+
+
+    public ProcessResult lunchUsers() {
+        String url = baseUrl+"users/";
+        ProcessResult processResult = new ProcessResult();
         UserMigration[] userMigrations = restTemplate.getForObject(url, UserMigration[].class);
         int count = 0;
         List<User> users = construct(userMigrations, User.class);
+        Langue langue;
+        Role role;
         if (userMigrations != null) {
             for (int i = 0; i < userMigrations.length; i++) {
                 User user = users.get(i);
-                User byReferenceEntity = userService.findByReferenceEntity(user);
-                if (byReferenceEntity == null) {
-                    Langue langue = new Langue();
-                    if (user.getLangue() != null) {
-                        BeanUtils.copyProperties(user.getLangue(), langue);
+                UserMigration userMigration = userMigrations[i];
+                User byId = userService.findById(user.getId());
+
+                if (byId == null ) {
+                    user.setId(null);
+                    langue=langueService.findOrSave(user.getLangue());
+                    user.setLangue(langue);
+                    userService.save(user);
+                    String loadedRole=userMigration.getRole();
+                    if(loadedRole.equals("STUDENT")){
+                        loadedRole="ROLE_STUDENT";
+                    } else if (loadedRole.equals("TEACHER")) {
+                        loadedRole = "ROLE_TEACHER";
+                    }else if (loadedRole.isEmpty()) {
+                        loadedRole = "ROLE_ANONYMOUS";
+                    } else if (loadedRole.equals("ADMIN")) {
+                        loadedRole="ROLE_ADMIN";
+                    } else if (loadedRole.equals("ADVERTISER")) {
+                        loadedRole="ROLE_ADVERTISER";
                     }
-                    user.setLangue(langueService.findOrSave(langue));
-                    userService.create(user);
+                    role=roleService.findOrSave(new Role(loadedRole));
+                    roleUserService.create(new RoleUser(role,user));
+                    processResult.getInfos().add(user.getId().toString());
                     count++;
                 }
+                else {
+                    processResult.getErrors().add(user.getId().toString());
+                }
+
             }
         }
-        return count;
+        processResult.setCount(count);
+        return processResult;
     }
-
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
     public ProcessResult lunchExerciceFromQuiz() {
@@ -413,6 +457,10 @@ public class MigratorService {
     private LangueAdminService langueService;
     @Autowired
     private SectionItemAdminService sectionItemService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private RoleUserService roleUserService;
 
     @Autowired
     private TypeDeQuestionDao typeQuestionDao;

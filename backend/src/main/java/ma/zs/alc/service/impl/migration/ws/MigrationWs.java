@@ -53,8 +53,8 @@ public class MigrationWs {
         this.migratorService.cleanData();
     }
     @GetMapping("user")
-    public int lunchUsers() {
-        int result=migratorService.lunchUsers();
+    public ProcessResult lunchUsers() {
+        ProcessResult result=migratorService.lunchUsers();
         return result;
     }
 }

@@ -19,10 +19,15 @@ public class RoleUser extends AuditBusinessObject {
     @JsonIgnore
     private User user;
 
+    public RoleUser(Role role, User user) {
+        this.role = role;
+        this.user = user;
+    }
 
     public RoleUser() {
         super();
     }
+
 
     @Id
     @Column(name = "id")

@@ -1,12 +1,13 @@
 package ma.zs.alc.service.impl.migration.dto;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import ma.zs.alc.bean.core.inscriptionref.Langue;
+import ma.zs.alc.zynerator.security.bean.Role;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-public class UserMigration implements UserDetails {
+public class UserMigration {
 
     protected Long id;
     protected boolean credentialsNonExpired = true;
@@ -27,14 +28,12 @@ public class UserMigration implements UserDetails {
     protected Date birthday;
     protected String numero;
     protected String image;
-    protected LangueMigration langue;
+    protected Langue langue;
     protected String role;
-    protected Collection<RoleMigration> roles = new ArrayList<>();
 
-    protected Collection<RoleMigration> authorities;
+    protected Collection<Role> roles = new ArrayList<>();
 
-    //private List<Coupon> coupons;
-    //private List<Notification> notifications;
+    protected Collection<Role> authorities;
 
 
     public UserMigration() {
@@ -49,9 +48,13 @@ public class UserMigration implements UserDetails {
     }
 
 
-    public Collection<RoleMigration> getAuthorities() {
+    public Collection<Role> getAuthorities() {
         if (this.authorities == null) this.authorities = this.roles;
         return authorities;
+    }
+
+    public void setAuthorities(Collection<Role> authorities) {
+        this.authorities = authorities;
     }
 
     public Long getId() {
@@ -62,7 +65,6 @@ public class UserMigration implements UserDetails {
         this.id = id;
     }
 
-    @Override
     public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
@@ -71,7 +73,6 @@ public class UserMigration implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    @Override
     public boolean isEnabled() {
         return enabled;
     }
@@ -120,7 +121,6 @@ public class UserMigration implements UserDetails {
         this.email = email;
     }
 
-    @Override
     public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
@@ -129,7 +129,6 @@ public class UserMigration implements UserDetails {
         this.accountNonExpired = accountNonExpired;
     }
 
-    @Override
     public boolean isAccountNonLocked() {
         return accountNonLocked;
     }
@@ -138,7 +137,6 @@ public class UserMigration implements UserDetails {
         this.accountNonLocked = accountNonLocked;
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
@@ -147,7 +145,6 @@ public class UserMigration implements UserDetails {
         this.username = username;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
@@ -212,11 +209,11 @@ public class UserMigration implements UserDetails {
         this.image = image;
     }
 
-    public LangueMigration getLangue() {
+    public Langue getLangue() {
         return langue;
     }
 
-    public void setLangue(LangueMigration langue) {
+    public void setLangue(Langue langue) {
         this.langue = langue;
     }
 
@@ -228,15 +225,11 @@ public class UserMigration implements UserDetails {
         this.role = role;
     }
 
-    public Collection<RoleMigration> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<RoleMigration> roles) {
+    public void setRoles(Collection<Role> roles) {
         this.roles = roles;
-    }
-
-    public void setAuthorities(Collection<RoleMigration> authorities) {
-        this.authorities = authorities;
     }
 }

@@ -139,6 +139,10 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserCriteria, Use
     public String cryptPassword(String value) {
         return value == null ? null : bCryptPasswordEncoder.encode(value);
     }
+    @Override
+    public User save(User user) {
+        return dao.save(user);
+    }
 
     @Override
     public boolean changePassword(String username, String newPassword) {

@@ -1,9 +1,5 @@
 package ma.zs.alc.service.impl.migration.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LangueMigration {
 
     private Long id;

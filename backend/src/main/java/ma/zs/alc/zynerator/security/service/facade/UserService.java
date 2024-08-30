@@ -31,6 +31,8 @@ public interface UserService extends IService<User, UserCriteria>, UserDetailsSe
 
     String cryptPassword(String value);
 
+    User save(User user);
+
     boolean changePassword(String username, String newPassword);
 
     int deleteByUsername(String username);
